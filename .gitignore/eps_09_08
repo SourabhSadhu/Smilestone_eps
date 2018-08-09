@@ -1,0 +1,556 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 10.4
+-- Dumped by pg_dump version 10.4
+
+-- Started on 2018-08-09 08:00:24
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 8 (class 2615 OID 16398)
+-- Name: eps; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+CREATE SCHEMA eps;
+
+
+ALTER SCHEMA eps OWNER TO postgres;
+
+--
+-- TOC entry 1 (class 3079 OID 12924)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2878 (class 0 OID 0)
+-- Dependencies: 1
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 206 (class 1259 OID 16576)
+-- Name: age_group; Type: TABLE; Schema: eps; Owner: postgres
+--
+
+CREATE TABLE eps.age_group (
+    group_id character varying(10) NOT NULL,
+    from_age numeric(3,0) NOT NULL,
+    to_age numeric(3,0) NOT NULL
+);
+
+
+ALTER TABLE eps.age_group OWNER TO postgres;
+
+--
+-- TOC entry 197 (class 1259 OID 16399)
+-- Name: findings_seq; Type: SEQUENCE; Schema: eps; Owner: postgres
+--
+
+CREATE SEQUENCE eps.findings_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE eps.findings_seq OWNER TO postgres;
+
+--
+-- TOC entry 207 (class 1259 OID 16588)
+-- Name: clinical_findings; Type: TABLE; Schema: eps; Owner: postgres
+--
+
+CREATE TABLE eps.clinical_findings (
+    f_id bigint DEFAULT nextval('eps.findings_seq'::regclass) NOT NULL,
+    f_name character varying(50) NOT NULL,
+    f_desc character varying(100),
+    f_tooth numeric(2,0) NOT NULL,
+    fee bigint,
+    age_group character varying(30) NOT NULL
+);
+
+
+ALTER TABLE eps.clinical_findings OWNER TO postgres;
+
+--
+-- TOC entry 202 (class 1259 OID 16538)
+-- Name: fees_id_seq; Type: SEQUENCE; Schema: eps; Owner: postgres
+--
+
+CREATE SEQUENCE eps.fees_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE eps.fees_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 203 (class 1259 OID 16540)
+-- Name: fees_breakup; Type: TABLE; Schema: eps; Owner: postgres
+--
+
+CREATE TABLE eps.fees_breakup (
+    f_id bigint DEFAULT nextval('eps.fees_id_seq'::regclass) NOT NULL,
+    prescription_id bigint NOT NULL,
+    patient_id bigint NOT NULL,
+    notes character varying(50),
+    amount numeric(8,0) NOT NULL,
+    ts_created date NOT NULL,
+    clinical_findings_ref bigint
+);
+
+
+ALTER TABLE eps.fees_breakup OWNER TO postgres;
+
+--
+-- TOC entry 205 (class 1259 OID 16569)
+-- Name: medicines; Type: TABLE; Schema: eps; Owner: postgres
+--
+
+CREATE TABLE eps.medicines (
+    medicine_name character varying(50) NOT NULL,
+    disease_code character varying(20) NOT NULL,
+    disease_name character varying(20),
+    dosage character varying(30),
+    clinical_availability numeric(3,0),
+    age_group character varying(50) NOT NULL,
+    treatment_id bigint
+);
+
+
+ALTER TABLE eps.medicines OWNER TO postgres;
+
+--
+-- TOC entry 199 (class 1259 OID 16403)
+-- Name: patient_id_seq; Type: SEQUENCE; Schema: eps; Owner: postgres
+--
+
+CREATE SEQUENCE eps.patient_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE eps.patient_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 209 (class 1259 OID 16654)
+-- Name: patients; Type: TABLE; Schema: eps; Owner: postgres
+--
+
+CREATE TABLE eps.patients (
+    p_id bigint DEFAULT nextval('eps.patient_id_seq'::regclass) NOT NULL,
+    first_name character varying(30) NOT NULL,
+    last_name character varying(30) NOT NULL,
+    dob_dd numeric(2,0) NOT NULL,
+    dob_mm numeric(2,0) NOT NULL,
+    dob_yy numeric(4,0) DEFAULT 1947 NOT NULL,
+    contact_no1 numeric(15,0) NOT NULL,
+    contact_no2 numeric(15,0),
+    discount numeric(2,0) DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE eps.patients OWNER TO postgres;
+
+--
+-- TOC entry 200 (class 1259 OID 16405)
+-- Name: prescription_id_seq; Type: SEQUENCE; Schema: eps; Owner: postgres
+--
+
+CREATE SEQUENCE eps.prescription_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE eps.prescription_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 204 (class 1259 OID 16560)
+-- Name: prescription_history; Type: TABLE; Schema: eps; Owner: postgres
+--
+
+CREATE TABLE eps.prescription_history (
+    prescription_id bigint DEFAULT nextval('eps.prescription_id_seq'::regclass) NOT NULL,
+    chief_complaint character varying(500),
+    chief_findings character varying(500),
+    personal_diagnosis character varying(1000),
+    treatment_plan character varying(500),
+    treatment_done character varying(500),
+    advice character varying(100),
+    note character varying(200),
+    investigation character varying(200),
+    medicines character varying(200),
+    patient_id bigint NOT NULL
+);
+
+
+ALTER TABLE eps.prescription_history OWNER TO postgres;
+
+--
+-- TOC entry 198 (class 1259 OID 16401)
+-- Name: rx_plan_seq; Type: SEQUENCE; Schema: eps; Owner: postgres
+--
+
+CREATE SEQUENCE eps.rx_plan_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE eps.rx_plan_seq OWNER TO postgres;
+
+--
+-- TOC entry 201 (class 1259 OID 16509)
+-- Name: tooth_quadrent; Type: TABLE; Schema: eps; Owner: postgres
+--
+
+CREATE TABLE eps.tooth_quadrent (
+    tooth_index numeric(2,0) NOT NULL,
+    tooth_qdr numeric(1,0) NOT NULL,
+    tooth_number numeric(1,0) NOT NULL
+);
+
+
+ALTER TABLE eps.tooth_quadrent OWNER TO postgres;
+
+--
+-- TOC entry 208 (class 1259 OID 16634)
+-- Name: treatment_plan; Type: TABLE; Schema: eps; Owner: postgres
+--
+
+CREATE TABLE eps.treatment_plan (
+    trt_id bigint DEFAULT nextval('eps.rx_plan_seq'::regclass) NOT NULL,
+    trt_name character varying(50) NOT NULL,
+    trt_desc character varying(100),
+    clinical_finding bigint NOT NULL
+);
+
+
+ALTER TABLE eps.treatment_plan OWNER TO postgres;
+
+--
+-- TOC entry 2867 (class 0 OID 16576)
+-- Dependencies: 206
+-- Data for Name: age_group; Type: TABLE DATA; Schema: eps; Owner: postgres
+--
+
+COPY eps.age_group (group_id, from_age, to_age) FROM stdin;
+3to13	3	13
+\.
+
+
+--
+-- TOC entry 2868 (class 0 OID 16588)
+-- Dependencies: 207
+-- Data for Name: clinical_findings; Type: TABLE DATA; Schema: eps; Owner: postgres
+--
+
+COPY eps.clinical_findings (f_id, f_name, f_desc, f_tooth, fee, age_group) FROM stdin;
+6	Carries	Min severe	16	50	3to13
+9	Carries	Min severe	17	50	3to13
+10	Carries	Min severe	18	50	3to13
+\.
+
+
+--
+-- TOC entry 2864 (class 0 OID 16540)
+-- Dependencies: 203
+-- Data for Name: fees_breakup; Type: TABLE DATA; Schema: eps; Owner: postgres
+--
+
+COPY eps.fees_breakup (f_id, prescription_id, patient_id, notes, amount, ts_created, clinical_findings_ref) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2866 (class 0 OID 16569)
+-- Dependencies: 205
+-- Data for Name: medicines; Type: TABLE DATA; Schema: eps; Owner: postgres
+--
+
+COPY eps.medicines (medicine_name, disease_code, disease_name, dosage, clinical_availability, age_group, treatment_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2870 (class 0 OID 16654)
+-- Dependencies: 209
+-- Data for Name: patients; Type: TABLE DATA; Schema: eps; Owner: postgres
+--
+
+COPY eps.patients (p_id, first_name, last_name, dob_dd, dob_mm, dob_yy, contact_no1, contact_no2, discount) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2865 (class 0 OID 16560)
+-- Dependencies: 204
+-- Data for Name: prescription_history; Type: TABLE DATA; Schema: eps; Owner: postgres
+--
+
+COPY eps.prescription_history (prescription_id, chief_complaint, chief_findings, personal_diagnosis, treatment_plan, treatment_done, advice, note, investigation, medicines, patient_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2862 (class 0 OID 16509)
+-- Dependencies: 201
+-- Data for Name: tooth_quadrent; Type: TABLE DATA; Schema: eps; Owner: postgres
+--
+
+COPY eps.tooth_quadrent (tooth_index, tooth_qdr, tooth_number) FROM stdin;
+18	1	8
+17	1	7
+16	1	6
+15	1	5
+14	1	4
+13	1	3
+12	1	2
+11	1	1
+28	2	8
+27	2	7
+26	2	6
+25	2	5
+24	2	4
+23	2	3
+22	2	2
+21	2	1
+38	3	8
+37	3	7
+36	3	6
+35	3	5
+34	3	4
+33	3	3
+32	3	2
+31	3	1
+48	4	8
+47	4	7
+46	4	6
+45	4	5
+44	4	4
+43	4	3
+42	4	2
+41	4	1
+\.
+
+
+--
+-- TOC entry 2869 (class 0 OID 16634)
+-- Dependencies: 208
+-- Data for Name: treatment_plan; Type: TABLE DATA; Schema: eps; Owner: postgres
+--
+
+COPY eps.treatment_plan (trt_id, trt_name, trt_desc, clinical_finding) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2879 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: fees_id_seq; Type: SEQUENCE SET; Schema: eps; Owner: postgres
+--
+
+SELECT pg_catalog.setval('eps.fees_id_seq', 1, false);
+
+
+--
+-- TOC entry 2880 (class 0 OID 0)
+-- Dependencies: 197
+-- Name: findings_seq; Type: SEQUENCE SET; Schema: eps; Owner: postgres
+--
+
+SELECT pg_catalog.setval('eps.findings_seq', 10, true);
+
+
+--
+-- TOC entry 2881 (class 0 OID 0)
+-- Dependencies: 199
+-- Name: patient_id_seq; Type: SEQUENCE SET; Schema: eps; Owner: postgres
+--
+
+SELECT pg_catalog.setval('eps.patient_id_seq', 1, false);
+
+
+--
+-- TOC entry 2882 (class 0 OID 0)
+-- Dependencies: 200
+-- Name: prescription_id_seq; Type: SEQUENCE SET; Schema: eps; Owner: postgres
+--
+
+SELECT pg_catalog.setval('eps.prescription_id_seq', 1, false);
+
+
+--
+-- TOC entry 2883 (class 0 OID 0)
+-- Dependencies: 198
+-- Name: rx_plan_seq; Type: SEQUENCE SET; Schema: eps; Owner: postgres
+--
+
+SELECT pg_catalog.setval('eps.rx_plan_seq', 3, true);
+
+
+--
+-- TOC entry 2724 (class 2606 OID 16580)
+-- Name: age_group age_group_pkey; Type: CONSTRAINT; Schema: eps; Owner: postgres
+--
+
+ALTER TABLE ONLY eps.age_group
+    ADD CONSTRAINT age_group_pkey PRIMARY KEY (group_id);
+
+
+--
+-- TOC entry 2726 (class 2606 OID 16641)
+-- Name: clinical_findings clinical_findings_pkey; Type: CONSTRAINT; Schema: eps; Owner: postgres
+--
+
+ALTER TABLE ONLY eps.clinical_findings
+    ADD CONSTRAINT clinical_findings_pkey PRIMARY KEY (f_id);
+
+
+--
+-- TOC entry 2718 (class 2606 OID 16545)
+-- Name: fees_breakup fees_pkey; Type: CONSTRAINT; Schema: eps; Owner: postgres
+--
+
+ALTER TABLE ONLY eps.fees_breakup
+    ADD CONSTRAINT fees_pkey PRIMARY KEY (f_id);
+
+
+--
+-- TOC entry 2722 (class 2606 OID 16587)
+-- Name: medicines medicine_p_key; Type: CONSTRAINT; Schema: eps; Owner: postgres
+--
+
+ALTER TABLE ONLY eps.medicines
+    ADD CONSTRAINT medicine_p_key PRIMARY KEY (medicine_name, disease_code, age_group);
+
+
+--
+-- TOC entry 2720 (class 2606 OID 16568)
+-- Name: prescription_history patient_history_pkey; Type: CONSTRAINT; Schema: eps; Owner: postgres
+--
+
+ALTER TABLE ONLY eps.prescription_history
+    ADD CONSTRAINT patient_history_pkey PRIMARY KEY (prescription_id);
+
+
+--
+-- TOC entry 2730 (class 2606 OID 16663)
+-- Name: patients patients_pkey; Type: CONSTRAINT; Schema: eps; Owner: postgres
+--
+
+ALTER TABLE ONLY eps.patients
+    ADD CONSTRAINT patients_pkey PRIMARY KEY (p_id);
+
+
+--
+-- TOC entry 2716 (class 2606 OID 16513)
+-- Name: tooth_quadrent tooth_quadrent_pkey; Type: CONSTRAINT; Schema: eps; Owner: postgres
+--
+
+ALTER TABLE ONLY eps.tooth_quadrent
+    ADD CONSTRAINT tooth_quadrent_pkey PRIMARY KEY (tooth_index);
+
+
+--
+-- TOC entry 2728 (class 2606 OID 16648)
+-- Name: treatment_plan treatment_plan_pkey; Type: CONSTRAINT; Schema: eps; Owner: postgres
+--
+
+ALTER TABLE ONLY eps.treatment_plan
+    ADD CONSTRAINT treatment_plan_pkey PRIMARY KEY (trt_id);
+
+
+--
+-- TOC entry 2736 (class 2606 OID 16642)
+-- Name: treatment_plan cf_f_key; Type: FK CONSTRAINT; Schema: eps; Owner: postgres
+--
+
+ALTER TABLE ONLY eps.treatment_plan
+    ADD CONSTRAINT cf_f_key FOREIGN KEY (clinical_finding) REFERENCES eps.clinical_findings(f_id);
+
+
+--
+-- TOC entry 2735 (class 2606 OID 16599)
+-- Name: clinical_findings clinical_findings_agegrp_f_key; Type: FK CONSTRAINT; Schema: eps; Owner: postgres
+--
+
+ALTER TABLE ONLY eps.clinical_findings
+    ADD CONSTRAINT clinical_findings_agegrp_f_key FOREIGN KEY (age_group) REFERENCES eps.age_group(group_id);
+
+
+--
+-- TOC entry 2734 (class 2606 OID 16594)
+-- Name: clinical_findings clinical_findings_f_tooth_fkey; Type: FK CONSTRAINT; Schema: eps; Owner: postgres
+--
+
+ALTER TABLE ONLY eps.clinical_findings
+    ADD CONSTRAINT clinical_findings_f_tooth_fkey FOREIGN KEY (f_tooth) REFERENCES eps.tooth_quadrent(tooth_index);
+
+
+--
+-- TOC entry 2733 (class 2606 OID 16649)
+-- Name: medicines medicine_trtmnt_plan_f_key; Type: FK CONSTRAINT; Schema: eps; Owner: postgres
+--
+
+ALTER TABLE ONLY eps.medicines
+    ADD CONSTRAINT medicine_trtmnt_plan_f_key FOREIGN KEY (treatment_id) REFERENCES eps.treatment_plan(trt_id);
+
+
+--
+-- TOC entry 2732 (class 2606 OID 16581)
+-- Name: medicines medicines_age_group_fkey; Type: FK CONSTRAINT; Schema: eps; Owner: postgres
+--
+
+ALTER TABLE ONLY eps.medicines
+    ADD CONSTRAINT medicines_age_group_fkey FOREIGN KEY (age_group) REFERENCES eps.age_group(group_id);
+
+
+--
+-- TOC entry 2731 (class 2606 OID 16664)
+-- Name: prescription_history patient_id_fkey; Type: FK CONSTRAINT; Schema: eps; Owner: postgres
+--
+
+ALTER TABLE ONLY eps.prescription_history
+    ADD CONSTRAINT patient_id_fkey FOREIGN KEY (patient_id) REFERENCES eps.patients(p_id);
+
+
+-- Completed on 2018-08-09 08:00:26
+
+--
+-- PostgreSQL database dump complete
+--
+

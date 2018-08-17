@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<!-- <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" /> -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>Remittance Portal</title>
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="all,follow" />
+
+
+<link rel="stylesheet" type="text/css" 	th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" 	th:href="@{/css/font-awesome.min.css}" />
+<link rel="stylesheet" type="text/css" 	th:href="@{/css/style.default.css}" id="theme-stylesheet" />
+<link rel="stylesheet" type="text/css" 	th:href="@{/css/formwizard.css}" />
+
+<link rel="stylesheet" th:href="@{/lib/datatable/bootstrap-3.3.4.min.css}" />
+<link rel="stylesheet" th:href="@{/lib/datatable/font-awesome.min.css}" />
+<link rel="stylesheet" th:href="@{/lib/datatable/font-awesome.css}" />
+<link rel="stylesheet" th:href="@{/lib/datatable/ultimate-datatable-3.3.1-SNAPSHOT.css}" />
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
+<link rel="stylesheet" type="text/css"	th:href="@{/css/jquery-ui.1.12.1.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/custom.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/icons.css}" />
+<link rel="shortcut icon" th:href="@{/img/favicon.ico}" />
+
+<script type="text/javascript" th:src="@{/js/fontawesome.js}"></script>
+<script type="text/javascript" th:src="@{/lib/angular-1.5.8/angular.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/angular-1.5.8/angular-cookies.min.js}"></script>	
+<script type="text/javascript" th:src="@{/lib/angular-1.5.8/angular-messages.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/chart.js/dist/Chart.js}"></script>
+<script type="text/javascript" th:src="@{/lib/angular-chart.js/dist/angular-chart.js}"></script>
+<script type="text/javascript" th:src="@{/js/chartmin.js}"></script>
+
+<script type="text/javascript" th:src="@{/js/ui-bootstrap-tpls-0.12.1.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/remittance/master.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/remittance/statementController.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/remittance/RemittanceService.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/remittance/RemittanceFactory.js}"></script>
+<script type="text/javascript" th:src="@{/lib/promise/promise-7.0.4.min.js}" ></script>
+<script type="text/javascript" th:src="@{/js/dirPagination.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-1.12.4.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-ui.1.12.1.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/remittance/dashboardController.js}"></script>
+
+
+<script type="text/javascript" th:src="@{/lib/promise/promise-7.0.4.min.js}" ></script>
+<script type="text/javascript" th:src="@{/js/dirPagination.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-1.12.4.js}"></script>
+<script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-ui.1.12.1.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.cookie.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.validate.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/chartmin.js}"></script>
+<script type="text/javascript" th:src="@{/js/front.js}"></script>
+<script type="text/javascript" th:src="@{/js/angular-sanitize.min.js}"></script>
+
+<script type="text/javascript" th:src="@{/lib/datatable/bootstrap-3.3.4.min.js}" ></script>
+<script type="text/javascript" th:src="@{/lib/datatable/ultimate-datatable-3.3.1-SNAPSHOT.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/common/jqueryCalendarConfig.js}"></script>
+<script type="text/javascript" th:src="@{/js/sha256.js}"></script>
+
+<!-- <script type="text/javascript" th:src="@{/customjs/remittance/remittanceFlowController.js}"></script> -->
+<script type="text/javascript" th:src="@{/js/bootbox.min.version-4.4.0.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/remittance/NumberOnlyDirective.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/remittance/ekycController.js}"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/2.3.1/jsencrypt.min.js"></script>
+<script type="text/javascript" th:src="@{/customjs/common/encrypt.js}"></script>
+
+<style type="text/css">
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
+.notVerified:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}
+.alert {
+    padding: 0;
+    margin-bottom: 0;
+}
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px white inset;
+}
+</style>
+
+</head>
+<body class="yFull" ng-app="masterApp" ng-controller="masterController">
+	<div >
+		<div class="page home-page">
+			<!-- Main Navbar-->
+			<!-- <div ng-include="'header'" /> -->
+			<div th:include="header::head"></div>
+			<div class="page-content d-flex align-items-stretch"
+				style="margin-top: -15px;">
+				<!-- Side Navbar -->
+				<!-- <div ng-include="'nav'" />-->
+				<div th:include="nav::navmenu"></div>
+				<div class="content-inner">
+					<!-- Page Header-->
+					<div class="container theme-showcase"
+						ng-controller="ekycController as ec" id="flowCtrl">
+						
+						<br></br>
+						<div class="dashboard-counts no-padding-bottom ng-cloak">
+							<div class="container-fluid">
+								<div class="row">
+									<div class="col-md-12">
+<div id="accordion" class="checkout">
+	<div class="checkout-step-custom">
+		<div ng-show="ec.custMobileHeader" ng-click="ec.headerControl('header')">
+			<span class="checkout-step-number">1</span>
+			<h4 class="checkout-step-title">
+				<p>Enter Customer Details</p>
+			</h4>
+		</div>
+		<div ng-show="ec.custEkycSectionHeader" ng-click="ec.headerControl('method')">
+			<hr />
+			<span class="checkout-step-number">2</span>
+			<h4 class="checkout-step-title">
+				<p>Validation Method</p>
+			</h4>
+		</div>
+		<div ng-show="ec.custEkycBioSectionHeader" ng-click="ec.headerControl('bio')">
+			<hr />
+			<span class="checkout-step-number">3</span>
+			<h4 class="checkout-step-title">
+				<p>Biometric Validation</p>
+			</h4>
+		</div>
+		<div ng-show="ec.custEkycOtpSectionHeader" ng-click="ec.headerControl('otp')">
+			<hr />
+			<span class="checkout-step-number">3</span>
+			<h4 class="checkout-step-title">
+				<p>Otp Validation</p>
+			</h4>
+		</div>
+		<div id="collapseOne" class="collapse in">
+			<form name="custMobileForm"
+				class="form-inline  center-block"
+				style="margin-top: 15px;padding-bottom:10%;" novalidate=""
+				ng-show="ec.custMobile">
+																	
+
+				<div class="form-group col-md-12"
+					ng-class="{ 'has-error' : custMobileForm.mobile.$invalid &amp;&amp; !custMobileForm.mobile.$pristine }">
+
+				<b th:inline="text" id='loginUser' class="hide-me">[[${#httpServletRequest.remoteUser}]]</b>
+				<label class="sr-only" for="mobileNo">Mobile No</label>
+					<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+						<div class="input-group-addon">+91</div>
+						<input type="text" class="form-control" id="mobile"
+							name="mobile" placeholder="Enter Mobile No"
+							ng-model="ec.mobile" maxlength="10"
+							ng-pattern="/^[123456789]\d{9}$/" required=""
+							ng-keypress="ec.ieoErrMsgView=false"  ng-keydown="ec.ieoErrMsgView=false" numbers-only=""/>
+							<!-- ng-disabled="ec.todisable"   -->
+
+					</div>
+					<button type="button" class="btn btn-indepay"
+						ng-disabled="custMobileForm.mobile.$invalid &amp;&amp; ec.isEkycEnabled"
+						ng-click="ec.getDetails()">Proceed</button>
+
+				   <p
+						ng-show="custMobileForm.mobile.$invalid &amp;&amp; !custMobileForm.mobile.$pristine"
+						class="help-block">Please enter a valid Mobile
+						number</p>
+						
+				   <p id="ieoErrMsg" class="help-block" style="color:#a94442;" ng-show="ec.ieoErrMsgView" >
+				      {{ec.errorMsg}} 
+				   </p>					
+				</div>
+			</form>
+			
+			<!-- Ekyc method selection section -->
+			<form name="custEkycForm"
+				class="form-inline panel-body center-block"
+				style="margin-top: 15px;" novalidate=""
+				ng-show="ec.custEkycSection">
+																	
+
+				<div class="form-group col-md-12"
+					ng-class="{ 'has-error' : custEkycForm.kycMethod.$invalid &amp;&amp; !custEkycForm.kycMethod.$pristine }">
+
+				<label class="sr-only" for="mobileNo">Ekyc method selection</label>
+					<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+						<select name = "kycMethod" class="form-control" style="height:3rem;" ng-model="ec.kycMethod" ng-change="ec.kycInvalidMethod = 'false'">
+	                        <option value="">Select Method</option>
+	                        <option value="bio">Biometric</option>
+	                        <option value="otp">OTP</option>
+	                    </select>
+					</div>
+					
+					
+					<!-- <span>ec.kycInvalidMethod {{ec.kycInvalidMethod}}</span> -->
+					<button type="button" class="btn btn-indepay"
+						ng-disabled="false"
+						ng-click="ec.validateKycMethod()">Proceed</button>
+
+				   <p class="help-block" style="color:#a94442;" ng-show="ec.ekycMethodErrMsgView" >
+				      {{ec.bioMethodErrorMsg}} 
+				   </p>	
+					
+				</div>
+			</form>
+			
+			<!-- Biometric section -->
+			<form name="custEkycBioSection"
+				class="form-inline panel-body center-block-custom"
+				style="margin-top: 15px;" novalidate=""
+				ng-show="ec.custEkycBioSection">
+																	
+
+				<div class="form-group col-md-12"
+					ng-class="{ 'has-error' : custEkycBioSection.aadhaarBio.$invalid &amp;&amp; !custEkycBioSection.aadhaarBio.$pristine }">
+
+					<label class="sr-only" for="mobileNo">Bio metric validation using device</label>
+					<input type="text" class="form-control" 
+							name="aadhaarBio" placeholder="Enter Aadhaar No"
+							ng-model="ec.aadhaarBio" maxlength="12" minlength="12"
+							ng-pattern="/^[123456789]\d{11}$/" required = "true" numbers-only=""/>
+					<button type="button" class="btn btn-indepay"
+						ng-disabled="custEkycBioSection.aadhaarBio.$invalid"
+						ng-click="ec.validateKycBio()">Proceed</button>
+
+					<p  ng-show="custEkycBioSection.aadhaarBio.$invalid &amp;&amp; !custEkycBioSection.aadhaarBio.$pristine"
+						class="help-block">Please enter an Aadhaar number</p>
+						
+				   <p class="help-block" style="color:#a94442;" ng-show="ec.bioErrMsgView" >
+				      {{ec.bioErrorMsg}} 
+				   </p>	
+					
+				</div>
+			</form>
+			
+			<!-- Otp section -->
+			<form name="custEkycOtpSection"
+				class="form-inline panel-body center-block"
+				style="margin-top: 15px;" novalidate=""
+				ng-show="ec.custEkycOtpSection">
+																	
+
+				<div class="form-group col-md-12"
+					ng-class="{ 'has-error' : custEkycOtpSection.aadhaarOtp.$invalid &amp;&amp; !custEkycOtpSection.aadhaarOtp.$pristine }">
+
+					<label class="sr-only" for="mobileNo">Bio metric validation using otp</label>
+					<div ng-show="ec.custEkycOtpGenerateSection">
+						<input type="text" class="form-control" 
+								name="aadhaarOtp" placeholder="Enter Aadhaar No"
+								ng-model="ec.aadhaarOtp" maxlength="12" minlength="12"
+								ng-pattern="/^[123456789]\d{11}$/" required = "true" numbers-only=""/>
+						<button type="button" class="btn btn-indepay"
+							ng-disabled="custEkycBioSection.aadhaarOtp.$invalid"
+							ng-click="ec.generateKycOtp()">Proceed</button>
+	
+						<p  ng-show="custEkycOtpSection.aadhaarOtp.$invalid &amp;&amp; !custEkycOtpSection.aadhaarOtp.$pristine"
+							class="help-block">Please enter an Aadhaar number</p>
+							
+					   <p class="help-block" style="color:#a94442;" ng-show="ec.bioErrMsgView" >
+					      {{ec.otpGenerateErrorMsg}} 
+					   </p>	
+					</div>
+					<div ng-show="ec.custEkycOtpValidateSection">
+						<input type="text" class="form-control" 
+								name="otpValue" placeholder="Enter OTP"
+								ng-model="ec.otpValue" maxlength="6" minlength="6"
+								ng-pattern="/^[0123456789]\d{5}$/" required = "true" numbers-only=""/>
+						<button type="button" class="btn btn-indepay"
+							ng-disabled="custEkycOtpSection.aadhaar.$invalid"
+							ng-click="ec.validateKycOtp()">Proceed</button>
+	
+						<p  ng-show="custEkycOtpSection.aadhaarOtp.$invalid &amp;&amp; !custEkycOtpSection.aadhaarOtp.$pristine"
+							class="help-block">Please enter the OTP</p>
+							
+					   <p class="help-block" style="color:#a94442;" ng-show="ec.bioErrMsgView" >
+					      {{ec.otpValidateErrorMsg}} 
+					   </p>	
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+									</div>
+								</div>
+							</div>
+						</div>							
+					</div>
+				</div>
+			</div>
+			<!-- <div ng-include="'footer'" /> -->
+			<div th:include="footer::foot"></div>
+		</div>
+	</div>
+</body>
+</html>

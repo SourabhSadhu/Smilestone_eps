@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<!-- <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" /> -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.springframework.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>Remittance Portal</title>
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="all,follow" />
+
+
+<link rel="stylesheet" type="text/css" 	th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" 	th:href="@{/css/font-awesome.min.css}" />
+<link rel="stylesheet" type="text/css" 	th:href="@{/css/style.default.css}" id="theme-stylesheet" />
+<link rel="stylesheet" type="text/css" 	th:href="@{/css/formwizard.css}" />
+
+<link rel="stylesheet" th:href="@{/lib/datatable/bootstrap-3.3.4.min.css}" />
+<link rel="stylesheet" th:href="@{/lib/datatable/font-awesome.min.css}" />
+<link rel="stylesheet" th:href="@{/lib/datatable/font-awesome.css}" />
+<link rel="stylesheet" th:href="@{/lib/datatable/ultimate-datatable-3.3.1-SNAPSHOT.css}" />
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
+<link rel="stylesheet" type="text/css"	th:href="@{/css/jquery-ui.1.12.1.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/custom.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/icons.css}" />
+<link rel="shortcut icon" th:href="@{/img/favicon.ico}" />
+
+<script type="text/javascript" th:src="@{/js/fontawesome.js}"></script>
+<script type="text/javascript" th:src="@{/lib/angular-1.5.8/angular.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/angular-1.5.8/angular-cookies.min.js}"></script>	
+<script type="text/javascript" th:src="@{/lib/angular-1.5.8/angular-messages.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/chart.js/dist/Chart.js}"></script>
+<script type="text/javascript" th:src="@{/lib/angular-chart.js/dist/angular-chart.js}"></script>
+<script type="text/javascript" th:src="@{/js/chartmin.js}"></script>
+
+<script type="text/javascript" th:src="@{/js/ui-bootstrap-tpls-0.12.1.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/remittance/master.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/remittance/statementController.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/remittance/RemittanceService.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/remittance/RemittanceFactory.js}"></script>
+<script type="text/javascript" th:src="@{/lib/promise/promise-7.0.4.min.js}" ></script>
+<script type="text/javascript" th:src="@{/js/dirPagination.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-1.12.4.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-ui.1.12.1.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/remittance/dashboardController.js}"></script>
+
+
+<script type="text/javascript" th:src="@{/lib/promise/promise-7.0.4.min.js}" ></script>
+<script type="text/javascript" th:src="@{/js/dirPagination.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-1.12.4.js}"></script>
+<script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-ui.1.12.1.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.cookie.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.validate.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/chartmin.js}"></script>
+<script type="text/javascript" th:src="@{/js/front.js}"></script>
+<script type="text/javascript" th:src="@{/js/angular-sanitize.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/xml2json.js}"></script>
+
+<script type="text/javascript" th:src="@{/lib/datatable/bootstrap-3.3.4.min.js}" ></script>
+<script type="text/javascript" th:src="@{/lib/datatable/ultimate-datatable-3.3.1-SNAPSHOT.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/common/jqueryCalendarConfig.js}"></script>
+<script type="text/javascript" th:src="@{/js/sha256.js}"></script>
+
+<script type="text/javascript" th:src="@{/customjs/remittance/aepsFlowController.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootbox.min.version-4.4.0.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/remittance/NumberOnlyDirective.js}"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/2.3.1/jsencrypt.min.js"></script>
+<script type="text/javascript" th:src="@{/customjs/common/encrypt.js}"></script>
+
+<style type="text/css">
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
+.notVerified:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}
+.alert {
+    padding: 0;
+    margin-bottom: 0;
+}
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px white inset;
+}
+</style>
+
+</head>
+<body class="yFull" ng-app="masterApp" ng-controller="masterController">
+	
+		<div class="page home-page">
+			<!-- Main Navbar-->
+			<!-- <div ng-include="'header'" /> -->
+			<div th:include="header::head"></div>
+			<div class="page-content d-flex align-items-stretch"
+				style="margin-top: -15px;">
+				<!-- Side Navbar -->
+				<!-- <div ng-include="'nav'" /> -->
+				<div th:include="nav::navmenu"></div>
+				<div class="content-inner">
+					<!-- Page Header-->
+					<div class="container theme-showcase"
+						ng-controller="aepsFlowController" id="flowCtrl">
+
+						<!-- ###### Code To be ADD ############ -->
+
+		<div class="dashboard-counts no-padding-bottom ng-cloak">
+		<div class="container-fluid">
+							
+		<div class="row bg-white">
+			<span>
+				<h4 class="checkout-step-title" style="margin-top: 20px; margin-left: 20px;">
+					<p>AEPS Transaction</p>
+				</h4>
+			</span>
+			
+					
+			<form name="aepsForm" class="col-md-12" style="margin-top: 20px; margin-bottom: 15px; margin-left: 40px;" novalidate="">
+			<div class="row">
+			<div class="form-group col-md-5" ng-class="{ 'has-error' : aepsForm.aadharNo.$invalid &amp;&amp; !aepsForm.aadharNo.$pristine }">
+				<label for="aadharNo">Aadhaar No<span class="required">*</span></label> 
+				<input type="text" name="aadharNo" class="form-control" ng-model="aadharNo" maxlength="12" 
+				ng-pattern="/^[0-9]\d{11}$/" numbers-only="" required="" autocomplete="off" ng-paste="$event.preventDefault()" 
+				ng-keypress="isErrorAadhaar=false"  ng-keydown="isErrorAadhaar=false"/>
+				<p ng-show="aepsForm.aadharNo.$invalid &amp;&amp; !aepsForm.aadharNo.$pristine" class="help-block">
+				Must be a valid 12 digit Aadhaar number</p>
+				<!-- error handling -->
+				<div ng-show="isErrorAadhaar" ng-init="isErrorAadhaar=false">
+					<p ng-bind="errorMsgAadhaar" style="color:#A94442;"></p>
+				</div>
+			</div>
+			</div>
+			
+			<div class="row">
+			<div class="form-group col-md-5" ng-class="{ 'has-error' : aepsForm.custMobile.$invalid &amp;&amp; !aepsForm.custMobile.$pristine }">
+				<label for="custMobile">Mobile No<span class="required">*</span></label> 
+				<input type="text" name="custMobile" class="form-control-custom" ng-model="custMobile" maxlength="10"
+				ng-pattern="/^[123456789]\d{9}$/" required="" numbers-only="" />
+				<p ng-show="aepsForm.custMobile.$invalid &amp;&amp; !aepsForm.custMobile.$pristine"
+				class="help-block">Please enter a valid Mobile number</p>
+			</div>
+			</div>
+			
+			<div class="row">
+				<div class="form-group col-md-8" ng-class="{ 'has-error' : aepsForm.beneBankName.$invalid &amp;&amp; !aepsForm.beneBankName.$pristine }">
+				<label for="beneBankName">Bank<span class="required">*</span></label> 
+				
+			<fieldset class="row">
+                       <div class="form-group">
+                         <div class="col-xs-12 col-md-12">
+                           <label class="radio-inline net-bank" ng-repeat="bank in bankLogoList" style="margin-left:10px;">
+                             <input type="radio" name="bankLogo" id="bankLogo" ng-model="bankLogo" ng-value="{{bank.bankId}}" ng-click="bankLogoChanged(bank.bankId)" />
+                             <span class="imgframe">
+                               <img alt="{{bank.bankName}}" src="data:image/jpeg;base64,{{bank.logo}}"  title="{{bank.bankName}}" width="80" height="60" />
+                             </span>
+                           </label>
+                         </div>
+                       </div>
+            </fieldset>
+            </div>
+           </div> 
+           
+           <div class="row">
+               <div class="form-group col-md-5" ng-class="{ 'has-error' : aepsForm.aepsBankName.$invalid &amp;&amp; !aepsForm.beneBankName.$pristine }">
+				<select ng-model="aepsBankName" ng-options="bank as bank.bankName for bank in bankDetailList track by bank.bankId" class="form-control" style="height: auto;" required="" ng-change="bankListChanged()">
+					<option ng-selected="false" value="">Select Bank</option>
+				</select>
+				<p ng-show="aepsForm.aepsBankName.$invalid &amp;&amp; !aepsForm.aepsBankName.$pristine" class="help-block">Bank is required.</p>
+				</div>
+            
+            			            
+            </div> 												
+				
+				
+			
+			<div class="row">
+			<div class="form-group col-md-5" ng-class="{ 'has-error' : aepsForm.transactionType.$invalid &amp;&amp; !aepsForm.transactionType.$pristine }">
+			<label for="transactionType">Transaction Type<span class="required">*</span></label></label> 
+				<select id="transactionType" name="transactionType" ng-model="transactionType" 
+				class="form-control" style="height: auto;" required="" ng-change="txnTypeChanged()">
+					<option selected="selected" value="">Select Transaction Type</option>
+					<option ng-repeat="(key, value) in transactionTypes" 
+					value="{{key}}" ng-hide="{{ key === 'MINI_STATEMENT'}}" >
+					{{value}}
+					</option>
+				</select>
+				<p ng-show="aepsForm.transactionType.$invalid &amp;&amp; !aepsForm.transactionType.$pristine"
+					class="help-block">Please select transaction type</p>
+			</div>
+			
+			
+			<div class="form-group col-md-3" ng-class="{ 'has-error' : aepsForm.amount.$invalid &amp;&amp; !aepsForm.amount.$pristine }" ng-show="isWithDrawal" ng-init="isWithDrawal=false"> 
+				<label for="amount">Amount<span class="required">*</span></label>
+					<input type="text" class="form-control" id="amount" name="amount" maxlength="6"
+					ng-model="amount" placeholder="Enter amount in &#8377;" ng-required="transactionType === 'WITHDRAWAL'" ng-pattern="/^[0-9]*$/" ng-keypress="isError=false"  ng-keydown="isError=false"/>
+					<p ng-show="aepsForm.amount.$invalid &amp;&amp; !aepsForm.amount.$pristine"
+					class="help-block">Amount must be digit</p>
+					
+					<!-- error handling -->
+					<div ng-show="isError" ng-init="isError=false">
+						<p ng-bind="errorMsg" style="color:#A94442;"></p>
+					</div>
+				
+				
+			</div>
+			
+			</div>
+			
+			
+		<div class="row">
+			<div class="form-group col-md-5" ng-class="{ 'has-error' : aepsForm.bioDeviceType.$invalid &amp;&amp; !aepsForm.bioDeviceType.$pristine }">
+			<label for="bioDeviceType">Biometric Device<span class="required">*</span></label></label> 
+				<select id="bioDeviceType" name="bioDeviceType" ng-model="bioDeviceType" 
+				class="form-control" style="height: auto;" required="" ng-change="bioDeviceChanged()">
+					<option selected="selected" value="">Select Biometric Device</option>
+					<option ng-repeat="deviceType in biometricDeviceList" value="{{deviceType.deviceCode}}">
+						{{deviceType.deviceName}}
+					</option>
+				</select>
+				<p ng-show="aepsForm.bioDeviceType.$invalid &amp;&amp; !aepsForm.bioDeviceType.$pristine"
+					class="help-block">Please select Biometric device</p>
+			</div>
+		</div>
+			
+			<div class="row">
+				<div class="col-md-offset-6" style="margin-top: 10px; margin-bottom: 10px;">
+				<button type="button" class="btn btn-indepay" ng-click="captureBiometric()"
+				ng-disabled="aepsForm.$invalid || aepsForm.$pristine">Capture<i class="fa fa-paper-plane"></i>
+				</button>
+				<button type="button" class="btn btn-indepay-info" ng-click="resetAepsForm(aepsForm)">Reset
+				<i class="fa fa-times-circle-o"></i>
+				</button>
+				</div>
+			</div>
+			
+	</form>
+	</div>
+	
+	</div>
+	</div>
+						
+
+	<!-- ####### To View mini statement modal  ####### -->
+	<!-- Modal -->
+	<div class="modal fade" id="statementModal" tabindex="-1"
+		role="dialog" aria-labelledby="statementModalLabel" aria-hidden="true"
+		data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog">
+	<div class="modal-content">
+	<!-- Modal Header -->
+	<div class="modal-header">
+	<h4 class="modal-title" id="statementModalLabel">Mini Statement Details</h4>
+	</div>
+	<!-- Modal Body -->
+	<div class="modal-body">
+
+	<form name="miniStatementForm" role="form">
+	<div id="statementPrint" class="container" >
+		<table class="table">
+        	<tr>
+          		<th>Date</th><th>Ref Id</th><th>Txn type</th><th>Txn Details</th><th>Amount</th>
+        	</tr>
+        	<tr ng-repeat="txn in transactionTypes">
+         	 	<td>{{txn.txnDate}}</td>
+         	 	<td>{{txn.refId}}</td>
+         	 	<td>{{txn.txnType}}</td>
+         	 	<td>{{txn.narration}}</td>
+         	 	<td>{{txn.amount}}</td>         	 	
+        	</tr>
+        </table>
+	</div>
+	</form>										
+										
+	</div>
+
+	<!-- Modal Footer -->
+	<div class="modal-footer">
+	<button type="button" class="btn btn-indepay"
+	ng-click="closeStatementModel()" ng-disabled="miniStatementForm.$invalid" >Ok</button>
+	<button type="button" class="btn btn-indepay"
+	ng-click="printDivData('statementPrint','Mini Statement')" ng-disabled="miniStatementForm.$invalid" >Print</button>
+	</div>
+	</div>
+	</div>
+	</div>
+	<!--  Model -->
+	<!-- ########END View mini statement modal ########### -->	
+	
+	<!-- ####### To Balance Inquiry Modal  ####### -->
+	<!-- Modal -->
+	<div class="modal fade" id="balanceInquireModal" tabindex="-1"
+		role="dialog" aria-labelledby="balanceInquireLabel" aria-hidden="true"
+		data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog">
+	<div class="modal-content">
+	<!-- Modal Header -->
+	<div class="modal-header">
+	<h4 class="modal-title" id="balanceInquireLabel">Balance Inquiry</h4>
+	</div>
+	<!-- Modal Body -->
+	<div class="modal-body">
+
+	<form name="balanceInquireForm" role="form">
+	<div id="balanceInquirePrint" class="container" >
+		<table class="table">
+        	<tr>
+          		<th>Account Type</th><th>Balance Type</th><th>Balance Indicator</th><th>Amount</th>
+        	</tr>
+        	<tr ng-repeat="balance in balanceInquire">
+         	 	<td>{{balance.accountType}}</td>
+         	 	<td>{{balance.balanceType}}</td>         	 	
+         	 	<td>{{balance.balanceIndicator}}</td>
+         	 	<td>&#8377; {{balance.amount}}</td>         	 	
+        	</tr>
+        </table>
+	</div>
+	</form>										
+										
+	</div>
+
+
+	<!-- Modal Footer -->
+	<div class="modal-footer">
+	<button type="button" class="btn btn-indepay"
+	ng-click="closeBalanceInquireModel()" ng-disabled="balanceInquireForm.$invalid" >Ok</button>
+	<button type="button" class="btn btn-indepay"
+	ng-click="printDivData('balanceInquirePrint','Balance Inquiry')" ng-disabled="balanceInquireForm.$invalid" >Print</button>
+	</div>
+	</div>
+	</div>
+	</div>
+	<!--  Model -->
+	<!-- ########END Balance Inquiry Modal ########### -->	
+	
+	
+	
+	<!-- ####### To Cash Withdrawal Modal  ####### -->
+	<!-- Modal -->
+	<div class="modal fade" id="cashWithdrawalModal" tabindex="-1"
+		role="dialog" aria-labelledby="cashWithdrawalLabel" aria-hidden="true"
+		data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog">
+	<div class="modal-content">
+	<!-- Modal Header -->
+	<div class="modal-header">
+	<h4 class="modal-title" id="cashWithdrawalLabel">Cash Withdrawal Successful</h4>
+	</div>
+	<!-- Modal Body -->
+	<div class="modal-body">
+
+	
+	
+	<!-- <form name="cashWithdrawalForm" role="form">
+	<div id="cashWithdrawalPrint" class="container" >
+		<div class="row">
+				<div class="form-group col-md-3">CustRef Id: </div>
+				<div class="form-group col-md-3">{{printCustRef}}</div>
+		</div>
+		<div class="row">
+			<div class="form-group col-md-3">Amount: </div>
+			<div class="form-group col-md-3">&#8377;{{printAmount}}</div>
+        </div>
+		<div class="row">
+               <div class="form-group col-md-3">Bank Name:</div>
+               <div class="form-group col-md-3">{{aepsBankName.bankName}}</div>
+		</div>
+		<div class="row">
+               <div class="form-group col-md-3">Bank Iin:</div>
+               <div class="form-group col-md-3">{{aepsBankName.iin}}</div>
+		</div>
+						
+	</div>	
+	</form>	 -->
+	
+	<form name="tableWithdrawalForm" role="form" ng-show="true">
+
+    						
+	<table id="tableWithdrawalPrint" class="dashboardtable"> 
+	<tbody>
+		<tr>
+			<td width="150px">CustRef Id: &nbsp;</td> 
+			<td width="250px">{{printCustRef}}</td>
+		</tr>
+		<tr><td><br></br></td></tr>		
+		<tr>
+			<td width="150px">Amount: &nbsp;</td>
+			<td width="250px">&#8377;{{printAmount}}</td>
+        </tr>
+        <tr><td><br></br></td></tr>	
+        <tr>
+            <td width="150px">Bank Name: &nbsp;</td>
+            <td width="250px">{{aepsBankName.bankName}}</td>
+		</tr>
+		<tr><td><br></br></td></tr>	
+		<tr>
+            <td width="150px">Bank Iin: &nbsp;</td> 
+            <td width="250px">{{aepsBankName.iin}}</td>
+		</tr>
+	</tbody>
+								
+	</table>	
+	</form>										
+										
+	</div>
+
+
+	<!-- Modal Footer -->
+	<div class="modal-footer">
+	<button type="button" class="btn btn-indepay"
+	ng-click="closeCashWithdrawalModel()" ng-disabled="balanceInquireForm.$invalid" >Ok</button>
+	<button type="button" class="btn btn-indepay"
+	ng-click="printDivData('tableWithdrawalPrint','Cash Withdrawal Successful')" ng-disabled="balanceInquireForm.$invalid" >Print</button>
+	</div>
+	</div>
+	</div>
+	</div>
+	<!--  Model -->
+	<!-- ########END Cash Withdrawal Modal ########### -->	
+	
+					
+						
+						
+						
+							
+
+					</div>
+				</div>
+			</div>
+			<!-- <div ng-include="'footer'" /> -->
+			<div th:include="footer::foot"></div>
+		</div>
+	</body>
+</html>

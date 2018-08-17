@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"	xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Indepay Remittance Portal</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="all,follow" />
+    
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/fontastic.css}" />
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700" />
+    <link rel="stylesheet" th:href="@{/css/style.default.css}" id="theme-stylesheet" />
+    <link rel="stylesheet" th:href="@{/css/custom.css}" />
+    <link rel="shortcut icon" th:href="@{/img/favicon.png}" />    
+    <link rel="stylesheet" th:href="@{/lib/sweetalert2/sweetalert2.min.css}" />
+    
+    <script type="text/javascript" th:src="@{/lib/angular-1.5.8/angular.min.js}"></script>
+	<script type="text/javascript" th:src="@{/lib/angular-1.5.8/angular-cookies.min.js}"></script>	
+    <script type="text/javascript" th:src="@{/lib/promise/promise-7.0.4.min.js}" ></script>
+    	
+    <script type="text/javascript" th:src="@{/customjs/remittance/RemittancePortalApp.js}"></script>
+	<script type="text/javascript" th:src="@{/customjs/remittance/RemittanceController.js}"></script>
+	<script type="text/javascript" th:src="@{/customjs/remittance/RemittanceFactory.js}"></script>
+    <script type="text/javascript" th:src="@{/lib/sweetalert2/sweetalert2.min.js}"></script>
+    
+  </head>
+  <body>
+    <div class="page login-page">
+      <div class="container d-flex align-items-center">
+        <div class="form-holder has-shadow">
+          <div class="row">
+            <!-- Logo & Information Panel-->
+            <div class="col-lg-6" style="border-right: 1px solid #250E62; ">
+              <div class="info d-flex align-items-center">
+                <div class="content">
+                <div><img class="img-responsive" src="../img/Indepay-Logo-Horizontal.png" width="180px;" height="" style="margin-left: -20px;"/>
+                </div>
+                  <div class="logo"><h1>Cash Services</h1></div>
+                  <p>Simplest way to view and manage your account.</p>
+                </div>
+              </div>
+            </div>
+            <!-- Form Panel    -->
+            <div class="col-lg-6 bg-white" >
+              <div class="form d-flex align-items-center" ng-app="remittancePortalApp">
+                <div class="content"  ng-controller="remittanceController">
+                  <form id="login-form" name="login_form" th:action="@{/remittance/login}" method="post" onsubmit="convertToHash()">
+                     <div class="form-group" >   <!-- ng-hide="validUser" -->     
+                      <input id="login-username" type="text" name="username" required="" maxlength="10" ng-pattern="/^[123456789]\d{9}$/" class="input-material" ng-model="loginId" autocomplete="off" ng-paste="$event.preventDefault()"/>
+                      <label ng-show="login_form.username.$invalid &amp;&amp; !login_form.username.$pristine &amp;&amp; !login_form.username.$error.required" class="error" ng-message="pattern">Please enter a valid Mobile number</label> 
+                      <label for="login-username" class="label-material">Enter Login Mobile Number</label>
+					</div>
+					<!--Start Remove Two-Factor Authentication  -->
+                    <!-- <div class="form-group" >ng-show="validUser"
+                      <label id="login-username-label" data-ng-model="mobile" class="label-material">{{ mobile }}</label>
+                      <label class="label-material">Mobile No</label>
+                      <input id="login-username-label" type="text" name="login-username-label" class="input-material" ng-model="mobile" readonly="readonly" />
+                    </div> -->
+                    <!--End Remove Two-Factor Authentication  -->
+                    <div class="form-group" ><!-- ng-hide="validUser" -->
+                      <!-- <input id="login-dummy1" type="password" name="login-dummy1" value="123456789" class="hide-me" autocomplete="off" />
+                      <input id="login-password" type="password" name="password" required="" class="input-material" ng-model="loginpassword" autocomplete="off" ng-paste="$event.preventDefault()" />
+                      <input id="login-dummy2" type="password" name="login-dummy2" value="123456789" class="hide-me" autocomplete="off" />
+                      <label for="login-password" class="label-material">Please Enter Password</label> -->
+                      
+                      <input id="login-dummy1" type="password" name="login-dummy1" value="123456789" class="hide-me" autocomplete="off" />
+                      <input id="login-password" type="password" name="password" required="" class="hide-me" ng-model="loginpassword" autocomplete="off" ng-paste="$event.preventDefault()" />
+                      <input id="login-password1" type="password" name="login-password1" required="" class="input-material" autocomplete="off" ng-paste="$event.preventDefault()"/>
+                      <label for="login-password1" class="label-material">Please Enter Password</label> 
+                      
+                      <small class="pull-right pt-1"><a href="#" ng-click="forgotPwd()">No worries, click here to reset your password</a></small>
+                    </div>
+                    <button class="btn btn-indepay" type="submit">Sign In</button>
+                    <!--Start Remove Two-Factor Authentication  -->
+                    <!-- <button id="login" class="btn btn-indepay" type="button" ng-click="ValidateLogin()" ng-hide="validUser">Generate OTP</button>
+                    
+                    <div class="form-group" ng-show="validUser">
+                      <input id="otpLogin" type="password" name="otpLogin" required="" class="input-material" ng-model="otpLogin" ng-paste="$event.preventDefault()"/>
+                      <label for="otpLogin" class="label-material">OTP</label>
+                      <button class="btn btn-indepay" type="submit">Sign In</button>
+                      <br/>
+                   	</div> -->                                    
+                   <!--End Remove Two-Factor Authentication  -->
+                   	<!-- </div> -->
+                    <br/>
+                    <br/>
+                   <div ng-show="showLoginError" ng-init="showLoginError=true">
+                     <div class="alert alert-danger ng-cloak" th:if="${param.error}" th:with="errorMsg=${session['SPRING_SECURITY_LAST_EXCEPTION'].message}" ><span th:text="${errorMsg}">Wrong input!</span></div>
+                    <br/>
+                    <!-- <div ng-model="showLoginError" ng-init="showLoginError=false">
+                    	<div class="alert alert-danger" ng-if="showLoginError">
+                        {{loginerror}}
+                    </div> -->
+                    
+                    </div>
+                    <br/>
+                    <div class="alert alert-info" th:if="${param.logout}">
+                        You have been logged out.
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="copyrights text-center">
+      	<p style="color:#796AEE">Powered by <a href="http://www.indepay.com/" class="external">Indepay Networks</a></p>
+        <!-- <p>Design by <a href="http://www.indepay.com/" class="external">Indepay Networks</a></p> -->
+      </div>
+    </div>
+    <!-- Javascript files-->
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
+    <script th:src="@{/js/jquery-1.12.4.js}"></script>
+    <script th:src="@{/js/popper.min.js}"> </script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/jquery.cookie.js}"> </script>
+    <script th:src="@{/js/jquery.validate.min.js}"></script>
+    <script th:src="@{/js/front.js}"></script>
+    <script th:src="@{/js/sha256.js}"></script>
+    <script type="text/javascript">
+	    function convertToHash() {
+	    	try {
+	    		document.getElementById("login-password").value = sha256(document.getElementById("login-password1").value);
+	    		document.getElementById("login-password1").value = sha256(document.getElementById("login-password1").value);
+	    		//document.getElementById("otpLogin").value = sha256(document.getElementById("otpLogin").value);
+	    	}catch(e) {
+	    		alert(e);
+	    	}
+	    }
+    </script>
+  </body>
+</html>

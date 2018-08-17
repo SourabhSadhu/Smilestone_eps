@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<!-- <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" /> -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>Remittance Portal</title>
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="all,follow" />
+
+
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/font-awesome.min.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/style.default.css}" id="theme-stylesheet" />
+
+<link rel="stylesheet"
+	th:href="@{/lib/datatable/bootstrap-3.3.4.min.css}" />
+<link rel="stylesheet" th:href="@{/lib/datatable/font-awesome.min.css}" />
+<link rel="stylesheet" th:href="@{/lib/datatable/font-awesome.css}" />
+<link rel="stylesheet"
+	th:href="@{/lib/datatable/ultimate-datatable-3.3.1-SNAPSHOT.css}" />
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/jquery-ui.1.12.1.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/custom.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/icons.css}" />
+<link rel="shortcut icon" th:href="@{/img/favicon.ico}" />
+
+<link rel="stylesheet" type="text/css"  th:href="@{/css/Exportall.min.css}" />
+
+<script type="text/javascript" th:src="@{/js/fontawesome.js}"></script>
+<script type="text/javascript"
+	th:src="@{/lib/angular-1.5.8/angular.min.js}"></script>
+<script type="text/javascript"
+	th:src="@{/lib/angular-1.5.8/angular-cookies.min.js}"></script>
+<script type="text/javascript"
+	th:src="@{/lib/angular-1.5.8/angular-messages.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/chart.js/dist/Chart.js}"></script>
+<script type="text/javascript" th:src="@{/lib/angular-chart.js/dist/angular-chart.js}"></script>
+<script type="text/javascript" th:src="@{/js/chartmin.js}"></script>
+<script type="text/javascript"
+	th:src="@{/js/ui-bootstrap-tpls-0.12.1.js}"></script>
+<script type="text/javascript"
+	th:src="@{/customjs/remittance/master.js}"></script>
+<script type="text/javascript"
+	th:src="@{/customjs/remittance/dashboardController.js}"></script>
+<script type="text/javascript"
+	th:src="@{/customjs/remittance/accountDetailsController.js}"></script>
+<script type="text/javascript"
+	th:src="@{/customjs/remittance/RemittanceService.js}"></script>
+<script type="text/javascript"
+	th:src="@{/customjs/remittance/RemittanceFactory.js}"></script>
+<script type="text/javascript"
+	th:src="@{/lib/promise/promise-7.0.4.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/dirPagination.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-1.12.4.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-ui.1.12.1.js}"></script>
+
+<script type="text/javascript" th:src="@{/lib/promise/promise-7.0.4.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/dirPagination.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-1.12.4.js}"></script>
+<script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-ui.1.12.1.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.cookie.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.validate.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/chartmin.js}"></script>
+<script type="text/javascript" th:src="@{/js/front.js}"></script>
+<script type="text/javascript" th:src="@{/js/angular-sanitize.min.js}"></script>
+
+<script type="text/javascript" th:src="@{/lib/datatable/bootstrap-3.3.4.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/datatable/ultimate-datatable-3.3.1-SNAPSHOT.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootbox.min.version-4.4.0.js}"></script>
+<script type="text/javascript" th:src="@{/js/sha256.js}"></script>
+
+<script type="text/javascript" th:src="@{/js/Exportshieldui-all.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/Exportjszip.min.js}"></script>
+
+<style type="text/css">
+.progress {
+  margin-bottom: 0;
+}
+.modal-body-pad0 {
+padding: 0;
+}
+.fa-file-excel-o, .fa-file-pdf-o {
+  font-size: 1.5em;
+}
+.col-xs-2 {
+    width: 64%;
+}
+</style>
+
+</head>
+<body class="yFull">
+	<div ng-app="masterApp" ng-controller="masterController">
+		<div class="page home-page">
+			<!-- Main Navbar-->
+			<!-- <div ng-include="'header'" /> -->
+			<div th:include="header::head"></div>
+			<div class="page-content d-flex align-items-stretch" style="margin-top: -15px;">
+				<!-- Side Navbar -->
+				<!-- <div ng-include="'nav'" /> -->
+				<div th:include="nav::navmenu"></div>
+				<div class="content-inner">
+					<div class="container theme-showcase" ng-controller="accountDetailsController" style="margin-right:auto;margin-bottom:3%;margin-left:auto;">
+
+						<!-- ###### Code To be ADD ############ -->
+						<br/>
+						<!-- ### Search ###### -->
+
+						<div class="dashboard-counts no-padding-bottom ng-cloak" ng-show="searchDiv">
+							<div class="container-fluid">
+								<div class="row bg-white has-shadow">
+									<div class="col-md-12">
+										<h3>Account Details</h3>
+									</div>
+
+									<div id="searchErrMsgDIV" ng-show="searchErrMsgDIV" class="alert alert-danger col-sm-12" align="center"> {{errorMsg}}</div>
+									<div ng-show="((searchForm.remitterMobile.$invalid &amp;&amp; !searchForm.remitterMobile.$pristine) ||
+													(searchForm.beneficiaryMobile.$invalid &amp;&amp; !searchForm.beneficiaryMobile.$pristine)) "
+										class="alert alert-danger col-sm-12" align="center">
+										Must be a valid 10 digit phone number starts with 7 or 8 or 9
+									</div>
+									
+									<form name="searchForm" id="searchForm" class="form-inline panel-body col-sm-12">
+
+										<div class="row col-sm-12">
+											<div class="form-group">
+												<label for="from">Transaction - From Date</label>
+												<input type="text" id="from" class="form-control" name="from" readonly=""/>
+											</div>
+											<div class="col-sm-2"></div>
+											<div class="form-group">
+												<label for="to">Transaction - To Date</label>
+												<input type="text" id="to" class="form-control" name="to" readonly=""/>
+											</div>
+											<div class="col-sm-2"></div>
+											<div class="form-group" style="padding-top: 16px;">
+												<button class="btn btn-indepay" style="padding: 6px 23px;"
+													ng-click="searchAccount()" ng-disabled="searchForm.$invalid">Search</button>
+													&nbsp;
+												<button type="reset" class="btn btn-indepay-info" style="padding: 6px 23px;" 
+													ng-click="searchFormReset()">RESET</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+
+						<!-- ### End Search ###### -->
+						<!-- ### data display -->
+						<!-- <br/>
+						<div class="dashboard-counts no-padding-bottom ng-cloak">
+							<div class="container-fluid">
+								<div class="row bg-white has-shadow">
+									<div class="col-md-12">
+										<label for="from">Del Number : </label> {{delNo}}<br/>
+										<label for="from">Available Balance : <i class="fa fa-inr"></i></label> {{currentBalance}}<br/>
+									</div>
+								</div>
+							</div>
+						</div> -->
+						<!-- ### data display -->
+					<div style="display:none">
+							<table id ="data">
+							<thead>
+									<tr>
+										<th>TransactionDate</th>
+										<th>ReferenceNo</th>
+										<th>CustRefId</th>
+										<th>Narration</th>
+										<th>Debit</th>
+										<th>Credit</th>
+										<th>Balance</th>
+									</tr>
+								</thead>
+								<tbody id="item">
+									<tr ng-repeat="doc in docDefinition">
+								        <td>{{doc.dateTime}}</td>
+								        <td>{{doc.refNo}}</td>
+								        <td>{{doc.custRefNo}}</td>
+								        <td>{{doc.narration}}</td>
+								        <td ng-if="doc.type == 'DEBIT'">{{doc.amount}}</td>
+								         <td ng-if="doc.type != 'DEBIT'"></td>
+								        <td ng-if="doc.type == 'CREDIT'">{{doc.amount}}</td>
+										<td ng-if="doc.type != 'CREDIT'"></td>								        
+								        <td>{{doc.balance}}</td>
+								       </tr>
+								</tbody>
+							</table>
+						</div>
+
+						<!-- ###### Data Table ###### -->
+						<br></br>
+						<div id="scrolly" class="dashboard-counts no-padding-bottom ng-cloak bg-white"
+							ng-show="dataTableDiv" style="width:auto">
+							<div class="container-fluid">
+								<div class="row">
+									<br></br>
+									<div class="row col-sm-12 col-md-12 col-lg-12">
+										<br></br>
+										<div class="container">
+											<button id="exportExcel" class="btn btn-link" title="Save As Excel"><img th:src="@{/img/excel.png}" width="30" /></button> 
+											<button id="exportButton" class="btn btn-link" title="Save As PDF"><img th:src="@{/img/pdf.png}" width="30" /></button>
+										</div>
+										<div class="col-lg-12" ultimate-datatable="accountDatatable"></div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						<!-- #### End Data Table ###### -->
+
+					</div>
+				</div>
+			</div>
+			<!-- <div ng-include="'footer'" /> -->
+			<div th:include="footer::foot"></div>
+			
+		</div>
+	</div>
+<script type="text/javascript">
+// parse the HTML table element having an id=exportTable
+
+var date = new Date();
+function pad(s) { return (s < 10) ? '0' + s : s; }
+
+var formatdate = pad(date.getDate()) +"-"+  pad(date.getMonth()+1) +"-"+ date.getFullYear()+"__"
+	 + pad(date.getHours()) +"-"+ pad(date.getMinutes()) +"-"+ pad(date.getSeconds());
+
+
+    jQuery(function ($) {
+        $("#exportButton").click(function () {
+
+        	
+        	var dataSource = shield.DataSource.create({
+        	    data: "#data",
+        	    schema: {
+        	        type: "table",
+        	        fields: {
+        	            TransactionDate: { type: String},
+        	            ReferenceNo: {type: String},
+        	            CustRefId: {type: String},
+        	            Narration: {type: String},
+        	            Debit: {type: String},
+        	            Credit: {type: String},
+        	            Balance:{type: String}
+        	            
+        	        }
+        	    }
+        	});
+            // when parsing is done, export the data to PDF
+            dataSource.read().then(function (data) {
+                var pdf = new shield.exp.PDFDocument({
+                    author: "INDEPAY",
+                    created: new Date()
+                });
+
+                pdf.addPage("a4", "potrait");
+
+                pdf.table(
+                    20,
+                    20,
+                    data,
+                    [
+                        { field: "TransactionDate", title: "Transaction Date" , width: 80 },
+                        { field: "ReferenceNo", title: "Reference No", width: 140 },
+                        { field: "CustRefId", title: "Cust RefId"},
+                        { field: "Narration", title: "Narration" },
+                        { field: "Debit", title: "Debit"},
+                        { field:"Credit", title: "Credit"},
+                        { field: "Balance", title: "Balance" }
+                    ],
+                    {
+                        margins: {
+                            top: 10,
+                            left: 10,
+                            bottom: 10,
+                            right: 10
+                        },
+                    fontSize: 8
+                    }
+                );
+                pdf.saveAs({
+                    fileName: "Indepay-Stt-" + formatdate
+                });
+            });
+        });
+    });
+    
+    jQuery(function ($) {
+        $("#exportExcel").click(function () {
+
+        	var dataSource = shield.DataSource.create({
+        	    data: "#data",
+        	    schema: {
+        	        type: "table",
+        	        fields: {
+        	            TransactionDate: { type: String},
+        	            ReferenceNo: {type: String},
+        	            CustRefId: {type: String},
+        	            Narration: {type: String},
+        	            Debit: {type: String},
+        	            Credit: {type: String},
+        	            Balance:{type: String}
+        	            
+        	        }
+        	    }
+        	});
+            // when parsing is done, export the data to Excel
+            dataSource.read().then(function (data) {
+                new shield.exp.OOXMLWorkbook({
+                    author: "Indepay",
+                    worksheets: [
+                        {
+                            name: "Transaction",
+                            rows: [
+                                {
+                                    cells: [
+                                       
+                                        {
+                                            style: {
+                                                bold: true
+                                            },
+                                            type: String,
+                                            value: "Transaction Date"
+                                        },
+                                        {
+                                            style: {
+                                                bold: true
+                                            },
+                                            type: String,
+                                            value: "Reference No"
+                                        },
+                                        {
+                                            style: {
+                                                bold: true
+                                            },
+                                            type: String,
+                                            value: "Cust RefId"
+                                        },{
+                                            style: {
+                                                bold: true
+                                            },
+                                            type: String,
+                                            value: "Narration"
+                                        },
+                                        {
+                                            style: {
+                                                bold: true
+                                            },
+                                            type: String,
+                                            value: "Debit"
+                                        },
+                                        {
+                                            style: {
+                                                bold: true
+                                            },
+                                            type: String,
+                                            value: "Credit"
+                                        },
+                                        {
+                                            style: {
+                                                bold: true
+                                            },
+                                            type: String,
+                                            value: "Balance"
+                                        }
+                                    ]
+                                }
+                            ].concat($.map(data, function(item) {
+                                return {
+                                    cells: [
+                                    	 { type: String, value: item.TransactionDate},
+                                         { type: String, value: item.ReferenceNo},
+                                         {type: String, value: item.CustRefId},
+                                         {type: String, value: item.Narration},
+                                         {type: String, value: item.Debit},
+                                         {type: String, value: item.Credit},
+                                         {type: String, value: item.Balance}
+                                        
+                                    ]
+                                };
+                            }))
+                        }
+                    ]
+                }).saveAs({
+                    fileName: "Indepay-Stt-"+formatdate
+                });
+            });
+        });
+    });
+</script> 
+</body>
+</html>

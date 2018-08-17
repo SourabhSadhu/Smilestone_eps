@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<!-- <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" /> -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>Remittance Portal</title>
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="all,follow" />
+
+
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/font-awesome.min.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/style.default.css}" id="theme-stylesheet" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/formwizard.css}" />
+
+<link rel="stylesheet"
+	th:href="@{/lib/datatable/bootstrap-3.3.4.min.css}" />
+<link rel="stylesheet" th:href="@{/lib/datatable/font-awesome.min.css}" />
+<link rel="stylesheet" th:href="@{/lib/datatable/font-awesome.css}" />
+<link rel="stylesheet"
+	th:href="@{/lib/datatable/ultimate-datatable-3.3.1-SNAPSHOT.css}" />
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/jquery-ui.1.12.1.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/custom.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/icons.css}" />
+<link rel="shortcut icon" th:href="@{/img/favicon.ico}" />
+
+<script type="text/javascript" th:src="@{/js/fontawesome.js}"></script>
+<script type="text/javascript"
+	th:src="@{/lib/angular-1.5.8/angular.min.js}"></script>
+<script type="text/javascript"
+	th:src="@{/lib/angular-1.5.8/angular-cookies.min.js}"></script>
+<script type="text/javascript"
+	th:src="@{/lib/angular-1.5.8/angular-messages.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/chart.js/dist/Chart.js}"></script>
+<script type="text/javascript"
+	th:src="@{/lib/angular-chart.js/dist/angular-chart.js}"></script>
+<script type="text/javascript" th:src="@{/js/chartmin.js}"></script>
+<script type="text/javascript"
+	th:src="@{/js/ui-bootstrap-tpls-0.12.1.js}"></script>
+<script type="text/javascript"
+	th:src="@{/customjs/remittance/master.js}"></script>
+<script type="text/javascript"
+	th:src="@{/customjs/remittance/statementController.js}"></script>
+<script type="text/javascript"
+	th:src="@{/customjs/remittance/RemittanceService.js}"></script>
+<script type="text/javascript"
+	th:src="@{/customjs/remittance/RemittanceFactory.js}"></script>
+<script type="text/javascript"
+	th:src="@{/lib/promise/promise-7.0.4.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/dirPagination.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-1.12.4.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-ui.1.12.1.js}"></script>
+<script type="text/javascript"
+	th:src="@{/customjs/remittance/dashboardController.js}"></script>
+
+
+<script type="text/javascript"
+	th:src="@{/lib/promise/promise-7.0.4.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/dirPagination.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-1.12.4.js}"></script>
+<script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-ui.1.12.1.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.cookie.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.validate.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/chartmin.js}"></script>
+<script type="text/javascript" th:src="@{/js/front.js}"></script>
+<script type="text/javascript" th:src="@{/js/angular-sanitize.min.js}"></script>
+
+<script type="text/javascript"
+	th:src="@{/lib/datatable/bootstrap-3.3.4.min.js}"></script>
+<script type="text/javascript"
+	th:src="@{/lib/datatable/ultimate-datatable-3.3.1-SNAPSHOT.js}"></script>
+<script type="text/javascript"
+	th:src="@{/customjs/common/jqueryCalendarConfig.js}"></script>
+<script type="text/javascript" th:src="@{/js/sha256.js}"></script>
+
+<script type="text/javascript"
+	th:src="@{/customjs/remittance/remittanceFlowController.js?v=1}"></script>
+<script type="text/javascript"
+	th:src="@{/js/bootbox.min.version-4.4.0.js}"></script>
+<script type="text/javascript"
+	th:src="@{/customjs/remittance/NumberOnlyDirective.js}"></script>
+
+<style type="text/css">
+[ng\:cloak], [ng-cloak], .ng-cloak {
+	display: none !important;
+}
+
+.notVerified:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+.alert {
+	padding: 0;
+	margin-bottom: 0;
+}
+
+input:-webkit-autofill {
+	-webkit-box-shadow: 0 0 0 30px white inset;
+}
+</style>
+
+</head>
+<body class="yFull" ng-app="masterApp" ng-controller="masterController">
+	<div>
+		<div class="page home-page">
+			<!-- Main Navbar-->
+			<!-- <div ng-include="'header'" /> -->
+			<div th:include="header::head"></div>
+			<div class="page-content d-flex align-items-stretch"
+				style="margin-top: -15px;">
+				<!-- Side Navbar -->
+				<!-- <div ng-include="'nav'" /> -->
+				<div th:include="nav::navmenu"></div>
+				<div class="content-inner">
+					<!-- Page Header-->
+					<div class="container theme-showcase"
+						ng-controller="remittanceFlowController" id="flowCtrl">
+
+						<!-- ###### Code To be ADD ############ -->
+
+						<!-- ### Mobile No. -->
+						<br></br>
+						<div
+							class="dashboard-counts no-padding-bottom ng-cloak container-custom">
+							<div class="container-fluid">
+								<div class="row">
+									<div class="col-md-12">
+										<div id="accordion" class="checkout">
+											<div class="checkout-step-custom-div">
+												<div ng-show="entercust" style="padding-left: 20px">
+													<h4 class="checkout-step-title">
+														<p>Enter Customer Details</p>
+													</h4>
+												</div>
+												<div style="padding-left: 10px" ng-show="checkcust">
+													<span class="checkout-step-number" style="color: green;"><i
+														class="fa fa-lg fa-check"></i></span>
+													<h4 class="checkout-step-title">
+														<p>Customer Details</p>
+													</h4>
+												</div>
+												<div id="collapseOne" class="collapse in">
+													<form name="custMobileForm" class="form-inline "
+														style="width: 100%; margin-top: 15px;" novalidate=""
+														ng-show="custMobile">
+
+
+														<div class="form-group col-md-12"
+															ng-class="{ 'has-error' : custMobileForm.mobile.$invalid &amp;&amp; !custMobileForm.mobile.$pristine }">
+
+															<b th:inline="text" id='loginUser' class="hide-me">[[${#httpServletRequest.remoteUser}]]</b>
+															<label class="sr-only" for="mobileNo">Mobile No</label>
+															<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+																<div class="input-group-addon">+91</div>
+																<input type="text" class="form-control" id="mobile"
+																	name="mobile" placeholder="Enter Mobile No"
+																	ng-model="mobile" maxlength="10"
+																	ng-pattern="/^[123456789]\d{9}$/" required=""
+																	ng-disabled="todisable"
+																	ng-keypress="ieoErrMsgView=false"
+																	ng-keydown="ieoErrMsgView=false" numbers-only="" />
+
+															</div>
+
+															<!-- <label
+																class="input-group mb-2 mr-sm-2 mb-sm-0 text-center"
+																style="padding: 0px 20px;">OR</label>
+
+															<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+																	<label for="beneAccNo">Account No<span
+																		class="required">*</span></label> 
+																		<input type="text" placeholder="Enter Account No"
+																		name="beneAcc" class="form-control"
+																		ng-model="beneAcc" maxlength="20"
+																		ng-pattern="/^[0-9]\d{2,19}$/" required=""
+																		ng-cut="$event.preventDefault()" ng-disabled="todisable"
+																		ng-copy="$event.preventDefault()" numbers-only="" />
+																</div> -->
+
+														
+															<button type="button" class="btn btn-indepay"
+																ng-disabled="custMobileForm.$invalid"
+																ng-click="getDetails()">Proceed</button>
+
+															<p
+																ng-show="custMobileForm.mobile.$invalid &amp;&amp; !custMobileForm.mobile.$pristine"
+																class="help-block">Please enter a valid Mobile
+																number</p>
+
+															<p id="ieoErrMsg" class="help-block"
+																style="color: #a94442;" ng-show="ieoErrMsgView"
+																ng-init="ieoErrMsgView=false">{{errorMsg}}</p>
+
+
+
+															<br></br> <br></br>
+														</div>
+													</form>
+													<div class="container-fluid" ng-show="addCust">
+														<div class="row bg-white">
+															<h4 style="margin-left: 20px;">Add Customer</h4>
+															<form name="addCustForm" class="col-md-12"
+																style="margin-top: 10px; margin-bottom: 50px;"
+																novalidate="">
+																<div class="row">
+																	<div class="form-group col-md-5 col-md-offset-0"
+																		ng-class="{ 'has-error' : addCustForm.firstName.$invalid &amp;&amp; !addCustForm.firstName.$pristine }">
+																		<label for="firstName">Name<span
+																			class="required">*</span></label> <input type="text"
+																			name="firstName" class="form-control"
+																			ng-pattern="/^[a-zA-Z ]+$/" ng-model="firstName"
+																			required="" ng-cut="$event.preventDefault()"
+																			ng-copy="$event.preventDefault()"
+																			ng-paste="$event.preventDefault()" />
+																		<p
+																			ng-show="addCustForm.firstName.$invalid &amp;&amp; !addCustForm.firstName.$pristine"
+																			class="help-block">The Name should contain only
+																			alphabets</p>
+																	</div>
+
+																	<div class="form-group col-md-5"
+																		ng-class="{ 'has-error' : addCustForm.dob.$invalid &amp;&amp; !addCustForm.dob.$pristine }">
+																		<label for="dob">Date of Birth<span
+																			class="required">*</span></label> <input type="text"
+																			name="dob" class="form-control" ng-model="dob"
+																			required="" id="dob" ng-readonly="true" />
+																		<p
+																			ng-show="addCustForm.dob.$invalid &amp;&amp; !addCustForm.dob.$pristine"
+																			class="help-block">Date of Birth should not be
+																			empty</p>
+																	</div>
+
+																</div>
+
+																<div class="row">
+
+																	<div class="form-group col-md-5 col-md-offset-0"
+																		ng-class="{ 'has-error' : addCustForm.pincode.$invalid &amp;&amp; !addCustForm.pincode.$pristine }">
+																		<label for="pincode">Pin Code<span
+																			class="required">*</span></label> <input type="text"
+																			name="pincode" class="form-control"
+																			ng-model="pincode" ng-pattern="/^[0-9]\d{5}$/"
+																			ng-minlength="6" maxlength="6" required=""
+																			numbers-only="" />
+																		<p
+																			ng-show="addCustForm.pincode.$invalid &amp;&amp; !addCustForm.pincode.$pristine"
+																			class="help-block">Pin Code must be of 6 digits.</p>
+																	</div>
+
+																	<!-- <div class="form-group col-md-5"
+																		ng-class="{ 'has-error' : addCustForm.aadharNo.$invalid &amp;&amp; !addCustForm.aadharNo.$pristine }">
+																		<label for="aadharNo">Aadhaar No</label> <input
+																			type="text" name="aadharNo" class="form-control"
+																			ng-model="aadharNo" maxlength="12"
+																			ng-pattern="/^[0-9]\d{11}$/" numbers-only="" />
+																		<p
+																			ng-show="addCustForm.aadharNo.$invalid &amp;&amp; !addCustForm.aadharNo.$pristine"
+																			class="help-block">Must be a valid 12 digit
+																			Aadhaar number</p>
+																	</div> -->
+																</div>
+
+																<div class="col-md-offset-9"
+																	style="margin-top: 10px; margin-bottom: 10px;">
+																	<button type="submit" class="btn btn-indepay"
+																		ng-click="initiateCustomerOTP(addCustForm)"
+																		ng-disabled="addCustForm.$invalid || addCustForm.$pristine">
+																		Register <i class="fa fa-paper-plane"></i>
+																	</button>
+																	<button type="button" class="btn btn-indepay-info"
+																		ng-click="resetForm(addCustForm)">
+																		Reset <i class="fa fa-times-circle-o"></i>
+																	</button>
+																</div>
+															</form>
+														</div>
+													</div>
+													<div ng-show="custProfile" id="showProfile"
+														style="margin-left: 50px;">
+														<div class="row">
+															<div class="col-md-4">
+																<h3 class="example">Name: {{custDetails.firstName}}
+																	{{custDetails.lastName}}</h3>
+															</div>
+															<div class="col-md-4">
+																<h3 class="example">Mobile:
+																	{{custDetails.telephone1}}</h3>
+															</div>
+															<div class="col-md-4">
+																<div
+																	class="pull-right statistic d-flex align-items-center bg-light has-shadow">
+																	<div class="icon bg-red">
+																		<i class="fa fa-tasks"></i>
+																	</div>
+																	<div class="text" style="">
+																		<small style="color: black;">Available txn
+																			Limit</small> <a href="#" ng-click="resetAvlTxnLimit();">
+																			<i class="fa fa-refresh"></i>
+																		</a> <br /> <i class="fa fa-inr"></i> {{ avlTxnLimit }} <br />
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-4" ng-show="custDetails.ekyc==true">
+															<small style="color: green;"> <i
+																class="fa fa-check-circle fa-lg"></i> <span
+																style="color: green;"> Ekyc Completed </span>
+															</small>
+														</div>
+														<div class="col-md-4"
+															ng-show="custDetails.ekyc==false &amp;&amp; isKycEnabled==true">
+															<!-- <button class="btn btn-link"
+																	ng-click="updateEKYC(custDetails.telephone1)" style="color: red;">
+																	<small style="color: red;">
+																	<i class="fa fa-times-circle fa-lg"></i></small>
+																	<span class="blink-text">Ekyc Incomplete</span>																	
+																</button> -->
+															<small style="color: red;"> <i
+																class="fa fa-times-circle fa-lg"></i></small> <a href="#"
+																ng-click="updateEKYC(custDetails.telephone1)"
+																style="color: red;"><span class="blink-text">Ekyc
+																	Incomplete</span></a>
+
+														</div>
+														<div class="col-md-4">
+															<small><button class="btn btn-link"
+																	ng-click="showAddBene()" style="padding-left: 0;">Add
+																	Beneficiary</button></small>
+														</div>
+
+													</div>
+
+												</div>
+											</div>
+
+											<div class="checkout-step-custom-two" ng-show="benehead"
+												style="margin-bottom: 100px;">
+												<div class="container-fluid" ng-show="addBene">
+													<div class="row bg-white">
+														<span class="checkout-step-number">2</span> <span
+															class="checkout-step-title"><p>Add Beneficiary</p></span>
+
+
+														<form name="addBeneForm" class="col-md-12 "
+															style="margin-top: 20px; margin-bottom: 15px; margin-left: 14px;"
+															novalidate="">
+															<div class="row">
+																<div class="form-group col-md-5"
+																	ng-class="{ 'has-error' : addBeneForm.beneName.$invalid &amp;&amp; !addBeneForm.beneName.$pristine }">
+																	<label for="beneName">Name<span
+																		class="required">*</span></label> <input type="text"
+																		name="beneName" class="form-control-custom"
+																		ng-pattern="/^[a-zA-Z ]+$/" ng-model="beneName"
+																		required="" ng-cut="$event.preventDefault()"
+																		ng-copy="$event.preventDefault()"
+																		ng-paste="$event.preventDefault()" />
+																	<p
+																		ng-show="addBeneForm.beneName.$invalid &amp;&amp; !addBeneForm.beneName.$pristine"
+																		class="help-block">Must have alphabets and space
+																		only</p>
+																</div>
+
+																<div class="form-group col-md-5 col-md-offset-1"
+																	ng-class="{ 'has-error' : addBeneForm.beneNickName.$invalid &amp;&amp; !addBeneForm.beneNickName.$pristine }">
+																	<label for="beneNickName">Nick Name</label> <input
+																		type="text" name="beneNickName"
+																		class="form-control-custom"
+																		ng-pattern="/^[a-zA-Z ]+$/" ng-model="beneNickName"
+																		ng-cut="$event.preventDefault()"
+																		ng-copy="$event.preventDefault()"
+																		ng-paste="$event.preventDefault()" />
+																	<p
+																		ng-show="addBeneForm.beneNickName.$invalid &amp;&amp; !addBeneForm.beneNickName.$pristine"
+																		class="help-block">Must have alphabets and space
+																		only</p>
+																</div>
+
+															</div>
+
+															<div class="row">
+																<div class="form-group col-md-5"
+																	ng-class="{ 'has-error' : addBeneForm.beneBankName.$invalid &amp;&amp; !addBeneForm.beneBankName.$pristine }">
+																	<label for="beneBankName">Bank</label> <select
+																		id="beneBankName" name="beneBankName"
+																		ng-model="beneBankName" class="form-control-custom"
+																		style="height: auto;">
+																		<option selected="selected" value="">Select
+																			Bank</option>
+																		<option ng-repeat="bank in bankDetailList"
+																			value="{{bank.bankId}}_{{bank.defaultIfsc}}_{{bank.bankName}}">{{bank.bankName}}</option>
+																	</select>
+																	<p
+																		ng-show="addBeneForm.beneBankName.$invalid &amp;&amp; !addBeneForm.beneBankName.$pristine"
+																		class="help-block">Bank is required.</p>
+																</div>
+																<div class="form-group col-md-5 col-md-offset-1"
+																	ng-class="{ 'has-error' : addBeneForm.beneIfsc.$invalid &amp;&amp; !addBeneForm.beneIfsc.$pristine }">
+																	<div class="row col-sm-12">
+																		<div class="row col-sm-10">
+																			<label for="beneIfsc">IFSC Code<span
+																				class="required">*</span></label> <input type="text"
+																				name="beneIfsc" id="beneIfsc"
+																				class="form-control-custom" ng-model="beneIfsc"
+																				ng-minlength="11" maxlength="11" required=""
+																				ng-disabled="!beneBankName" />
+																		</div>
+																		<div class="row col-sm-2">
+																			<button class="btn btn-indepay"
+																				style="margin-left: 2px; margin-top: 21px;"
+																				ng-click="searchIFSC()" ng-disabled="!beneBankName">Search</button>
+																		</div>
+																	</div>
+																	<p ng-show="addBeneForm.beneIfsc.$error.minlength"
+																		class="help-block">Please enter Valid IFSC code</p>
+																</div>
+															</div>
+
+															<div class="row">
+																<div class="form-group col-md-5"
+																	ng-class="{ 'has-error' : addBeneForm.beneAccNo.$invalid &amp;&amp; !addBeneForm.beneAccNo.$pristine }">
+																	<label for="beneAccNo">Account No<span
+																		class="required">*</span></label> <input type="text"
+																		name="beneAccNo" class="form-control-custom"
+																		ng-model="beneAccNo" maxlength="20"
+																		ng-pattern="/^[0-9]\d{2,19}$/" required=""
+																		ng-cut="$event.preventDefault()"
+																		ng-copy="$event.preventDefault()" numbers-only="" />
+																	<p
+																		ng-show="addBeneForm.beneAccNo.$invalid &amp;&amp; !addBeneForm.beneAccNo.$pristine"
+																		class="help-block">Min 3 digits valid account
+																		number</p>
+																</div>
+																<div class="form-group col-md-5 col-md-offset-1"
+																	ng-class="{ 'has-error' : addBeneForm.reBeneAccNo.$invalid &amp;&amp; !addBeneForm.reBeneAccNo.$pristine }">
+																	<label for="reBeneAccNo">Re-enter Account No<span
+																		class="required">*</span></label> <input type="text"
+																		name="reBeneAccNo" class="form-control-custom"
+																		ng-model="reBeneAccNo" maxlength="20" required=""
+																		ng-pattern="beneAccNo"
+																		ng-paste="$event.preventDefault()" numbers-only="" />
+																	<p
+																		ng-show="addBeneForm.reBeneAccNo.$invalid &amp;&amp; !addBeneForm.reBeneAccNo.$pristine"
+																		class="help-block">Re-entered account number
+																		mis-match</p>
+																</div>
+
+															</div>
+
+															<div class="row">
+																<div class="form-group col-md-5"
+																	ng-class="{ 'has-error' : addBeneForm.beneMobile.$invalid &amp;&amp; !addBeneForm.beneMobile.$pristine }">
+																	<label for="beneMobile">Mobile No<span
+																		class="required">*</span></label> <input type="text"
+																		name="beneMobile" class="form-control-custom"
+																		ng-model="beneMobile" maxlength="10"
+																		ng-pattern="/^[123456789]\d{9}$/" required=""
+																		numbers-only="" />
+																	<p
+																		ng-show="addBeneForm.beneMobile.$invalid &amp;&amp; !addBeneForm.beneMobile.$pristine"
+																		class="help-block">Please enter a valid Mobile
+																		number</p>
+																</div>
+																<!-- <div class="form-group col-md-5 col-md-offset-1"
+																			ng-class="{ 'has-error' : addBeneForm.pinCode.$invalid &amp;&amp; !addBeneForm.pinCode.$pristine }">
+																			<label for="pinCode">Pin Code<span class="required">*</span></label>
+																			<input type="text" name="pinCode" class="form-control"
+																				ng-model="pinCode" ng-pattern="/^[0-9]\d{5}$/"
+																				ng-minlength="6" maxlength="6" required="" />
+																			<p
+																				ng-show="addBeneForm.pinCode.$invalid &amp;&amp; !addBeneForm.pinCode.$pristine"
+																				class="help-block">PinCode must be of 6 digits.</p>
+																		</div> -->
+															</div>
+
+															<div class="col-md-offset-9"
+																style="margin-top: 10px; margin-bottom: 10px;">
+																<button type="button" class="btn btn-indepay"
+																	ng-click="addBeneficiary(custDetails.customerId, addBeneForm)"
+																	ng-disabled="addBeneForm.$invalid || addBeneForm.$pristine">
+																	Add <i class="fa fa-paper-plane"></i>
+																</button>
+																<button type="button" class="btn btn-indepay-info"
+																	ng-click="resetBeneForm(addBeneForm)">
+																	Reset <i class="fa fa-times-circle-o"></i>
+																</button>
+															</div>
+														</form>
+													</div>
+												</div>
+
+												<span ng-show="addBene" class="checkout-step-number">3</span>
+												<span ng-hide="addBene" class="checkout-step-number">2</span>
+												<span><h4 class="checkout-step-title">
+														<p>Beneficiary List</p>
+													</h4></span>
+
+												<div id="collapseTwo" class="panel-collapse">
+													<div class="checkout-step-body-custom">
+
+														<!-- Show Customer Profile End -->
+
+														<br />
+														<!-- Add Beneficiary -->
+
+
+														<!-- Add Beneficiary End -->
+
+
+														<!-- Show Beneficiary Profile -->
+														<div ng-show="beneProfile">
+															<div class="row">
+																<div class="col-lg-12">
+																	<input type="text" ng-model="search"
+																		class="input-material large"
+																		placeholder="Search By Name, Mobile Number, Account Number" />
+
+																	<input type="text" ng-model="search"
+																		class="input-material small"
+																		placeholder="Name,Mobile,Account No." />
+
+
+																</div>
+															</div>
+															<br />
+															<div ng-repeat="(key,bene) in beneList | filter:search"
+																class="list-group">
+																<div class="alert">
+																	<a
+																		class="list-group-item list-group-item-action flex-column align-items-start">
+																		<div class="d-flex w-100 justify-content-between">
+																			<h4 class="mb-1">
+																				<span ng-if="bene.verifiedAccName!=null || bene.verifiedAccName != ''"> {{bene.verifiedAccName}}</span>
+																				<span ng-if="bene.verifiedAccName==null || bene.verifiedAccName == ''"> {{bene.beneName}}</span>
+																				<small ng-model="beneId"
+																					ng-show="bene.status=='ACTIVE'"
+																					style="color: green;"> <i
+																					class="fa fa-check-circle fa-lg"></i>
+																				</small> <small ng-model="beneId"
+																					ng-show="bene.status=='NOT VERIFIED'"
+																					class="notVerified" style="color: red;"
+																					ng-click="reverifyOtp(bene.beneId)">Not
+																					Verified <i class="fa fa-times-circle fa-lg"></i>
+																				</small> <small ng-model="beneId"
+																					ng-show="bene.status=='DISABLE'"
+																					style="color: #aaa;">DISABLE <i
+																					class="fa fa-check-circle fa-lg"></i>
+																				</small> <small ng-model="beneId"
+																					ng-show="bene.accountValidationStatus==false &amp;&amp; bene.accountValidationInProg==false" class="notVerified"
+																					ng-click="verifyAccount(bene,false)" style="color: red;"> Verify Account <i
+																					class="fa fa-times-circle fa-lg"></i>
+																				</small> <small ng-model="beneId"
+																					ng-show="bene.accountValidationStatus==true"
+																					style="color: green;"> Account Verified <i
+																					class="fa fa-check-circle fa-lg"></i>
+																				</small> <small ng-model="beneId"
+																					ng-show="bene.accountValidationStatus==false &amp;&amp; bene.accountValidationInProg==true"
+																					style="color: grey;"> Account Verification In-Progress <i
+																					class="fa fa-times-circle fa-lg"></i>
+																				</small>
+																			</h4>
+																			<small ng-click="deleteBeneOTP(bene.beneId)"
+																				style="cursor: pointer;" aria-label="close">
+																				<i class="icon icon-close fa-2x"></i>
+																			</small>
+																		</div>
+																		<form name="remittance">
+																			<div class="mb-1 col-md-8" style="padding-left: 0;">
+																				Mobile: {{bene.mobile}} | Account No:
+																				{{bene.accountNo}} <span
+																					ng-if="bene.beneBankName!=null">,
+																					{{bene.beneBankName}}</span> <span
+																					ng-if="bene.beneNickName!=null">| Nick Name:
+																					{{bene.beneNickName}}</span> | IFSC: {{bene.ifscCode}}
+																			</div>
+
+																			<div
+																				ng-class="{ 'has-error' : remittance.amount.$invalid &amp;&amp; !remittance.amount.$pristine }"
+																				class="col-md-4 input-group mb-2 mr-sm-2 mb-sm-0">
+																				<input type="text" class="form-control"
+																					id="amount_{{bene.beneId}}" name="amount"
+																					ng-model="remitAmount" placeholder="Enter Amount"
+																					required="" maxlength="6"
+																					ng-pattern="/^[1-9]\d{1,5}$/"
+																					ng-disabled="bene.status=='DISABLE' || bene.status=='NOT VERIFIED'"
+																					style="border-radius: 4px; border-color: skyblue" />
+																				<div class="input-group-addon"
+																					style="background: transparent; border: transparent;">
+																					<button type="button" id="{{key}}"
+																						ng-click="inititateRemittance(remitAmount, bene.beneId, key)"
+																						ng-disabled="remittance.$invalid"
+																						ng-show="bene.status=='ACTIVE'"
+																						style="background: transparent; border: transparent;">
+																						<i class="icon icon-paper-airplane fa-2x"
+																							style="cursor: pointer; color: #2A2377; margin-top: -7px;"></i>
+																					</button>
+																					<button type="button"
+																						ng-show="bene.status=='DISABLE'"
+																						style="background: transparent; border: transparent;">
+																						<i class="icon icon-paper-airplane fa-2x"
+																							style="cursor: not-allowed; color: #aaa; margin-top: -7px;"></i>
+																					</button>
+																					<button type="button"
+																						ng-show="bene.status=='NOT VERIFIED'"
+																						style="background: transparent; border: transparent;">
+																						<i class="icon icon-paper-airplane fa-2x"
+																							style="cursor: not-allowed; color: #aaa; margin-top: -7px;"></i>
+																					</button>
+																				</div>
+																			</div>
+																			<p
+																				ng-show=" remittance.amount.$invalid &amp;&amp; !remittance.amount.$pristine"
+																				class="help-block col-md-offset-8"
+																				style="color: #a94442">Enter Valid Amount</p>
+																		</form> <!-- <small>Pin Code: {{bene.pinCode}}</small> -->
+																	</a>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+						<!-- ### Mobile No. -->
+
+						<!-- Add Customer -->
+						<div class="dashboard-counts no-padding-bottom" ng-show="addCust">
+
+						</div>
+						<!-- Add Customer End -->
+
+						<!-- Show Customer Profile -->
+						<!-- Show Beneficiary Profile End -->
+						<!-- ################## -->
+
+						<!-- #########For IFSC code search############## -->
+						<!-- Modal -->
+						<div class="modal" id="ifscModalForm" tabindex="-1" role="dialog"
+							aria-labelledby="ifscModalLabel" aria-hidden="true"
+							data-backdrop="static" data-keyboard="false">
+							<div class="modal-dialog modal-lg">
+								<div class="custom-modal-content-custom">
+									<!-- Modal Header -->
+									<div class="modal-header">
+										<h4 class="modal-title" id="ifscModalLabel">Search IFSC</h4>
+										<button type="button" class="close" data-dismiss="modal">&times;</button>
+									</div>
+
+
+									<!-- Modal Body -->
+									<div class="modal-body">
+
+										<form name="bankIfscForm" role="form">
+
+											<!-- ################## -->
+											<div class="row">
+												<div class="form-group col-md-4">
+													<label for="beneMobile">Bank Name</label> <input
+														type="text" name="bankName" class="form-control"
+														ng-model="bnkName" readonly="" />
+												</div>
+												<div class="form-group col-md-4">
+													<label for="beneMobile">Branch Name</label> <input
+														type="text" name="branchName" class="form-control"
+														ng-model="bnkBranch" />
+												</div>
+												<div class="form-group col-md-4">
+													<label for="beneMobile">Bank IFSC</label> <input
+														type="text" name="bankIfsc" class="form-control"
+														ng-model="bnkIfsc" maxlength="11" />
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="form-group col-md-4">
+													<label for="beneMobile">City</label> <input type="text"
+														name="bankCity" class="form-control" ng-model="bnkCity" />
+												</div>
+												<div class="form-group col-md-4">
+													<label for="beneMobile">District</label> <input type="text"
+														name="bankDistrict" class="form-control"
+														ng-model="bnkDistrict" />
+												</div>
+												<div class="form-group col-md-4">
+													<label for="beneMobile">State</label> <input type="text"
+														name="bankState" class="form-control" ng-model="bnkState" />
+												</div>
+											</div>
+
+											<div class="container-fluid" ng-show="ifscList">
+												<div id="searchErrMsgDIV" ng-show="searchErrMsgDIV"
+													class="alert alert-danger col-sm-12" align="center">
+													{{errorMsg}}</div>
+											</div>
+
+
+
+											<!-- ################## -->
+										</form>
+
+										<div class="modal-footer">
+											<button class="btn btn-indepay" ng-click="searchIfscList()"
+												ng-disabled="bankIfscForm.$invalid">Search</button>
+											<button type="reset" class="btn btn-indepay-info"
+												ng-click="ifscFormReset()">Reset</button>
+										</div>
+
+										<!-- ###### Data Table ###### -->
+										<div id="scrollCustom"
+											class="dashboard-counts no-padding-bottom ng-cloak"
+											ng-show="dataTableDiv">
+											<div class="container-fluid">
+												<div class="row bg-white">
+													<br></br>
+													<div class="row col-sm-12 col-md-12 col-lg-12">
+														<br></br>
+														<div class="col-lg-12" ultimate-datatable="ifscDatatable"></div>
+													</div>
+
+												</div>
+											</div>
+										</div>
+										<!-- #### End Data Table ###### -->
+
+
+
+									</div>
+
+
+
+									<!-- Modal Footer -->
+
+								</div>
+							</div>
+						</div>
+						<!--  Model -->
+						<!-- ##########For IFSC code search############# -->
+						<!-- Statement Print -->
+						<div ng-show="false">
+							<div id="printable">
+								<br /> <br />
+								<div class="row">
+									<div class="col-sm-12">
+
+										<div class="">
+											<img class="img-responsive"
+												src="../img/Indepay-Logo-Horizontal(1).png" width="200px;"
+												height="" />
+										</div>
+									</div>
+									<br /> <br />
+									<div class="col-md-6">
+										<code>Fund Transfer Receipt</code>
+									</div>
+								</div>
+								<br></br>
+								<div class="row">
+									<div class="col-sm-6" style="width: 60%">
+
+										<strong>Sender Info</strong>
+										<table>
+											<tbody>
+												<tr class="panel-heading">
+													<td width="100px">Name</td>
+													<td width="250px">{{printData.remittance.remitterName}}</td>
+												</tr>
+												<tr>
+													<td width="100px">Mobile No</td>
+													<td width="250px">{{printData.remittance.remitterMobileNumber}}</td>
+												</tr>
+
+											</tbody>
+										</table>
+										<br /> <strong>Transaction Info</strong>
+										<table>
+											<tbody>
+												<tr class="panel-heading">
+													<td width="150px">Transaction Info</td>
+													<td width="250px">Cash Service</td>
+												</tr>
+												<tr>
+													<td width="150px">Transaction Status</td>
+													<td width="250px">{{printData.customStatus}}</td>
+												</tr>
+												<tr>
+													<td width="150px">RRN/UTR No.</td>
+													<td width="250px">manualReplace.remittance.retrievedRRN</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+
+									<div class="col-sm-6" style="width: 40%; text-align: left;">
+
+										<strong>Beneficiary Info</strong>
+										<table>
+											<tbody>
+												<tr class="panel-heading">
+													<td width="200px">Name</td>
+													<td width="250px">{{printData.remittance.beneficiaryName}}</td>
+												</tr>
+												<tr>
+													<td width="200px">Mobile No</td>
+													<td width="250px">{{printData.remittance.beneMobileNumber}}</td>
+												</tr>
+												<tr>
+													<td width="200px">Bank Name</td>
+													<!-- Dirty way: manually replace the below string from js -->
+													<td width="250px">manualReplace.remittance.retrievedBankName</td>
+												</tr>
+												<tr>
+													<td width="200px">A/c No</td>
+													<td width="250px">{{printData.accountNumber}}</td>
+												</tr>
+												<tr>
+													<td width="200px">IFSC Code</td>
+													<td width="250px">{{printData.ifsc}}</td>
+												</tr>
+
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-6" style="width: 60%">
+										<br /> <br />
+										<table class="table-bordered" width="95%">
+											<thead>
+												<tr class="panel-heading">
+													<td width="130px"><strong>Reference ID</strong></td>
+													<td width="130px"><strong>Txn Amount</strong></td>
+													<td width="130px"><strong>Date</strong></td>
+													<td width="100px"><strong>Time</strong></td>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td width="130px">{{ printData.custRefId }}</td>
+													<td width="130px">{{(printData.tranAmount)/100.0}}</td>
+													<td width="130px">{{printData.creationTime |
+														date:'dd-MMM-yyyy'}}</td>
+													<td width="100px">{{printData.creationTime |
+														date:'HH:mm:ss'}}</td>
+												</tr>
+
+											</tbody>
+										</table>
+									</div>
+
+									<div class="col-sm-6" style="width: 40%; text-align: left;">
+										<br /> <strong>Agent Details</strong>
+										<table>
+											<tbody>
+												<tr class="panel-heading">
+													<td width="200px">Mobile No</td>
+													<td width="250px">{{user.mobileNumber}}</td>
+												</tr>
+												<tr>
+													<td width="200px">Agent Name</td>
+													<td width="250px">{{user.firstName}}</td>
+												</tr>
+												<tr>
+													<td width="200px">Est. Name</td>
+													<td width="250px">{{user.shopName}}</td>
+												</tr>
+												<tr>
+													<td width="200px">Address</td>
+													<td width="250px">{{user.address}}</td>
+												</tr>
+
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="col-sm-12" style="padding-left: 0px;">
+									<br /> <br />
+									<p style="margin: 0;">
+										<strong>Note:</strong> This is a computer-generated receipt
+										and do not need signature
+									</p>
+									<p ng-show="printData.customStatus == 'In Progress*'">
+										<strong>*</strong> The Transaction has been initiated and the
+										status will be updated in 5 working days.
+									</p>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<!-- <div ng-include="'footer'" /> -->
+			<div th:include="footer::foot"></div>
+		</div>
+	</div>
+</body>
+</html>

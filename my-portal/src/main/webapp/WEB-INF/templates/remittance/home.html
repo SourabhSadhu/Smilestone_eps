@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<!-- <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" /> -->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>Remittance Portal</title>
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+<meta name="robots" content="all,follow" />
+
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.default.css}" id="theme-stylesheet" />
+
+<link rel="stylesheet" th:href="@{/lib/datatable/bootstrap-3.3.4.min.css}" />
+<link rel="stylesheet" th:href="@{/lib/datatable/font-awesome.min.css}" />
+<link rel="stylesheet" th:href="@{/lib/datatable/font-awesome.css}" />
+<link rel="stylesheet" th:href="@{/lib/datatable/ultimate-datatable-3.3.1-SNAPSHOT.css}" />
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/jquery-ui.1.12.1.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/custom.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/icons.css}" />
+<link rel="shortcut icon" th:href="@{/img/favicon.ico}" />
+
+<script type="text/javascript" th:src="@{/js/fontawesome.js}"></script>
+<script type="text/javascript" th:src="@{/lib/angular-1.5.8/angular.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/angular-1.5.8/angular-cookies.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/angular-1.5.8/angular-messages.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/chart.js/dist/Chart.js}"></script>
+<script type="text/javascript" th:src="@{/lib/angular-chart.js/dist/angular-chart.js}"></script>
+
+<script type="text/javascript" th:src="@{/js/ui-bootstrap-tpls-0.12.1.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/remittance/master.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/remittance/dashboardController.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/remittance/RemittanceService.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/remittance/RemittanceFactory.js}"></script>
+<script type="text/javascript" th:src="@{/lib/promise/promise-7.0.4.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/dirPagination.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-1.12.4.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-ui.1.12.1.js}"></script>
+<script type="text/javascript" th:src="@{/js/angular-sanitize.min.js}"></script>
+
+<script type="text/javascript" th:src="@{/lib/promise/promise-7.0.4.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/dirPagination.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-1.12.4.js}"></script>
+<script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-ui.1.12.1.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.cookie.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.validate.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/chartmin.js}"></script>
+<script type="text/javascript" th:src="@{/js/front.js}"></script>
+
+<script type="text/javascript" th:src="@{/lib/datatable/bootstrap-3.3.4.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/datatable/ultimate-datatable-3.3.1-SNAPSHOT.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootbox.min.version-4.4.0.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/common/jqueryCalendarConfig.js}"></script>
+<script th:src="@{/js/sha256.js}"></script>
+
+<style type="text/css">
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
+h1 {
+    position: relative;
+    margin-top: 20px;
+  }
+  
+  h1.one {
+    margin-top: 20px;
+    text-align:center;
+    margin-bottom: 0;
+    margin-bottom: 20px;
+  }
+  
+  h1.one:before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    top: 64%;
+    z-index: 1;
+    background: linear-gradient(to right, transparent, #818078, transparent);
+  }
+  
+  h1.one span {
+    background: #eef5fa;
+    padding: 0 20px;
+    position: relative;
+    z-index: 5;
+    font-size: 20px;
+    color:slategrey;
+  }
+  .chart{
+	max-width: 100%;
+	height: auto;
+  }
+  tr{
+  	cursor : auto;
+  }
+  td, th {
+    border: 1px solid #fff;
+    text-align: left;
+    background-color:#fff;
+	}
+
+tr:nth-child(even) {
+    background-color: #fff;
+}
+
+.menu{
+    padding-left: 5px;
+    padding-right: 1px;
+}
+</style>
+</head>
+<body class="yFull">
+	<div ng-app="masterApp" ng-controller="masterController">
+		<div class="page home-page">
+			<!-- Main Navbar-->
+			<!-- <div ng-include="'header'" /> -->
+			<div th:include="header::head"></div>
+			<div class="page-content d-flex align-items-stretch" style="margin-top:-15px;">
+				<!-- Side Navbar -->
+				<!-- <div ng-include="'nav'" /> -->
+				<div th:include="nav::navmenu"></div>
+				<div class="content-inner">
+					<!-- Page Header-->
+					
+					<div class="container theme-showcase" ng-controller="dashboardController as dsCtrl">
+					<section class="dashboard-counts no-padding-bottom">
+            <div class="container-fluid">
+              <div class="row bg-white has-shadow">
+                <!-- Item -->
+                <div class="col-xl-3 col-sm-6 menu">
+                  <div class="item d-flex align-items-center">
+                    <div class="icon bg-violet"><i class="fa fa-tasks"></i></div>
+                    <div class="title">
+                     <table>
+						  <tr>
+						    <th colspan="3" class="title"><b>Successful Transactions</b></th>
+						   </tr>
+						  <tr>
+						  	<td>Amount (FTD)</td>
+						    <td>:&nbsp;&nbsp;&nbsp;</td>
+						    <td><i class="fa fa-inr"></i> {{ txnftd.successTransactionAmount | currency:"":2}}</td>
+						  </tr>
+						  <tr>
+						  	<td>Count (FTD)</td>
+						    <td>:&nbsp;&nbsp;&nbsp;</td>
+						    <td>{{ txnftd.successTransactionCount }}</td>
+						  </tr>
+						  <tr>
+						  	<td>Amount (MTD)</td>
+						    <td>:&nbsp;&nbsp;&nbsp;</td>
+						    <td><i class="fa fa-inr"></i> {{ txn.successTransactionAmount | currency:"":2}}</td>
+						  </tr>
+						 <tr>
+						  	<td>Count (MTD)</td>
+						    <td>:&nbsp;&nbsp;&nbsp;</td>
+						    <td>{{ txn.successTransactionCount }}</td>
+						  </tr>
+						</table>
+					</div>
+                  </div>
+                </div>
+                <!-- Item -->
+                <div class="col-xl-3 col-sm-6 clearfix menu">
+                  <div class="item d-flex align-items-center">
+                    <div class="icon bg-red"><i class="fa fa-tasks"></i></div>
+                  <!--   <div class="title"><b>Failed Transactions</b> -->
+                     <div class="title">
+                     <table>
+						  <tr>
+						    <th colspan="3" class="title"><b>Failed Transactions</b></th>
+						   </tr>
+						  <tr>
+						  	<td>Amount (FTD)</td>
+						    <td>:&nbsp;&nbsp;&nbsp;</td>
+						    <td><i class="fa fa-inr"></i> {{ txnftd.failureTransactionAmount | currency:"":2 }}</td>
+						  </tr>
+						  <tr>
+						  	<td>Count (FTD)</td>
+						    <td>:&nbsp;&nbsp;&nbsp;</td>
+						    <td>{{ txnftd.failureTransactionCount }}</td>
+						  </tr>
+						  <tr>
+						  	<td>Amount (MTD)</td>
+						    <td>:&nbsp;&nbsp;&nbsp;</td>
+						    <td><i class="fa fa-inr"></i> {{ txn.failureTransactionAmount | currency:"":2 }}</td>
+						  </tr>
+						 <tr>
+						  	<td>Count (MTD)</td>
+						    <td>:&nbsp;&nbsp;&nbsp;</td>
+						    <td>{{ txn.failureTransactionCount }}</td>
+						  </tr>
+						</table>
+                        <!-- Amount(FTD):&nbsp; <span class="pull-right"><i class="fa fa-inr"></i> {{ txnftd.failureTransactionAmount | currency:"":2 }}</span><br/>
+						Count(FTD) :&nbsp; <span class="pull-right">{{ txnftd.failureTransactionCount }}</span> <br>
+						Amount(MTD):&nbsp;<span class="pull-right"> <i class="fa fa-inr"></i> {{ txn.failureTransactionAmount | currency:"":2 }}</span><br/>
+						Count(MTD) :&nbsp;<span class="pull-right">{{ txn.failureTransactionCount }}</span> -->
+					</div>
+                  </div>
+                </div>
+                <!-- Item -->
+                <div class="col-xl-3 col-sm-6 clearfix menu">
+                  <div class="item d-flex align-items-center">
+                    <div class="icon bg-orange"><i class="fa fa-tasks"></i></div>
+                    <div class="title">
+                     <table>
+						  <tr>
+						    <th colspan="3" class="title"><b>In-Progress Transactions</b></th>
+						   </tr>
+						  <tr>
+						  	<td>Amount (FTD)</td>
+						    <td>:&nbsp;&nbsp;&nbsp;</td>
+						    <td><i class="fa fa-inr"></i> {{ txnftd.inProgTransactionAmount | currency:"":2}}</td>
+						  </tr>
+						  <tr>
+						  	<td>Count (FTD)</td>
+						    <td>:&nbsp;&nbsp;&nbsp;</td>
+						    <td>{{ txnftd.inProgTransactionCount }}</td>
+						  </tr>
+						  <tr>
+						  	<td>Amount (MTD)</td>
+						    <td>:&nbsp;&nbsp;&nbsp;</td>
+						    <td><i class="fa fa-inr"></i> {{ txn.inProgTransactionAmount | currency:"":2}}</td>
+						  </tr>
+						 <tr>
+						  	<td>Count (MTD)</td>
+						    <td>:&nbsp;&nbsp;&nbsp;</td>
+						    <td>{{ txn.inProgTransactionCount }}</td>
+						  </tr>
+						</table>
+					</div>
+                </div>
+              </div>
+              <!-- Item -->
+                <div class="col-xl-3 col-sm-6 clearfix menu">
+                  <div class="item d-flex align-items-center"  style="padding:3.4rem 0;">
+                    <div class="icon bg-green"><i class="fa fa-calendar-o"></i></div>
+                     <div class="title">
+                     <table>
+						  <tr>
+						    <th colspan="3" class="title"><b>Commission</b></th>
+						   </tr>
+						  <tr>
+						  	<td>Amount (FTD)</td>
+						    <td>:&nbsp;&nbsp;&nbsp;</td>
+						    <td><i class="fa fa-inr"></i> {{ commissionftd | currency:"":2}}</td>
+						  </tr>
+						  <tr>
+						  	<td>Amount (MTD)</td>
+						    <td>:&nbsp;&nbsp;&nbsp;</td>
+						    <td><i class="fa fa-inr"></i> {{ commission | currency:"":2}}</td>
+						  </tr>
+						 </table>
+					</div>
+                </div>
+                </div>
+            </div>
+            </div>
+          </section>
+						<!-- ################## -->
+						<!-- <br></br> -->
+					<!-- <h1 class="one"><span>For the Day</span></h1>
+						#### Txn Details #####
+						<div class="row">
+							Statistics
+							<div class="statistics col-md-3">
+								<div class="statistic d-flex align-items-center bg-white has-shadow" 
+									style="height: 140px;margin-top: 30px;">
+									<div class="icon bg-green"><i class="fa fa-tasks"></i></div>
+									<div class="text">
+										<b>Successful Transactions</b><br/>
+										Amount: <i class="fa fa-inr"></i> {{ txnftd.successTransactionAmount | currency:"":2}}<br/>
+										Count : {{ txnftd.successTransactionCount }} <br></br>
+									</div>
+								</div>
+							</div>
+							<div class="statistics col-md-3">
+							<div class="statistic d-flex align-items-center bg-white has-shadow" 
+								style="height: 140px;margin-top: 30px;">
+									<div class="icon bg-red"><i class="fa fa-tasks"></i></div>
+									<div class="text">
+										<b>Failed Transaction</b><br/>
+										Amount: <i class="fa fa-inr"></i> {{ txnftd.failureTransactionAmount | currency:"":2 }}<br/>
+										Count : {{ txnftd.failureTransactionCount }}
+									</div>
+								</div>
+							</div>
+							
+							<div class="statistics col-md-3">
+								<div class="statistic d-flex align-items-center bg-white has-shadow" 
+									style="height: 140px;margin-top: 30px;">
+									<div class="icon bg-violet"><i class="fa fa-calendar-o"></i></div>
+									<div class="text">
+									<b>Commission</b><br/>
+										<i class="fa fa-inr"></i> {{ commissionftd | currency:"":2}}
+									</div>
+								</div>
+							</div>
+							
+							<div class="statistics col-md-3">
+								<div class="statistic d-flex align-items-center bg-white has-shadow" 
+									style="height: 140px;margin-top: 30px;">
+									<div class="icon bg-orange"><i class="fa fa-tasks"></i></div>
+									<div class="text">
+										<b>In Progress Transaction</b><br/>
+										Amount: <i class="fa fa-inr"></i> {{ txnftd.inProgTransactionAmount | currency:"":2}}<br/>
+										Count : {{ txnftd.inProgTransactionCount }}
+										
+									</div>
+								</div>
+							</div>
+						</div>
+						#### Txn Details #####
+						<h1 class="one"><span>Month Till Date</span></h1>
+						<div class="row">
+							<div class="statistics col-md-3">
+								<div class="statistic d-flex align-items-center bg-white has-shadow" 
+									style="height: 140px;margin-top: 30px;">
+									<div class="icon bg-green"><i class="fa fa-tasks"></i></div>
+									<div class="text">
+										<b>Successful Transactions</b><br/>
+										Amount: <i class="fa fa-inr"></i> {{ txn.successTransactionAmount | currency:"":2}}<br/>
+										Count : {{ txn.successTransactionCount }} <br></br>
+									</div>
+								</div>
+							</div>
+							<div class="statistics col-md-3">
+							<div class="statistic d-flex align-items-center bg-white has-shadow" 
+								style="margin-top: 30px;height: 140px;">
+									<div class="icon bg-red"><i class="fa fa-tasks"></i></div>
+									<div class="text">
+										<b>Failed Transaction</b><br/>
+										Amount: <i class="fa fa-inr"></i> {{ txn.failureTransactionAmount | currency:"":2 }}<br/>
+										Count : {{ txn.failureTransactionCount }}
+									</div>
+								</div>
+							</div>
+							
+							<div class="statistics col-md-3">
+								<div class="statistic d-flex align-items-center bg-white has-shadow" 
+									style="height: 140px;margin-top: 30px;">
+									<div class="icon bg-violet"><i class="fa fa-calendar-o"></i></div>
+									<div class="text">
+									<b>Commission</b><br/>
+										<i class="fa fa-inr"></i> {{ commission | currency:"":2}}
+									</div>
+								</div>
+							</div>
+							
+							<div class="statistics col-md-3">
+								<div class="statistic d-flex align-items-center bg-white has-shadow" 
+									style="height: 140px;margin-top: 30px;">
+									<div class="icon bg-orange"><i class="fa fa-tasks"></i></div>
+									<div class="text">
+										<b>In Progress Transaction</b><br/>
+										Amount: <i class="fa fa-inr"></i> {{ txn.inProgTransactionAmount | currency:"":2}}<br/>
+										Count : {{ txn.inProgTransactionCount }}
+										
+									</div>
+								</div>
+							</div>
+						</div> -->
+						
+						<!-- Chart Start -->
+						<!-- #### Txn Details ##### -->
+						<h1 class="one"><span>Transaction Analysis</span></h1>
+						<div class="row">
+							<div class="col-lg-6">
+								<div class="line-chart-example card">
+									<div class="card-header d-flex align-items-center">
+										<h3 class="h4">Daily Purchase Chart</h3>
+									</div>
+									<div class="card-body">
+										<canvas id="line" class="chart chart-line"
+											chart-data="dailyPurchaseData"
+											chart-labels="dailyPurchaseLabels"
+											chart-options="dailyPurchaseOptions"
+											chart-dataset-override="datasetOverride"
+											chart-click="onClick">
+					 				</canvas>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6">
+								<div class="line-chart-example card">
+									<div class="card-header d-flex align-items-center">
+										<h3 class="h4">Sales Summary or Throughput Chart</h3>
+									</div>
+									<div class="card-body">
+										<canvas id="line" class="chart chart-line"
+											chart-data="salesSummaryData"
+											chart-labels="salesSummaryLabels"
+											chart-options="salesSummaryOptions"
+											chart-dataset-override="datasetOverride"
+											chart-click="onClick">
+					 				</canvas>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6">
+								<div class="pie-chart-example card">
+									<div class="card-header d-flex align-items-center">
+										<h3 class="h4">Daily Transaction Chart</h3>
+									</div>
+									<div class="card-body">
+										<canvas id="pie" class="chart chart-pie"
+											chart-data="pieChartData" chart-labels="pieChartLabels"
+											chart-options="ftdCountOptions">
+										 </canvas>
+									</div>
+								</div>
+							</div>
+							</div>
+						<!-- Chart End -->
+						<!-- #### Commission/Earnings Ends ##### -->
+						
+						<br></br>
+						<!-- Panel Start -->
+						<!-- <div class="statistic d-flex align-items-center bg-white has-shadow">	
+						
+							<div class="container">
+						          <div class="row">
+							          <div class="col-md-4">
+						          		<div class="icon bg-orange">
+											<i class="fa fa-paper-plane-o"></i>
+										</div>
+									  </div>
+									  <div class="col-md-4">
+						          		<h3 class="text-center offset-1"> Transaction Details </h3>
+									  </div>
+									  <div class="col-md-4">
+									   `<a href="#" ng-click="txnReset()" class="pull-right"> 
+									    <img src="../img/refresh.png" height="15" width="15" /></a>
+									  </div>									
+						          </div>
+						          <br/>
+						          <br/>
+						          	Row Start
+					                <div class="row">
+					                	<div class="statistics col-md-4 ">
+											<div class="statistic d-flex align-items-center bg-white has-shadow">
+												
+												<div class="text">Successful Transaction <br></br> 
+												<small>Amount :</small> 
+												<img src="../img/rupee.png" height="10" width="12" /> 
+												{{txn.successTransactionAmount }}<br></br> 
+												<small>Count :</small> {{ txn.successTransactionCount}} <br></br>
+												</div>			
+											</div>
+										</div>
+										
+										<div class="statistics col-md-4 ">
+											<div class="statistic d-flex align-items-center bg-white has-shadow">											
+												<div class="text">
+													Failure Transaction <br></br> 
+													<small>Amount :</small> 
+													<img src="../img/rupee.png" height="10" width="12" />
+													{{txn.failureTransactionAmount }} <br></br> 
+													<small>Count :</small> 
+													{{ txn.failureTransactionCount}} <br></br>
+												</div>									
+			
+											</div>
+										</div>
+					                
+					                	<div class="statistics col-md-4 ">
+											<div class="statistic d-flex align-items-center bg-white has-shadow" style="padding-left: 10px;">
+												<div class="text">
+													In-progress Transaction <br></br> 
+													<small>Amount :</small> 
+													<img src="../img/rupee.png" height="10" width="12" />
+													{{txn.inProgTransactionAmount }} <br></br> 
+													<small>Count :</small>
+													{{ txn.inProgTransactionCount}} <br></br>
+												</div>											
+											</div>
+										</div>
+					                
+					                </div>
+					                Row End
+						     </div>							
+						</div> -->
+						<!-- Panel End -->	
+							<!-- #### Txn Details ##### -->		
+							
+				
+
+						<!-- ####### For Change password @ first time log in ####### -->
+
+						<!-- Modal -->
+						<div class="modal fade" id="myModalForm" tabindex="-1"
+							role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+							data-backdrop="static" data-keyboard="false">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<!-- Modal Header -->
+									<div class="modal-header">
+										<h4 class="modal-title" id="myModalLabel">Change Password</h4>
+									</div>
+
+									<!-- Modal Body -->
+									<div class="modal-body">
+
+										<form name="changePassword" role="form">
+											<div class="form-group">
+												<label for="newPassword">New Password</label> <input
+													type="password" class="form-control" id="newPassword"
+													name="newPassword" placeholder="New Password"
+													ng-pattern="/^(?=.*[A-Za-z])(?=.*\d)(?=.*[0-9])[A-Za-z\d$]{6,10}$/"
+													ng-model="newPassword" required="" maxlength="10"></input> <br />
+												<div ng-messages="changePassword.newPassword.$error"
+													ng-show="changePassword.newPassword.$dirty">
+													<div ng-message="pattern">Password should be alphanumeric and 6 to 10 characters in length</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="confirmPassword">Confirm Password</label> <input
+													type="password" class="form-control" id="confirmPassword"
+													name="confirmPassword" placeholder="Confirm Password"
+													ng-model="confirmPassword" ng-pattern="newPassword" required="" maxlength="10"></input>
+												<br /> <span ng-hide="changePassword.confirmPassword.$pristine || changePassword.confirmPassword.$valid">Passwords
+													does not match</span>
+											</div>
+										</form>										
+										<form id="logOut" th:action="@{/remittance/logout}" method="post">
+											
+										</form>	
+									</div>
+
+									<!-- Modal Footer -->
+									<div class="modal-footer">
+										<button type="button" class="btn btn-indepay"
+											ng-click="updatePassword()" ng-disabled="changePassword.$invalid" >Submit</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--  Model -->
+						<!-- ########END Change Password ########### -->
+					</div>
+					</div>
+				</div>
+			<!-- <div ng-include="'footer'"></div> -->
+			<div th:include="footer::foot"></div>
+		</div>
+	</div>
+</body>
+</html>

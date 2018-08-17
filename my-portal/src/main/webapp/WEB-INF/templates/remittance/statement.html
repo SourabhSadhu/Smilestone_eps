@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<!-- <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" /> -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>Remittance Portal</title>
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="all,follow" />
+
+
+<link rel="stylesheet" type="text/css" 	th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" 	th:href="@{/css/font-awesome.min.css}" />
+<link rel="stylesheet" type="text/css" 	th:href="@{/css/style.default.css?v=1.0}" id="theme-stylesheet" />
+<link rel="stylesheet" type="text/css"  th:href="@{/css/Exportall.min.css}" />
+
+<link rel="stylesheet" th:href="@{/lib/datatable/bootstrap-3.3.4.min.css}" />
+<link rel="stylesheet" th:href="@{/lib/datatable/font-awesome.min.css}" />
+<link rel="stylesheet" th:href="@{/lib/datatable/font-awesome.css}" />
+<link rel="stylesheet" th:href="@{/lib/datatable/ultimate-datatable-3.3.1-SNAPSHOT.css}" />
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css?v=1.0}" />
+<link rel="stylesheet" type="text/css"	th:href="@{/css/jquery-ui.1.12.1.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/custom.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/icons.css}" />
+<link rel="shortcut icon" th:href="@{/img/favicon.ico}" />
+
+<script type="text/javascript" th:src="@{/js/fontawesome.js}"></script>
+<script type="text/javascript" th:src="@{/lib/angular-1.5.8/angular.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/angular-1.5.8/angular-cookies.min.js}"></script>	
+<script type="text/javascript" th:src="@{/lib/angular-1.5.8/angular-messages.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/chart.js/dist/Chart.js}"></script>
+<script type="text/javascript" th:src="@{/lib/angular-chart.js/dist/angular-chart.js}"></script>
+<script type="text/javascript" th:src="@{/js/chartmin.js}"></script>
+
+<script type="text/javascript" th:src="@{/js/ui-bootstrap-tpls-0.12.1.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/remittance/master.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/remittance/dashboardController.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/remittance/statementController.js?v=1}"></script>
+<script type="text/javascript" th:src="@{/customjs/remittance/RemittanceService.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/remittance/RemittanceFactory.js}"></script>
+<script type="text/javascript" th:src="@{/lib/promise/promise-7.0.4.min.js}" ></script>
+<script type="text/javascript" th:src="@{/js/dirPagination.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-1.12.4.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-ui.1.12.1.js}"></script>
+<script type="text/javascript" th:src="@{/js/Exportshieldui-all.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/Exportjszip.min.js}"></script>
+
+<script type="text/javascript" th:src="@{/lib/promise/promise-7.0.4.min.js}" ></script>
+<script type="text/javascript" th:src="@{/js/dirPagination.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-1.12.4.js}"></script>
+<script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-ui.1.12.1.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.cookie.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.validate.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/front.js}"></script>
+<script type="text/javascript" th:src="@{/js/angular-sanitize.min.js}"></script>
+
+<script type="text/javascript" th:src="@{/lib/datatable/bootstrap-3.3.4.min.js}" ></script>
+<script type="text/javascript" th:src="@{/lib/datatable/ultimate-datatable-3.3.1-SNAPSHOT.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/common/jqueryCalendarConfig.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootbox.min.version-4.4.0.js}"></script>
+<script type="text/javascript" th:src="@{/js/sha256.js}"></script>
+
+<style type="text/css">
+.col-xs-2 {
+    width: 64%;
+}
+.progress {
+	margin-bottom: 0;
+}
+.modal-body-pad0 {
+	padding: 0;
+}
+.fa-file-excel-o, .fa-file-pdf-o {
+	font-size: 1.5em;
+}
+.form-control[readonly] {
+	background-color: #fff;
+}
+</style>
+
+</head>
+<body class="yFull">
+	<div ng-app="masterApp" ng-controller="masterController">
+		<div class="page home-page">
+		<!-- Main Navbar-->
+			<!-- <div ng-include="'header'" /> -->
+			<div th:include="header::head"></div>
+			<div class="page-content d-flex align-items-stretch" style="margin-top: -15px;">
+				<!-- Side Navbar -->
+				<!-- <div ng-include="'nav'"/> -->
+				<div th:include="nav::navmenu"></div>
+				<div class="content-inner">
+					<div class="container theme-showcase" ng-controller="statementController" style="margin-right:auto;margin-left:auto;margin-bottom:3%;">
+
+						<!-- ###### Code To be ADD ############ -->
+						<br/>
+						<!-- ### Search ###### -->
+
+						<div class="dashboard-counts no-padding-bottom ng-cloak" ng-show="searchDiv">
+							<div class="container-fluid">
+								<div class="row bg-white has-shadow">
+									<div class="col-md-12">
+										<h3>Statement</h3>
+									</div>
+
+									<div id="searchErrMsgDIV" ng-show="searchErrMsgDIV"
+										class="alert alert-danger col-sm-12" align="center">
+										{{errorMsg}}</div>
+									<div ng-show="((searchForm.remitterMobile.$invalid &amp;&amp; !searchForm.remitterMobile.$pristine) ||
+													(searchForm.beneficiaryMobile.$invalid &amp;&amp; !searchForm.beneficiaryMobile.$pristine)) "
+										class="alert alert-danger col-sm-12" align="center">
+										Must be a valid 10 digit phone number starts with 7 or 8 or 9
+									</div>
+									
+									<form name="searchForm" id="searchForm" class="col-sm-12 ng-pristine ng-valid">
+
+										<div class="form-row">
+											<div class="form-group col-lg-3">
+												<label for="txnType">Transaction Type</label>
+												<select id="txnType" name="txnType" ng-model="txnType" ng-change="checkType(txnType)" class="form-control"
+													style="height: auto;">
+													<option selected="selected" value="">Select Type</option>
+													<option value="CASH_PICKUP">Cash Pickup</option>
+													<option value="REMITTANCE_CASH_TO_ACCOUNT">Cash	Service</option>
+													<option value="PURCHASE_LIMIT">Purchase Limit</option>
+												</select>
+											</div>
+											<div class="col-lg-1"></div>
+											<div class="form-group col-lg-3"
+												ng-class="{ 'has-error' : searchForm.remitterMobile.$invalid &amp;&amp; !searchForm.remitterMobile.$pristine }">
+												<label for="remitterMobile">Remitter Mobile No</label>
+												<input type="text" name="remitterMobile" id="remitterMobile"
+													class="form-control" ng-model="remitterMobile" maxlength="10" ng-pattern="/^[123456789]\d{9}$/" />
+											</div>
+											<div class="col-lg-1"></div>
+											<div class="form-group col-lg-3"
+												ng-class="{ 'has-error' : searchForm.beneficiaryMobile.$invalid &amp;&amp; !searchForm.beneficiaryMobile.$pristine }">
+												<label for="beneficiaryMobile">BeneficiaryMobile No</label>
+												<input type="text" name="beneficiaryMobile" id="beneficiaryMobile" class="form-control"
+													ng-model="beneficiaryMobile" maxlength="10" ng-pattern="/^[123456789]\d{9}$/" />
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="form-group col-lg-3">
+												<label for="from">Transaction - From Date</label>
+												<input type="text" id="from" class="form-control" name="from" readonly=""/>
+											</div>
+											<div class="col-lg-1"></div>
+											<div class="form-group col-lg-3">
+												<label for="to">Transaction - To Date</label>
+												<input type="text" id="to" class="form-control" name="to" readonly=""/>
+											</div>
+											<div class="col-lg-1"></div>
+											<div class="form-group col-lg-3" style="padding-top: 24px;">
+												<button id="search" class="btn btn-indepay col-sm-5" ng-click="searchTxns()" ng-disabled="searchForm.$invalid" 
+													style="padding: 6px 25px;">Search</button>
+												<div class="col-sm-2"></div>
+												<button type="reset" class="btn btn-indepay-info col-sm-5" ng-click="searchFormReset()" 
+													style="padding: 6px 25px;">RESET</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+
+						<!-- ### End Search ###### -->
+						<div style="display:none">
+							<table id ="data">
+							<thead>
+									<tr>
+										<th>Type</th>
+										<th>TransactionDate</th>
+										<th>ReferenceID</th>
+										<th>RemitterName</th>
+										<th>RemitterMobile</th>
+										<th>AccountNumber</th>
+										<th>BeneficiaryName</th>
+										<th>BeneficiaryMobile</th>
+										<th>NetAmount</th>
+										<th>GrossAmount</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody id="item">
+									<tr ng-repeat="doc in docDefinition">
+								        <td>{{doc.customType}}</td>
+								        <td>{{doc.creationTime}}</td>
+								        <td>{{doc.custRefId}}</td>
+								        <td>{{doc.remittance.remitterName}}</td>
+								        <td>{{doc.remittance.remitterMobileNumber}}</td>
+								        <td>{{doc.customerPaymentInstrument}}</td>
+								        <td>{{doc.remittance.beneficiaryName}}</td>
+								        <td>{{doc.remittance.beneMobileNumber}}</td>
+								        <td>{{doc.tranAmount}}</td>
+								        <td>{{doc.grossTranAmount}}</td>
+								        <td>{{doc.customStatus}}</td>
+								    </tr>
+								</tbody>
+							</table>
+						</div>
+
+						<!-- ###### Data Table ###### -->
+						<br/>
+						<div id="scrolly" class="dashboard-counts no-padding-bottom ng-cloak bg-white"
+							ng-show="dataTableDiv" style="width:auto">
+							<div class="container-fluid">
+								<div class="row">
+									<br></br>
+									<div class="row col-sm-12 col-md-12 col-lg-12">
+										<br/>
+										<div class="container">
+											<button id="exportExcel" class="btn btn-link" title="Save As Excel"><img th:src="@{/img/excel.png}" width="30" /></button> 
+											<button id="exportButton" class="btn btn-link" title="Save As PDF"><img th:src="@{/img/pdf.png}" width="30" /></button>
+										</div>
+										<div class="col-lg-12" ultimate-datatable="statementDatatable"></div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						<!-- #### End Data Table ###### -->
+
+						<!-- ####### Print Statement Page ####### -->
+
+						<div class="dashboard-counts no-padding-bottom ng-cloak"
+							ng-show="printFormDiv">
+							<div class="container-fluid">
+								<div class="row bg-white has-shadow">
+
+									<form name="printForm" class="form-inline panel-body col-md-12">
+										<div id="printable" style="width: 100%">
+											<br/>
+											<br/>
+											<div class="row">
+												<div class="col-sm-12">
+
+													<div class="">
+														<img class="img-responsive"
+															src="../img/Indepay-Logo-Horizontal(1).png" width="200px;"
+															height="" />
+													</div>
+												</div>
+												<br/><br/>
+												<div class="col-md-6"><code>Fund Transfer Receipt</code></div>
+											</div>
+											<br></br>
+				<div class="row">
+    			<div class="col-sm-6">
+    				<!-- <address>
+    				<strong>Sender Info:</strong><br/>
+    					Name:    <strong>{{printData.remittance.remitterName}}</strong><br/>
+    					Mobile: <strong>{{printData.remittance.remitterMobileNumber}}</strong><br/>
+    					<br/>
+    					<strong>Transaction Info:</strong><br/>
+    					Transaction Type: <strong>{{printData.customType}}</strong><br/>
+    					Transaction Status: <strong>{{printData.customStatus}}</strong>
+    				</address> -->
+    				<strong>Sender Info</strong>
+    				<table>
+    				<tbody>
+                                <tr class="panel-heading">
+        							<td width="100px">Name</td>
+        							<td width="250px">{{printData.remittance.remitterName}}</td>
+                                </tr>
+    							<tr>
+    								<td width="100px">Mobile No</td>
+    								<td width="250px">{{printData.remittance.remitterMobileNumber}}</td>
+    								</tr>
+            
+    						</tbody>
+    				</table>
+    				<br/>
+    				<strong>Transaction Info</strong>
+    				<table>
+    				<tbody>
+    						  <tr class="panel-heading">
+        							<td width="150px">Transaction Info</td>
+        							<td width="250px">{{printData.customType}}</td>
+                                </tr>
+    							<tr>
+    								<td width="150px">Transaction Status</td>
+    								<td width="250px">{{printData.customStatus}}</td>
+    								</tr>
+            					<tr>
+    								<td width="150px">RRN/UTR No.</td>
+    								<td width="250px">{{rrn}}</td>
+    								</tr>
+    						</tbody>
+    				</table>
+    			</div>
+    			<!-- <div class="col-sm-6" style="width:10%">
+    				
+    			</div> -->
+    			<div class="col-sm-6" style="text-align:left;">
+    				<!-- <address>
+        			<strong>Beneficiary Info:</strong><br/>
+    					Name: <strong>{{printData.remittance.beneficiaryName}}</strong><br/>
+    					Mobile No: <strong>{{printData.remittance.beneMobileNumber}}</strong><br/>
+    					Bank Name: <strong>Apt. 4B</strong><br/>
+    					A/c no: <strong>789456132665</strong><br/>
+    					IFSC Code: <strong>SBIN0000001</strong><br/>
+    				</address> -->
+    				<strong>Beneficiary Info</strong>
+    				<table>
+    				<tbody>
+    						<tr class="panel-heading">
+        							<td width="200px">Name</td>
+        							<td width="250px">{{printData.remittance.beneficiaryName}}</td>
+                                </tr>
+    							<tr>
+    								<td width="200px">Mobile No</td>
+    								<td width="250px">{{printData.remittance.beneMobileNumber}}</td>
+    								</tr>
+    								<tr>
+    								<td width="200px">Bank Name</td>
+    								<td width="250px">{{bankName}}</td>
+    								</tr>
+    								<tr>
+    								<td width="200px">A/c No</td>
+    								<td width="250px">{{printData.accountNumber}}</td>
+    								</tr>
+    								<tr>
+    								<td width="200px">IFSC Code</td>
+    								<td width="250px">{{printData.ifsc}}</td>
+    								</tr>
+            
+    						</tbody>
+    				</table>
+    			</div>
+    		</div>
+    		<div class="row">
+    			<div class="col-sm-6">
+    			<br/><br/>
+    				<table class="table-bordered" width="95%">
+    						<thead>
+                                <tr class="panel-heading">
+        							<td width="130px"><strong>Reference ID</strong></td>
+        							<td width="130px"><strong>Txn Amount</strong></td>
+        							<td width="130px"><strong>Date</strong></td>
+        							<td width="100px"><strong>Time</strong></td>
+                                </tr>
+    						</thead>
+    						<tbody>
+    							<tr>
+    								<td width="130px">{{printData.custRefId }}</td>
+    								<td width="130px">{{printData.tranAmount}}</td>
+    								<td width="130px">{{printData.creationTime.split(" ")[0]}}</td>
+    								<td width="100px">{{printData.creationTime.split(" ")[1]}}</td>
+    							</tr>
+            
+    						</tbody>
+    					</table>
+    			</div>
+    			
+    			<div class="col-sm-6" style="text-align:left;">
+    			<br/>
+    				<strong>Agent Details</strong>
+    				<table>
+    				<tbody>
+                                <tr class="panel-heading">
+        							<td width="200px">Mobile No</td>
+        							<td width="250px">{{user.mobileNumber}}</td>
+                                </tr>
+    							<tr>
+    								<td width="200px">Agent Name</td>
+    								<td width="250px">{{user.firstName}}</td>
+    								</tr>
+    								<tr>
+    								<td width="200px">Est. Name</td>
+    								<td width="250px">{{user.shopName}}</td>
+    								</tr>
+    								<tr>
+    								<td width="200px">Address</td>
+    								<td width="250px">{{user.address}}</td>
+    								</tr>
+    								
+    						</tbody>
+    				</table>
+    			</div>
+    		</div>
+    		<div class="col-sm-12" style="padding-left:0px;">
+    		<br/><br/>
+    		<p style="margin:0;"><strong>Note:</strong> This is a computer-generated receipt and do not need signature</p>
+    		<p ng-show="printData.customStatus == 'In Progress*'"><strong>*</strong> The Transaction has been initiated and the status will be updated in 5 working days.</p>
+    		</div>
+    		
+    			
+										</div>
+									</form>
+									<br />
+									<div class="row col-sm-12">
+										<div class="col-sm-4" style="margin-bottom: 25%;margin-left:20%;">
+											<button type="button" class="btn btn-indepay pull-left"
+												ng-click="dataPrint();">Print</button>&nbsp;&nbsp;
+										<!-- </div> -->
+										<!-- <div class="col-sm-4"> -->
+											<button class="btn btn-indepay-info"
+												onclick="location.href='./statement'">Back</button>
+											<br></br>
+										</div>
+										<br/><br/>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- ### Print Statement Page -->
+
+						<!-- ################## -->
+					</div>
+				</div>
+			</div>
+			<div th:include="footer::foot"></div>
+		</div>
+	</div>
+	<script type="text/javascript">
+	
+
+	
+    // parse the HTML table element having an id=exportTable
+   
+    var date = new Date();
+    function pad(s) { return (s < 10) ? '0' + s : s; }
+    var formatdate = pad(date.getDate()) +"-"+  pad(date.getMonth()+1) +"-"+ date.getFullYear()+"__"
+    	 + pad(date.getHours()) +"-"+ pad(date.getMinutes()) +"-"+ pad(date.getSeconds());
+    
+	jQuery(function ($) {
+        $("#exportButton").click(function () {
+        	
+        	 var dataSource = shield.DataSource.create({
+        	        data: "#data",
+        	        schema: {
+        	            type: "table",
+        	            fields: {
+        	                Type: { type: String },
+        	                TransactionDate: { type: String},
+        	                ReferenceID: {type: String},
+        	                RemitterName: {type: String},
+        	                RemitterMobile: {type: String},
+        	                AccountNumber: {type: String},
+        	                BeneficiaryName: {type: String},
+        	                BeneficiaryMobile:{type: String},
+        	                NetAmount: {type: String},
+        	                GrossAmount:{type: String},
+        	                Status:{type: String}
+        	            }
+        	        }
+        	    });
+        	 
+            // when parsing is done, export the data to PDF
+            dataSource.read().then(function (data) {
+                var pdf = new shield.exp.PDFDocument({
+                    author: "INDEPAY",
+                    created: new Date()
+                });
+
+                pdf.addPage("a4", "landscape");
+
+                pdf.table(
+                    20,
+                    20,
+                    data,
+                    [
+                        { field: "Type", title: "Type", width: 60 },
+                        { field: "TransactionDate", title: "Transaction Date" } ,
+                        { field: "ReferenceID", title: "Reference ID" },
+                        { field: "RemitterName", title: "Remitter Name"},
+                        { field: "RemitterMobile", title: "Remitter Mobile" },
+                        { field: "AccountNumber", title: "Account Number", width: 110},
+                        { field: "BeneficiaryName", title: "Beneficiary Name", width: 80},
+                        { field: "BeneficiaryMobile", title: "Beneficiary Mobile" },
+                        { field: "NetAmount", title: "Net Amount" },
+                        { field: "GrossAmount", title: "Gross Amount"},
+                        { field: "Status", title: "Status", width: 120}
+                    ],
+                    {
+                        margins: {
+                            top: 10,
+                            left: 10,
+                            bottom: 10,
+                            right: 10
+                        },
+                    fontSize: 8
+                    }
+                );
+                pdf.saveAs({
+                    fileName: "Indepay-Txn-" + formatdate
+                });
+            });
+        });
+    });
+   
+	jQuery(function ($) {
+        $("#exportExcel").click(function () {
+
+        	 var dataSource = shield.DataSource.create({
+        	        data: "#data",
+        	        schema: {
+        	            type: "table",
+        	            fields: {
+        	                Type: { type: String },
+        	                TransactionDate: { type: String},
+        	                ReferenceID: {type: String},
+        	                RemitterName: {type: String},
+        	                RemitterMobile: {type: String},
+        	                AccountNumber: {type: String},
+        	                BeneficiaryName: {type: String},
+        	                BeneficiaryMobile:{type: String},
+        	                NetAmount: {type: String},
+        	                GrossAmount:{type: String},
+        	                Status:{type: String}
+        	            }
+        	        }
+        	    });
+        	
+        	
+            // when parsing is done, export the data to Excel
+            dataSource.read().then(function (data) {
+                new shield.exp.OOXMLWorkbook({
+                    author: "Indepay",
+                    worksheets: [
+                        {
+                            name: "Transaction",
+                            rows: [
+                                {
+                                    cells: [
+                                        {
+                                             style: {
+                                                bold: true
+                                            },
+                                            type: String,
+                                            value: "Type"
+                                        },
+                                        {
+                                            style: {
+                                                bold: true
+                                            },
+                                            type: String,
+                                            value: "Transaction Date"
+                                        },
+                                        {
+                                            style: {
+                                                bold: true
+                                            },
+                                            type: String,
+                                            value: "Reference ID"
+                                        },
+                                        {
+                                            style: {
+                                                bold: true
+                                            },
+                                            type: String,
+                                            value: "Remitter Name"
+                                        },{
+                                            style: {
+                                                bold: true
+                                            },
+                                            type: String,
+                                            value: "Remitter Mobile"
+                                        },
+                                        {
+                                            style: {
+                                                bold: true
+                                            },
+                                            type: String,
+                                            value: "Account Number"
+                                        },
+                                        {
+                                            style: {
+                                                bold: true
+                                            },
+                                            type: String,
+                                            value: "Beneficiary Name"
+                                        },
+                                        {
+                                            style: {
+                                                bold: true
+                                            },
+                                            type: String,
+                                            value: "Beneficiary Mobile"
+                                        },
+                                        {
+                                            style: {
+                                                bold: true
+                                            },
+                                            type: String,
+                                            value: "Net Amount"
+                                        },
+                                        {
+                                            style: {
+                                                bold: true
+                                            },
+                                            type: String,
+                                            value: "Gross Amount"
+                                        },
+                                        {
+                                            style: {
+                                                bold: true
+                                            },
+                                            type: String,
+                                            value: "Status"
+                                        }
+                                    ]
+                                }
+                            ].concat($.map(data, function(item) {
+                                return {
+                                    cells: [
+                                    	 { type: String, value: item.Type},
+                                         { type: String, value: item.TransactionDate},
+                                         {type: String, value: item.ReferenceID},
+                                         {type: String, value: item.RemitterName},
+                                         {type: String, value: item.RemitterMobile},
+                                         {type: String, value: item.AccountNumber},
+                                         {type: String, value: item.BeneficiaryName},
+                                         {type: String, value: item.BeneficiaryMobile},
+                                         {type: String, value: item.NetAmount},
+                                         {type: String, value: item.GrossAmount},
+                                         {type: String, value: item.Status}
+                                    ]
+                                };
+                            }))
+                        }
+                    ]
+                }).saveAs({
+                    fileName: "Indepay-Txn-"+formatdate
+                });
+            });
+        });
+    });
+    
+    $('#cross').append('<button id="exportExcel" class="btn btn-default" title="Save As Excel"><i class="fa fa-file-excel-o"></i></button>');
+    
+</script>
+</body>
+</html>

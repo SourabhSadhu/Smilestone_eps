@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<!-- <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" /> -->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>Remittance Portal</title>
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+<meta name="robots" content="all,follow" />
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.default.css?v=1}" id="theme-stylesheet" />
+
+<link rel="stylesheet" th:href="@{/lib/datatable/bootstrap-3.3.4.min.css}" />
+<link rel="stylesheet" th:href="@{/lib/datatable/font-awesome.min.css}" />
+<link rel="stylesheet" th:href="@{/lib/datatable/ultimate-datatable-3.3.1-SNAPSHOT.css}" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/jquery-ui.1.12.1.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/custom.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/icons.css}" />
+<link rel="shortcut icon" th:href="@{/img/favicon.ico}" />
+<link rel="stylesheet" th:href="@{/lib/sweetalert2/sweetalert2.min.css}" />
+
+<script type="text/javascript" th:src="@{/js/fontawesome.js}"></script>
+<script type="text/javascript" th:src="@{/lib/angular-1.5.8/angular.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/angular-1.5.8/angular-cookies.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/angular-1.5.8/angular-messages.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/chart.js/dist/Chart.js}"></script>
+<script type="text/javascript" th:src="@{/lib/angular-chart.js/dist/angular-chart.js}"></script>
+
+<script type="text/javascript" th:src="@{/js/ui-bootstrap-tpls-0.12.1.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/remittance/master.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/remittance/dashboardController.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/remittance/RemittanceService.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/remittance/RemittanceFactory.js}"></script>
+<script type="text/javascript" th:src="@{/lib/promise/promise-7.0.4.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/dirPagination.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-1.12.4.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-ui.1.12.1.js}"></script>
+<script type="text/javascript" th:src="@{/js/angular-sanitize.min.js}"></script>
+
+<script type="text/javascript" th:src="@{/lib/promise/promise-7.0.4.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/dirPagination.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-1.12.4.js}"></script>
+<script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-ui.1.12.1.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.cookie.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.validate.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/chartmin.js}"></script>
+<script type="text/javascript" th:src="@{/js/front.js}"></script>
+
+<script type="text/javascript" th:src="@{/lib/datatable/bootstrap-3.3.4.min.js}"></script>
+<script type="text/javascript" th:src="@{/lib/datatable/ultimate-datatable-3.3.1-SNAPSHOT.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootbox.min.version-4.4.0.js}"></script>
+<script th:src="@{/js/sha256.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/remittance/FileModel.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/remittance/profile.js}"></script>
+<script type="text/javascript" th:src="@{/lib/sweetalert2/sweetalert2.min.js}"></script>
+<script type="text/javascript" th:src="@{/customjs/remittance/FileModel.js}"></script>
+
+<style type="text/css">
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
+.icon {
+  color: white;
+  font-size: 30px;
+  position: absolute;
+  top: 55%;
+  left: 51%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+.containerImg:hover .overlay {
+  opacity: 1;
+}
+.overlay {
+    position: absolute;
+    bottom: 11px;
+    left: 6px;
+    right: 0;
+    width: 140px;
+    height: 152px;
+    border-radius: 50%;
+    margin-left: 27%;
+    opacity: 0;
+    transition: .3s ease;
+    background-color: #0000008a;
+    border-radis: 50%;
+}
+.card-header h2{
+    margin-top: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.1;
+}
+.card-body {
+	padding: 1.25rem;
+}
+#payMode, #bankName, #entries {
+	height: auto;
+}
+label.form-control-static {
+	font-weight: bold;
+}
+.h4 {
+	margin-top: 0;
+}
+.table {
+	margin-bottom: 0;
+}
+.alert-dismissible .close {
+	top: -.75rem !important;
+}
+label > i {
+	color: #f00;
+}
+.table>tbody>tr>td, .table>thead>tr>th {
+vertical-align: middle;
+}
+.profileImg {
+	width: 140px;
+	height: 150px;
+	border-radius: 50%;
+	
+}
+</style>
+</head>
+<body class="yFull">
+	<div ng-app="masterApp" ng-controller="masterController">
+		<div class="page home-page">
+			<div th:include="header::head"></div>
+			<div class="page-content d-flex align-items-stretch" style="margin-top: -15px;">
+				<div th:include="nav::navmenu"></div>
+				<div class="content-inner">
+					<div class="container theme-showcase" ng-controller="profileCtrl" style="margin-right:auto;margin-left:auto;margin-bottom:3%;">
+						<!-- ###### Code To be ADD ############ -->
+						<br/>
+						<section class="feeds no-padding-top">
+							<div class="container-fluid">
+								<div ng-show="isErrorMsg">
+									<div class="alert alert-danger alert-dismissible" role="alert">
+										<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										{{errorMsg}}
+									</div>
+								</div>
+								<div ng-if="isSuccessMsg">
+									<div class="alert alert-success alert-dismissible" role="alert">
+										<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										{{successMsg}}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-6">
+										<div class="card" style="margin-bottom: 30px;">
+											<div class="card-header d-flex align-items-center">
+                                                 <h3 class="h4">My Profile</h3>
+                                                 </div>
+											<div class="card-body">
+												<form name="requestForm" novalidate=""><fieldset ng-disabled="isClicked">
+													<div class="form-group" ng-class="{ 'has-error' : requestForm.date.$invalid &amp;&amp; !requestForm.date.$pristine }">
+                          								<label class="form-control-label">Name:</label>
+                          								<input type="text" class="form-control" name="username" ng-model="name" required="" maxlength="10" autocomplete="off" readonly>
+                          								</div>
+                          							<div class="form-group" ng-class="{ 'has-error' : requestForm.payMode.$invalid &amp;&amp; !requestForm.payMode.$pristine }">
+                          								<label class="form-control-label">Del No:</label>
+                          								<input type="text" class="form-control" id="delNo" name="delno" ng-model="delno" readonly>
+                          								
+                          							</div>
+                          							<div class="form-group" ng-class="{ 'has-error' : requestForm.bankName.$invalid &amp;&amp; !requestForm.bankName.$pristine }">
+                          								<label class="form-control-label">Mobile</label>
+                          								<input type="text" class="form-control" id="delNo" name="delno" ng-model="mobile" readonly>
+                          								
+                          							</div>
+                          							<div class="form-group" ng-class="{ 'has-error' : requestForm.narration.$invalid &amp;&amp; !requestForm.narration.$pristine }">
+                          								<label class="form-control-label">Distributor Name:</label>
+                          								<input type="text" class="form-control" name="DistName" id="distName" ng-model="distName" readonly>
+                          								
+                          							</div>
+                          							<div class="form-group" ng-class="{ 'has-error' : requestForm.narration.$invalid &amp;&amp; !requestForm.narration.$pristine }">
+                          								<label class="form-control-label">Distributor DelNo:</label>
+                          								<input type="text" class="form-control" name="DistMobile" id="distDelno" ng-model="distDelno" readonly>
+                          								
+                          							</div>
+                          							<div class="form-group" ng-class="{ 'has-error' : requestForm.txnId.$invalid &amp;&amp; !requestForm.txnId.$pristine }">
+                          								<label class="form-control-label">Status</label>
+                          								<input type="text" class="form-control" name="Status" id="Status" ng-model="status" readonly>
+                          								
+                          							</div>
+                          							
+                                                  <div class="form-group" ng-class="{ 'has-error' : requestForm.narration.$invalid &amp;&amp; !requestForm.narration.$pristine }">
+                          								<label class="form-control-label">ShopName:</label>
+                          								<input type="text" class="form-control" name="Address 2" id="shopName" ng-model="shopName" readonly>
+                          								
+                          							</div>
+                          							
+                          							</fieldset>
+                          						</form>
+                          					</div>
+                          				</div>
+									</div>
+									<div class="col-lg-4">
+										<div class="card " style="margin-bottom: 30px;">
+											<div class="card-header d-flex align-items-center"><h3 class="h4">Profile Image</h3></div>
+    										<div class="card-body containerImg text-center">
+    											<img class="profileImg" ng-src="{{image.imageSrc}}" src="../img/download.png">
+    											<div class="overlay">
+         											<span class="fa fa-camera icon" style="cursor: pointer;" ng-click="upload()" title="Change Image"></span>
+    											</div>
+     										</div>
+     									</div>
+     								</div>
+								</div>
+									</div>
+						</section>
+							</div>
+						<!-- ###### Code Ends Here ############ -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<div th:include="footer::foot"></div>
+	</div>
+</body>
+</html>

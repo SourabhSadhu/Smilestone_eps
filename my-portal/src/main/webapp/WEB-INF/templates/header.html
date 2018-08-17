@@ -1,0 +1,147 @@
+<div th:fragment="head">
+	<header class="header">
+		<div ng-controller="dashboardController">
+			<nav class="navbar">
+				<div class="container-fluid">
+					<div class="navbar-holder d-flex justify-content-between" style="margin-top:0px;margin-bottom:-9px;margin-left:-9px;">
+						<!-- Navbar Header-->
+						<!-- Transaction tracking modal start -->
+						<button class="navbar-toggler toggler-example btn btn-link d-md-none p-0 ml-3 collapsed" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle"
+        aria-expanded="false" aria-label="Toggle navigation" style = "color:#260f61;display:none;margin-top:10px;"><span><i class="fa fa-bars fa-3x" style="font-size:2.5em;"></i></span></button>
+        <div class="navbar-header">
+				<div class="sidebar-header" style="margin-top:7px;">
+					<span>
+						 <img class="img-responsive" src="../img/Indepay-Logo-Horizontal(1).png" width="160px;"/>
+						 <span style="color: #271c6f;float: right;position: relative;">Make everyday rewarding</span>
+					</span>
+				</div>
+			</div>
+       <!--  <img class="img-responsive" src="../img/Indepay-Logo-Horizontal(1).png" width="160px;" style="padding-top:8px;"/>
+						<span style="color: #271c6f;float: right;position: relative;">Make everyday rewarding</span> -->
+								<div id="remittanceStatusModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+									<div class="modal-dialog modal-md" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<img th:src="@{/img/indepay-text-color.png}" width="100"
+													height="50" />
+											</div>
+											<div class="modal-body">
+												<div class="progress">
+													<div class="progress-bar progress-bar-striped active"
+														role="progressbar" aria-valuenow="45" aria-valuemin="0"
+														aria-valuemax="100" style="width: 100%"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+						<!-- Transaction tracking modal end -->
+						
+						<!-- AEPS Loader with message -->
+								<div id="aepsLoaderModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+									<div class="modal-dialog modal-md" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<img th:src="@{/img/indepay-text-color.png}" width="100"
+													height="50" />
+											</div>
+											<div class="modal-body">
+												<span class="blink-text1 align-middle">Please provide the finger print and wait for status!!!</span>
+												<br></br>
+												<div class="progress">
+													<div class="progress-bar progress-bar-striped active"
+														role="progressbar" aria-valuenow="45" aria-valuemin="0"
+														aria-valuemax="100" style="width: 100%"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+						<!-- AEPS Loader message end -->
+							<!-- Navbar Brand -->
+							
+								
+							<!-- Toggle Button-->
+							<!-- <a id="toggle-btn" ng-click="navToggleClick()" href="#" class="menu-btn active "><span></span><span></span><span></span></a> -->
+						<!-- Navbar Menu -->
+						<!-- <button class="navbar-toggler toggler-example btn btn-link d-md-none" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style = "color:#260f61;display:none"><span>
+				<i class="fa fa-user fa-2x" style="position: relative;float: right;"></i></span>
+    		         </button> -->
+						<!-- <div id="navbarSupportedContent" class="collapse navbar-collapse" style="position: relative;float: left;padding-top:6px;">
+						<ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+							<h5 class="h5" style="color: #250E62;">
+							Hi <b th:inline="text" class="user">
+									[[${#httpServletRequest.remoteUser}]] </b>&nbsp;&nbsp;
+							Hi <b th:inline="text" class="user">
+									{{ user.firstName }} ! </b>&nbsp;&nbsp;<i class="fa fa-inr"></i>
+												{{ walletLimit | currency:"":2}} 
+												<a href="#" ng-click="walletLimitReset()"> <i class="fa fa-refresh"></i></a>
+							</h5>&nbsp;&nbsp;
+							<form th:action="@{/remittance/logout}" method="post">
+								<button type="submit" value="Sign Out" class="btn btn-indepay">Sign Out</button>
+							</form>					
+						</ul>
+						
+						
+						
+						
+						</div> -->
+						<div class="nav_menu">
+						<ul class="nav navbar-nav navbar-right" style="float:right;margin-right:-15px;">
+                <li class="">
+                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <img ng-src="{{image.imageSrc}}" src="../img/download.png">{{ user.firstName }}
+                    <span class=" fa fa-angle-down"></span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-usermenu pull-right">
+                  	<li class="list-balance" style="display:none;">
+                      <a href="#" ng-click="walletLimitReset()" id="updateBal">
+                        <span class="pull-right" ng-click="walletLimitReset()"><i class="fa fa-refresh"></i></span>
+                        <span><i class="fa fa-inr"></i> {{ walletLimit | currency:"":2}}</span>
+                      </a>
+                    </li>
+                    <li><a href="./userProfile"><span style="color: #271c6f;"><b>My Profile</b></span></a></li>
+                    <li><a href="./changePassword"><span style="color: #271c6f;"><b>Change Password</b></span></a></li>
+                    
+                    <!-- <li><a><i class="fa fa-inr"></i>
+												{{ walletLimit | currency:"":2}} 
+												<a href="#" ng-click="walletLimitReset()"> <i class="fa fa-refresh"></i></a></a></li>
+                    <li> -->
+                    <li>
+                    <form th:action="@{/remittance/logout}" method="post" id="logout">
+								<a href="#" onclick="document.getElementById('logout').submit();" style="text-decoration:none;"><i class="fa fa-sign-out pull-right"></i><span style="color: #271c6f;"><b>Log Out</b></span></a>
+							</form>	</li>
+                  </ul>
+                </li>
+                
+                </ul>
+                <ul class="nav navbar-nav navbar-right wallet-balance" style="display: block;">
+                <li>	
+                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="padding-top:20px;">
+                   <span class="pull-right" ng-click="walletLimitReset()"><i class="fa fa-refresh"></i></span>
+                        <span><i class="fa fa-inr"></i> {{ walletLimit | currency:"":2}}</span>&nbsp;&nbsp;
+                  </a>
+                  </li>
+                  </ul>
+                </div>
+					</div>
+				</div>	
+				
+			</nav>
+			
+			<div class="ticker-wrap" ng-if="tickerMessage !=''">
+				<div class="ticker">
+					<div class="ticker__item" ng-repeat="ticker in tickerMessage" ng-bind-html="ticker.tickerMessage"></div>	
+				</div>
+			</div>
+		</div>
+		</br>				
+				
+	</header>
+	<script type="text/javascript">
+	$('#updateBal').on('click', function(e) {
+		  e.stopPropagation();
+	});
+	</script>
+</div>

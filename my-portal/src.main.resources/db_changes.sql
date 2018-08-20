@@ -38,3 +38,6 @@ INSERT INTO eps.medical_history (disease_name) values
 ('Hypothyroidism'),
 ('Hyperthyroidism'),
 ('Drug hypersensitivity');
+
+ALTER TABLE eps.prescription_history
+    ADD COLUMN medical_histories character varying(300);

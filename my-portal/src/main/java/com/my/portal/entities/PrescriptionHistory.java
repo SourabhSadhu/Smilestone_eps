@@ -52,6 +52,9 @@ public class PrescriptionHistory implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="patient_id")
 	private Patient patient;
+	
+	@Column(name="medical_histories")
+	private String medicalHistories;
 
 	public PrescriptionHistory() {
 	}
@@ -158,6 +161,14 @@ public class PrescriptionHistory implements Serializable {
 
 	public void setPatient(Patient patient) {
 		this.patient = patient;
+	}
+
+	public String getMedicalHistories() {
+		return medicalHistories;
+	}
+
+	public void setMedicalHistories(String medicalHistories) {
+		this.medicalHistories = medicalHistories;
 	}
 
 }

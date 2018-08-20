@@ -2,16 +2,24 @@ package com.my.portal.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.springframework.data.repository.query.Param;
+
 import java.util.List;
 
 
 /**
  * The persistent class for the clinical_findings database table.
  * 
+ * findByNameToothAgeGrp(@Param("f_name") String fName, @Param("tooth_index") long toothIndex, @Param("age_grp_id") String ageGrpId);
  */
 @Entity
 @Table(name="clinical_findings")
-@NamedQuery(name="ClinicalFinding.findAll", query="SELECT c FROM ClinicalFinding c")
+@NamedQueries({	
+	@NamedQuery(name="ClinicalFinding.findAll", query="SELECT c FROM ClinicalFinding c"),
+	@NamedQuery(name="ClinicalFinding.findByNameToothAgeGrp", 
+		query="SELECT c FROM ClinicalFinding c WHERE c.fName = :f_name AND c.toothQuadrent.toothIndex = :tooth_index AND c.ageGroupBean.groupId = :age_grp_id")
+})
 public class ClinicalFinding implements Serializable {
 	private static final long serialVersionUID = 1L;
 

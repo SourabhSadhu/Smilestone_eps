@@ -21,7 +21,7 @@ import com.my.portal.service.MedicalHistoryService;
 public class MedicalHistoryServiceImpl implements MedicalHistoryService {
 
 	@Autowired MedicalHistoryRepository repo;
-	private List<MedicalHistoryView> mhvList;
+	private List<MedicalHistoryView> mhvList = new ArrayList<>();
 	
 	@Override
 	public List<MedicalHistoryView> getMedicalHistory() {		

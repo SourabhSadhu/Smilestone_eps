@@ -21,7 +21,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages="com.indepay.portal")
+@ComponentScan(basePackages="com.my.portal")
 public class WebAppConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
 
 

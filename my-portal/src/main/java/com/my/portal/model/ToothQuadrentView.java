@@ -2,7 +2,6 @@ package com.my.portal.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.List;
 
 public class ToothQuadrentView implements Serializable {
 	
@@ -10,7 +9,7 @@ public class ToothQuadrentView implements Serializable {
 	private long toothIndex;
 	private BigDecimal toothNumber;
 	private BigDecimal toothQdr;
-	private List<ClinicalFindingView> clinicalFindings;
+//	private List<ClinicalFindingView> clinicalFindings;
 
 	public ToothQuadrentView() {
 	}
@@ -39,26 +38,26 @@ public class ToothQuadrentView implements Serializable {
 		this.toothQdr = toothQdr;
 	}
 
-	public List<ClinicalFindingView> getClinicalFindings() {
-		return this.clinicalFindings;
-	}
-
-	public void setClinicalFindings(List<ClinicalFindingView> clinicalFindings) {
-		this.clinicalFindings = clinicalFindings;
-	}
-
-	public ClinicalFindingView addClinicalFinding(ClinicalFindingView clinicalFinding) {
-		getClinicalFindings().add(clinicalFinding);
-		clinicalFinding.setToothQuadrent(this);
-
-		return clinicalFinding;
-	}
-
-	public ClinicalFindingView removeClinicalFinding(ClinicalFindingView clinicalFinding) {
-		getClinicalFindings().remove(clinicalFinding);
-		clinicalFinding.setToothQuadrent(null);
-
-		return clinicalFinding;
-	}
+//	public List<ClinicalFindingView> getClinicalFindings() {
+//		return this.clinicalFindings;
+//	}
+//
+//	public void setClinicalFindings(List<ClinicalFindingView> clinicalFindings) {
+//		this.clinicalFindings = clinicalFindings;
+//	}
+//
+//	public ClinicalFindingView addClinicalFinding(ClinicalFindingView clinicalFinding) {
+//		getClinicalFindings().add(clinicalFinding);
+//		clinicalFinding.setToothQuadrent(this);
+//
+//		return clinicalFinding;
+//	}
+//
+//	public ClinicalFindingView removeClinicalFinding(ClinicalFindingView clinicalFinding) {
+//		getClinicalFindings().remove(clinicalFinding);
+//		clinicalFinding.setToothQuadrent(null);
+//
+//		return clinicalFinding;
+//	}
 
 }

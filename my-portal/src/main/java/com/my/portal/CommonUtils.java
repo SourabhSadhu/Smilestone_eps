@@ -1,5 +1,9 @@
 package com.my.portal;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import com.my.portal.model.ApiResponse;
 import com.my.portal.model.ErrorCode;
 import com.my.portal.model.ResponseStatus;
@@ -20,5 +24,9 @@ public class CommonUtils {
 		resp.setResp(o);
 		resp.setDesc(error.getDesc());
 		return resp;
+	}
+	
+	public static String getDateDDMMYYYY(Timestamp ts){
+		return new SimpleDateFormat("DD-MM-YYYY").format(new Date(ts.getTime()));
 	}
 }

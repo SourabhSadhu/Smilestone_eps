@@ -1,11 +1,48 @@
-<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="2.0">
   <wb-module deploy-name="my-portal">
     <property name="context-root" value="my-portal"/>
     <wb-resource deploy-path="/" source-path="src/main/webapp"/>
     <property name="java-output-path" value="/target/classes"/>
+    <dependent-module archiveName="slf4j-api-1.7.25.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="logback-classic-1.1.11.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/ch/qos/logback/logback-classic/1.1.11/logback-classic-1.1.11.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="logback-core-1.1.11.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/ch/qos/logback/logback-core/1.1.11/logback-core-1.1.11.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="thymeleaf-3.0.9.RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/thymeleaf/thymeleaf/3.0.9.RELEASE/thymeleaf-3.0.9.RELEASE.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="ognl-3.1.12.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/ognl/ognl/3.1.12/ognl-3.1.12.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="javassist-3.20.0-GA.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/javassist/javassist/3.20.0-GA/javassist-3.20.0-GA.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="attoparser-2.0.4.RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/attoparser/attoparser/2.0.4.RELEASE/attoparser-2.0.4.RELEASE.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="unbescape-1.1.5.RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/unbescape/unbescape/1.1.5.RELEASE/unbescape-1.1.5.RELEASE.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="thymeleaf-spring4-3.0.9.RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/thymeleaf/thymeleaf-spring4/3.0.9.RELEASE/thymeleaf-spring4-3.0.9.RELEASE.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="thymeleaf-layout-dialect-2.0.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/nz/net/ultraq/thymeleaf/thymeleaf-layout-dialect/2.0.4/thymeleaf-layout-dialect-2.0.4.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="groovy-2.4.6.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/codehaus/groovy/groovy/2.4.6/groovy-2.4.6.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="thymeleaf-expression-processor-1.1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/nz/net/ultraq/thymeleaf/thymeleaf-expression-processor/1.1.1/thymeleaf-expression-processor-1.1.1.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="thymeleaf-extras-springsecurity4-3.0.2.RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/thymeleaf/extras/thymeleaf-extras-springsecurity4/3.0.2.RELEASE/thymeleaf-extras-springsecurity4-3.0.2.RELEASE.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
     <wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/java"/>
-    <wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/resources"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
   </wb-module>
 </project-modules>

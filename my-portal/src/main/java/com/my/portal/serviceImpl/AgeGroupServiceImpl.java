@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.my.portal.ValidationException;
 import com.my.portal.entities.AgeGroup;
+import com.my.portal.model.AgeGroupView;
 import com.my.portal.model.ErrorCode;
 import com.my.portal.repositories.AgeGroupRepository;
 import com.my.portal.service.AgeGroupService;
@@ -24,10 +25,10 @@ public class AgeGroupServiceImpl implements AgeGroupService {
 	
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly=true)
-	public AgeGroup getFromAgeToAge(BigDecimal age) {
+	public AgeGroupView getFromAgeToAge(BigDecimal age) {
 		List<AgeGroup> ageGrpList = repo.findByFromAgeToAge(age);
 		if(null != ageGrpList && !ageGrpList.isEmpty()) {
-			return ageGrpList.get(0);
+			return toView(ageGrpList.get(0));
 		}else {
 			throw new ValidationException(ErrorCode.NOT_FOUND);
 		}
@@ -46,7 +47,8 @@ public class AgeGroupServiceImpl implements AgeGroupService {
 
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED)
-	public AgeGroup addAgeGrp(AgeGroup ageGroup) {
+	public AgeGroupView addAgeGrp(AgeGroupView ageGrp) {
+		AgeGroup ageGroup = toEntity(ageGrp);
 		if(null != ageGroup.getFromAge() && null != ageGroup.getToAge()) {
 			if(checkByAge(ageGroup.getFromAge(), ageGroup.getToAge())) {
 				ageGroup.setGroupId(new StringBuilder()
@@ -54,7 +56,7 @@ public class AgeGroupServiceImpl implements AgeGroupService {
 						.append("to")
 						.append(String.valueOf(ageGroup.getToAge()))
 						.toString());
-				return repo.saveAndFlush(ageGroup);
+				return toView(repo.saveAndFlush(ageGroup));
 			}else {
 				throw new ValidationException(ErrorCode.DUPLICATE_AGE_GRP);
 			}
@@ -64,4 +66,24 @@ public class AgeGroupServiceImpl implements AgeGroupService {
 	}
 	
 
+	private AgeGroupView toView(AgeGroup a){
+		AgeGroupView b = new AgeGroupView();
+		if(null != a){
+			b.setGroupId(a.getGroupId());
+			b.setFromAge(a.getFromAge());
+			b.setToAge(a.getToAge());
+		}
+		return b;
+	}
+	
+	private AgeGroup toEntity(AgeGroupView a){
+		AgeGroup b = new AgeGroup();
+		if(null != a){
+			b.setGroupId(a.getGroupId());
+			b.setFromAge(a.getFromAge());
+			b.setToAge(a.getToAge());
+		}
+		return b;
+	}
+	
 }

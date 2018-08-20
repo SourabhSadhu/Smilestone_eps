@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.my.portal.CommonUtils;
 import com.my.portal.ValidationException;
-import com.my.portal.entities.Patient;
 import com.my.portal.model.ApiResponse;
+import com.my.portal.model.PatientView;
+import com.my.portal.model.ResponseStatus;
 import com.my.portal.service.PatientService;
 
 @Controller
@@ -24,13 +25,22 @@ public class PatientController {
 
 	@Autowired
 	PatientService patientService;
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<?> get() {
+		ApiResponse resp = new ApiResponse();
+		resp.setDesc("Dummy API");
+		resp.setStatus(ResponseStatus.SUCCESS);
+		return new ResponseEntity<>(resp, HttpStatus.OK);
+	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/getPatient", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<?> getPatient(@RequestBody Patient p) {
+	public ResponseEntity<?> getPatient(@RequestBody PatientView p) {
 			
 		try {
-			List<Patient> pList = patientService.getPatient(p);
+			List<PatientView> pList = patientService.getPatient(p);
 			if(null != pList && !pList.isEmpty()) {
 				return new ResponseEntity<>(CommonUtils.getResp(pList), HttpStatus.OK);
 			}else {
@@ -48,7 +58,7 @@ public class PatientController {
 
 	@RequestMapping(method = RequestMethod.POST, value = "/addPatient", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<?> addPatient(@RequestBody Patient p) {
+	public ResponseEntity<?> addPatient(@RequestBody PatientView p) {
 
 		try {
 			return new ResponseEntity<>(CommonUtils.getResp(patientService.addPatient(p)), HttpStatus.OK);

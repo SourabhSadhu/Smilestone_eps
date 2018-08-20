@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.my.portal.CommonUtils;
 import com.my.portal.ValidationException;
-import com.my.portal.entities.AgeGroup;
+import com.my.portal.model.AgeGroupView;
+import com.my.portal.model.ApiResponse;
+import com.my.portal.model.ResponseStatus;
 import com.my.portal.service.AgeGroupService;
 
 @RestController
@@ -25,6 +27,15 @@ public class AgeGroupController {
 	@Autowired
 	AgeGroupService ageGrpService;
 
+	@RequestMapping(method = RequestMethod.GET, value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<?> get() {
+		ApiResponse resp = new ApiResponse();
+		resp.setDesc("Dummy API");
+		resp.setStatus(ResponseStatus.SUCCESS);
+		return new ResponseEntity<>(resp, HttpStatus.OK);
+	}
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/getAgeGroup", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<?> getAgeGroup(@RequestParam(required = false, value = "age") BigDecimal age) {
@@ -43,10 +54,10 @@ public class AgeGroupController {
 
 	@RequestMapping(method = RequestMethod.POST, value = "/addAgeGroup", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<?> addAgeGroup(@RequestBody AgeGroup ageGroup) {
+	public ResponseEntity<?> addAgeGroup(@RequestBody AgeGroupView ageGroupView) {
 
 		try {
-			return new ResponseEntity<>(CommonUtils.getResp(ageGrpService.addAgeGrp(ageGroup)), HttpStatus.OK);
+			return new ResponseEntity<>(CommonUtils.getResp(ageGrpService.addAgeGrp(ageGroupView)), HttpStatus.OK);
 		} catch (Exception e) {
 			if(e instanceof ValidationException) {
 				ValidationException ve = (ValidationException) e;

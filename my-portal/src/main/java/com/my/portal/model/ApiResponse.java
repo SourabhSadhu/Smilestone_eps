@@ -1,7 +1,10 @@
 package com.my.portal.model;
 
-public class ApiResponse {
+import java.io.Serializable;
 
+public class ApiResponse implements Serializable{
+
+	private static final long serialVersionUID = -8842953338570777685L;
 	ResponseStatus status;
 	String desc;
 	Object resp;
@@ -19,5 +22,15 @@ public class ApiResponse {
 	public void setResp(Object resp) {
 		this.resp = resp;
 	}
+	public ResponseStatus getStatus() {
+		return status;
+	}
+	public String getDesc() {
+		return desc;
+	}
+	public Object getResp() {
+		return resp;
+	}
+	
 	
 }

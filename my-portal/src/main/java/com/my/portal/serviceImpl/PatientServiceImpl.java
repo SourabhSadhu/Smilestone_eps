@@ -2,6 +2,7 @@ package com.my.portal.serviceImpl;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ import org.springframework.util.StringUtils;
 import com.my.portal.ValidationException;
 import com.my.portal.entities.Patient;
 import com.my.portal.model.ErrorCode;
+import com.my.portal.model.PatientView;
 import com.my.portal.repositories.PatientRespository;
 import com.my.portal.service.PatientService;
 
@@ -26,43 +28,43 @@ public class PatientServiceImpl implements PatientService{
 	
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
-	public List<Patient> findByFirstName(String fName) {
-		return repo.findByFirstName(fName);
+	public List<PatientView> findByFirstName(String fName) {
+		return toView(repo.findByFirstName(fName));
 	}
 	
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
-	public List<Patient> findByLastName(String lName) {
-		return repo.findByLastName(lName);
+	public List<PatientView> findByLastName(String lName) {
+		return toView(repo.findByLastName(lName));
 	}
 	
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
-	public List<Patient> findByFullName(String fName, String lName) {
-		return repo.findByFullName(fName, lName);
+	public List<PatientView> findByFullName(String fName, String lName) {
+		return toView(repo.findByFullName(fName, lName));
 	}
 	
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
-	public List<Patient> findByDOB(BigDecimal dd, BigDecimal mm, BigDecimal yy) {
-		return repo.findByDOB(dd, mm, yy);
+	public List<PatientView> findByDOB(BigDecimal dd, BigDecimal mm, BigDecimal yy) {
+		return toView(repo.findByDOB(dd, mm, yy));
 	}
 
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
-	public List<Patient> findByDetails(String fName, String lName, BigDecimal dd, BigDecimal mm, BigDecimal yy) {
-		return repo.findByDetails(fName, lName, dd, mm, yy);
+	public List<PatientView> findByDetails(String fName, String lName, BigDecimal dd, BigDecimal mm, BigDecimal yy) {
+		return toView(repo.findByDetails(fName, lName, dd, mm, yy));
 	}
 
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
-	public List<Patient> findByContactNo(BigDecimal cNo) {
-		return repo.findByContactNo(cNo);
+	public List<PatientView> findByContactNo(BigDecimal cNo) {
+		return toView(repo.findByContactNo(cNo));
 	}
 
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED)
-	public Patient addPatient(Patient p) {
+	public PatientView addPatient(PatientView p) {
 		if(StringUtils.hasText(p.getFirstName()) 
 				&& StringUtils.hasText(p.getLastName())
 				&& null != p.getContactNo1()
@@ -71,25 +73,15 @@ public class PatientServiceImpl implements PatientService{
 				&& null != p.getDobYy()
 				&& p.getDobDd().compareTo(new BigDecimal(32)) < 1
 				&& p.getDobMm().compareTo(new BigDecimal(13)) < 1				
-				) {
-			Patient p1 = new Patient();
-			p1.setFirstName(p.getFirstName().toLowerCase());
-			p1.setLastName(p.getLastName().toLowerCase());
-			p1.setDobDd(p.getDobDd());
-			p1.setDobMm(p.getDobMm());
-			p1.setDobYy(p.getDobYy());
-			p1.setContactNo1(p.getContactNo1());
-			p1.setContactNo2(p.getContactNo2());
-			p1.setDiscount(p.getDiscount());
-			p1.setTsCreated(new Timestamp(System.currentTimeMillis()));
-			return repo.saveAndFlush(p1);
+				) {			
+			return toView(repo.saveAndFlush(toEntity(p)));
 		}else {
 			throw new ValidationException(ErrorCode.INVALID_INPUT);
 		}
 	}
 
 	@Override
-	public List<Patient> getPatient(Patient p) {
+	public List<PatientView> getPatient(PatientView p) {
 		if (null != p.getDobDd() && null != p.getDobMm() && null != p.getDobYy()
 				&& (StringUtils.isEmpty(p.getFirstName()) || StringUtils.isEmpty(p.getLastName()))) {
 			return findByDOB(p.getDobDd(), p.getDobMm(), p.getDobYy());
@@ -102,10 +94,59 @@ public class PatientServiceImpl implements PatientService{
 			return findByFirstName(p.getFirstName().toLowerCase());
 		} else if (StringUtils.hasText(p.getLastName())) {
 			return findByLastName(p.getLastName().toLowerCase());
-		} else {
+		} else if((null != p.getContactNo1() && BigDecimal.ZERO.compareTo(p.getContactNo1()) != 0) ||
+				(null != p.getContactNo2() && BigDecimal.ZERO.compareTo(p.getContactNo2()) != 0) 
+				){
+			if(null != p.getContactNo1()){
+				return findByContactNo(p.getContactNo1());
+			}else{
+				return findByContactNo(p.getContactNo2());
+			}
+		}else {
 			throw new ValidationException(ErrorCode.INVALID_INPUT);
 		}
 	}
 
+	PatientView toView(Patient p){
+		PatientView pv = new PatientView();
+		if(null != p){
+			pv.setContactNo1(p.getContactNo1());
+			pv.setContactNo2(p.getContactNo2());
+			pv.setDiscount(p.getDiscount());
+			pv.setDobDd(p.getDobDd());
+			pv.setDobMm(p.getDobMm());
+			pv.setDobYy(p.getDobYy());
+			pv.setFirstName(p.getFirstName());
+			pv.setLastName(p.getLastName());
+			pv.setPId(p.getPId());			
+			pv.setTsCreated(p.getTsCreated());
+		}
+		return pv;
+	}
 	
+	List<PatientView> toView(List<Patient> pList){
+		List<PatientView> pvList = new ArrayList<>();
+		if(null != pList && !pList.isEmpty()){
+			for(Patient p : pList){
+				pvList.add(toView(p));
+			}
+		}
+		return pvList;
+	}
+	
+	Patient toEntity(PatientView pv){
+		Patient p = new Patient();
+		if(null != pv){
+			p.setFirstName(p.getFirstName().toLowerCase());
+			p.setLastName(p.getLastName().toLowerCase());
+			p.setDobDd(p.getDobDd());
+			p.setDobMm(p.getDobMm());
+			p.setDobYy(p.getDobYy());
+			p.setContactNo1(p.getContactNo1());
+			p.setContactNo2(p.getContactNo2());
+			p.setDiscount(p.getDiscount());
+			p.setTsCreated(new Timestamp(System.currentTimeMillis()));
+		}
+		return p;
+	}
 }

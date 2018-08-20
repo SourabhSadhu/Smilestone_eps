@@ -27,7 +27,7 @@ import javax.persistence.Table;
 	@NamedQuery(name="Patient.findByDOB", query="SELECT p FROM Patient p WHERE p.dobDd = :dd AND p.dobMm = :mm AND p.dobYy = :yy"),
 	@NamedQuery(name="Patient.findByDetails", query="SELECT p FROM Patient p WHERE p.firstName = :fName AND p.lastName = :lName "
 						+"AND p.dobDd = :dd AND p.dobMm = :mm AND p.dobYy = :yy"),
-	@NamedQuery(name="Patient.findByContactNo", query="SELECT p FROM Patient p WHERE p.contactNo1 = cNo OR p.contactNo2 = cNo")
+	@NamedQuery(name="Patient.findByContactNo", query="SELECT p FROM Patient p WHERE p.contactNo1 = :cNo OR p.contactNo2 = :cNo")
 })
 public class Patient implements Serializable {
 	private static final long serialVersionUID = 1L;

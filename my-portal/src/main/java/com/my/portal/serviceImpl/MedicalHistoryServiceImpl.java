@@ -42,14 +42,22 @@ public class MedicalHistoryServiceImpl implements MedicalHistoryService {
 	private void getAll(){
 		mhvList.addAll(toView(repo.findAll()));
 	}
-	
+	/**
+	 * 
+	 * @param mh
+	 * @return
+	 * Mapper needs to be updated
+	 * 
+	 */
 	private MedicalHistoryView toView(MedicalHistory mh){
 		MedicalHistoryView mhv = new MedicalHistoryView();
 		if(null != mh){
-			mhv.setDiseaseName(mh.getDiseaseName());
-			mhv.setDiseaseFrom(CommonUtils.getDateDDMMYYYY(mh.getDiseaseFrom()));
+			mhv.setMedicalHistoryId(mh.getMedicalHistoryId());
+			mhv.setMedicalHistoryMaster(mh.getMedicalHistoryMaster());
+			mhv.setPatient(mh.getPatient());			
 			mhv.setNote(mh.getNote());
 			mhv.setSeverity(mh.getSeverity());
+			mhv.setStartedFrom(mh.getStartedFrom());
 		}
 		return mhv;
 	}
@@ -62,6 +70,10 @@ public class MedicalHistoryServiceImpl implements MedicalHistoryService {
 		return mhvList;
 	}
 	
+	/**
+	 * Mapper needs to be updated
+	 */
+	/*
 	private MedicalHistory toEntity(MedicalHistoryView mhv){
 		MedicalHistory mh = new MedicalHistory();
 		if(null != mhv){
@@ -71,6 +83,6 @@ public class MedicalHistoryServiceImpl implements MedicalHistoryService {
 			mh.setSeverity(mhv.getSeverity());
 		}
 		return mh;
-	}
+	}*/
 
 }

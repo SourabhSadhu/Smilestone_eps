@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
+
 public class PatientView implements Serializable {
 
 	private static final long serialVersionUID = -3439715817276863931L;
@@ -18,6 +19,7 @@ public class PatientView implements Serializable {
 	private String lastName;
 	private Timestamp tsCreated;
 //	private List<PrescriptionHistoryView> prescriptionHistories;
+//	private List<MedicalHistoryView> medicalHistories;
 
 	public PatientView() {
 	}
@@ -95,7 +97,7 @@ public class PatientView implements Serializable {
 	}
 
 	public Timestamp getTsCreated() {
-		return tsCreated;
+		return this.tsCreated;
 	}
 
 	public void setTsCreated(Timestamp tsCreated) {
@@ -123,5 +125,26 @@ public class PatientView implements Serializable {
 //
 //		return prescriptionHistory;
 //	}
-
+//
+//	public List<MedicalHistoryView> getMedicalHistories() {
+//		return this.medicalHistories;
+//	}
+//
+//	public void setMedicalHistories(List<MedicalHistoryView> medicalHistories) {
+//		this.medicalHistories = medicalHistories;
+//	}
+//
+//	public MedicalHistoryView addMedicalHistory(MedicalHistoryView medicalHistory) {
+//		getMedicalHistories().add(medicalHistory);
+//		medicalHistory.setPatient(this);
+//
+//		return medicalHistory;
+//	}
+//
+//	public MedicalHistoryView removeMedicalHistory(MedicalHistoryView medicalHistory) {
+//		getMedicalHistories().remove(medicalHistory);
+//		medicalHistory.setPatient(null);
+//
+//		return medicalHistory;
+//	}
 }

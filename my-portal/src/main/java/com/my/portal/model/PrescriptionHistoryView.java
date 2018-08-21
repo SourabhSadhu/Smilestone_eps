@@ -3,6 +3,7 @@ package com.my.portal.model;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+
 public class PrescriptionHistoryView implements Serializable {
 	
 	private static final long serialVersionUID = -6822247146991891755L;
@@ -18,8 +19,7 @@ public class PrescriptionHistoryView implements Serializable {
 	private String treatmentPlan;
 	private Timestamp tsCreated;
 	private Timestamp tsModified;
-	private PatientView patient;
-
+//	private Patient patient;
 	public PrescriptionHistoryView() {
 	}
 
@@ -119,12 +119,11 @@ public class PrescriptionHistoryView implements Serializable {
 		this.tsModified = tsModified;
 	}
 
-	public PatientView getPatient() {
-		return this.patient;
-	}
-
-	public void setPatient(PatientView patient) {
-		this.patient = patient;
-	}
-
+//	public Patient getPatient() {
+//		return this.patient;
+//	}
+//
+//	public void setPatient(Patient patient) {
+//		this.patient = patient;
+//	}
 }

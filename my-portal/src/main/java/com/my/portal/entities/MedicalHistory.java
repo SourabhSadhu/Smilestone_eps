@@ -15,34 +15,36 @@ import java.sql.Timestamp;
 public class MedicalHistory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id	
-	@Column(name="disease_name")
-	private String diseaseName;
-
-	@Column(name="disease_from")
-	private Timestamp diseaseFrom;
+	@Id
+	@Column(name="medical_history_id")
+	private Long medicalHistoryId;
 
 	private String note;
 
 	private String severity;
 
+	@Column(name="started_from")
+	private Timestamp startedFrom;
+
+	//bi-directional many-to-one association to MedicalHistoryMaster
+	@ManyToOne
+	@JoinColumn(name="medical_history_name")
+	private MedicalHistoryMaster medicalHistoryMaster;
+
+	//bi-directional many-to-one association to Patient
+	@ManyToOne
+	@JoinColumn(name="patient_id")
+	private Patient patient;
+
 	public MedicalHistory() {
 	}
 
-	public String getDiseaseName() {
-		return this.diseaseName;
+	public Long getMedicalHistoryId() {
+		return this.medicalHistoryId;
 	}
 
-	public void setDiseaseName(String diseaseName) {
-		this.diseaseName = diseaseName;
-	}
-
-	public Timestamp getDiseaseFrom() {
-		return this.diseaseFrom;
-	}
-
-	public void setDiseaseFrom(Timestamp diseaseFrom) {
-		this.diseaseFrom = diseaseFrom;
+	public void setMedicalHistoryId(Long medicalHistoryId) {
+		this.medicalHistoryId = medicalHistoryId;
 	}
 
 	public String getNote() {
@@ -59,6 +61,30 @@ public class MedicalHistory implements Serializable {
 
 	public void setSeverity(String severity) {
 		this.severity = severity;
+	}
+
+	public Timestamp getStartedFrom() {
+		return this.startedFrom;
+	}
+
+	public void setStartedFrom(Timestamp startedFrom) {
+		this.startedFrom = startedFrom;
+	}
+
+	public MedicalHistoryMaster getMedicalHistoryMaster() {
+		return this.medicalHistoryMaster;
+	}
+
+	public void setMedicalHistoryMaster(MedicalHistoryMaster medicalHistoryMaster) {
+		this.medicalHistoryMaster = medicalHistoryMaster;
+	}
+
+	public Patient getPatient() {
+		return this.patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
 	}
 
 }

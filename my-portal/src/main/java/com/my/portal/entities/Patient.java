@@ -1,17 +1,11 @@
 package com.my.portal.entities;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 
 /**
@@ -58,13 +52,17 @@ public class Patient implements Serializable {
 
 	@Column(name="last_name")
 	private String lastName;
-	
+
 	@Column(name="ts_created")
 	private Timestamp tsCreated;
 
 	//bi-directional many-to-one association to PrescriptionHistory
 	@OneToMany(mappedBy="patient")
 	private List<PrescriptionHistory> prescriptionHistories;
+
+	//bi-directional many-to-one association to MedicalHistory
+	@OneToMany(mappedBy="patient")
+	private List<MedicalHistory> medicalHistories;
 
 	public Patient() {
 	}
@@ -142,7 +140,7 @@ public class Patient implements Serializable {
 	}
 
 	public Timestamp getTsCreated() {
-		return tsCreated;
+		return this.tsCreated;
 	}
 
 	public void setTsCreated(Timestamp tsCreated) {
@@ -169,6 +167,28 @@ public class Patient implements Serializable {
 		prescriptionHistory.setPatient(null);
 
 		return prescriptionHistory;
+	}
+
+	public List<MedicalHistory> getMedicalHistories() {
+		return this.medicalHistories;
+	}
+
+	public void setMedicalHistories(List<MedicalHistory> medicalHistories) {
+		this.medicalHistories = medicalHistories;
+	}
+
+	public MedicalHistory addMedicalHistory(MedicalHistory medicalHistory) {
+		getMedicalHistories().add(medicalHistory);
+		medicalHistory.setPatient(this);
+
+		return medicalHistory;
+	}
+
+	public MedicalHistory removeMedicalHistory(MedicalHistory medicalHistory) {
+		getMedicalHistories().remove(medicalHistory);
+		medicalHistory.setPatient(null);
+
+		return medicalHistory;
 	}
 
 }

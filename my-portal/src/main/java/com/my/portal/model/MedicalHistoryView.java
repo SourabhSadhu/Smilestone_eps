@@ -11,12 +11,10 @@ public class MedicalHistoryView implements Serializable {
 	private static final long serialVersionUID = 9129670593956909083L;
 	private Long medicalHistoryId;
 	private String note;
-	private String severity;
-	
+	private String severity;	
 	//TODO: Change to string for ui
 	private Timestamp startedFrom;
-	//TODO: Change to string for ui
-	private MedicalHistoryMaster medicalHistoryMaster;
+	private String medicalHistoryMasterName;
 	private Patient patient;
 
 	public MedicalHistoryView() {
@@ -54,12 +52,12 @@ public class MedicalHistoryView implements Serializable {
 		this.startedFrom = startedFrom;
 	}
 
-	public MedicalHistoryMaster getMedicalHistoryMaster() {
-		return this.medicalHistoryMaster;
+	public String getMedicalHistoryMasterName() {
+		return this.medicalHistoryMasterName;
 	}
 
-	public void setMedicalHistoryMaster(MedicalHistoryMaster medicalHistoryMaster) {
-		this.medicalHistoryMaster = medicalHistoryMaster;
+	public void setMedicalHistoryMasterName(String medicalHistoryMasterName) {
+		this.medicalHistoryMasterName = medicalHistoryMasterName;
 	}
 
 	public Patient getPatient() {

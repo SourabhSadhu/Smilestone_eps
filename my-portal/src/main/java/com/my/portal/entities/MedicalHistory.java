@@ -1,17 +1,34 @@
 package com.my.portal.entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.sql.Timestamp;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 
 /**
  * The persistent class for the medical_history database table.
  * 
+ * MedicalHistory getByHistoryName(@Param("name") String name);
+ * MedicalHistory getByPatientId(@Param("patient_id") Long id);
+ * 
  */
 @Entity
 @Table(name="medical_history")
-@NamedQuery(name="MedicalHistory.findAll", query="SELECT m FROM MedicalHistory m")
+@NamedQueries({
+	@NamedQuery(name="MedicalHistory.findAll", query="SELECT m FROM MedicalHistory m"),
+	@NamedQuery(name="MedicalHistory.getByHistoryName", 
+			query="SELECT m FROM MedicalHistory m WHERE m.medicalHistoryMaster.medicalHistoryName = :name"),
+	@NamedQuery(name="MedicalHistory.getByPatientId", 
+			query="SELECT m FROM MedicalHistory m WHERE m.patient.pId = :patient_idO")
+})
 public class MedicalHistory implements Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -3,8 +3,12 @@ package com.my.portal.model;
 public enum ErrorCode {
 
 	DUPLICATE_AGE_GRP("Age Group already exists"),
+	NOT_FOUND("Data not found"),
 	INVALID_INPUT("Invalid input"),
-	NOT_FOUND("Data not found");
+	INVALID_MEDICAL_HISTORY("Invalid Medical History"),
+	INVALID_AGE_GROUP_INDEX("Age group not found"), 
+	INVALID_TOOTH_QUADRENT("Invalid tooth quadrent")
+	;
 
 	String desc;
 

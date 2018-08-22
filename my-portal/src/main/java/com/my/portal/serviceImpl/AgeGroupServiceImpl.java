@@ -30,16 +30,7 @@ public class AgeGroupServiceImpl implements AgeGroupService {
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly=true)
 	public AgeGroupView getFromAgeToAge(BigDecimal age) {
-		/*List<AgeGroup> ageGrpList = repo.findByFromAgeToAge(age);
-		if(null != ageGrpList && !ageGrpList.isEmpty()) {
-			return toView(ageGrpList.get(0));
-		}else {
-			throw new ValidationException(ErrorCode.NOT_FOUND);
-		}*/
-		/**
-		 * Using cached data
-		 * as this is static table
-		 */
+
 		for(AgeGroupView a : ageList){
 			if(a.getFromAge().compareTo(age) <= 0 && a.getToAge().compareTo(age) == 1){
 				return a;
@@ -62,15 +53,15 @@ public class AgeGroupServiceImpl implements AgeGroupService {
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED)
 	public AgeGroupView addAgeGrp(AgeGroupView ageGrp) {
-		AgeGroup ageGroup = toEntity(ageGrp);
+		AgeGroup ageGroup = map(ageGrp);
 		if(null != ageGroup.getFromAge() && null != ageGroup.getToAge()) {
-			if(checkByAge(ageGroup.getFromAge(), ageGroup.getToAge())) {
+			if(!checkByAge(ageGroup.getFromAge(), ageGroup.getToAge())) {
 				ageGroup.setGroupId(new StringBuilder()
 						.append(String.valueOf(ageGroup.getFromAge()))
 						.append("to")
 						.append(String.valueOf(ageGroup.getToAge()))
 						.toString());
-				return toView(repo.saveAndFlush(ageGroup));
+				return map(repo.saveAndFlush(ageGroup));
 			}else {
 				throw new ValidationException(ErrorCode.DUPLICATE_AGE_GRP);
 			}
@@ -79,14 +70,23 @@ public class AgeGroupServiceImpl implements AgeGroupService {
 		}
 	}
 	
-	@PostConstruct
-	private void cacheData(){
-		for(AgeGroup a : repo.findAll()){
-			ageList.add(toView(a));
-		}
+	@Override
+	public AgeGroup findById(String id) {
+		return repo.findOne(id);
 	}
 
-	private AgeGroupView toView(AgeGroup a){
+	@PostConstruct
+	private void cacheData(){
+		mapAgeGrp();
+	}
+
+	
+	@Override
+	public boolean checkAgeGrpIndex(String index) {
+		return repo.exists(index);
+	}
+
+	private AgeGroupView map(AgeGroup a){
 		AgeGroupView b = new AgeGroupView();
 		if(null != a){
 			b.setGroupId(a.getGroupId());
@@ -96,14 +96,28 @@ public class AgeGroupServiceImpl implements AgeGroupService {
 		return b;
 	}
 	
-	private AgeGroup toEntity(AgeGroupView a){
+	private AgeGroup map(AgeGroupView a){
 		AgeGroup b = new AgeGroup();
-		if(null != a){
+		if(null != a && repo.exists(a.getGroupId())){
 			b.setGroupId(a.getGroupId());
 			b.setFromAge(a.getFromAge());
 			b.setToAge(a.getToAge());
+		}else {
+			throw new ValidationException(ErrorCode.INVALID_AGE_GROUP_INDEX);
 		}
 		return b;
 	}
 	
+	private List<AgeGroupView> mapAgeGrp() {
+		if(null == ageList || ageList.isEmpty()) {
+			ageList = new ArrayList<>();
+		}
+		if(repo.findAll().size() != ageList.size()) {
+			ageList.clear();
+			for(AgeGroup a : repo.findAll()){
+				ageList.add(map(a));
+			}
+		}
+		return ageList;
+	}
 }

@@ -35,7 +35,7 @@ public class PatientController {
 		return new ResponseEntity<>(resp, HttpStatus.OK);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/getPatient", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, value = "/get-patient", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<?> getPatient(@RequestBody PatientView p) {
 			
@@ -56,7 +56,7 @@ public class PatientController {
 		}
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/addPatient", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, value = "/add-patient", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<?> addPatient(@RequestBody PatientView p) {
 

@@ -45,9 +45,9 @@ public class AgeGroupServiceImpl implements AgeGroupService {
 	public boolean checkByAge(BigDecimal fromAge, BigDecimal toAge) {
 		List<AgeGroup> ageGrpList = repo.checkByAge(fromAge, toAge);
 		if(null != ageGrpList && !ageGrpList.isEmpty()) {
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	@Override
@@ -55,16 +55,19 @@ public class AgeGroupServiceImpl implements AgeGroupService {
 	public AgeGroupView addAgeGrp(AgeGroupView ageGrp) {
 		AgeGroup ageGroup = map(ageGrp);
 		if(null != ageGroup.getFromAge() && null != ageGroup.getToAge()) {
-			if(!checkByAge(ageGroup.getFromAge(), ageGroup.getToAge())) {
-				ageGroup.setGroupId(new StringBuilder()
-						.append(String.valueOf(ageGroup.getFromAge()))
-						.append("to")
-						.append(String.valueOf(ageGroup.getToAge()))
-						.toString());
-				return map(repo.saveAndFlush(ageGroup));
-			}else {
+			if(checkByAge(ageGroup.getFromAge(), ageGroup.getToAge())) {
 				throw new ValidationException(ErrorCode.DUPLICATE_AGE_GRP);
 			}
+			if(ageGroup.getToAge().compareTo(ageGroup.getFromAge()) <= 0) {
+				throw new ValidationException(ErrorCode.TO_AGE_SMALLER_THAN_FROM_AGE);
+			}
+			ageGroup.setGroupId(new StringBuilder()
+					.append(String.valueOf(ageGroup.getFromAge()))
+					.append("to")
+					.append(String.valueOf(ageGroup.getToAge()))
+					.toString());
+			return map(repo.saveAndFlush(ageGroup));
+			
 		}else {
 			throw new ValidationException(ErrorCode.INVALID_INPUT);
 		}
@@ -98,7 +101,7 @@ public class AgeGroupServiceImpl implements AgeGroupService {
 	
 	private AgeGroup map(AgeGroupView a){
 		AgeGroup b = new AgeGroup();
-		if(null != a && repo.exists(a.getGroupId())){
+		if(null != a && !repo.exists(a.getGroupId())){
 			b.setGroupId(a.getGroupId());
 			b.setFromAge(a.getFromAge());
 			b.setToAge(a.getToAge());

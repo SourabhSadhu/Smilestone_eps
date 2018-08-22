@@ -8,7 +8,7 @@ import com.my.portal.model.ToothQuadrentView;
 public interface ToothQuadrentService {
 	
 	ToothQuadrent findById(long id);
-	List<ToothQuadrentView> getToothQuadrent();
+	List<ToothQuadrentView> findAll();
 	boolean isToothQuadrentAvailable(long toothIndex);
 	ToothQuadrentView addToothQuadrent(ToothQuadrentView view);
 }

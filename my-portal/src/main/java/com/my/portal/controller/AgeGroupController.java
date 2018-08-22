@@ -36,9 +36,9 @@ public class AgeGroupController {
 		return new ResponseEntity<>(resp, HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/getAgeGroup", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.GET, value = "/get-age-group", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<?> getAgeGroup(@RequestParam(required = false, value = "age") BigDecimal age) {
+	public ResponseEntity<?> getAgeGroup(@RequestParam(required = true, value = "age") BigDecimal age) {
 
 		try {
 			return new ResponseEntity<>(CommonUtils.getResp(ageGrpService.getFromAgeToAge(age)), HttpStatus.OK);
@@ -52,7 +52,7 @@ public class AgeGroupController {
 		}
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/addAgeGroup", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, value = "/add-age-group", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<?> addAgeGroup(@RequestBody AgeGroupView ageGroupView) {
 

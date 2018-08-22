@@ -41,7 +41,7 @@ public class MedicalHistoryServiceImpl implements MedicalHistoryService {
 
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
-	public List<MedicalHistoryView> getAllMedicalHistory() {
+	public List<MedicalHistoryView> findAll() {
 		return toView(repo.findAll());
 	}
 	

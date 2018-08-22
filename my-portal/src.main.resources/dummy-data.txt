@@ -1,0 +1,216 @@
+http://localhost:12000/my-portal/tooth-qdr/get-all
+{
+    "status": "SUCCESS",
+    "desc": null,
+    "resp": [
+        {
+            "toothIndex": 18,
+            "toothNumber": 8,
+            "toothQdr": 1
+        },
+        {
+            "toothIndex": 17,
+            "toothNumber": 7,
+            "toothQdr": 1
+        },
+        {
+            "toothIndex": 16,
+            "toothNumber": 6,
+            "toothQdr": 1
+        },
+        {
+            "toothIndex": 15,
+            "toothNumber": 5,
+            "toothQdr": 1
+        },
+        {
+            "toothIndex": 14,
+            "toothNumber": 4,
+            "toothQdr": 1
+        },
+        {
+            "toothIndex": 13,
+            "toothNumber": 3,
+            "toothQdr": 1
+        },
+        {
+            "toothIndex": 12,
+            "toothNumber": 2,
+            "toothQdr": 1
+        },
+        {
+            "toothIndex": 11,
+            "toothNumber": 1,
+            "toothQdr": 1
+        },
+        {
+            "toothIndex": 28,
+            "toothNumber": 8,
+            "toothQdr": 2
+        },
+        {
+            "toothIndex": 27,
+            "toothNumber": 7,
+            "toothQdr": 2
+        },
+        {
+            "toothIndex": 26,
+            "toothNumber": 6,
+            "toothQdr": 2
+        },
+        {
+            "toothIndex": 25,
+            "toothNumber": 5,
+            "toothQdr": 2
+        },
+        {
+            "toothIndex": 24,
+            "toothNumber": 4,
+            "toothQdr": 2
+        },
+        {
+            "toothIndex": 23,
+            "toothNumber": 3,
+            "toothQdr": 2
+        },
+        {
+            "toothIndex": 22,
+            "toothNumber": 2,
+            "toothQdr": 2
+        },
+        {
+            "toothIndex": 21,
+            "toothNumber": 1,
+            "toothQdr": 2
+        },
+        {
+            "toothIndex": 38,
+            "toothNumber": 8,
+            "toothQdr": 3
+        },
+        {
+            "toothIndex": 37,
+            "toothNumber": 7,
+            "toothQdr": 3
+        },
+        {
+            "toothIndex": 36,
+            "toothNumber": 6,
+            "toothQdr": 3
+        },
+        {
+            "toothIndex": 35,
+            "toothNumber": 5,
+            "toothQdr": 3
+        },
+        {
+            "toothIndex": 34,
+            "toothNumber": 4,
+            "toothQdr": 3
+        },
+        {
+            "toothIndex": 33,
+            "toothNumber": 3,
+            "toothQdr": 3
+        },
+        {
+            "toothIndex": 32,
+            "toothNumber": 2,
+            "toothQdr": 3
+        },
+        {
+            "toothIndex": 31,
+            "toothNumber": 1,
+            "toothQdr": 3
+        },
+        {
+            "toothIndex": 48,
+            "toothNumber": 8,
+            "toothQdr": 4
+        },
+        {
+            "toothIndex": 47,
+            "toothNumber": 7,
+            "toothQdr": 4
+        },
+        {
+            "toothIndex": 46,
+            "toothNumber": 6,
+            "toothQdr": 4
+        },
+        {
+            "toothIndex": 45,
+            "toothNumber": 5,
+            "toothQdr": 4
+        },
+        {
+            "toothIndex": 44,
+            "toothNumber": 4,
+            "toothQdr": 4
+        },
+        {
+            "toothIndex": 43,
+            "toothNumber": 3,
+            "toothQdr": 4
+        },
+        {
+            "toothIndex": 42,
+            "toothNumber": 2,
+            "toothQdr": 4
+        },
+        {
+            "toothIndex": 41,
+            "toothNumber": 1,
+            "toothQdr": 4
+        }
+    ]
+}
+
+http://localhost:12000/my-portal/tooth-qdr/add-tooth-quadrent
+{
+	"toothIndex" : 49,
+	"toothNumber" : 9,
+	"toothQdr" : 4
+}
+{
+    "status": "SUCCESS",
+    "desc": null,
+    "resp": {
+        "toothIndex": 49,
+        "toothNumber": 9,
+        "toothQdr": 4
+    }
+}
+
+
+
+http://localhost:12000/my-portal/age-group/get-age-group?age=50
+FAILURE RESPONSE
+{
+    "status": "FAILURE",
+    "desc": "Data not found",
+    "resp": null
+}
+SUCCESS RESPONSE
+{
+    "status": "SUCCESS",
+    "desc": null,
+    "resp": {
+        "groupId": "3to13",
+        "fromAge": 3,
+        "toAge": 13
+    }
+}
+http://localhost:12000/my-portal/age-group/add-age-group
+{
+	"groupId" : "10to20",
+	"fromAge" : 9,
+	"toAge" : 4
+}
+FAILURE RESPONSE
+{
+    "status": "FAILURE",
+    "desc": "Age group not found",
+    "resp": null
+}
+

@@ -27,31 +27,48 @@ public class ToothQuadrentServiceImpl implements ToothQuadrentService {
 	@PostConstruct
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
 	private void loadAll(){
-		mapAll();
+		mapAll(true);
 	}
 	
 	@Override
-	public List<ToothQuadrentView> getToothQuadrent() {
-		return mapAll();
+	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
+	public List<ToothQuadrentView> findAll() {
+		return mapAll(false);
 	}
 
 	@Override
+	@Transactional(isolation = Isolation.READ_COMMITTED)
 	public ToothQuadrentView addToothQuadrent(ToothQuadrentView view) {
 		if(null != view && 
 				0 != view.getToothIndex() &&
 				BigDecimal.ZERO.compareTo(view.getToothQdr()) < 0 &&
-				BigDecimal.ZERO.compareTo(view.getToothNumber()) < 0
+				BigDecimal.ZERO.compareTo(view.getToothNumber()) < 0 &&
+				11 <= view.getToothIndex() &&  view.getToothIndex() <= 48
 				)	
-		{
-			ToothQuadrentView v = map(repo.saveAndFlush(map(view)));
-			return v;
+		{			
+			//TODO: GOJ DANT MAPPING??			
+			if(view.getToothQdr().longValue() <= 4  && view.getToothQdr().longValue() == view.getToothIndex()/10) {
+				if(view.getToothNumber().longValue() <= 8  && view.getToothQdr().longValue() == view.getToothIndex()%10) {
+					if(null != repo.findOne(view.getToothIndex())) {
+						throw new ValidationException(ErrorCode.DUPLICATE_TOOTH_INDEX);
+					}
+					ToothQuadrentView v = map(repo.saveAndFlush(map(view)));
+					mapAll(true);
+					return v;
+				}else {
+					throw new ValidationException(ErrorCode.INVALID_TOOTH_QUADRENT_NUMBER);
+				}
+			}else {
+				throw new ValidationException(ErrorCode.INVALID_TOOTH_QUADRENT_QUADRENT);
+			}
 		}else {
-			throw new ValidationException(ErrorCode.INVALID_TOOTH_QUADRENT);
+			throw new ValidationException(ErrorCode.INVALID_TOOTH_QUADRENT_INDEX);
 		}
 		
 	}
 	
 	@Override
+	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
 	public boolean isToothQuadrentAvailable(long toothIndex) {
 		return repo.exists(Long.valueOf(toothIndex));
 	}
@@ -81,11 +98,11 @@ public class ToothQuadrentServiceImpl implements ToothQuadrentService {
 		return tq;
 	}
 	
-	private List<ToothQuadrentView> mapAll(){
+	private List<ToothQuadrentView> mapAll(boolean reload){
 		if(null == tqvList){
 			tqvList = new ArrayList<>();
 		}
-		if(repo.findAll().size() != tqvList.size()) {
+		if(reload && repo.findAll().size() != tqvList.size()) {
 			for(ToothQuadrent tq : repo.findAll()){
 				tqvList.add(map(tq));
 			}

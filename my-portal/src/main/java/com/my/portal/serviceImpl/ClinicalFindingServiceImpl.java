@@ -84,7 +84,7 @@ public class ClinicalFindingServiceImpl implements ClinicalFindingService {
 					f.setFName(v.getFindingName());
 					f.setToothQuadrent(t);
 				}else {
-					throw new ValidationException(ErrorCode.INVALID_TOOTH_QUADRENT);
+					throw new ValidationException(ErrorCode.INVALID_TOOTH_QUADRENT_INDEX);
 				}
 			}else {
 				throw new ValidationException(ErrorCode.INVALID_AGE_GROUP_INDEX);

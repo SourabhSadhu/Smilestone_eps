@@ -9,8 +9,9 @@ public class TreatmentPlanView implements Serializable {
 	private Long trtId;
 	private String trtDesc;
 	private String trtName;
-	private List<MedicineView> medicines;
+	private List<MedicineMasterView> medicines;
 	private ClinicalFindingView clinicalFindingBean;
+	private long clinicalFindingId;
 
 	public TreatmentPlanView() {
 	}
@@ -39,22 +40,22 @@ public class TreatmentPlanView implements Serializable {
 		this.trtName = trtName;
 	}
 
-	public List<MedicineView> getMedicines() {
+	public List<MedicineMasterView> getMedicines() {
 		return this.medicines;
 	}
 
-	public void setMedicines(List<MedicineView> medicines) {
+	public void setMedicines(List<MedicineMasterView> medicines) {
 		this.medicines = medicines;
 	}
 
-	public MedicineView addMedicine(MedicineView medicine) {
+	public MedicineMasterView addMedicine(MedicineMasterView medicine) {
 		getMedicines().add(medicine);
 		medicine.setTreatmentPlan(this);
 
 		return medicine;
 	}
 
-	public MedicineView removeMedicine(MedicineView medicine) {
+	public MedicineMasterView removeMedicine(MedicineMasterView medicine) {
 		getMedicines().remove(medicine);
 		medicine.setTreatmentPlan(null);
 
@@ -69,4 +70,13 @@ public class TreatmentPlanView implements Serializable {
 		this.clinicalFindingBean = clinicalFindingBean;
 	}
 
+	public long getClinicalFindingId() {
+		return clinicalFindingId;
+	}
+
+	public void setClinicalFindingId(long clinicalFindingId) {
+		this.clinicalFindingId = clinicalFindingId;
+	}
+
+	
 }

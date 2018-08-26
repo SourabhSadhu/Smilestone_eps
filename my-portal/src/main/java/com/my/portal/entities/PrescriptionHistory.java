@@ -1,8 +1,18 @@
 package com.my.portal.entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 
 /**
@@ -11,7 +21,11 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name="prescription_history")
-@NamedQuery(name="PrescriptionHistory.findAll", query="SELECT p FROM PrescriptionHistory p")
+@NamedQueries({
+	@NamedQuery(name="PrescriptionHistory.findAll", query="SELECT p FROM PrescriptionHistory p"),
+	@NamedQuery(name="PrescriptionHistory.findByPatientId", query="SELECT p FROM PrescriptionHistory p WHERE p.patient.pId = :patientId"),
+	@NamedQuery(name="PrescriptionHistory.getByDateRange", query="SELECT p FROM PrescriptionHistory p")
+})
 public class PrescriptionHistory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -47,6 +61,14 @@ public class PrescriptionHistory implements Serializable {
 
 	@Column(name="ts_modified")
 	private Timestamp tsModified;
+
+	//bi-directional many-to-one association to FeesBreakup
+	@OneToMany(mappedBy="prescriptionHistory")
+	private List<FeesBreakup> feesBreakups;
+
+	//bi-directional many-to-one association to MedicineHistory
+	@OneToMany(mappedBy="prescriptionHistory")
+	private List<MedicineHistory> medicineHistories;
 
 	//bi-directional many-to-one association to Patient
 	@ManyToOne
@@ -150,6 +172,50 @@ public class PrescriptionHistory implements Serializable {
 
 	public void setTsModified(Timestamp tsModified) {
 		this.tsModified = tsModified;
+	}
+
+	public List<FeesBreakup> getFeesBreakups() {
+		return this.feesBreakups;
+	}
+
+	public void setFeesBreakups(List<FeesBreakup> feesBreakups) {
+		this.feesBreakups = feesBreakups;
+	}
+
+	public FeesBreakup addFeesBreakup(FeesBreakup feesBreakup) {
+		getFeesBreakups().add(feesBreakup);
+		feesBreakup.setPrescriptionHistory(this);
+
+		return feesBreakup;
+	}
+
+	public FeesBreakup removeFeesBreakup(FeesBreakup feesBreakup) {
+		getFeesBreakups().remove(feesBreakup);
+		feesBreakup.setPrescriptionHistory(null);
+
+		return feesBreakup;
+	}
+
+	public List<MedicineHistory> getMedicineHistories() {
+		return this.medicineHistories;
+	}
+
+	public void setMedicineHistories(List<MedicineHistory> medicineHistories) {
+		this.medicineHistories = medicineHistories;
+	}
+
+	public MedicineHistory addMedicineHistory(MedicineHistory medicineHistory) {
+		getMedicineHistories().add(medicineHistory);
+		medicineHistory.setPrescriptionHistory(this);
+
+		return medicineHistory;
+	}
+
+	public MedicineHistory removeMedicineHistory(MedicineHistory medicineHistory) {
+		getMedicineHistories().remove(medicineHistory);
+		medicineHistory.setPrescriptionHistory(null);
+
+		return medicineHistory;
 	}
 
 	public Patient getPatient() {

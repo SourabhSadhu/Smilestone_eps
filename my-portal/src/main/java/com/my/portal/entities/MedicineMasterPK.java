@@ -1,15 +1,27 @@
-package com.my.portal.model;
+package com.my.portal.entities;
 
 import java.io.Serializable;
+import javax.persistence.*;
 
-public class MedicinePKView implements Serializable {
+/**
+ * The primary key class for the medicine_master database table.
+ * 
+ */
+@Embeddable
+public class MedicineMasterPK implements Serializable {
+	//default serial version id, required for serializable classes.
+	private static final long serialVersionUID = 1L;
 
-	private static final long serialVersionUID = 6214674421303370899L;
+	@Column(name="medicine_name")
 	private String medicineName;
+
+	@Column(name="disease_code")
 	private String diseaseCode;
+
+	@Column(name="age_group", insertable=false, updatable=false)
 	private String ageGroup;
 
-	public MedicinePKView() {
+	public MedicineMasterPK() {
 	}
 	public String getMedicineName() {
 		return this.medicineName;
@@ -34,10 +46,10 @@ public class MedicinePKView implements Serializable {
 		if (this == other) {
 			return true;
 		}
-		if (!(other instanceof MedicinePKView)) {
+		if (!(other instanceof MedicineMasterPK)) {
 			return false;
 		}
-		MedicinePKView castOther = (MedicinePKView)other;
+		MedicineMasterPK castOther = (MedicineMasterPK)other;
 		return 
 			this.medicineName.equals(castOther.medicineName)
 			&& this.diseaseCode.equals(castOther.diseaseCode)

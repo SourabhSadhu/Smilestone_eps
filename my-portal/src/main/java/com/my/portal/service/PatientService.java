@@ -3,6 +3,7 @@ package com.my.portal.service;
 import java.math.BigDecimal;
 import java.util.List;
 
+import com.my.portal.entities.Patient;
 import com.my.portal.model.PatientView;
 
 public interface PatientService {
@@ -15,4 +16,7 @@ public interface PatientService {
 	List<PatientView> findByContactNo(BigDecimal cNo);
 	PatientView addPatient(PatientView p);
 	List<PatientView> getPatient(PatientView p);
+	PatientView map(Patient p);
+	List<PatientView> map(List<Patient> pList);
+	Patient map(PatientView pv);
 }

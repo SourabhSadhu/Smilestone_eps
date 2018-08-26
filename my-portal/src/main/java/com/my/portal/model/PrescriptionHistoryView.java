@@ -19,7 +19,7 @@ public class PrescriptionHistoryView implements Serializable {
 	private String treatmentPlan;
 	private Timestamp tsCreated;
 	private Timestamp tsModified;
-//	private Patient patient;
+	private PatientView patient;
 	public PrescriptionHistoryView() {
 	}
 
@@ -119,11 +119,11 @@ public class PrescriptionHistoryView implements Serializable {
 		this.tsModified = tsModified;
 	}
 
-//	public Patient getPatient() {
-//		return this.patient;
-//	}
-//
-//	public void setPatient(Patient patient) {
-//		this.patient = patient;
-//	}
+	public PatientView getPatient() {
+		return this.patient;
+	}
+
+	public void setPatient(PatientView patient) {
+		this.patient = patient;
+	}
 }

@@ -2,27 +2,26 @@ package com.my.portal.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class FeesBreakupView implements Serializable {
 	
 	private static final long serialVersionUID = 7870137900693294589L;
 	private Long fId;
 	private BigDecimal amount;
-	private Long clinicalFindingsRef;
 	private String notes;
-	private Long patientId;
-	private Long prescriptionId;
-	private Date tsCreated;
-
+	private long tsCreated;
+	private Long clinicalFindingRef;
+	private Long patientRef;
+	private Long prescriptionHistoryRef;
 	public FeesBreakupView() {
 	}
 
-	public Long getFId() {
-		return this.fId;
+	public Long getfId() {
+		return fId;
 	}
 
-	public void setFId(Long fId) {
+	public void setfId(Long fId) {
 		this.fId = fId;
 	}
 
@@ -34,14 +33,6 @@ public class FeesBreakupView implements Serializable {
 		this.amount = amount;
 	}
 
-	public Long getClinicalFindingsRef() {
-		return this.clinicalFindingsRef;
-	}
-
-	public void setClinicalFindingsRef(Long clinicalFindingsRef) {
-		this.clinicalFindingsRef = clinicalFindingsRef;
-	}
-
 	public String getNotes() {
 		return this.notes;
 	}
@@ -50,28 +41,36 @@ public class FeesBreakupView implements Serializable {
 		this.notes = notes;
 	}
 
-	public Long getPatientId() {
-		return this.patientId;
-	}
-
-	public void setPatientId(Long patientId) {
-		this.patientId = patientId;
-	}
-
-	public Long getPrescriptionId() {
-		return this.prescriptionId;
-	}
-
-	public void setPrescriptionId(Long prescriptionId) {
-		this.prescriptionId = prescriptionId;
-	}
-
-	public Date getTsCreated() {
+	public long getTsCreated() {
 		return this.tsCreated;
 	}
 
-	public void setTsCreated(Date tsCreated) {
+	public void setTsCreated(long tsCreated) {
 		this.tsCreated = tsCreated;
+	}
+
+	public Long getClinicalFindingRef() {
+		return clinicalFindingRef;
+	}
+
+	public void setClinicalFindingRef(Long clinicalFindingRef) {
+		this.clinicalFindingRef = clinicalFindingRef;
+	}
+
+	public Long getPatientRef() {
+		return patientRef;
+	}
+
+	public void setPatientRef(Long patientRef) {
+		this.patientRef = patientRef;
+	}
+
+	public Long getPrescriptionHistoryRef() {
+		return prescriptionHistoryRef;
+	}
+
+	public void setPrescriptionHistoryRef(Long prescriptionHistoryRef) {
+		this.prescriptionHistoryRef = prescriptionHistoryRef;
 	}
 
 }

@@ -2,6 +2,7 @@ package com.my.portal.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -11,7 +12,11 @@ import java.util.List;
  */
 @Entity
 @Table(name="treatment_plan")
-@NamedQuery(name="TreatmentPlan.findAll", query="SELECT t FROM TreatmentPlan t")
+@NamedQueries({
+	@NamedQuery(name="TreatmentPlan.findAll", query="SELECT t FROM TreatmentPlan t"),
+	@NamedQuery(name="TreatmentPlan.findByClinicalFindingsID", query="SELECT t FROM TreatmentPlan t WHERE t.clinicalFindingBean.fId = :cfId"),
+	@NamedQuery(name="TreatmentPlan.findByTreatmentName", query="SELECT t FROM TreatmentPlan t WHERE t.trtName = :trtName")
+})
 public class TreatmentPlan implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -27,7 +32,7 @@ public class TreatmentPlan implements Serializable {
 
 	//bi-directional many-to-one association to Medicine
 	@OneToMany(mappedBy="treatmentPlan")
-	private List<Medicine> medicines;
+	private List<MedicineMaster> medicines;
 
 	//bi-directional many-to-one association to ClinicalFinding
 	@ManyToOne
@@ -61,22 +66,22 @@ public class TreatmentPlan implements Serializable {
 		this.trtName = trtName;
 	}
 
-	public List<Medicine> getMedicines() {
+	public List<MedicineMaster> getMedicines() {
 		return this.medicines;
 	}
 
-	public void setMedicines(List<Medicine> medicines) {
+	public void setMedicines(List<MedicineMaster> medicines) {
 		this.medicines = medicines;
 	}
 
-	public Medicine addMedicine(Medicine medicine) {
+	public MedicineMaster addMedicine(MedicineMaster medicine) {
 		getMedicines().add(medicine);
 		medicine.setTreatmentPlan(this);
 
 		return medicine;
 	}
 
-	public Medicine removeMedicine(Medicine medicine) {
+	public MedicineMaster removeMedicine(MedicineMaster medicine) {
 		getMedicines().remove(medicine);
 		medicine.setTreatmentPlan(null);
 

@@ -13,13 +13,12 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import com.my.portal.ErrorCode;
 import com.my.portal.ValidationException;
 import com.my.portal.entities.AgeGroup;
 import com.my.portal.entities.ClinicalFinding;
 import com.my.portal.entities.ToothQuadrent;
 import com.my.portal.model.ClinicalFindingView;
-import com.my.portal.model.ErrorCode;
-import com.my.portal.model.ToothQuadrentView;
 import com.my.portal.repositories.ClinicalFindingRepository;
 import com.my.portal.service.AgeGroupService;
 import com.my.portal.service.ClinicalFindingService;
@@ -59,7 +58,8 @@ public class ClinicalFindingServiceImpl implements ClinicalFindingService {
 		return mapAllFinding();
 	}
 
-	private ClinicalFindingView map(ClinicalFinding f) {
+	@Override
+	public ClinicalFindingView map(ClinicalFinding f) {
 		ClinicalFindingView v = new ClinicalFindingView();
 		if(null != f) {
 			v.setAgeGroupIndex(f.getAgeGroupBean().getGroupId());
@@ -71,7 +71,8 @@ public class ClinicalFindingServiceImpl implements ClinicalFindingService {
 		return v;
 	}
 	
-	private ClinicalFinding map(ClinicalFindingView v) {
+	@Override
+	public ClinicalFinding map(ClinicalFindingView v) {
 		ClinicalFinding f = new ClinicalFinding();
 		if(null != v) {
 			if(StringUtils.hasText(v.getAgeGroupIndex()) && ageGrpService.checkAgeGrpIndex(v.getAgeGroupIndex())) {
@@ -93,7 +94,8 @@ public class ClinicalFindingServiceImpl implements ClinicalFindingService {
 		return f;
 	}
 	
-	private List<ClinicalFindingView> mapAllFinding() {
+	@Override
+	public List<ClinicalFindingView> mapAllFinding() {
 		if(null == cfvList) {
 			cfvList = new ArrayList<>();
 		}

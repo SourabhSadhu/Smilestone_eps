@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.my.portal.model.ApiResponse;
-import com.my.portal.model.ErrorCode;
 import com.my.portal.model.ResponseStatus;
 
 public class CommonUtils {

@@ -1,18 +1,40 @@
 package com.my.portal.entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Timestamp;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 
 /**
  * The persistent class for the fees_breakup database table.
- * 
+ *  findByPatientId(@Param("patientId") Long patientId);
+	findByPrescriptionId(@Param("prescriptionId") Long prescriptionId);
+	findByClinicalFindingId(@Param("clinicalFindingId") Long clinicalFindingId);
+	findByPatientAndPrescriptionId(@Param("patientId") Long patientId, @Param("prescriptionId") Long prescriptionId);
+	findByFeesBreakup(@Param("patientId") Long patientId, @Param("prescriptionId") Long prescriptionId, @Param("clinicalFindingId") Long clinicalFindingId);
  */
 @Entity
 @Table(name="fees_breakup")
-@NamedQuery(name="FeesBreakup.findAll", query="SELECT f FROM FeesBreakup f")
+@NamedQueries({
+	@NamedQuery(name="FeesBreakup.findAll", query="SELECT f FROM FeesBreakup f"),
+	@NamedQuery(name="FeesBreakup.findByPatientId", query="SELECT f FROM FeesBreakup f WHERE f.patient.pId = :patientId"),
+	@NamedQuery(name="FeesBreakup.findByPrescriptionId", query="SELECT f FROM FeesBreakup f WHERE f.prescriptionHistory.prescriptionId = :prescriptionId"),
+	@NamedQuery(name="FeesBreakup.findByClinicalFindingId", query="SELECT f FROM FeesBreakup f WHERE f.clinicalFinding.fId = :clinicalFindingId"),
+	@NamedQuery(name="FeesBreakup.findByPatientAndPrescriptionId", 
+		query="SELECT f FROM FeesBreakup f WHERE f.patient.pId = :patientId AND f.prescriptionHistory.prescriptionId = :prescriptionId"),
+	@NamedQuery(name="FeesBreakup.findByFeesBreakup", 
+			query="SELECT f FROM FeesBreakup f WHERE f.patient.pId = :patientId AND f.prescriptionHistory.prescriptionId = :prescriptionId"+
+			" AND f.clinicalFinding.fId = :clinicalFindingId")
+})
 public class FeesBreakup implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -22,20 +44,25 @@ public class FeesBreakup implements Serializable {
 
 	private BigDecimal amount;
 
-	@Column(name="clinical_findings_ref")
-	private Long clinicalFindingsRef;
-
 	private String notes;
 
-	@Column(name="patient_id")
-	private Long patientId;
-
-	@Column(name="prescription_id")
-	private Long prescriptionId;
-
-	@Temporal(TemporalType.DATE)
 	@Column(name="ts_created")
-	private Date tsCreated;
+	private Timestamp tsCreated;
+
+	//bi-directional many-to-one association to ClinicalFinding
+	@ManyToOne
+	@JoinColumn(name="clinical_findings_ref")
+	private ClinicalFinding clinicalFinding;
+
+	//bi-directional many-to-one association to Patient
+	@ManyToOne
+	@JoinColumn(name="patient_id")
+	private Patient patient;
+
+	//bi-directional many-to-one association to PrescriptionHistory
+	@ManyToOne
+	@JoinColumn(name="prescription_id")
+	private PrescriptionHistory prescriptionHistory;
 
 	public FeesBreakup() {
 	}
@@ -56,14 +83,6 @@ public class FeesBreakup implements Serializable {
 		this.amount = amount;
 	}
 
-	public Long getClinicalFindingsRef() {
-		return this.clinicalFindingsRef;
-	}
-
-	public void setClinicalFindingsRef(Long clinicalFindingsRef) {
-		this.clinicalFindingsRef = clinicalFindingsRef;
-	}
-
 	public String getNotes() {
 		return this.notes;
 	}
@@ -72,28 +91,36 @@ public class FeesBreakup implements Serializable {
 		this.notes = notes;
 	}
 
-	public Long getPatientId() {
-		return this.patientId;
-	}
-
-	public void setPatientId(Long patientId) {
-		this.patientId = patientId;
-	}
-
-	public Long getPrescriptionId() {
-		return this.prescriptionId;
-	}
-
-	public void setPrescriptionId(Long prescriptionId) {
-		this.prescriptionId = prescriptionId;
-	}
-
-	public Date getTsCreated() {
+	public Timestamp getTsCreated() {
 		return this.tsCreated;
 	}
 
-	public void setTsCreated(Date tsCreated) {
+	public void setTsCreated(Timestamp tsCreated) {
 		this.tsCreated = tsCreated;
+	}
+
+	public ClinicalFinding getClinicalFinding() {
+		return this.clinicalFinding;
+	}
+
+	public void setClinicalFinding(ClinicalFinding clinicalFinding) {
+		this.clinicalFinding = clinicalFinding;
+	}
+
+	public Patient getPatient() {
+		return this.patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
+
+	public PrescriptionHistory getPrescriptionHistory() {
+		return this.prescriptionHistory;
+	}
+
+	public void setPrescriptionHistory(PrescriptionHistory prescriptionHistory) {
+		this.prescriptionHistory = prescriptionHistory;
 	}
 
 }

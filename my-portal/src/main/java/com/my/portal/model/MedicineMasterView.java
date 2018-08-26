@@ -4,25 +4,43 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 
-public class MedicineView implements Serializable {
+public class MedicineMasterView implements Serializable {
 
 	private static final long serialVersionUID = -4709864767652298620L;
-	private MedicinePKView id;
+	private String medicineName;
+	private String diseaseCode;
+	private String ageGroup;
 	private BigDecimal clinicalAvailability;
 	private String diseaseName;
 	private String dosage;
 	private AgeGroupView ageGroupBean;
 	private TreatmentPlanView treatmentPlan;
 
-	public MedicineView() {
+	public MedicineMasterView() {
 	}
 
-	public MedicinePKView getId() {
-		return this.id;
+	public String getMedicineName() {
+		return medicineName;
 	}
 
-	public void setId(MedicinePKView id) {
-		this.id = id;
+	public void setMedicineName(String medicineName) {
+		this.medicineName = medicineName;
+	}
+
+	public String getDiseaseCode() {
+		return diseaseCode;
+	}
+
+	public void setDiseaseCode(String diseaseCode) {
+		this.diseaseCode = diseaseCode;
+	}
+
+	public String getAgeGroup() {
+		return ageGroup;
+	}
+
+	public void setAgeGroup(String ageGroup) {
+		this.ageGroup = ageGroup;
 	}
 
 	public BigDecimal getClinicalAvailability() {

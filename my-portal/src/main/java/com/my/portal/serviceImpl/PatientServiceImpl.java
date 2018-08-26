@@ -13,9 +13,10 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import com.my.portal.CommonConstants.BloodGroup;
+import com.my.portal.ErrorCode;
 import com.my.portal.ValidationException;
 import com.my.portal.entities.Patient;
-import com.my.portal.model.ErrorCode;
 import com.my.portal.model.PatientView;
 import com.my.portal.repositories.PatientRespository;
 import com.my.portal.service.PatientService;
@@ -29,37 +30,37 @@ public class PatientServiceImpl implements PatientService{
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
 	public List<PatientView> findByFirstName(String fName) {
-		return toView(repo.findByFirstName(fName));
+		return map(repo.findByFirstName(fName));
 	}
 	
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
 	public List<PatientView> findByLastName(String lName) {
-		return toView(repo.findByLastName(lName));
+		return map(repo.findByLastName(lName));
 	}
 	
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
 	public List<PatientView> findByFullName(String fName, String lName) {
-		return toView(repo.findByFullName(fName, lName));
+		return map(repo.findByFullName(fName, lName));
 	}
 	
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
 	public List<PatientView> findByDOB(BigDecimal dd, BigDecimal mm, BigDecimal yy) {
-		return toView(repo.findByDOB(dd, mm, yy));
+		return map(repo.findByDOB(dd, mm, yy));
 	}
 
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
 	public List<PatientView> findByDetails(String fName, String lName, BigDecimal dd, BigDecimal mm, BigDecimal yy) {
-		return toView(repo.findByDetails(fName, lName, dd, mm, yy));
+		return map(repo.findByDetails(fName, lName, dd, mm, yy));
 	}
 
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
 	public List<PatientView> findByContactNo(BigDecimal cNo) {
-		return toView(repo.findByContactNo(cNo));
+		return map(repo.findByContactNo(cNo));
 	}
 
 	@Override
@@ -74,7 +75,7 @@ public class PatientServiceImpl implements PatientService{
 				&& p.getDobDd().compareTo(new BigDecimal(32)) < 1
 				&& p.getDobMm().compareTo(new BigDecimal(13)) < 1				
 				) {			
-			return toView(repo.saveAndFlush(toEntity(p)));
+			return map(repo.saveAndFlush(map(p)));
 		}else {
 			throw new ValidationException(ErrorCode.INVALID_INPUT);
 		}
@@ -107,7 +108,8 @@ public class PatientServiceImpl implements PatientService{
 		}
 	}
 
-	PatientView toView(Patient p){
+	@Override
+	public PatientView map(Patient p){
 		PatientView pv = new PatientView();
 		if(null != p){
 			pv.setContactNo1(p.getContactNo1());
@@ -120,21 +122,27 @@ public class PatientServiceImpl implements PatientService{
 			pv.setLastName(p.getLastName());
 			pv.setPId(p.getPId());			
 			pv.setTsCreated(p.getTsCreated());
+			pv.setWeight(p.getWeight());
+			if(StringUtils.hasText(p.getBloodGroup())){
+				pv.setBloodGroup(BloodGroup.valueOf(p.getBloodGroup()));
+			}
 		}
 		return pv;
 	}
 	
-	List<PatientView> toView(List<Patient> pList){
+	@Override
+	public List<PatientView> map(List<Patient> pList){
 		List<PatientView> pvList = new ArrayList<>();
 		if(null != pList && !pList.isEmpty()){
 			for(Patient p : pList){
-				pvList.add(toView(p));
+				pvList.add(map(p));
 			}
 		}
 		return pvList;
 	}
 	
-	Patient toEntity(PatientView pv){
+	@Override
+	public Patient map(PatientView pv){
 		Patient p = new Patient();
 		if(null != pv){
 			p.setFirstName(p.getFirstName().toLowerCase());
@@ -145,6 +153,10 @@ public class PatientServiceImpl implements PatientService{
 			p.setContactNo1(p.getContactNo1());
 			p.setContactNo2(p.getContactNo2());
 			p.setDiscount(p.getDiscount());
+			p.setWeight(pv.getWeight());
+			if(null != pv.getBloodGroup()){
+				p.setBloodGroup(pv.getBloodGroup().getBloodGroup());
+			}
 			p.setTsCreated(new Timestamp(System.currentTimeMillis()));
 		}
 		return p;

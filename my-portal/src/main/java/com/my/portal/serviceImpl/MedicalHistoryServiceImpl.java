@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.my.portal.ErrorCode;
 import com.my.portal.ValidationException;
 import com.my.portal.entities.MedicalHistory;
 import com.my.portal.entities.MedicalHistoryMaster;
-import com.my.portal.model.ErrorCode;
 import com.my.portal.model.MedicalHistoryView;
 import com.my.portal.repositories.MedicalHistoryRepository;
 import com.my.portal.service.MedicalHistoryMasterService;

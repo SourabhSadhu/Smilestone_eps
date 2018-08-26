@@ -30,6 +30,9 @@ public class Patient implements Serializable {
 	@Column(name="p_id")
 	private Long pId;
 
+	@Column(name="blood_group")
+	private String bloodGroup;
+
 	@Column(name="contact_no1")
 	private BigDecimal contactNo1;
 
@@ -56,13 +59,23 @@ public class Patient implements Serializable {
 	@Column(name="ts_created")
 	private Timestamp tsCreated;
 
-	//bi-directional many-to-one association to PrescriptionHistory
+	private Integer weight;
+
+	//bi-directional many-to-one association to FeesBreakup
 	@OneToMany(mappedBy="patient")
-	private List<PrescriptionHistory> prescriptionHistories;
+	private List<FeesBreakup> feesBreakups;
 
 	//bi-directional many-to-one association to MedicalHistory
 	@OneToMany(mappedBy="patient")
 	private List<MedicalHistory> medicalHistories;
+
+	//bi-directional many-to-one association to MedicineHistory
+	@OneToMany(mappedBy="patient")
+	private List<MedicineHistory> medicineHistories;
+
+	//bi-directional many-to-one association to PrescriptionHistory
+	@OneToMany(mappedBy="patient")
+	private List<PrescriptionHistory> prescriptionHistories;
 
 	public Patient() {
 	}
@@ -73,6 +86,14 @@ public class Patient implements Serializable {
 
 	public void setPId(Long pId) {
 		this.pId = pId;
+	}
+
+	public String getBloodGroup() {
+		return this.bloodGroup;
+	}
+
+	public void setBloodGroup(String bloodGroup) {
+		this.bloodGroup = bloodGroup;
 	}
 
 	public BigDecimal getContactNo1() {
@@ -147,26 +168,34 @@ public class Patient implements Serializable {
 		this.tsCreated = tsCreated;
 	}
 
-	public List<PrescriptionHistory> getPrescriptionHistories() {
-		return this.prescriptionHistories;
+	public Integer getWeight() {
+		return this.weight;
 	}
 
-	public void setPrescriptionHistories(List<PrescriptionHistory> prescriptionHistories) {
-		this.prescriptionHistories = prescriptionHistories;
+	public void setWeight(Integer weight) {
+		this.weight = weight;
 	}
 
-	public PrescriptionHistory addPrescriptionHistory(PrescriptionHistory prescriptionHistory) {
-		getPrescriptionHistories().add(prescriptionHistory);
-		prescriptionHistory.setPatient(this);
-
-		return prescriptionHistory;
+	public List<FeesBreakup> getFeesBreakups() {
+		return this.feesBreakups;
 	}
 
-	public PrescriptionHistory removePrescriptionHistory(PrescriptionHistory prescriptionHistory) {
-		getPrescriptionHistories().remove(prescriptionHistory);
-		prescriptionHistory.setPatient(null);
+	public void setFeesBreakups(List<FeesBreakup> feesBreakups) {
+		this.feesBreakups = feesBreakups;
+	}
 
-		return prescriptionHistory;
+	public FeesBreakup addFeesBreakup(FeesBreakup feesBreakup) {
+		getFeesBreakups().add(feesBreakup);
+		feesBreakup.setPatient(this);
+
+		return feesBreakup;
+	}
+
+	public FeesBreakup removeFeesBreakup(FeesBreakup feesBreakup) {
+		getFeesBreakups().remove(feesBreakup);
+		feesBreakup.setPatient(null);
+
+		return feesBreakup;
 	}
 
 	public List<MedicalHistory> getMedicalHistories() {
@@ -189,6 +218,50 @@ public class Patient implements Serializable {
 		medicalHistory.setPatient(null);
 
 		return medicalHistory;
+	}
+
+	public List<MedicineHistory> getMedicineHistories() {
+		return this.medicineHistories;
+	}
+
+	public void setMedicineHistories(List<MedicineHistory> medicineHistories) {
+		this.medicineHistories = medicineHistories;
+	}
+
+	public MedicineHistory addMedicineHistory(MedicineHistory medicineHistory) {
+		getMedicineHistories().add(medicineHistory);
+		medicineHistory.setPatient(this);
+
+		return medicineHistory;
+	}
+
+	public MedicineHistory removeMedicineHistory(MedicineHistory medicineHistory) {
+		getMedicineHistories().remove(medicineHistory);
+		medicineHistory.setPatient(null);
+
+		return medicineHistory;
+	}
+
+	public List<PrescriptionHistory> getPrescriptionHistories() {
+		return this.prescriptionHistories;
+	}
+
+	public void setPrescriptionHistories(List<PrescriptionHistory> prescriptionHistories) {
+		this.prescriptionHistories = prescriptionHistories;
+	}
+
+	public PrescriptionHistory addPrescriptionHistory(PrescriptionHistory prescriptionHistory) {
+		getPrescriptionHistories().add(prescriptionHistory);
+		prescriptionHistory.setPatient(this);
+
+		return prescriptionHistory;
+	}
+
+	public PrescriptionHistory removePrescriptionHistory(PrescriptionHistory prescriptionHistory) {
+		getPrescriptionHistories().remove(prescriptionHistory);
+		prescriptionHistory.setPatient(null);
+
+		return prescriptionHistory;
 	}
 
 }

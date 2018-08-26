@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
+import com.my.portal.CommonConstants.BloodGroup;
+
 
 public class PatientView implements Serializable {
 
@@ -18,6 +20,9 @@ public class PatientView implements Serializable {
 	private String firstName;
 	private String lastName;
 	private Timestamp tsCreated;
+	private BloodGroup bloodGroup;
+	private Integer weight;
+	
 //	private List<PrescriptionHistoryView> prescriptionHistories;
 //	private List<MedicalHistoryView> medicalHistories;
 
@@ -103,7 +108,23 @@ public class PatientView implements Serializable {
 	public void setTsCreated(Timestamp tsCreated) {
 		this.tsCreated = tsCreated;
 	}
+	
+	public BloodGroup getBloodGroup() {
+		return bloodGroup;
+	}
 
+	public void setBloodGroup(BloodGroup bloodGroup) {
+		this.bloodGroup = bloodGroup;
+	}
+
+	public Integer getWeight() {
+		return weight;
+	}
+
+	public void setWeight(Integer weight) {
+		this.weight = weight;
+	}
+	
 //	public List<PrescriptionHistoryView> getPrescriptionHistories() {
 //		return this.prescriptionHistories;
 //	}

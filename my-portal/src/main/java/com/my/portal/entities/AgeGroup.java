@@ -36,7 +36,7 @@ public class AgeGroup implements Serializable {
 
 	//bi-directional many-to-one association to Medicine
 	@OneToMany(mappedBy="ageGroupBean")
-	private List<Medicine> medicines;
+	private List<MedicineMaster> medicines;
 
 	public AgeGroup() {
 	}
@@ -87,22 +87,22 @@ public class AgeGroup implements Serializable {
 		return clinicalFinding;
 	}
 
-	public List<Medicine> getMedicines() {
+	public List<MedicineMaster> getMedicines() {
 		return this.medicines;
 	}
 
-	public void setMedicines(List<Medicine> medicines) {
+	public void setMedicines(List<MedicineMaster> medicines) {
 		this.medicines = medicines;
 	}
 
-	public Medicine addMedicine(Medicine medicine) {
+	public MedicineMaster addMedicine(MedicineMaster medicine) {
 		getMedicines().add(medicine);
 		medicine.setAgeGroupBean(this);
 
 		return medicine;
 	}
 
-	public Medicine removeMedicine(Medicine medicine) {
+	public MedicineMaster removeMedicine(MedicineMaster medicine) {
 		getMedicines().remove(medicine);
 		medicine.setAgeGroupBean(null);
 

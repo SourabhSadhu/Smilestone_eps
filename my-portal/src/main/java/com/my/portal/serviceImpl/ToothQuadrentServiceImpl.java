@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.my.portal.ErrorCode;
 import com.my.portal.ValidationException;
 import com.my.portal.entities.ToothQuadrent;
-import com.my.portal.model.ErrorCode;
 import com.my.portal.model.ToothQuadrentView;
 import com.my.portal.repositories.ToothQuadrentRepository;
 import com.my.portal.service.ToothQuadrentService;
@@ -48,7 +48,7 @@ public class ToothQuadrentServiceImpl implements ToothQuadrentService {
 		{			
 			//TODO: GOJ DANT MAPPING??			
 			if(view.getToothQdr().longValue() <= 4  && view.getToothQdr().longValue() == view.getToothIndex()/10) {
-				if(view.getToothNumber().longValue() <= 8  && view.getToothQdr().longValue() == view.getToothIndex()%10) {
+				if(view.getToothNumber().longValue() <= 8  && view.getToothNumber().longValue() == view.getToothIndex()%10) {
 					if(null != repo.findOne(view.getToothIndex())) {
 						throw new ValidationException(ErrorCode.DUPLICATE_TOOTH_INDEX);
 					}

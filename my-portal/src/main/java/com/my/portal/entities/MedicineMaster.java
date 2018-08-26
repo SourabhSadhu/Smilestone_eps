@@ -6,17 +6,17 @@ import java.math.BigDecimal;
 
 
 /**
- * The persistent class for the medicines database table.
+ * The persistent class for the medicine_master database table.
  * 
  */
 @Entity
-@Table(name="medicines")
-@NamedQuery(name="Medicine.findAll", query="SELECT m FROM Medicine m")
-public class Medicine implements Serializable {
+@Table(name="medicine_master")
+@NamedQuery(name="MedicineMaster.findAll", query="SELECT m FROM MedicineMaster m")
+public class MedicineMaster implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private MedicinePK id;
+	private MedicineMasterPK id;
 
 	@Column(name="clinical_availability")
 	private BigDecimal clinicalAvailability;
@@ -28,7 +28,7 @@ public class Medicine implements Serializable {
 
 	//bi-directional many-to-one association to AgeGroup
 	@ManyToOne
-	@JoinColumn(name="age_group", insertable=false, updatable=false)
+	@JoinColumn(name="age_group")
 	private AgeGroup ageGroupBean;
 
 	//bi-directional many-to-one association to TreatmentPlan
@@ -36,14 +36,14 @@ public class Medicine implements Serializable {
 	@JoinColumn(name="treatment_id")
 	private TreatmentPlan treatmentPlan;
 
-	public Medicine() {
+	public MedicineMaster() {
 	}
 
-	public MedicinePK getId() {
+	public MedicineMasterPK getId() {
 		return this.id;
 	}
 
-	public void setId(MedicinePK id) {
+	public void setId(MedicineMasterPK id) {
 		this.id = id;
 	}
 

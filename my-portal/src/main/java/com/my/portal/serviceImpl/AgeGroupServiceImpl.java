@@ -13,10 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.my.portal.ErrorCode;
 import com.my.portal.ValidationException;
 import com.my.portal.entities.AgeGroup;
 import com.my.portal.model.AgeGroupView;
-import com.my.portal.model.ErrorCode;
 import com.my.portal.repositories.AgeGroupRepository;
 import com.my.portal.service.AgeGroupService;
 
@@ -58,7 +58,7 @@ public class AgeGroupServiceImpl implements AgeGroupService {
 			if(checkByAge(ageGroup.getFromAge(), ageGroup.getToAge())) {
 				throw new ValidationException(ErrorCode.DUPLICATE_AGE_GRP);
 			}
-			if(ageGroup.getToAge().compareTo(ageGroup.getFromAge()) <= 0) {
+			if(ageGroup.getToAge().compareTo(ageGroup.getFromAge()) > 0) {
 				throw new ValidationException(ErrorCode.TO_AGE_SMALLER_THAN_FROM_AGE);
 			}
 			ageGroup.setGroupId(new StringBuilder()

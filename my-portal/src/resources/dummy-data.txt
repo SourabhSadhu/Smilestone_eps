@@ -214,3 +214,21 @@ FAILURE RESPONSE
     "resp": null
 }
 
+
+http://localhost:12000/my-portal/fee/get-config?age_grp=10to30&tooth_grp_idx=2&trtmnt_id=1
+{
+    "status": "SUCCESS",
+    "desc": null,
+    "resp": [
+        {
+            "feeConfigId": 18,
+            "ageGroupId": "10to30",
+            "ageGroupPercent": 10,
+            "baseFee": 60,
+            "toothGroupId": 2,
+            "toothGroupPercent": 10,
+            "treatmentPlanId": 1,
+            "totalFee": 72
+        }
+    ]
+}

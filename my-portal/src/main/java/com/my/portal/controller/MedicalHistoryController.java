@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,15 +12,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.my.portal.CommonUtils;
 import com.my.portal.ValidationException;
-import com.my.portal.model.MedicalHistoryView;
+import com.my.portal.service.MedicalHistoryMasterService;
 import com.my.portal.service.MedicalHistoryService;
 
 @Controller
 @RequestMapping(value = "/medical-history")
 public class MedicalHistoryController {
 
-	@Autowired
-	MedicalHistoryService mhService;
+	@Autowired	MedicalHistoryService mhService;
+	@Autowired MedicalHistoryMasterService mhmService;
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/get-all", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -67,12 +66,13 @@ public class MedicalHistoryController {
 			}
 		}
 	}
-	
-	@RequestMapping(method = RequestMethod.GET, value = "/get-medical-history", produces = MediaType.APPLICATION_JSON_VALUE)
+
+	/*@RequestMapping(method = RequestMethod.POST, value = "/add-medical-history", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<?> getMedicalHistory() {			
+	public ResponseEntity<?> addPatient(@RequestBody MedicalHistoryView view) {
+
 		try {
-			return new ResponseEntity<>(CommonUtils.getResp(mhService.getAllMedicalHistoryMaster()), HttpStatus.OK);
+			return new ResponseEntity<>(CommonUtils.getResp(mhService.addMedicalHistory(view)), HttpStatus.OK);
 		} catch (Exception e) {
 			if(e instanceof ValidationException) {
 				ValidationException ve = (ValidationException) e;
@@ -81,14 +81,14 @@ public class MedicalHistoryController {
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			}
 		}
-	}
-
-	@RequestMapping(method = RequestMethod.POST, value = "/add-medical-history", produces = MediaType.APPLICATION_JSON_VALUE)
+	}*/
+	
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/get-medical-master", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<?> addPatient(@RequestBody MedicalHistoryView view) {
-
+	public ResponseEntity<?> getMedicalHistory() {			
 		try {
-			return new ResponseEntity<>(CommonUtils.getResp(mhService.addMedicalHistory(view)), HttpStatus.OK);
+			return new ResponseEntity<>(CommonUtils.getResp(mhmService.getMedicalHistoryMaster()), HttpStatus.OK);
 		} catch (Exception e) {
 			if(e instanceof ValidationException) {
 				ValidationException ve = (ValidationException) e;

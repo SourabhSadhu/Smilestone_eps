@@ -3,19 +3,18 @@ package com.my.portal.model;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-import com.my.portal.entities.MedicalHistoryMaster;
-import com.my.portal.entities.Patient;
-
 public class MedicalHistoryView implements Serializable {
-	
-	private static final long serialVersionUID = 9129670593956909083L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8596285564750726903L;
 	private Long medicalHistoryId;
 	private String note;
-	private String severity;	
-	//TODO: Change to string for ui
+	private String severity;
 	private Timestamp startedFrom;
-	private String medicalHistoryMasterName;
-	private Patient patient;
+	private MedicalHistoryMasterView medicalHistoryMaster;
+	private PatientView patient;
+	private PrescriptionHistoryView prescriptionHistory;
 
 	public MedicalHistoryView() {
 	}
@@ -52,20 +51,28 @@ public class MedicalHistoryView implements Serializable {
 		this.startedFrom = startedFrom;
 	}
 
-	public String getMedicalHistoryMasterName() {
-		return this.medicalHistoryMasterName;
+	public MedicalHistoryMasterView getMedicalHistoryMaster() {
+		return this.medicalHistoryMaster;
 	}
 
-	public void setMedicalHistoryMasterName(String medicalHistoryMasterName) {
-		this.medicalHistoryMasterName = medicalHistoryMasterName;
+	public void setMedicalHistoryMaster(MedicalHistoryMasterView medicalHistoryMaster) {
+		this.medicalHistoryMaster = medicalHistoryMaster;
 	}
 
-	public Patient getPatient() {
+	public PatientView getPatient() {
 		return this.patient;
 	}
 
-	public void setPatient(Patient patient) {
+	public void setPatient(PatientView patient) {
 		this.patient = patient;
+	}
+
+	public PrescriptionHistoryView getPrescriptionHistory() {
+		return prescriptionHistory;
+	}
+
+	public void setPrescriptionHistory(PrescriptionHistoryView prescriptionHistory) {
+		this.prescriptionHistory = prescriptionHistory;
 	}
 
 }

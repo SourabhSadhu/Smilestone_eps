@@ -7,7 +7,7 @@ import com.my.portal.model.ClinicalFindingView;
 
 public interface ClinicalFindingService {
 
-	ClinicalFindingView findByNameToothAgeGrp(String name, long toothIndex, String ageGrpIndex);
+//	ClinicalFindingView findByNameToothAgeGrp(String name, long toothIndex, String ageGrpIndex);
 	List<ClinicalFindingView> findAll();
 	ClinicalFindingView addClinicalFinding(ClinicalFindingView view);
 	ClinicalFindingView map(ClinicalFinding f);

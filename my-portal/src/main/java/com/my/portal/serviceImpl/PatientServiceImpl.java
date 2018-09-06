@@ -30,37 +30,37 @@ public class PatientServiceImpl implements PatientService{
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
 	public List<PatientView> findByFirstName(String fName) {
-		return map(repo.findByFirstName(fName));
+		return mapAll(repo.findByFirstName(fName));
 	}
 	
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
 	public List<PatientView> findByLastName(String lName) {
-		return map(repo.findByLastName(lName));
+		return mapAll(repo.findByLastName(lName));
 	}
 	
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
 	public List<PatientView> findByFullName(String fName, String lName) {
-		return map(repo.findByFullName(fName, lName));
+		return mapAll(repo.findByFullName(fName, lName));
 	}
 	
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
 	public List<PatientView> findByDOB(BigDecimal dd, BigDecimal mm, BigDecimal yy) {
-		return map(repo.findByDOB(dd, mm, yy));
+		return mapAll(repo.findByDOB(dd, mm, yy));
 	}
 
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
 	public List<PatientView> findByDetails(String fName, String lName, BigDecimal dd, BigDecimal mm, BigDecimal yy) {
-		return map(repo.findByDetails(fName, lName, dd, mm, yy));
+		return mapAll(repo.findByDetails(fName, lName, dd, mm, yy));
 	}
 
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
 	public List<PatientView> findByContactNo(BigDecimal cNo) {
-		return map(repo.findByContactNo(cNo));
+		return mapAll(repo.findByContactNo(cNo));
 	}
 
 	@Override
@@ -79,6 +79,12 @@ public class PatientServiceImpl implements PatientService{
 		}else {
 			throw new ValidationException(ErrorCode.INVALID_INPUT);
 		}
+	}
+
+	
+	@Override
+	public PatientView findById(Long pId) {
+		return map(repo.findOne(pId));
 	}
 
 	@Override
@@ -124,14 +130,15 @@ public class PatientServiceImpl implements PatientService{
 			pv.setTsCreated(p.getTsCreated());
 			pv.setWeight(p.getWeight());
 			if(StringUtils.hasText(p.getBloodGroup())){
-				pv.setBloodGroup(BloodGroup.valueOf(p.getBloodGroup()));
+				pv.setBloodGroup(BloodGroup.getBloodGroup(p.getBloodGroup()));
 			}
+			pv.setImage(p.getImage());
 		}
 		return pv;
 	}
 	
 	@Override
-	public List<PatientView> map(List<Patient> pList){
+	public List<PatientView> mapAll(List<Patient> pList){
 		List<PatientView> pvList = new ArrayList<>();
 		if(null != pList && !pList.isEmpty()){
 			for(Patient p : pList){
@@ -145,8 +152,12 @@ public class PatientServiceImpl implements PatientService{
 	public Patient map(PatientView pv){
 		Patient p = new Patient();
 		if(null != pv){
-			p.setFirstName(p.getFirstName().toLowerCase());
-			p.setLastName(p.getLastName().toLowerCase());
+			if(StringUtils.hasText(p.getFirstName())){
+				p.setFirstName(p.getFirstName().toLowerCase());
+			}
+			if(StringUtils.hasText(p.getLastName())){
+				p.setLastName(p.getLastName().toLowerCase());
+			}
 			p.setDobDd(p.getDobDd());
 			p.setDobMm(p.getDobMm());
 			p.setDobYy(p.getDobYy());
@@ -158,7 +169,10 @@ public class PatientServiceImpl implements PatientService{
 				p.setBloodGroup(pv.getBloodGroup().getBloodGroup());
 			}
 			p.setTsCreated(new Timestamp(System.currentTimeMillis()));
+			p.setImage(pv.getImage());
+			p.setPId(pv.getPId());
 		}
 		return p;
 	}
+
 }

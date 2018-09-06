@@ -11,5 +11,7 @@ public interface AgeGroupService {
 	AgeGroupView getFromAgeToAge(BigDecimal age);
 	boolean checkByAge(BigDecimal fromAge, BigDecimal toAge);
 	boolean checkAgeGrpIndex(String index);
+	AgeGroupView map(AgeGroup e);
+	AgeGroup map(AgeGroupView v);
 	AgeGroupView addAgeGrp(AgeGroupView ageGroup);
 }

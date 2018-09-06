@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.repository.query.Param;
 
+import com.my.portal.entities.FeesBreakup;
 import com.my.portal.model.FeesBreakupView;
 
 public interface FeesBreakupService {
@@ -22,4 +23,8 @@ public interface FeesBreakupService {
 	FeesBreakupView findById(Long feesBrealupId);
 
 	FeesBreakupView addFeesBreakup(FeesBreakupView view);
+	FeesBreakupView map(FeesBreakup e);
+	FeesBreakup map(FeesBreakupView view);
+	List<FeesBreakupView> mapAll(List<FeesBreakup> el);
+	List<FeesBreakup> map(List<FeesBreakupView> vl);
 }

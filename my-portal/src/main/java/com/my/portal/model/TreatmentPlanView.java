@@ -4,15 +4,15 @@ import java.io.Serializable;
 import java.util.List;
 
 public class TreatmentPlanView implements Serializable {
-
-	private static final long serialVersionUID = 2545204689598917896L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1613710874394574633L;
 	private Long trtId;
 	private String trtDesc;
 	private String trtName;
-	private List<MedicineMasterView> medicines;
-	private ClinicalFindingView clinicalFindingBean;
-	private long clinicalFindingId;
-
+	private Long clinicalFinding;
+	
 	public TreatmentPlanView() {
 	}
 
@@ -40,43 +40,12 @@ public class TreatmentPlanView implements Serializable {
 		this.trtName = trtName;
 	}
 
-	public List<MedicineMasterView> getMedicines() {
-		return this.medicines;
+	public final Long getClinicalFinding() {
+		return clinicalFinding;
 	}
 
-	public void setMedicines(List<MedicineMasterView> medicines) {
-		this.medicines = medicines;
+	public final void setClinicalFinding(Long clinicalFinding) {
+		this.clinicalFinding = clinicalFinding;
 	}
 
-	public MedicineMasterView addMedicine(MedicineMasterView medicine) {
-		getMedicines().add(medicine);
-		medicine.setTreatmentPlan(this);
-
-		return medicine;
-	}
-
-	public MedicineMasterView removeMedicine(MedicineMasterView medicine) {
-		getMedicines().remove(medicine);
-		medicine.setTreatmentPlan(null);
-
-		return medicine;
-	}
-
-	public ClinicalFindingView getClinicalFindingBean() {
-		return this.clinicalFindingBean;
-	}
-
-	public void setClinicalFindingBean(ClinicalFindingView clinicalFindingBean) {
-		this.clinicalFindingBean = clinicalFindingBean;
-	}
-
-	public long getClinicalFindingId() {
-		return clinicalFindingId;
-	}
-
-	public void setClinicalFindingId(long clinicalFindingId) {
-		this.clinicalFindingId = clinicalFindingId;
-	}
-
-	
 }

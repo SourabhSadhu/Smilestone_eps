@@ -6,63 +6,56 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 
 /**
  * The persistent class for the fees_breakup database table.
- *  findByPatientId(@Param("patientId") Long patientId);
-	findByPrescriptionId(@Param("prescriptionId") Long prescriptionId);
-	findByClinicalFindingId(@Param("clinicalFindingId") Long clinicalFindingId);
-	findByPatientAndPrescriptionId(@Param("patientId") Long patientId, @Param("prescriptionId") Long prescriptionId);
-	findByFeesBreakup(@Param("patientId") Long patientId, @Param("prescriptionId") Long prescriptionId, @Param("clinicalFindingId") Long clinicalFindingId);
+ * 
  */
 @Entity
+@SequenceGenerator(name="FEES_BREAKUP_FID_GENERATOR", sequenceName="fees_id_seq", allocationSize = 1, schema = "eps")
 @Table(name="fees_breakup")
 @NamedQueries({
 	@NamedQuery(name="FeesBreakup.findAll", query="SELECT f FROM FeesBreakup f"),
-	@NamedQuery(name="FeesBreakup.findByPatientId", query="SELECT f FROM FeesBreakup f WHERE f.patient.pId = :patientId"),
-	@NamedQuery(name="FeesBreakup.findByPrescriptionId", query="SELECT f FROM FeesBreakup f WHERE f.prescriptionHistory.prescriptionId = :prescriptionId"),
-	@NamedQuery(name="FeesBreakup.findByClinicalFindingId", query="SELECT f FROM FeesBreakup f WHERE f.clinicalFinding.fId = :clinicalFindingId"),
+	@NamedQuery(name="FeesBreakup.findByPatientId", query="SELECT f FROM FeesBreakup f WHERE f.patientId = :patientId"),
+	@NamedQuery(name="FeesBreakup.findByPrescriptionId", query="SELECT f FROM FeesBreakup f WHERE f.prescriptionId = :prescriptionId"),
+	@NamedQuery(name="FeesBreakup.findByClinicalFindingId", query="SELECT f FROM FeesBreakup f WHERE f.clinicalFindingsRef = :clinicalFindingId"),
 	@NamedQuery(name="FeesBreakup.findByPatientAndPrescriptionId", 
-		query="SELECT f FROM FeesBreakup f WHERE f.patient.pId = :patientId AND f.prescriptionHistory.prescriptionId = :prescriptionId"),
+		query="SELECT f FROM FeesBreakup f WHERE f.patientId = :patientId AND f.prescriptionId = :prescriptionId"),
 	@NamedQuery(name="FeesBreakup.findByFeesBreakup", 
-			query="SELECT f FROM FeesBreakup f WHERE f.patient.pId = :patientId AND f.prescriptionHistory.prescriptionId = :prescriptionId"+
-			" AND f.clinicalFinding.fId = :clinicalFindingId")
+			query="SELECT f FROM FeesBreakup f WHERE f.patientId = :patientId AND f.prescriptionId = :prescriptionId"+
+			" AND f.clinicalFindingsRef = :clinicalFindingId")
 })
 public class FeesBreakup implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="FEES_BREAKUP_FID_GENERATOR")
 	@Column(name="f_id")
 	private Long fId;
 
 	private BigDecimal amount;
 
+	@Column(name="clinical_findings_ref")
+	private Long clinicalFindingsRef;
+
 	private String notes;
+
+	@Column(name="patient_id")
+	private Long patientId;
+
+	@Column(name="prescription_id")
+	private Long prescriptionId;
 
 	@Column(name="ts_created")
 	private Timestamp tsCreated;
-
-	//bi-directional many-to-one association to ClinicalFinding
-	@ManyToOne
-	@JoinColumn(name="clinical_findings_ref")
-	private ClinicalFinding clinicalFinding;
-
-	//bi-directional many-to-one association to Patient
-	@ManyToOne
-	@JoinColumn(name="patient_id")
-	private Patient patient;
-
-	//bi-directional many-to-one association to PrescriptionHistory
-	@ManyToOne
-	@JoinColumn(name="prescription_id")
-	private PrescriptionHistory prescriptionHistory;
 
 	public FeesBreakup() {
 	}
@@ -99,28 +92,28 @@ public class FeesBreakup implements Serializable {
 		this.tsCreated = tsCreated;
 	}
 
-	public ClinicalFinding getClinicalFinding() {
-		return this.clinicalFinding;
+	public Long getClinicalFindingsRef() {
+		return clinicalFindingsRef;
 	}
 
-	public void setClinicalFinding(ClinicalFinding clinicalFinding) {
-		this.clinicalFinding = clinicalFinding;
+	public void setClinicalFindingsRef(Long clinicalFindingsRef) {
+		this.clinicalFindingsRef = clinicalFindingsRef;
 	}
 
-	public Patient getPatient() {
-		return this.patient;
+	public Long getPatientId() {
+		return patientId;
 	}
 
-	public void setPatient(Patient patient) {
-		this.patient = patient;
+	public void setPatientId(Long patientId) {
+		this.patientId = patientId;
 	}
 
-	public PrescriptionHistory getPrescriptionHistory() {
-		return this.prescriptionHistory;
+	public Long getPrescriptionId() {
+		return prescriptionId;
 	}
 
-	public void setPrescriptionHistory(PrescriptionHistory prescriptionHistory) {
-		this.prescriptionHistory = prescriptionHistory;
+	public void setPrescriptionId(Long prescriptionId) {
+		this.prescriptionId = prescriptionId;
 	}
 
 }

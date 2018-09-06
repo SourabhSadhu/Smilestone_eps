@@ -8,11 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.my.portal.ErrorCode;
-import com.my.portal.ValidationException;
-import com.my.portal.entities.ClinicalFinding;
 import com.my.portal.entities.TreatmentPlan;
-import com.my.portal.model.ClinicalFindingView;
 import com.my.portal.model.TreatmentPlanView;
 import com.my.portal.repositories.ClinicalFindingRepository;
 import com.my.portal.repositories.TreatmentPlanRepository;
@@ -40,8 +36,9 @@ public class TreatmentPlanServiceImpl implements TreatmentPlanService {
 
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
-	public TreatmentPlanView findById(Long id) {
-		return map(repo.findOne(id));
+	public Object findById(Long id, boolean isRaw) {
+		TreatmentPlan e = repo.findOne(id);
+		return isRaw ? e : map(e);
 	}
 
 	@Override
@@ -54,21 +51,17 @@ public class TreatmentPlanServiceImpl implements TreatmentPlanService {
 	public TreatmentPlanView map(TreatmentPlan e) {
 		TreatmentPlanView v = new TreatmentPlanView();
 		if(null != e){
-			ClinicalFindingView cfView = cfService.map(e.getClinicalFindingBean());
-			if(null == cfView){
-				throw new ValidationException(ErrorCode.INVALID_CLINICAL_FINDING_ID);
-			}
-			v.setClinicalFindingBean(cfView);
+			
+			v.setClinicalFinding(e.getClinicalFinding());
 			v.setTrtDesc(e.getTrtDesc());
 			v.setTrtName(e.getTrtName());
 			v.setTrtId(e.getTrtId());
-			v.setClinicalFindingId(cfView.getFindingId());
 		}
 		return v;
 	}
 
 	@Override
-	public List<TreatmentPlanView> map(List<TreatmentPlan> el) {
+	public List<TreatmentPlanView> mapAll(List<TreatmentPlan> el) {
 		List<TreatmentPlanView> vl = new ArrayList<>();
 		for(TreatmentPlan e : el){
 			vl.add(map(e));
@@ -80,16 +73,10 @@ public class TreatmentPlanServiceImpl implements TreatmentPlanService {
 	public TreatmentPlan map(TreatmentPlanView v) {
 		TreatmentPlan e = new TreatmentPlan();
 		if(null != v){
-			ClinicalFinding cf = cfRepo.findOne(v.getClinicalFindingId());
-			if(null == cf){
-				throw new ValidationException(ErrorCode.INVALID_CLINICAL_FINDING_ID);
-			}
 			e.setTrtDesc(v.getTrtDesc());
 			e.setTrtName(v.getTrtName());			
-			e.setClinicalFindingBean(cf);
-			if(null != v.getTrtId() && 0 < v.getTrtId().longValue()){
-				e.setTrtId(v.getTrtId());
-			}
+			e.setClinicalFinding(v.getClinicalFinding());
+			e.setTrtId(v.getTrtId());
 		}
 		return e;
 	}

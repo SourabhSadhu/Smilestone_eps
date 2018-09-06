@@ -89,7 +89,8 @@ public class AgeGroupServiceImpl implements AgeGroupService {
 		return repo.exists(index);
 	}
 
-	private AgeGroupView map(AgeGroup a){
+	@Override
+	public AgeGroupView map(AgeGroup a){
 		AgeGroupView b = new AgeGroupView();
 		if(null != a){
 			b.setGroupId(a.getGroupId());
@@ -99,7 +100,8 @@ public class AgeGroupServiceImpl implements AgeGroupService {
 		return b;
 	}
 	
-	private AgeGroup map(AgeGroupView a){
+	@Override
+	public AgeGroup map(AgeGroupView a){
 		AgeGroup b = new AgeGroup();
 		if(null != a && !repo.exists(a.getGroupId())){
 			b.setGroupId(a.getGroupId());

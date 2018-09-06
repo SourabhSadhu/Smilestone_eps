@@ -13,6 +13,6 @@ public interface PrescriptionHistoryService {
 	PrescriptionHistoryView findOne(Long id);
 	PrescriptionHistoryView addPrescription(PrescriptionHistoryView v);
 	PrescriptionHistoryView map(PrescriptionHistory e);
-	List<PrescriptionHistoryView> map(List<PrescriptionHistory> e);
+	List<PrescriptionHistoryView> mapAll(List<PrescriptionHistory> el);
 	PrescriptionHistory map(PrescriptionHistoryView v);
 }

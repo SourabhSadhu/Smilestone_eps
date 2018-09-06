@@ -5,125 +5,138 @@ import java.sql.Timestamp;
 
 
 public class PrescriptionHistoryView implements Serializable {
-	
-	private static final long serialVersionUID = -6822247146991891755L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2022178289084986726L;
 	private Long prescriptionId;
 	private String advice;
 	private String chiefComplaint;
-	private String chiefFindings;
+	private String clinicalFindings;
 	private String investigation;
 	private String medicines;
+	private Timestamp nextAppointment;
 	private String note;
+	private Long patientId;
 	private String personalDiagnosis;
 	private String treatmentDone;
 	private String treatmentPlan;
 	private Timestamp tsCreated;
 	private Timestamp tsModified;
-	private PatientView patient;
+
 	public PrescriptionHistoryView() {
 	}
 
-	public Long getPrescriptionId() {
-		return this.prescriptionId;
+	public final Long getPrescriptionId() {
+		return prescriptionId;
 	}
 
-	public void setPrescriptionId(Long prescriptionId) {
+	public final void setPrescriptionId(Long prescriptionId) {
 		this.prescriptionId = prescriptionId;
 	}
 
-	public String getAdvice() {
-		return this.advice;
+	public final String getAdvice() {
+		return advice;
 	}
 
-	public void setAdvice(String advice) {
+	public final void setAdvice(String advice) {
 		this.advice = advice;
 	}
 
-	public String getChiefComplaint() {
-		return this.chiefComplaint;
+	public final String getChiefComplaint() {
+		return chiefComplaint;
 	}
 
-	public void setChiefComplaint(String chiefComplaint) {
+	public final void setChiefComplaint(String chiefComplaint) {
 		this.chiefComplaint = chiefComplaint;
 	}
 
-	public String getChiefFindings() {
-		return this.chiefFindings;
+	public final String getClinicalFindings() {
+		return clinicalFindings;
 	}
 
-	public void setChiefFindings(String chiefFindings) {
-		this.chiefFindings = chiefFindings;
+	public final void setClinicalFindings(String clinicalFindings) {
+		this.clinicalFindings = clinicalFindings;
 	}
 
-	public String getInvestigation() {
-		return this.investigation;
+	public final String getInvestigation() {
+		return investigation;
 	}
 
-	public void setInvestigation(String investigation) {
+	public final void setInvestigation(String investigation) {
 		this.investigation = investigation;
 	}
 
-	public String getMedicines() {
-		return this.medicines;
+	public final String getMedicines() {
+		return medicines;
 	}
 
-	public void setMedicines(String medicines) {
+	public final void setMedicines(String medicines) {
 		this.medicines = medicines;
 	}
 
-	public String getNote() {
-		return this.note;
+	public final Timestamp getNextAppointment() {
+		return nextAppointment;
 	}
 
-	public void setNote(String note) {
+	public final void setNextAppointment(Timestamp nextAppointment) {
+		this.nextAppointment = nextAppointment;
+	}
+
+	public final String getNote() {
+		return note;
+	}
+
+	public final void setNote(String note) {
 		this.note = note;
 	}
 
-	public String getPersonalDiagnosis() {
-		return this.personalDiagnosis;
+	public final Long getPatientId() {
+		return patientId;
 	}
 
-	public void setPersonalDiagnosis(String personalDiagnosis) {
+	public final void setPatientId(Long patientId) {
+		this.patientId = patientId;
+	}
+
+	public final String getPersonalDiagnosis() {
+		return personalDiagnosis;
+	}
+
+	public final void setPersonalDiagnosis(String personalDiagnosis) {
 		this.personalDiagnosis = personalDiagnosis;
 	}
 
-	public String getTreatmentDone() {
-		return this.treatmentDone;
+	public final String getTreatmentDone() {
+		return treatmentDone;
 	}
 
-	public void setTreatmentDone(String treatmentDone) {
+	public final void setTreatmentDone(String treatmentDone) {
 		this.treatmentDone = treatmentDone;
 	}
 
-	public String getTreatmentPlan() {
-		return this.treatmentPlan;
+	public final String getTreatmentPlan() {
+		return treatmentPlan;
 	}
 
-	public void setTreatmentPlan(String treatmentPlan) {
+	public final void setTreatmentPlan(String treatmentPlan) {
 		this.treatmentPlan = treatmentPlan;
 	}
 
-	public Timestamp getTsCreated() {
-		return this.tsCreated;
+	public final Timestamp getTsCreated() {
+		return tsCreated;
 	}
 
-	public void setTsCreated(Timestamp tsCreated) {
+	public final void setTsCreated(Timestamp tsCreated) {
 		this.tsCreated = tsCreated;
 	}
 
-	public Timestamp getTsModified() {
-		return this.tsModified;
+	public final Timestamp getTsModified() {
+		return tsModified;
 	}
 
-	public void setTsModified(Timestamp tsModified) {
+	public final void setTsModified(Timestamp tsModified) {
 		this.tsModified = tsModified;
 	}
 
-	public PatientView getPatient() {
-		return this.patient;
-	}
-
-	public void setPatient(PatientView patient) {
-		this.patient = patient;
-	}
 }

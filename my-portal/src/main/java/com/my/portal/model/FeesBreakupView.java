@@ -4,16 +4,21 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
+
 public class FeesBreakupView implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6740313101991027601L;
 	
-	private static final long serialVersionUID = 7870137900693294589L;
 	private Long fId;
 	private BigDecimal amount;
+	private Long clinicalFindingsRef;
 	private String notes;
-	private long tsCreated;
-	private Long clinicalFindingRef;
-	private Long patientRef;
-	private Long prescriptionHistoryRef;
+	private Long patientId;
+	private Long prescriptionId;
+	private Timestamp tsCreated;
+
 	public FeesBreakupView() {
 	}
 
@@ -26,51 +31,51 @@ public class FeesBreakupView implements Serializable {
 	}
 
 	public BigDecimal getAmount() {
-		return this.amount;
+		return amount;
 	}
 
 	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
 	}
 
+	public Long getClinicalFindingsRef() {
+		return clinicalFindingsRef;
+	}
+
+	public void setClinicalFindingsRef(Long clinicalFindingsRef) {
+		this.clinicalFindingsRef = clinicalFindingsRef;
+	}
+
 	public String getNotes() {
-		return this.notes;
+		return notes;
 	}
 
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
 
-	public long getTsCreated() {
-		return this.tsCreated;
+	public Long getPatientId() {
+		return patientId;
 	}
 
-	public void setTsCreated(long tsCreated) {
+	public void setPatientId(Long patientId) {
+		this.patientId = patientId;
+	}
+
+	public Long getPrescriptionId() {
+		return prescriptionId;
+	}
+
+	public void setPrescriptionId(Long prescriptionId) {
+		this.prescriptionId = prescriptionId;
+	}
+
+	public Timestamp getTsCreated() {
+		return tsCreated;
+	}
+
+	public void setTsCreated(Timestamp tsCreated) {
 		this.tsCreated = tsCreated;
 	}
-
-	public Long getClinicalFindingRef() {
-		return clinicalFindingRef;
-	}
-
-	public void setClinicalFindingRef(Long clinicalFindingRef) {
-		this.clinicalFindingRef = clinicalFindingRef;
-	}
-
-	public Long getPatientRef() {
-		return patientRef;
-	}
-
-	public void setPatientRef(Long patientRef) {
-		this.patientRef = patientRef;
-	}
-
-	public Long getPrescriptionHistoryRef() {
-		return prescriptionHistoryRef;
-	}
-
-	public void setPrescriptionHistoryRef(Long prescriptionHistoryRef) {
-		this.prescriptionHistoryRef = prescriptionHistoryRef;
-	}
-
+	
 }

@@ -5,53 +5,52 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 
 /**
  * The persistent class for the medical_history database table.
  * 
- * MedicalHistory getByHistoryName(@Param("name") String name);
- * MedicalHistory getByPatientId(@Param("patient_id") Long id);
- * 
  */
 @Entity
+@SequenceGenerator(name="MEDICAL_HISTORY_MEDICALHISTORYID_GENERATOR", sequenceName="medical_history_id_seq", allocationSize = 1, schema = "eps")
 @Table(name="medical_history")
 @NamedQueries({
 	@NamedQuery(name="MedicalHistory.findAll", query="SELECT m FROM MedicalHistory m"),
 	@NamedQuery(name="MedicalHistory.getByHistoryName", 
-			query="SELECT m FROM MedicalHistory m WHERE m.medicalHistoryMaster.medicalHistoryName = :name"),
+			query="SELECT m FROM MedicalHistory m WHERE m.medicalHistoryName = :name"),
 	@NamedQuery(name="MedicalHistory.getByPatientId", 
-			query="SELECT m FROM MedicalHistory m WHERE m.patient.pId = :patient_idO")
+			query="SELECT m FROM MedicalHistory m WHERE m.patientId = :patient_id")
 })
 public class MedicalHistory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
+	@Id	
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="MEDICAL_HISTORY_MEDICALHISTORYID_GENERATOR")
 	@Column(name="medical_history_id")
 	private Long medicalHistoryId;
 
+	@Column(name="medical_history_name")
+	private String medicalHistoryName;
+
 	private String note;
+
+	@Column(name="patient_id")
+	private Long patientId;
+
+	@Column(name="prescription_id")
+	private Long prescriptionId;
 
 	private String severity;
 
 	@Column(name="started_from")
 	private Timestamp startedFrom;
-
-	//bi-directional many-to-one association to MedicalHistoryMaster
-	@ManyToOne
-	@JoinColumn(name="medical_history_name")
-	private MedicalHistoryMaster medicalHistoryMaster;
-
-	//bi-directional many-to-one association to Patient
-	@ManyToOne
-	@JoinColumn(name="patient_id")
-	private Patient patient;
 
 	public MedicalHistory() {
 	}
@@ -64,12 +63,36 @@ public class MedicalHistory implements Serializable {
 		this.medicalHistoryId = medicalHistoryId;
 	}
 
+	public String getMedicalHistoryName() {
+		return this.medicalHistoryName;
+	}
+
+	public void setMedicalHistoryName(String medicalHistoryName) {
+		this.medicalHistoryName = medicalHistoryName;
+	}
+
 	public String getNote() {
 		return this.note;
 	}
 
 	public void setNote(String note) {
 		this.note = note;
+	}
+
+	public Long getPatientId() {
+		return this.patientId;
+	}
+
+	public void setPatientId(Long patientId) {
+		this.patientId = patientId;
+	}
+
+	public Long getPrescriptionId() {
+		return this.prescriptionId;
+	}
+
+	public void setPrescriptionId(Long prescriptionId) {
+		this.prescriptionId = prescriptionId;
 	}
 
 	public String getSeverity() {
@@ -86,22 +109,6 @@ public class MedicalHistory implements Serializable {
 
 	public void setStartedFrom(Timestamp startedFrom) {
 		this.startedFrom = startedFrom;
-	}
-
-	public MedicalHistoryMaster getMedicalHistoryMaster() {
-		return this.medicalHistoryMaster;
-	}
-
-	public void setMedicalHistoryMaster(MedicalHistoryMaster medicalHistoryMaster) {
-		this.medicalHistoryMaster = medicalHistoryMaster;
-	}
-
-	public Patient getPatient() {
-		return this.patient;
-	}
-
-	public void setPatient(Patient patient) {
-		this.patient = patient;
 	}
 
 }

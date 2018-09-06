@@ -1,7 +1,9 @@
 package com.my.portal.entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
 /**
  * The primary key class for the medicine_master database table.
@@ -15,11 +17,13 @@ public class MedicineMasterPK implements Serializable {
 	@Column(name="medicine_name")
 	private String medicineName;
 
-	@Column(name="disease_code")
-	private String diseaseCode;
-
 	@Column(name="age_group", insertable=false, updatable=false)
 	private String ageGroup;
+
+	@Column(name="treatment_id", insertable=false, updatable=false)
+	private Long treatmentId;
+
+	private String dosage;
 
 	public MedicineMasterPK() {
 	}
@@ -29,17 +33,23 @@ public class MedicineMasterPK implements Serializable {
 	public void setMedicineName(String medicineName) {
 		this.medicineName = medicineName;
 	}
-	public String getDiseaseCode() {
-		return this.diseaseCode;
-	}
-	public void setDiseaseCode(String diseaseCode) {
-		this.diseaseCode = diseaseCode;
-	}
 	public String getAgeGroup() {
 		return this.ageGroup;
 	}
 	public void setAgeGroup(String ageGroup) {
 		this.ageGroup = ageGroup;
+	}
+	public Long getTreatmentId() {
+		return this.treatmentId;
+	}
+	public void setTreatmentId(Long treatmentId) {
+		this.treatmentId = treatmentId;
+	}
+	public String getDosage() {
+		return this.dosage;
+	}
+	public void setDosage(String dosage) {
+		this.dosage = dosage;
 	}
 
 	public boolean equals(Object other) {
@@ -52,16 +62,18 @@ public class MedicineMasterPK implements Serializable {
 		MedicineMasterPK castOther = (MedicineMasterPK)other;
 		return 
 			this.medicineName.equals(castOther.medicineName)
-			&& this.diseaseCode.equals(castOther.diseaseCode)
-			&& this.ageGroup.equals(castOther.ageGroup);
+			&& this.ageGroup.equals(castOther.ageGroup)
+			&& this.treatmentId.equals(castOther.treatmentId)
+			&& this.dosage.equals(castOther.dosage);
 	}
 
 	public int hashCode() {
 		final int prime = 31;
 		int hash = 17;
 		hash = hash * prime + this.medicineName.hashCode();
-		hash = hash * prime + this.diseaseCode.hashCode();
 		hash = hash * prime + this.ageGroup.hashCode();
+		hash = hash * prime + this.treatmentId.hashCode();
+		hash = hash * prime + this.dosage.hashCode();
 		
 		return hash;
 	}

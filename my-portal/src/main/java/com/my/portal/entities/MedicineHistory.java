@@ -5,8 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
@@ -14,17 +13,26 @@ import javax.persistence.Table;
 /**
  * The persistent class for the medicine_history database table.
  * 
+ * List<MedicineHistory> getMedicineHistoryByPatientId(BigDecimal patientId);
+ * List<MedicineHistory> getMedicineHistoryByPrescriptionId(BigDecimal prescriptionId);
+ * 
  */
 @Entity
 @Table(name="medicine_history")
-@NamedQuery(name="MedicineHistory.findAll", query="SELECT m FROM MedicineHistory m")
+@NamedQueries({
+	@NamedQuery(name="MedicineHistory.findAll", query="SELECT m FROM MedicineHistory m"),
+	@NamedQuery(name="MedicineHistory.getMedicineHistoryByPatientId", query="SELECT m FROM MedicineHistory m "
+			+ " WHERE m.patientId = :patientId"),
+	@NamedQuery(name="MedicineHistory.getMedicineHistoryByPrescriptionId", query="SELECT m FROM MedicineHistory m"
+			+ " WHERE m.prescriptionId = :prescriptionId")
+})
 public class MedicineHistory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name="med_id")
-	private Long medId; 
-	
+	private Long medId;
+
 	@Column(name="disease_code")
 	private String diseaseCode;
 
@@ -36,21 +44,17 @@ public class MedicineHistory implements Serializable {
 	@Column(name="medicine_name")
 	private String medicineName;
 
-	//bi-directional many-to-one association to Patient
-	@ManyToOne
-	@JoinColumn(name="patient_id")
-	private Patient patient;
+	@Column(name="patient_id")
+	private Long patientId;
 
-	//bi-directional many-to-one association to PrescriptionHistory
-	@ManyToOne
-	@JoinColumn(name="prescription_id")
-	private PrescriptionHistory prescriptionHistory;
+	@Column(name="prescription_id")
+	private Long prescriptionId;
 
 	public MedicineHistory() {
 	}
 
 	public Long getMedId() {
-		return medId;
+		return this.medId;
 	}
 
 	public void setMedId(Long medId) {
@@ -89,20 +93,21 @@ public class MedicineHistory implements Serializable {
 		this.medicineName = medicineName;
 	}
 
-	public Patient getPatient() {
-		return this.patient;
+	public final Long getPatientId() {
+		return patientId;
 	}
 
-	public void setPatient(Patient patient) {
-		this.patient = patient;
+	public final void setPatientId(Long patientId) {
+		this.patientId = patientId;
 	}
 
-	public PrescriptionHistory getPrescriptionHistory() {
-		return this.prescriptionHistory;
+	public final Long getPrescriptionId() {
+		return prescriptionId;
 	}
 
-	public void setPrescriptionHistory(PrescriptionHistory prescriptionHistory) {
-		this.prescriptionHistory = prescriptionHistory;
+	public final void setPrescriptionId(Long prescriptionId) {
+		this.prescriptionId = prescriptionId;
 	}
+	
 
 }

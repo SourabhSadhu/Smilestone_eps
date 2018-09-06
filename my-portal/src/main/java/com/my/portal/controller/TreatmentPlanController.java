@@ -1,0 +1,63 @@
+package com.my.portal.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.my.portal.CommonUtils;
+import com.my.portal.ValidationException;
+import com.my.portal.service.TreatmentPlanService;
+
+@Controller
+@RequestMapping("trtmnt")
+public class TreatmentPlanController {
+	
+	@Autowired TreatmentPlanService tpService;
+
+	@RequestMapping(method = RequestMethod.GET, value = "get-plan", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<?> getPlan(
+				@RequestParam(value = "trtmntId") Long trtmntId,
+				@RequestParam(value = "trtmntName") String trtmntName
+			){
+		try {
+			if(StringUtils.hasText(trtmntName)){
+				return new ResponseEntity<>(CommonUtils.getResp(tpService.findByTreatmentName(trtmntName)), HttpStatus.OK);
+			}else if(null != trtmntId && 0 < trtmntId.longValue()){
+				return new ResponseEntity<>(CommonUtils.getResp(tpService.findByClinicalFindingsID(trtmntId)), HttpStatus.OK);
+			}
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		} catch (Exception e) {
+			if(e instanceof ValidationException) {
+				ValidationException ve = (ValidationException) e;
+				return new ResponseEntity<>(CommonUtils.getResp(null, ve.getValidationPayload()), HttpStatus.OK);
+			}else {
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+		}
+	}
+	
+/*	@RequestMapping(method = RequestMethod.GET, value = "/get-medicine", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<?> get(@RequestParam(required = true, value = "trtmntName") String trtmntName,
+								@RequestParam(required = true, value = "ageGrp") String ageGrp) 
+	{
+		try {
+			return new ResponseEntity<>(CommonUtils.getResp(mService.getMedicineByTreatmentNameAndAgeGrp(trtmntName, ageGrp)), HttpStatus.OK);
+		} catch (Exception e) {
+			if(e instanceof ValidationException) {
+				ValidationException ve = (ValidationException) e;
+				return new ResponseEntity<>(CommonUtils.getResp(null, ve.getValidationPayload()), HttpStatus.OK);
+			}else {
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+		}
+	}*/
+}

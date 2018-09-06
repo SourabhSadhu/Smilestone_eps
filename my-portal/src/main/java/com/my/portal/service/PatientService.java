@@ -14,9 +14,10 @@ public interface PatientService {
 	List<PatientView> findByDOB(BigDecimal dd, BigDecimal mm, BigDecimal yy);
 	List<PatientView> findByDetails(String fName, String lName, BigDecimal dd, BigDecimal mm, BigDecimal yy);
 	List<PatientView> findByContactNo(BigDecimal cNo);
+	PatientView findById(Long pId);
 	PatientView addPatient(PatientView p);
 	List<PatientView> getPatient(PatientView p);
 	PatientView map(Patient p);
-	List<PatientView> map(List<Patient> pList);
+	List<PatientView> mapAll(List<Patient> pList);
 	Patient map(PatientView pv);
 }

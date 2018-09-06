@@ -15,36 +15,38 @@ import org.springframework.util.StringUtils;
 
 import com.my.portal.ErrorCode;
 import com.my.portal.ValidationException;
-import com.my.portal.entities.AgeGroup;
 import com.my.portal.entities.ClinicalFinding;
-import com.my.portal.entities.ToothQuadrent;
 import com.my.portal.model.ClinicalFindingView;
 import com.my.portal.repositories.ClinicalFindingRepository;
 import com.my.portal.service.AgeGroupService;
 import com.my.portal.service.ClinicalFindingService;
+import com.my.portal.service.FeesBreakupService;
 import com.my.portal.service.ToothQuadrentService;
+import com.my.portal.service.TreatmentPlanService;
 
 @Service
 public class ClinicalFindingServiceImpl implements ClinicalFindingService {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	@Autowired ClinicalFindingRepository repo;
+
 	@Autowired AgeGroupService ageGrpService;
 	@Autowired ToothQuadrentService toothService;
-	
+	@Autowired FeesBreakupService fbkService;
+	@Autowired TreatmentPlanService tpService;
 	private List<ClinicalFindingView> cfvList = new ArrayList<>();
 	
 	@PostConstruct
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
 	private void test(){
-		mapAllFinding();
+//		mapAllFinding();
 	}
 	
-	@Override
+	/*@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
 	public ClinicalFindingView findByNameToothAgeGrp(String name, long toothIndex, String ageGrpIndex) {
 		return map(repo.findByNameToothAgeGrp(name, toothIndex, ageGrpIndex));
-	}
+	}*/
 
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED)
@@ -58,40 +60,31 @@ public class ClinicalFindingServiceImpl implements ClinicalFindingService {
 		return mapAllFinding();
 	}
 
+	
 	@Override
-	public ClinicalFindingView map(ClinicalFinding f) {
+	public ClinicalFindingView map(ClinicalFinding e) {
 		ClinicalFindingView v = new ClinicalFindingView();
-		if(null != f) {
-			v.setAgeGroupIndex(f.getAgeGroupBean().getGroupId());
-			v.setFee(f.getFee());
-			v.setFindingDesc(f.getFDesc());
-			v.setFindingId(f.getFId());
-			v.setToothQuadrentIndex(f.getToothQuadrent().getToothIndex());
+		if(null != e) {
+			v.setFDesc(e.getFDesc());
+			v.setFId(e.getFId());
+			v.setFName(e.getFName());
+//			v.setFeesBreakups(fbkService.mapAll(e.getFeesBreakups()));
+//			v.setTreatmentPlans(tpService.mapAll(e.getTreatmentPlans()));
 		}
 		return v;
 	}
 	
 	@Override
 	public ClinicalFinding map(ClinicalFindingView v) {
-		ClinicalFinding f = new ClinicalFinding();
+		ClinicalFinding e = new ClinicalFinding();
 		if(null != v) {
-			if(StringUtils.hasText(v.getAgeGroupIndex()) && ageGrpService.checkAgeGrpIndex(v.getAgeGroupIndex())) {
-				if(v.getToothQuadrentIndex() != 0 || toothService.isToothQuadrentAvailable(v.getToothQuadrentIndex())) {
-					AgeGroup a = ageGrpService.findById(v.getAgeGroupIndex());
-					ToothQuadrent t = toothService.findById(v.getToothQuadrentIndex());
-					f.setAgeGroupBean(a);
-					f.setFDesc(v.getFindingDesc());
-					f.setFee(v.getFee());
-					f.setFName(v.getFindingName());
-					f.setToothQuadrent(t);
-				}else {
-					throw new ValidationException(ErrorCode.INVALID_TOOTH_QUADRENT_INDEX);
-				}
-			}else {
-				throw new ValidationException(ErrorCode.INVALID_AGE_GROUP_INDEX);
+			if(StringUtils.isEmpty(v.getFDesc())){
+				throw new ValidationException(ErrorCode.INVALID_INPUT);
 			}
+			e.setFDesc(v.getFDesc());
+			e.setFName(v.getFName());
 		}
-		return f;
+		return e;
 	}
 	
 	@Override

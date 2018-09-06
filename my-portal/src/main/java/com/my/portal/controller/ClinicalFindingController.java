@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.my.portal.CommonUtils;
@@ -28,26 +27,6 @@ public class ClinicalFindingController {
 	public ResponseEntity<?> get() {
 		try {
 			return new ResponseEntity<>(CommonUtils.getResp(cfService.findAll()), HttpStatus.OK);
-		} catch (Exception e) {
-			if(e instanceof ValidationException) {
-				ValidationException ve = (ValidationException) e;
-				return new ResponseEntity<>(CommonUtils.getResp(null, ve.getValidationPayload()), HttpStatus.OK);
-			}else {
-				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-			}
-		}
-	}
-
-	@RequestMapping(method = RequestMethod.GET, value = "/get-clinical-finding", produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public ResponseEntity<?> getPatient(
-			@RequestParam(required = true, value="name") String name,
-			@RequestParam(required = true, value="toothIndex") long toothIndex,
-			@RequestParam(required = true, value="ageGrpIndex") String ageGrpIndex
-			) {
-			
-		try {
-			return new ResponseEntity<>(CommonUtils.getResp(cfService.findByNameToothAgeGrp(name, toothIndex, ageGrpIndex)), HttpStatus.OK);
 		} catch (Exception e) {
 			if(e instanceof ValidationException) {
 				ValidationException ve = (ValidationException) e;

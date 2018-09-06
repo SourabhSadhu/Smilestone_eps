@@ -3,45 +3,64 @@ package com.my.portal.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-
 public class MedicineMasterView implements Serializable {
-
-	private static final long serialVersionUID = -4709864767652298620L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2548648265826797384L;
 	private String medicineName;
-	private String diseaseCode;
 	private String ageGroup;
-	private BigDecimal clinicalAvailability;
-	private String diseaseName;
+	private Long treatmentId;
 	private String dosage;
+	private BigDecimal clinicalAvailability;
+	private String diseaseCode;
+	private String diseaseName;
 	private AgeGroupView ageGroupBean;
 	private TreatmentPlanView treatmentPlan;
 
 	public MedicineMasterView() {
 	}
 
+
 	public String getMedicineName() {
 		return medicineName;
 	}
+
 
 	public void setMedicineName(String medicineName) {
 		this.medicineName = medicineName;
 	}
 
-	public String getDiseaseCode() {
-		return diseaseCode;
-	}
-
-	public void setDiseaseCode(String diseaseCode) {
-		this.diseaseCode = diseaseCode;
-	}
 
 	public String getAgeGroup() {
 		return ageGroup;
 	}
 
+
 	public void setAgeGroup(String ageGroup) {
 		this.ageGroup = ageGroup;
 	}
+
+
+	public Long getTreatmentId() {
+		return treatmentId;
+	}
+
+
+	public void setTreatmentId(Long treatmentId) {
+		this.treatmentId = treatmentId;
+	}
+
+
+	public String getDosage() {
+		return dosage;
+	}
+
+
+	public void setDosage(String dosage) {
+		this.dosage = dosage;
+	}
+
 
 	public BigDecimal getClinicalAvailability() {
 		return this.clinicalAvailability;
@@ -51,20 +70,20 @@ public class MedicineMasterView implements Serializable {
 		this.clinicalAvailability = clinicalAvailability;
 	}
 
+	public String getDiseaseCode() {
+		return this.diseaseCode;
+	}
+
+	public void setDiseaseCode(String diseaseCode) {
+		this.diseaseCode = diseaseCode;
+	}
+
 	public String getDiseaseName() {
 		return this.diseaseName;
 	}
 
 	public void setDiseaseName(String diseaseName) {
 		this.diseaseName = diseaseName;
-	}
-
-	public String getDosage() {
-		return this.dosage;
-	}
-
-	public void setDosage(String dosage) {
-		this.dosage = dosage;
 	}
 
 	public AgeGroupView getAgeGroupBean() {

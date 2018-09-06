@@ -9,9 +9,9 @@ public interface TreatmentPlanService {
 
 	TreatmentPlanView findByClinicalFindingsID(Long cfId);
 	TreatmentPlanView findByTreatmentName(String trtName);
-	TreatmentPlanView findById(Long id);
+	Object findById(Long id, boolean isRaw);
 	TreatmentPlanView addTreatmentPlan(TreatmentPlanView view);
 	TreatmentPlanView map(TreatmentPlan e);
-	List<TreatmentPlanView> map(List<TreatmentPlan> el);
+	List<TreatmentPlanView> mapAll(List<TreatmentPlan> el);
 	TreatmentPlan map(TreatmentPlanView v);
 }

@@ -8,9 +8,12 @@ import com.my.portal.CommonConstants.BloodGroup;
 
 
 public class PatientView implements Serializable {
-
-	private static final long serialVersionUID = -3439715817276863931L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -161744595773118043L;
 	private Long pId;
+	private BloodGroup bloodGroup;
 	private BigDecimal contactNo1;
 	private BigDecimal contactNo2;
 	private BigDecimal discount;
@@ -20,11 +23,11 @@ public class PatientView implements Serializable {
 	private String firstName;
 	private String lastName;
 	private Timestamp tsCreated;
-	private BloodGroup bloodGroup;
 	private Integer weight;
-	
-//	private List<PrescriptionHistoryView> prescriptionHistories;
-//	private List<MedicalHistoryView> medicalHistories;
+	private byte[] image;
+	private String email;
+	private String address1;
+	private String address2;
 
 	public PatientView() {
 	}
@@ -35,6 +38,14 @@ public class PatientView implements Serializable {
 
 	public void setPId(Long pId) {
 		this.pId = pId;
+	}
+
+	public BloodGroup getBloodGroup() {
+		return this.bloodGroup;
+	}
+
+	public void setBloodGroup(BloodGroup bloodGroup) {
+		this.bloodGroup = bloodGroup;
 	}
 
 	public BigDecimal getContactNo1() {
@@ -108,64 +119,45 @@ public class PatientView implements Serializable {
 	public void setTsCreated(Timestamp tsCreated) {
 		this.tsCreated = tsCreated;
 	}
-	
-	public BloodGroup getBloodGroup() {
-		return bloodGroup;
-	}
-
-	public void setBloodGroup(BloodGroup bloodGroup) {
-		this.bloodGroup = bloodGroup;
-	}
 
 	public Integer getWeight() {
-		return weight;
+		return this.weight;
 	}
 
 	public void setWeight(Integer weight) {
 		this.weight = weight;
 	}
-	
-//	public List<PrescriptionHistoryView> getPrescriptionHistories() {
-//		return this.prescriptionHistories;
-//	}
-//
-//	public void setPrescriptionHistories(List<PrescriptionHistoryView> prescriptionHistories) {
-//		this.prescriptionHistories = prescriptionHistories;
-//	}
-//
-//	public PrescriptionHistoryView addPrescriptionHistory(PrescriptionHistoryView prescriptionHistory) {
-//		getPrescriptionHistories().add(prescriptionHistory);
-//		prescriptionHistory.setPatient(this);
-//
-//		return prescriptionHistory;
-//	}
-//
-//	public PrescriptionHistoryView removePrescriptionHistory(PrescriptionHistoryView prescriptionHistory) {
-//		getPrescriptionHistories().remove(prescriptionHistory);
-//		prescriptionHistory.setPatient(null);
-//
-//		return prescriptionHistory;
-//	}
-//
-//	public List<MedicalHistoryView> getMedicalHistories() {
-//		return this.medicalHistories;
-//	}
-//
-//	public void setMedicalHistories(List<MedicalHistoryView> medicalHistories) {
-//		this.medicalHistories = medicalHistories;
-//	}
-//
-//	public MedicalHistoryView addMedicalHistory(MedicalHistoryView medicalHistory) {
-//		getMedicalHistories().add(medicalHistory);
-//		medicalHistory.setPatient(this);
-//
-//		return medicalHistory;
-//	}
-//
-//	public MedicalHistoryView removeMedicalHistory(MedicalHistoryView medicalHistory) {
-//		getMedicalHistories().remove(medicalHistory);
-//		medicalHistory.setPatient(null);
-//
-//		return medicalHistory;
-//	}
+
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
+
+	public final String getEmail() {
+		return email;
+	}
+
+	public final void setEmail(String email) {
+		this.email = email;
+	}
+
+	public final String getAddress1() {
+		return address1;
+	}
+
+	public final void setAddress1(String address1) {
+		this.address1 = address1;
+	}
+
+	public final String getAddress2() {
+		return address2;
+	}
+
+	public final void setAddress2(String address2) {
+		this.address2 = address2;
+	}
+
 }

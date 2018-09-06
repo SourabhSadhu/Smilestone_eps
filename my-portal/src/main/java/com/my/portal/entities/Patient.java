@@ -1,11 +1,15 @@
 package com.my.portal.entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 
 /**
@@ -27,6 +31,8 @@ public class Patient implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+//	@SequenceGenerator(name="PATIENTS_PID_GENERATOR", sequenceName="REPLACE_SEQ_NAME")
+//	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PATIENTS_PID_GENERATOR")
 	@Column(name="p_id")
 	private Long pId;
 
@@ -60,23 +66,12 @@ public class Patient implements Serializable {
 	private Timestamp tsCreated;
 
 	private Integer weight;
+	
+	private byte[] image;
 
-	//bi-directional many-to-one association to FeesBreakup
-	@OneToMany(mappedBy="patient")
-	private List<FeesBreakup> feesBreakups;
-
-	//bi-directional many-to-one association to MedicalHistory
-	@OneToMany(mappedBy="patient")
-	private List<MedicalHistory> medicalHistories;
-
-	//bi-directional many-to-one association to MedicineHistory
-	@OneToMany(mappedBy="patient")
-	private List<MedicineHistory> medicineHistories;
-
-	//bi-directional many-to-one association to PrescriptionHistory
-	@OneToMany(mappedBy="patient")
-	private List<PrescriptionHistory> prescriptionHistories;
-
+	private String email;
+	private String address1;
+	private String address2;
 	public Patient() {
 	}
 
@@ -175,93 +170,45 @@ public class Patient implements Serializable {
 	public void setWeight(Integer weight) {
 		this.weight = weight;
 	}
-
-	public List<FeesBreakup> getFeesBreakups() {
-		return this.feesBreakups;
+	
+	public byte[] getImage() {
+		return image;
 	}
 
-	public void setFeesBreakups(List<FeesBreakup> feesBreakups) {
-		this.feesBreakups = feesBreakups;
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 
-	public FeesBreakup addFeesBreakup(FeesBreakup feesBreakup) {
-		getFeesBreakups().add(feesBreakup);
-		feesBreakup.setPatient(this);
-
-		return feesBreakup;
+	public Long getpId() {
+		return pId;
 	}
 
-	public FeesBreakup removeFeesBreakup(FeesBreakup feesBreakup) {
-		getFeesBreakups().remove(feesBreakup);
-		feesBreakup.setPatient(null);
-
-		return feesBreakup;
+	public void setpId(Long pId) {
+		this.pId = pId;
 	}
 
-	public List<MedicalHistory> getMedicalHistories() {
-		return this.medicalHistories;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setMedicalHistories(List<MedicalHistory> medicalHistories) {
-		this.medicalHistories = medicalHistories;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public MedicalHistory addMedicalHistory(MedicalHistory medicalHistory) {
-		getMedicalHistories().add(medicalHistory);
-		medicalHistory.setPatient(this);
-
-		return medicalHistory;
+	public String getAddress1() {
+		return address1;
 	}
 
-	public MedicalHistory removeMedicalHistory(MedicalHistory medicalHistory) {
-		getMedicalHistories().remove(medicalHistory);
-		medicalHistory.setPatient(null);
-
-		return medicalHistory;
+	public void setAddress1(String address1) {
+		this.address1 = address1;
 	}
 
-	public List<MedicineHistory> getMedicineHistories() {
-		return this.medicineHistories;
+	public String getAddress2() {
+		return address2;
 	}
 
-	public void setMedicineHistories(List<MedicineHistory> medicineHistories) {
-		this.medicineHistories = medicineHistories;
-	}
-
-	public MedicineHistory addMedicineHistory(MedicineHistory medicineHistory) {
-		getMedicineHistories().add(medicineHistory);
-		medicineHistory.setPatient(this);
-
-		return medicineHistory;
-	}
-
-	public MedicineHistory removeMedicineHistory(MedicineHistory medicineHistory) {
-		getMedicineHistories().remove(medicineHistory);
-		medicineHistory.setPatient(null);
-
-		return medicineHistory;
-	}
-
-	public List<PrescriptionHistory> getPrescriptionHistories() {
-		return this.prescriptionHistories;
-	}
-
-	public void setPrescriptionHistories(List<PrescriptionHistory> prescriptionHistories) {
-		this.prescriptionHistories = prescriptionHistories;
-	}
-
-	public PrescriptionHistory addPrescriptionHistory(PrescriptionHistory prescriptionHistory) {
-		getPrescriptionHistories().add(prescriptionHistory);
-		prescriptionHistory.setPatient(this);
-
-		return prescriptionHistory;
-	}
-
-	public PrescriptionHistory removePrescriptionHistory(PrescriptionHistory prescriptionHistory) {
-		getPrescriptionHistories().remove(prescriptionHistory);
-		prescriptionHistory.setPatient(null);
-
-		return prescriptionHistory;
+	public void setAddress2(String address2) {
+		this.address2 = address2;
 	}
 
 }

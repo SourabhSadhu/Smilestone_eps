@@ -3,65 +3,37 @@ package com.my.portal.model;
 import java.io.Serializable;
 
 public class ClinicalFindingView implements Serializable {
-
-	private static final long serialVersionUID = -2640551771464859736L;
-	private Long findingId;
-	private String findingDesc;
-	private String findingName;
-	private Long fee;
-	private String ageGroupIndex;
-	private long toothQuadrentIndex;
-//	private List<TreatmentPlanView> treatmentPlans;
+	
+	private static final long serialVersionUID = 5615963822165574912L;
+	private Long fId;
+	private String fDesc;
+	private String fName;
 
 	public ClinicalFindingView() {
 	}
 
-	public Long getFindingId() {
-		return findingId;
+	public Long getFId() {
+		return this.fId;
 	}
 
-	public void setFindingId(Long findingId) {
-		this.findingId = findingId;
+	public void setFId(Long fId) {
+		this.fId = fId;
 	}
 
-	public String getFindingDesc() {
-		return findingDesc;
+	public String getFDesc() {
+		return this.fDesc;
 	}
 
-	public void setFindingDesc(String findingDesc) {
-		this.findingDesc = findingDesc;
+	public void setFDesc(String fDesc) {
+		this.fDesc = fDesc;
 	}
 
-	public String getFindingName() {
-		return findingName;
+	public String getFName() {
+		return this.fName;
 	}
 
-	public void setFindingName(String findingName) {
-		this.findingName = findingName;
+	public void setFName(String fName) {
+		this.fName = fName;
 	}
 
-	public Long getFee() {
-		return fee;
-	}
-
-	public void setFee(Long fee) {
-		this.fee = fee;
-	}
-
-	public String getAgeGroupIndex() {
-		return ageGroupIndex;
-	}
-
-	public void setAgeGroupIndex(String ageGroupIndex) {
-		this.ageGroupIndex = ageGroupIndex;
-	}
-
-	public long getToothQuadrentIndex() {
-		return toothQuadrentIndex;
-	}
-
-	public void setToothQuadrentIndex(long toothQuadrentIndex) {
-		this.toothQuadrentIndex = toothQuadrentIndex;
-	}
-	
 }

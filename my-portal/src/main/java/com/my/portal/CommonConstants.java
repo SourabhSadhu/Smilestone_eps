@@ -1,5 +1,7 @@
 package com.my.portal;
 
+import org.springframework.util.StringUtils;
+
 public class CommonConstants {
 
 	public enum BloodGroup{
@@ -22,5 +24,16 @@ public class CommonConstants {
 		public String getBloodGroup(){
 			return bloodGroup;
 		}		
+		
+		public static BloodGroup getBloodGroup(String bgName){
+			if(StringUtils.hasText(bgName)){
+				for(BloodGroup bg : BloodGroup.values()){
+					if(bg.getBloodGroup().equals(bgName)){
+						return bg;
+					}
+				}
+			}
+			throw new ValidationException(ErrorCode.INVALID_BLOOD_GROUP);
+		}
 	}
 }

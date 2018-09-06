@@ -73,22 +73,34 @@ public class ToothQuadrentServiceImpl implements ToothQuadrentService {
 		return repo.exists(Long.valueOf(toothIndex));
 	}
 
-	private ToothQuadrentView map(ToothQuadrent tq){
+	@Override
+	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
+	public ToothQuadrentView findById(long id) {
+		return map(repo.findOne(id));
+	}
+	
+
+	@Override
+	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
+	public boolean isToothGrpIdAvailable(long toothIndex) {
+		List<ToothQuadrent> el = repo.isToothGrpIdAvailable(new BigDecimal(toothIndex));
+		return el != null && !el.isEmpty();
+	}
+	
+	@Override
+	public ToothQuadrentView map(ToothQuadrent tq){
 		ToothQuadrentView tqv = new ToothQuadrentView();
 		if(null != tq){
 			tqv.setToothIndex (tq.getToothIndex());
 			tqv.setToothNumber(tq.getToothNumber());
 			tqv.setToothQdr   (tq.getToothQdr());
+			tqv.setToothGroup(tq.getToothGroup());
 		}
 		return tqv;
 	}
-	
-	@Override
-	public ToothQuadrent findById(long id) {
-		return repo.findOne(id);
-	}
 
-	private ToothQuadrent map(ToothQuadrentView tqv){
+	@Override
+	public ToothQuadrent map(ToothQuadrentView tqv){
 		ToothQuadrent tq = new ToothQuadrent();
 		if(null != tqv){
 			tq.setToothIndex(tqv.getToothIndex());
@@ -98,7 +110,8 @@ public class ToothQuadrentServiceImpl implements ToothQuadrentService {
 		return tq;
 	}
 	
-	private List<ToothQuadrentView> mapAll(boolean reload){
+	@Override
+	public List<ToothQuadrentView> mapAll(boolean reload){
 		if(null == tqvList){
 			tqvList = new ArrayList<>();
 		}
@@ -108,6 +121,12 @@ public class ToothQuadrentServiceImpl implements ToothQuadrentService {
 			}
 		}
 		return tqvList;
+	}
+
+	@Override
+	public List<ToothQuadrent> mapAll(List<ToothQuadrentView> v) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

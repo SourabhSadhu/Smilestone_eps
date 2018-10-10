@@ -56,13 +56,14 @@ public class PatientController {
 		}
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/add-patient", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, value = "/add-patient", produces = MediaType.APPLICATION_JSON_VALUE/*, consumes=MediaType.TEXT_PLAIN_VALUE*/)
 	@ResponseBody
 	public ResponseEntity<?> addPatient(@RequestBody PatientView p) {
 
 		try {
 			return new ResponseEntity<>(CommonUtils.getResp(patientService.addPatient(p)), HttpStatus.OK);
 		} catch (Exception e) {
+			e.printStackTrace();
 			if(e instanceof ValidationException) {
 				ValidationException ve = (ValidationException) e;
 				return new ResponseEntity<>(CommonUtils.getResp(null, ve.getValidationPayload()), HttpStatus.OK);

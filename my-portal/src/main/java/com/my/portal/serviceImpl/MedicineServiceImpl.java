@@ -61,9 +61,9 @@ public class MedicineServiceImpl implements MedicineService {
 	}
 	
 	@Override
-	public List<MedicineMasterView> getMedicineByTreatmentNameAndAgeGrp(String trtmntName, String ageGrp) {
-		return map(masterRepo.getMedicineByTreatmentNameAndAgeGrp(trtmntName, ageGrp));
-	}
+	public List<MedicineMasterView> getMedicineByTreatmentNameAndAgeGrp(Long trtmntId, String ageGrp) {
+		return map(masterRepo.getMedicineByTreatmentNameAndAgeGrp(trtmntId, ageGrp));
+	} 
 
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED)
@@ -93,7 +93,7 @@ public class MedicineServiceImpl implements MedicineService {
 		for(MedicineMaster e : el){
 			vl.add(map(e));
 		}
-		return null;
+		return vl;
 	}
 
 	@Override

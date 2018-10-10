@@ -152,25 +152,27 @@ public class PatientServiceImpl implements PatientService{
 	public Patient map(PatientView pv){
 		Patient p = new Patient();
 		if(null != pv){
-			if(StringUtils.hasText(p.getFirstName())){
-				p.setFirstName(p.getFirstName().toLowerCase());
+			if(StringUtils.hasText(pv.getFirstName())){
+				p.setFirstName(pv.getFirstName().toLowerCase());
 			}
-			if(StringUtils.hasText(p.getLastName())){
-				p.setLastName(p.getLastName().toLowerCase());
+			if(StringUtils.hasText(pv.getLastName())){
+				p.setLastName(pv.getLastName().toLowerCase());
 			}
-			p.setDobDd(p.getDobDd());
-			p.setDobMm(p.getDobMm());
-			p.setDobYy(p.getDobYy());
-			p.setContactNo1(p.getContactNo1());
-			p.setContactNo2(p.getContactNo2());
-			p.setDiscount(p.getDiscount());
+			p.setDobDd(pv.getDobDd());
+			p.setDobMm(pv.getDobMm());
+			p.setDobYy(pv.getDobYy());
+			p.setContactNo1(pv.getContactNo1());
+			p.setContactNo2(pv.getContactNo2());
+			p.setDiscount(pv.getDiscount());
 			p.setWeight(pv.getWeight());
 			if(null != pv.getBloodGroup()){
 				p.setBloodGroup(pv.getBloodGroup().getBloodGroup());
 			}
+			p.setAddress1(pv.getAddress1());
+			p.setAddress2(pv.getAddress2());
 			p.setTsCreated(new Timestamp(System.currentTimeMillis()));
 			p.setImage(pv.getImage());
-			p.setPId(pv.getPId());
+//			p.setPId(pv.getPId());
 		}
 		return p;
 	}

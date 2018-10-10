@@ -15,6 +15,6 @@ public interface MedicineMasterRepository extends JpaRepository<MedicineMaster, 
 	List<MedicineMaster> getMedicineByAgeGroupId (@Param("ageGrp") String ageGroup);
 	List<MedicineMaster> getMedicineByTreatmentId (@Param("trtId") BigDecimal trtId);
 	List<MedicineMaster> getMedicineByDisease (@Param("diseaseName") String diseaseCode);
-	List<MedicineMaster> getMedicineByTreatmentNameAndAgeGrp (@Param("trtmntName") String trtmntName, @Param("ageGrp") String ageGrp);
+	List<MedicineMaster> getMedicineByTreatmentNameAndAgeGrp (@Param("trtmntId") Long trtmntId, @Param("ageGrp") String ageGrp);
 
 }

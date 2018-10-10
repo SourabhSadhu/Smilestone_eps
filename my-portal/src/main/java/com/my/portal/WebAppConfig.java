@@ -60,7 +60,8 @@ public class WebAppConfig extends WebMvcConfigurerAdapter implements Application
     
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-    	registry.addViewController("/remittance/login").setViewName("remittance/login");
+    	registry.addViewController("/index/**").setViewName("my-portal/index");
+    	/*registry.addViewController("/remittance/login").setViewName("remittance/login");
     	registry.addViewController("/remittance/remittancelogout").setViewName("remittance/remittancelogout");
         registry.addViewController("/remittance/home").setViewName("remittance/home");
         registry.addViewController("/remittance/header").setViewName("remittance/header");
@@ -82,7 +83,7 @@ public class WebAppConfig extends WebMvcConfigurerAdapter implements Application
         registry.addViewController("/remittance/applyForLoan").setViewName("remittance/applyForLoan");
         registry.addViewController("/remittance/limitRequest").setViewName("remittance/limitRequest");
         registry.addViewController("/remittance/userProfile").setViewName("remittance/userProfile");
-        registry.addViewController("/remittance/limitReport").setViewName("remittance/limitReport");
+        registry.addViewController("/remittance/limitReport").setViewName("remittance/limitReport");*/
     }
     
     

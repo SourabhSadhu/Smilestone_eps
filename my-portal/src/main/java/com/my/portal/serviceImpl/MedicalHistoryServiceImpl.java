@@ -88,9 +88,10 @@ public class MedicalHistoryServiceImpl implements MedicalHistoryService {
 			MedicalHistoryMasterView mhm = new MedicalHistoryMasterView();
 			mhm.setMedicalHistoryName(mh.getMedicalHistoryName());
 			mhv.setMedicalHistoryMaster(mhm);
-			PatientView p = new PatientView();
-			p.setPId(mh.getPatientId());
-			mhv.setPatient(p);
+			
+			if(null != mh.getPatientId() && mh.getPatientId().longValue() > 0){				
+				mhv.setPatient(pService.findById(mh.getPatientId()));
+			}
 			
 			mhv.setNote(mh.getNote());
 			mhv.setSeverity(mh.getSeverity());

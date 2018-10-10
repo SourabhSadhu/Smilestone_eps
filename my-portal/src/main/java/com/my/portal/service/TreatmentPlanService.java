@@ -7,8 +7,9 @@ import com.my.portal.model.TreatmentPlanView;
 
 public interface TreatmentPlanService {
 
-	TreatmentPlanView findByClinicalFindingsID(Long cfId);
-	TreatmentPlanView findByTreatmentName(String trtName);
+	List<TreatmentPlanView> findByClinicalFindingsID(Long cfId);
+	List<TreatmentPlanView> findByTreatmentName(String trtName);
+	List<TreatmentPlanView> findAll();
 	Object findById(Long id, boolean isRaw);
 	TreatmentPlanView addTreatmentPlan(TreatmentPlanView view);
 	TreatmentPlanView map(TreatmentPlan e);

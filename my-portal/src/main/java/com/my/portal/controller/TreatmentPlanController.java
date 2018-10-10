@@ -16,24 +16,25 @@ import com.my.portal.ValidationException;
 import com.my.portal.service.TreatmentPlanService;
 
 @Controller
-@RequestMapping("trtmnt")
+@RequestMapping(value = "/trtmnt")
 public class TreatmentPlanController {
 	
 	@Autowired TreatmentPlanService tpService;
 
-	@RequestMapping(method = RequestMethod.GET, value = "get-plan", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.GET, value = "/get-plan"/*, produces = MediaType.TEXT_PLAIN_VALUE*/)
 	@ResponseBody
 	public ResponseEntity<?> getPlan(
-				@RequestParam(value = "trtmntId") Long trtmntId,
-				@RequestParam(value = "trtmntName") String trtmntName
+				@RequestParam(value = "trtmntId", required = false) Long trtmntId,
+				@RequestParam(value = "trtmntName", required = false) String trtmntName
 			){
 		try {
 			if(StringUtils.hasText(trtmntName)){
 				return new ResponseEntity<>(CommonUtils.getResp(tpService.findByTreatmentName(trtmntName)), HttpStatus.OK);
 			}else if(null != trtmntId && 0 < trtmntId.longValue()){
 				return new ResponseEntity<>(CommonUtils.getResp(tpService.findByClinicalFindingsID(trtmntId)), HttpStatus.OK);
+			}else{
+				return new ResponseEntity<>(CommonUtils.getResp(tpService.findAll()), HttpStatus.OK);
 			}
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
 			if(e instanceof ValidationException) {
 				ValidationException ve = (ValidationException) e;

@@ -6,9 +6,12 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 
@@ -18,10 +21,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="patients")
+@SequenceGenerator(name="PATIENTS_PID_GENERATOR", sequenceName="patient_id_seq")
 @NamedQueries({
-	@NamedQuery(name="Patient.findByFirstName", query="SELECT p FROM Patient p WHERE p.firstName = :fName"),
-	@NamedQuery(name="Patient.findByLastName", query="SELECT p FROM Patient p WHERE p.lastName = :lName"),
-	@NamedQuery(name="Patient.findByFullName", query="SELECT p FROM Patient p WHERE p.firstName = :fName AND  p.lastName = :lName"),
+	@NamedQuery(name="Patient.findByFirstName", query="SELECT p FROM Patient p WHERE lower(p.firstName) like(:fName)"),
+	@NamedQuery(name="Patient.findByLastName", query="SELECT p FROM Patient p WHERE lower(p.lastName) LIKE( :lName )"),
+	@NamedQuery(name="Patient.findByFullName", query="SELECT p FROM Patient p WHERE lower(p.firstName) like(:fName) "+
+			"AND lower(p.lastName) like(:lName)"),
 	@NamedQuery(name="Patient.findByDOB", query="SELECT p FROM Patient p WHERE p.dobDd = :dd AND p.dobMm = :mm AND p.dobYy = :yy"),
 	@NamedQuery(name="Patient.findByDetails", query="SELECT p FROM Patient p WHERE p.firstName = :fName AND p.lastName = :lName "
 						+"AND p.dobDd = :dd AND p.dobMm = :mm AND p.dobYy = :yy"),
@@ -31,8 +36,8 @@ public class Patient implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-//	@SequenceGenerator(name="PATIENTS_PID_GENERATOR", sequenceName="REPLACE_SEQ_NAME")
-//	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PATIENTS_PID_GENERATOR")
+//	@SequenceGenerator(name="PATIENTS_PID_GENERATOR", sequenceName="patient_id_seq")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PATIENTS_PID_GENERATOR")
 	@Column(name="p_id")
 	private Long pId;
 

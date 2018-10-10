@@ -32,7 +32,7 @@ import javax.persistence.Table;
 	@NamedQuery(name="MedicineMaster.getMedicineByDisease", 
 		query="SELECT m FROM MedicineMaster m WHERE m.diseaseCode = :diseaseCode"),
 	@NamedQuery(name="MedicineMaster.getMedicineByTreatmentNameAndAgeGrp",
-		query = "SELECT m FROM MedicineMaster m WHERE m.id.ageGroup = :ageGrp AND m.id.treatmentId = :trtmntNames")
+		query = "SELECT m FROM MedicineMaster m WHERE m.id.ageGroup = :ageGrp AND m.id.treatmentId = :trtmntId")
 })
 public class MedicineMaster implements Serializable {
 	private static final long serialVersionUID = 1L;

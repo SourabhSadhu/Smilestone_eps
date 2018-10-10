@@ -24,14 +24,20 @@ public class TreatmentPlanServiceImpl implements TreatmentPlanService {
 	
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
-	public TreatmentPlanView findByClinicalFindingsID(Long cfId) {
-		return map(repo.findByClinicalFindingsID(cfId));
+	public List<TreatmentPlanView> findByClinicalFindingsID(Long cfId) {
+		return mapAll(repo.findByClinicalFindingsID(cfId));
 	}
 
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
-	public TreatmentPlanView findByTreatmentName(String trtName) {
-		return map(repo.findByTreatmentName(trtName));
+	public List<TreatmentPlanView> findByTreatmentName(String trtName) {
+		return mapAll(repo.findByTreatmentName(trtName));
+	}
+
+	
+	@Override
+	public List<TreatmentPlanView> findAll() {
+		return mapAll(repo.findAll());
 	}
 
 	@Override

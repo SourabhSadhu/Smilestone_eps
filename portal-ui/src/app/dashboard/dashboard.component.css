@@ -1,0 +1,63 @@
+.example-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .example-container > * {
+    width: 100%;
+  }
+  .example-card {
+    max-width: 800px;
+    min-width: 50px;
+    margin-left: 50px;
+    margin-top: 30px;
+    width : 100%;
+  }
+  .expansion-margin {
+    max-width: 1000px;
+    margin-left: 150px;
+    margin-top: 30px;
+  }
+  .example-section {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 60px;
+  }
+  .example-margin {
+    /* margin: 0 10px; */
+    margin-top: 20px;
+    margin : 5px 10px;
+  }
+  /* .mat-radio-button ~ .mat-radio-button {
+    padding: 36px;
+  } */
+
+  .example-radio-group-column {
+    /* display: inline-flex; */
+    /* flex-direction: column; */
+  }
+  
+  .example-icon-radio-button {
+    margin: 0px;
+    padding-left: 27px;
+  }
+
+  .example-half-width{
+    width: 50%;
+  }
+
+  .icon-male {
+    background: url("../images/gender-male.svg");
+    height: 27px;
+    width: 22px;
+    display: block;
+    /* Other styles here */
+}
+.icon-female {
+  background: url("../images/gender-female.svg");
+  height: 27px;
+  width: 22px;
+  display: block;
+  /* Other styles here */
+}

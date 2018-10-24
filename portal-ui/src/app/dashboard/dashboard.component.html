@@ -1,0 +1,241 @@
+<div class="dash">
+  <mat-tab-group>
+
+    <mat-tab label="Create Prescription">
+      <div class="expansion-margin">
+        <app-create-prescription>Loading...</app-create-prescription>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Add Patient">
+
+      <div class="expansion-margin">
+
+        <!-- Accordian expansion panel -->
+        <mat-accordion>
+          <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Basic data
+              </mat-panel-title>
+              <mat-panel-description>
+                Section for name, date of birth, weight, blood group
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <mat-card class="example-card">
+              <mat-card-content>
+                <table>
+                  <tr>
+                    <td>
+                      <!-- First Name -->
+                      <div class="example-container example-margin">
+                        <mat-form-field hintLabel="Max {{config.first_name_len}} characters">
+                          <input matInput [maxlength]="config.first_name_len" placeholder="First name" [(ngModel)]="patient.firstName" (keyup)='onKeyUp($event)'
+                            required>
+                          <mat-hint align="end">{{patient.firstName?.length || 0}}/{{config.first_name_len}}</mat-hint>
+                        </mat-form-field>
+                      </div>
+                    </td>
+                    <td>
+                      <!-- Last Name -->
+                      <div class="example-container example-margin">
+                        <mat-form-field hintLabel="Max {{config.last_name_len}} characters">
+                          <input matInput maxlength=15 placeholder="Last name" [(ngModel)]="patient.lastName" required>
+                          <mat-hint align="end">{{patient.lastName?.length || 0}}/{{config.last_name_len}}</mat-hint>
+                        </mat-form-field>
+                      </div>
+                    </td>
+                    <td>
+                      <!-- Sex -->
+                      <div class="example-container example-margin">
+                        <div style="display: inline;">
+                          <span>Sex</span>
+                          <mat-radio-group class="example-radio-group" [(ngModel)]="patient.sex">
+                            <span class="icon-male">
+                              <mat-radio-button class="example-icon-radio-button" value="male"></mat-radio-button>
+                            </span>
+                            <span class='icon-female'>
+                              <mat-radio-button class="example-icon-radio-button" value="female"></mat-radio-button>
+                            </span>
+                          </mat-radio-group>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+
+                      <!-- </td>
+                    <td> -->
+                      <!-- DOB -->
+                      <div class="example-margin">
+                        <span>
+                          Date of birth :
+                        </span>
+                        <mat-form-field>
+                          <input matInput [matDatepicker]="picker" placeholder="Select from calender" (dateChange)="dateAddEvent('change', $event)"
+                            disabled>
+                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                          <mat-datepicker #picker disabled="false"></mat-datepicker>
+                        </mat-form-field>
+                      </div>
+                    </td>
+                    <!-- </tr>
+                  <tr> -->
+                    <td>
+
+                      <!-- </td>
+                    <td> -->
+                      <div class="example-margin">
+                        <span>
+                          Blood Group :
+                        </span>
+                        <!-- Blood group -->
+                        <mat-select class="example-half-width" placeholder="Blood group" [(ngModel)]="patient.bloodGroup" name="bloodGroup">
+                          <mat-option *ngFor="let bg of bloodGroups" [value]="bg.value">
+                            {{bg.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <!-- Height -->
+                      <div class="example-margin">
+                        <span>
+                          Height(cm) :
+                        </span>
+                        <mat-form-field hintLabel="Enter in digits">
+                          <input matInput maxlength=3 placeholder="Height" [(ngModel)]="patient.height" required>
+                          <mat-hint align="end">{{patient.height?.length || 0}}/3</mat-hint>
+                        </mat-form-field>
+                      </div>
+                    </td>
+                    <td>
+                      <!-- Weight -->
+                      <div class="example-margin">
+                        <span>
+                          Weight(kg) :
+                        </span>
+                        <mat-form-field hintLabel="Enter in digits">
+                          <input matInput maxlength=3 placeholder="Weight" [(ngModel)]="patient.weight" required>
+                          <mat-hint align="end">{{patient.weight?.length || 0}}/3</mat-hint>
+                        </mat-form-field>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </mat-card-content>
+            </mat-card>
+            <mat-action-row>
+              <button mat-button color="primary" (click)="nextStep()">Next</button>
+            </mat-action-row>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Contact data
+              </mat-panel-title>
+              <mat-panel-description>
+                Section for phone number, email and address
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-card class="example-card">
+              <mat-card-content>
+                <table>
+                  <tr>
+                    <td>
+                      <!-- Contact Number -->
+                      <div class="example-container example-margin">
+                        <mat-form-field hintLabel="Enter in digits" class="example-full-width">
+                          <span matPrefix>+91 &nbsp;</span>
+                          <input type="tel" matInput placeholder="Contact number" [(ngModel)]="patient.contactNo1">
+                          <mat-icon matSuffix>contact_phone</mat-icon>
+                        </mat-form-field>
+                      </div>
+                    </td>
+                    <td>
+                      <!-- Email address -->
+                      <div class="example-container example-margin">
+                        <mat-form-field hintLabel="Optional email">
+                          <input matInput maxlength=30 placeholder="Enter email" type="email" [(ngModel)]="patient.email">
+                          <mat-icon matSuffix>contact_mail</mat-icon>
+                          <mat-hint align="end">{{patient.email?.length || 0}}/30</mat-hint>
+                        </mat-form-field>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+
+                <!-- Address 1 -->
+                <div class="example-container example-margin">
+                  <mat-form-field class="example-full-width">
+                    <textarea matInput placeholder="Address1" [(ngModel)]="patient.address1" required></textarea>
+                    <button mat-button *ngIf="patient.address1" matSuffix mat-icon-button aria-label="Clear" (click)="patient.address1=''">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
+                </div>
+
+                <!-- Address 2 -->
+                <div class="example-container example-margin">
+                  <mat-form-field class="example-full-width">
+                    <textarea matInput placeholder="Address2" [(ngModel)]="patient.address2"></textarea>
+                    <button mat-button *ngIf="patient.address2" matSuffix mat-icon-button aria-label="Clear" (click)="patient.address2=''">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
+                </div>
+              </mat-card-content>
+            </mat-card>
+            <mat-action-row>
+              <button mat-button color="warn" (click)="prevStep()">Previous</button>
+              <button mat-button color="primary" (click)="nextStep()">Next</button>
+            </mat-action-row>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Configuration data
+              </mat-panel-title>
+              <mat-panel-description>
+                Optional data
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <span>Discount</span>
+            <table>
+              <tr>
+                <td>
+                  <mat-radio-group class="example-margin" [(ngModel)]="patient.discountType">
+                    <mat-radio-button value="percentage">Percent</mat-radio-button>
+                    <mat-radio-button value="flat">Flat</mat-radio-button>
+                  </mat-radio-group>
+                </td>
+                <td>
+                  <div class="example-margin">
+                    <mat-form-field hintLabel="Enter in digits">
+                      <input matInput maxlength="5" placeholder="Discount" [(ngModel)]="patient.discount">
+                      <mat-hint align="end">{{patient.discount?.length || 0}}/5</mat-hint>
+                    </mat-form-field>
+                  </div>
+                </td>
+              </tr>
+            </table>
+            <mat-action-row>
+              <button mat-button color="warn" (click)="prevStep()">Previous</button>
+              <button mat-button color="primary" (click)="submitPatient()">Add Patient</button>
+            </mat-action-row>
+          </mat-expansion-panel>
+
+
+        </mat-accordion>
+
+      </div>
+    </mat-tab>
+
+  </mat-tab-group>
+</div>

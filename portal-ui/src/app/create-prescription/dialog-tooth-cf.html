@@ -1,0 +1,87 @@
+<h1 mat-dialog-title>Create Clinical Findings</h1>
+<div mat-dialog-content>
+    <!-- <mat-list>
+        <h3 mat-subheader>Clinical Findings</h3>
+        <mat-list-item *ngFor="let cf of data.clinicalFindingsComposite">
+            <mat-icon mat-list-icon>notes</mat-icon>
+            <h4 mat-line>Name : {{cf.fname}}</h4>
+            <p mat-line>Desc : {{cf.fdesc}} </p>
+        </mat-list-item>
+    </mat-list> -->
+    <form class="example-form">
+        <mat-form-field class="example-full-width">
+            <input type="text" matInput placeholder="Pick one" aria-label="Number" [formControl]="clinicalFindingForm"
+                [matAutocomplete]="auto2">
+            <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
+                <mat-option *ngFor="let cfdd of filteredCfList | async" [value]="cfdd">
+                    {{cfdd}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </form>
+    <mat-divider></mat-divider>
+
+    <!-- <mat-form-field>
+        <mat-select placeholder="Tooth" [formControl]="toothForm" multiple>
+            <mat-option *ngFor="let tooth of data.toothQuadrentsComposite" [value]="tooth.toothIndex">{{tooth.toothIndex}}</mat-option>
+        </mat-select>
+    </mat-form-field> -->
+
+    <table>
+        <tr>
+            <td *ngFor="let t of getOrderedList(1)" class="rcorners2" (click)="checkTooth(t)">
+                <!-- (click)="setSelect(t)" -->
+                <label>
+                    <input  class="custom_mat-radio-button" type="checkbox" name="all" value="{{t.toothIndex}}" [checked]="t.selected" disabled 
+                    />
+                    {{t.toothIndex}}
+                </label>
+            </td>
+            <td *ngFor="let t of getOrderedList(2, true)" class="rcorners2" (click)="checkTooth(t)">
+                <label>
+                    <input type="checkbox" name="all" value="{{t.toothIndex}}" [checked]="t.selected" disabled />
+                    <!-- (change)="checkTooth(t)" -->
+                    {{t.toothIndex}}
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td *ngFor="let t of getOrderedList(3)" class="rcorners2" (click)="checkTooth(t)">
+                <input type="checkbox" name="all" value="{{t.toothIndex}}" [checked]="t.selected" disabled />
+                <!-- (change)="checkTooth(t)" -->
+                {{t.toothIndex}}
+            </td>
+            <td *ngFor="let t of getOrderedList(4, true)" class="rcorners2" (click)="checkTooth(t)">
+                <input type="checkbox" name="all" value="{{t.toothIndex}}" [checked]="t.selected" disabled />
+                <!-- (change)="checkTooth(t)" -->
+                {{t.toothIndex}}
+            </td>
+        </tr>
+    </table>
+
+
+    <p>
+        <button mat-raised-button color="primary" (click)="add()">
+            Select <mat-icon aria-label="Select">check_circle_outline</mat-icon>
+        </button>
+    </p>
+    <p>
+        <mat-form-field>
+            <mat-chip-list #chipList>
+                <mat-chip *ngFor="let cf of cfTextToBeShownOnUi" selectable="true" removable="true" (removed)="remove(cf)">
+                    {{cf}}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+                <input placeholder="Result" disabled [matChipInputFor]="chipList" matChipInputAddOnBlur="true">
+                <!-- 
+                    (matChipInputTokenEnd)="addChip($event)" 
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                -->
+            </mat-chip-list>
+        </mat-form-field>
+    </p>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Close</button>
+    <button mat-button (click)="closeDialog()">Done</button>
+</div>

@@ -1,0 +1,354 @@
+<!-- <div class="example-margin">
+  <form class="example-form">
+    <mat-form-field class="example-full-width">
+      <input type="text" matInput placeholder="Pick one" aria-label="Number" [formControl]="myControl" [matAutocomplete]="auto">
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+  <form class="example-form">
+    <mat-form-field class="example-full-width">
+      <input type="text" matInput placeholder="Pick one2" aria-label="Number" [formControl]="myControl2" [matAutocomplete]="auto2">
+      <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
+        <mat-option *ngFor="let option2 of filteredOptions2 | async" [value]="option2">
+          {{option2}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+</div> -->
+
+<!-- Section to create presciption -->
+<mat-card class="example-card-parent">
+
+  <mat-tab-group [selectedIndex]="prescriptionFromControl.value" (selectedIndexChange)="prescriptionFromControl.setValue($event)"
+    mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4">
+    <mat-tab label="Basic Info">
+      <mat-card class="example-card">
+        <mat-card-content>
+          <table>
+            <tr>
+              <td>
+                <!-- First Name -->
+                <div class="example-container example-margin">
+                  <mat-form-field hintLabel="Min {{minCharToSearch}} char to search">
+                    <input matInput cdkFocusInitial maxlength=20 placeholder="First name" [(ngModel)]="selectedPatient.firstName"
+                      (keyup)='fetchPatient($event)'>
+                    <mat-hint align="end">{{selectedPatient.firstName?.length || 0}}/20</mat-hint>
+                  </mat-form-field>
+                </div>
+              </td>
+              <td>
+                <!-- Last Name -->
+                <div class="example-container example-margin">
+                  <mat-form-field hintLabel="Min {{minCharToSearch}} char to search">
+                    <input matInput maxlength=20 placeholder="Last name" [(ngModel)]="selectedPatient.lastName" (keyup)='fetchPatient($event)'>
+                    <mat-hint align="end">{{selectedPatient.lastName?.length || 0}}/20</mat-hint>
+                  </mat-form-field>
+                </div>
+              </td>
+              <td>
+                <div class="example-container example-margin">
+                  <mat-form-field>
+                    <input matInput [matDatepicker]="picker" placeholder="Select from calender" (dateChange)="dateValidate($event)"
+                      disabled>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker disabled="false"></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </td>
+              <td>
+                <div class="">
+                  <button mat-mini-fab color="primary" (click)="fetchPatient($event)" matTooltip="Search">
+                    <mat-icon aria-label="Search">search</mat-icon>
+                  </button>
+                </div>
+              </td>
+              <td>
+                <div class="example-margin">
+                  <button mat-mini-fab color="primary" (click)="initializeValiables()" matTooltip="Refresh">
+                    <mat-icon aria-label="Refresh">refresh</mat-icon>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </table>
+          <!-- Loading progressbar -->
+          <mat-progress-bar *ngIf="isPatientLoading" color="color" mode="indeterminate"></mat-progress-bar>
+          <!-- Patient list -->
+          <div *ngIf="isPatientLoaded">
+            <table mat-table [dataSource]="patientDataSource" multiTemplateDataRows class="mat-elevation-z8">
+              <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+                <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+                <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+              </ng-container>
+
+              <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+              <ng-container matColumnDef="expandedDetail">
+                <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                  <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                    <div class="example-element-diagram">
+                      <div class="example-element-position"> {{element.firstName}} </div>
+                      <div class="example-element-symbol"> {{element.lastName}} </div>
+                      <div class="example-element-name"> {{element.age}} </div>
+                      <div class="example-element-weight"> {{element.contactNo1}} </div>
+                      <!-- <span>Image placeholder</span> -->
+                    </div>
+                    <div class="example-element-description">
+                      <p>
+                        {{element.address1}}
+                      </p>
+                      <p>
+                        {{element.address2}}
+                      </p>
+                      <p>
+                        <!-- <span class="example-element-description-attribution"> -- Wikipedia </span> -->
+                        <button mat-raised-button color="primary" (click)="selectedElement(expandedElement)">
+                          Select <mat-icon aria-label="Select">check_circle_outline</mat-icon>
+                        </button>
+                      </p>
+                    </div>
+                  </div>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+              <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row"
+                [class.example-expanded-row]="expandedElement === element" (mouseenter)="mouseOverFn(element)">
+                <!-- (mouseout)="mouseOutFn(expandedElement)" -->
+              </tr>
+              <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+            </table>
+          </div>
+        </mat-card-content>
+        <!-- <mat-card-actions>
+          <button mat-button>LIKE</button>
+          <button mat-button>SHARE</button>
+        </mat-card-actions> -->
+      </mat-card>
+
+    </mat-tab>
+
+    <mat-tab label="History">
+
+    </mat-tab>
+
+    <mat-tab label="Prescription">
+      <mat-card class="example-card">
+        <mat-card-content>
+          <mat-form-field class="example-full-width">
+            <textarea matInput placeholder="Chief complaint" [(ngModel)]="prescriptionHistoryView.chiefComplaint"
+              cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
+            <button mat-button *ngIf="prescriptionHistoryView.chiefComplaint" matSuffix mat-icon-button aria-label="Clear"
+              (click)="prescriptionHistoryView.chiefComplaint=''" matToolTip="Clear">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <button mat-button matPrefix mat-icon-button aria-label="Add" (click)="openDialog()" matToolTip="Add">
+              <mat-icon>add_circle_outline</mat-icon>
+            </button>
+            <!-- <textarea matInput placeholder="Chief findings" disabled [(ngModel)]="clinicalFindingsView" cdkTextareaAutosize
+              cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea> -->
+            <mat-chip-list #chipList1>
+              <mat-chip *ngFor="let s of clinicalFindingsView" selectable="false" removable="false">
+                {{s}}
+              </mat-chip>
+              <input placeholder="Add C/F" [matChipInputFor]="chipList1" matChipInputAddOnBlur="true" disabled>
+            </mat-chip-list>
+          </mat-form-field>
+
+          <table>
+            <tr>
+              <td>
+                <!-- Medical History -->
+                <mat-form-field class="example-full-width">
+                  <mat-select placeholder="Medical History" [formControl]="medicalHistoryForm" 
+                    multiple class="example-full-width">
+                    <mat-option *ngFor="let mh of mhList" [value]="mh">{{mh}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <!-- Loading progressbar -->
+                <mat-progress-bar *ngIf="mhList == null || mhList?.length <= 0" color="color" mode="indeterminate"></mat-progress-bar>
+              </td>
+              <td>
+                <mat-form-field hintLabel="Max 30 characters" class="example-full-width">
+                  <input matInput [maxlength]="30" placeholder="Investigation" [(ngModel)]="prescriptionHistoryView.investigation">
+                  <mat-hint align="end">{{prescriptionHistoryView.investigation?.length || 0}}/30</mat-hint>
+                </mat-form-field>
+              </td>
+            </tr>
+          </table>
+
+          <!-- provisionalDiagnosis -->
+          <mat-form-field class="example-full-width">
+            <textarea matInput placeholder="Provisional diagnosis" [(ngModel)]="prescriptionHistoryView.provisionalDiagnosis"
+              cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
+            <button mat-button *ngIf="prescriptionHistoryView.provisionalDiagnosis" matSuffix mat-icon-button
+              aria-label="Clear" (click)="prescriptionHistoryView.provisionalDiagnosis=''" matToolTip="Clear">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+
+          <!-- Treatment Done -->
+          <mat-form-field class="example-full-width">
+            <textarea matInput placeholder="Treatment done" [(ngModel)]="prescriptionHistoryView.treatmentDone"
+              cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
+            <button mat-button *ngIf="prescriptionHistoryView.treatmentDone" matSuffix mat-icon-button aria-label="Clear"
+              (click)="prescriptionHistoryView.treatmentDone=''" matToolTip="Clear">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+
+          <!-- Treatment Plan -->
+          <mat-form-field class="example-full-width">
+            <mat-chip-list #chipListtrtmnt>
+              <mat-chip *ngFor="let s of treatmentPlanListView" selectable="true" removable="true" (removed)="removeChip(s,1)">
+                {{s}}
+                <mat-icon matChipRemove>cancel</mat-icon>
+              </mat-chip>
+              <input placeholder="Treatment Plan" [matChipInputFor]="chipListtrtmnt" matChipInputAddOnBlur="true"
+                (matChipInputTokenEnd)="addTreatmentPlan($event)" [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
+            </mat-chip-list>
+          </mat-form-field>
+
+          <!-- advice -->
+          <!-- <mat-grid-list cols="4" rowHeight="100px">
+            <mat-grid-tile colspan="3" rowspan="4"> -->
+          <mat-form-field class="example-full-width example-grid-margin">
+            <textarea matInput placeholder="Advice" [(ngModel)]="prescriptionHistoryView.advice" cdkTextareaAutosize
+              cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
+            <button mat-button *ngIf="prescriptionHistoryView.advice" matSuffix mat-icon-button aria-label="Clear"
+              (click)="prescriptionHistoryView.advice=''" matToolTip="Clear">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+          <!-- </mat-grid-tile> -->
+
+          <!-- Medicine -->
+          <!-- <mat-grid-tile colspan="3" rowspan="4"> -->
+          <mat-form-field class="example-full-width">
+            <mat-chip-list #chipListmedicine>
+              <mat-chip *ngFor="let s of medicineMasterViewList" selectable="true" removable="true" (removed)="removeChip(s,2)">
+                {{s.medicineName}} - {{s.dosage}}
+                <mat-icon matChipRemove>cancel</mat-icon>
+              </mat-chip>
+              <input placeholder="Medicines" [matChipInputFor]="chipListmedicine" matChipInputAddOnBlur="true"
+                (matChipInputTokenEnd)="addMedicine($event)" [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
+            </mat-chip-list>
+          </mat-form-field>
+          <!-- </mat-grid-tile> -->
+
+          <!-- Next appointment -->
+          <!-- <mat-grid-tile colspan="1" rowspan="8"> -->
+          <mat-form-field class="example-full-width">
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="nextAppoPicker" 
+              placeholder="Next appointment" (dateChange)="createNextAppo($event)">
+            <mat-datepicker-toggle matSuffix [for]="nextAppoPicker"></mat-datepicker-toggle>
+            <mat-datepicker #nextAppoPicker></mat-datepicker>
+          </mat-form-field>
+          <!-- </mat-grid-tile> 
+          </mat-grid-list> -->
+
+          <div *ngIf="feesConfigListView && feesConfigListView.length > 0">
+            <table mat-table [dataSource]="feesConfigListDataSource" class="mat-elevation-z8">
+
+              <!-- column list -->
+              <!-- Id Column -->
+              <ng-container matColumnDef="treatmentPlanId">
+                <th mat-header-cell *matHeaderCellDef> # </th>
+                <td mat-cell *matCellDef="let fee"> {{fee.treatmentPlanId}} </td>
+                <td mat-footer-cell *matFooterCellDef> </td>
+              </ng-container>
+
+              <!-- baseFee Column -->
+              <ng-container matColumnDef="baseFee">
+                <th mat-header-cell *matHeaderCellDef> Base </th>
+                <td mat-cell *matCellDef="let fee"> {{fee.baseFee}} </td>
+                <td mat-footer-cell *matFooterCellDef> </td>
+              </ng-container>
+              
+              <!-- ageGroupId Column -->
+              <ng-container matColumnDef="ageGroupId">
+                <th mat-header-cell *matHeaderCellDef> AgeGrp </th>
+                <td mat-cell *matCellDef="let fee"> {{fee.ageGroupId}} </td>
+                <td mat-footer-cell *matFooterCellDef> </td>
+              </ng-container>
+
+              <!-- ageGroupPercent Column -->
+              <ng-container matColumnDef="ageGroupPercent">
+                <th mat-header-cell *matHeaderCellDef> % </th>
+                <td mat-cell *matCellDef="let fee"> {{fee.ageGroupPercent}} </td>
+                <td mat-footer-cell *matFooterCellDef> </td>
+              </ng-container>
+
+              <!-- toothGroupId Column -->
+              <ng-container matColumnDef="toothGroupId">
+                <th mat-header-cell *matHeaderCellDef> ToothGrp </th>
+                <td mat-cell *matCellDef="let fee"> {{fee.toothGroupId}} </td>
+                <td mat-footer-cell *matFooterCellDef> </td>
+              </ng-container>
+
+              <!-- toothGroupPercent Column -->
+              <ng-container matColumnDef="toothGroupPercent">
+                <th mat-header-cell *matHeaderCellDef> % </th>
+                <td mat-cell *matCellDef="let fee"> {{fee.toothGroupPercent}} </td>
+                <td mat-footer-cell *matFooterCellDef> </td>
+              </ng-container>
+
+              <!-- totalFee Column -->
+              <ng-container matColumnDef="totalFee">
+                <th mat-header-cell *matHeaderCellDef> Fee </th>
+                <td mat-cell *matCellDef="let fee">
+                  <mat-form-field>
+                    <input matInput type="number" min=1 [(ngModel)]="fee.totalFee" (change)="getTotalFee()">
+                  </mat-form-field>
+                </td>
+                <td mat-footer-cell *matFooterCellDef> Total </td>
+              </ng-container>
+
+              <!-- notes Column -->
+              <ng-container matColumnDef="notes">
+                <th mat-header-cell *matHeaderCellDef> Note </th>
+                <td mat-cell *matCellDef="let fee">
+                  <mat-form-field>
+                    <input matInput [(ngModel)]="fee.notes">
+                  </mat-form-field>
+                  <button mat-button matSuffix mat-icon-button aria-label="Clear"
+                    (click)="removeFees($index)" matToolTip="Clear">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </td>
+                <td mat-footer-cell *matFooterCellDef> {{totalFees | currency:'&#8377;' }} </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="feesConfigListViewColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: feesConfigListViewColumns;"></tr>
+              <tr mat-footer-row *matFooterRowDef="feesConfigListViewColumns; sticky: true"></tr>
+            </table>
+          </div>
+
+          <!-- Note -->
+          <mat-form-field class="example-full-width">
+            <textarea matInput placeholder="Notes" [(ngModel)]="prescriptionHistoryView.note" cdkTextareaAutosize
+              cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
+            <button mat-button *ngIf="prescriptionHistoryView.note" matSuffix mat-icon-button aria-label="Clear"
+              (click)="prescriptionHistoryView.note=''" matToolTip="Clear">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+
+          <button mat-mini-fab color="primary" (click)="createAndSubmitPrescription()" matTooltip="Print">
+            <mat-icon aria-label="Print">print</mat-icon>
+          </button>
+        </mat-card-content>
+      </mat-card>
+    </mat-tab>
+
+  </mat-tab-group>
+
+</mat-card>

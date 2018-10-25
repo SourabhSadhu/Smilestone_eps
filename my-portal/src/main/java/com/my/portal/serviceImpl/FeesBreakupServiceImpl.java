@@ -82,7 +82,7 @@ public class FeesBreakupServiceImpl implements FeesBreakupService {
 //			v.setClinicalFinding(cfService.map(e.getClinicalFinding()));
 //			v.setPatient(pService.map(e.getPatient()));
 //			v.setPrescriptionHistory(phService.map(e.getPrescriptionHistory()));
-			v.setClinicalFindingsRef(e.getClinicalFindingsRef());
+			v.setTrtmntPlanRef(e.getTrtmntPlanRef());
 			v.setPatientId(e.getPatientId());
 			v.setPrescriptionId(v.getPrescriptionId());
 		}
@@ -113,7 +113,7 @@ public class FeesBreakupServiceImpl implements FeesBreakupService {
 //			e.setClinicalFinding(cfService.map(v.getClinicalFinding()));
 //			e.setPatient(pService.map(v.getPatient()));
 //			e.setPrescriptionHistory(phService.map(v.getPrescriptionHistory()));
-			e.setClinicalFindingsRef(v.getClinicalFindingsRef());
+			e.setTrtmntPlanRef(v.getTrtmntPlanRef());
 			e.setPatientId(v.getPatientId());
 			e.setPrescriptionId(v.getPrescriptionId());
 		}

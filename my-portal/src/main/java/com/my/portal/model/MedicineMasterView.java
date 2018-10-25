@@ -17,6 +17,7 @@ public class MedicineMasterView implements Serializable {
 	private String diseaseName;
 	private AgeGroupView ageGroupBean;
 	private TreatmentPlanView treatmentPlan;
+	private Long medicineId;
 
 	public MedicineMasterView() {
 	}
@@ -102,4 +103,12 @@ public class MedicineMasterView implements Serializable {
 		this.treatmentPlan = treatmentPlan;
 	}
 
+	public Long getMedicineId() {
+		return medicineId;
+	}
+	
+	public void setMedicineId(Long medicineId) {
+		this.medicineId = medicineId;
+	}
+	
 }

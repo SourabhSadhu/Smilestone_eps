@@ -48,6 +48,9 @@ public class MedicineMaster implements Serializable {
 
 	@Column(name="disease_name")
 	private String diseaseName;
+	
+	@Column(name="medicine_id")
+	private Long medicineId;
 
 	public MedicineMaster() {
 	}
@@ -82,6 +85,10 @@ public class MedicineMaster implements Serializable {
 
 	public void setDiseaseName(String diseaseName) {
 		this.diseaseName = diseaseName;
+	}
+	
+	public Long getMedicineId(){
+		return this.medicineId;
 	}
 
 }

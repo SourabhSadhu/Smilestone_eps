@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.my.portal.CommonUtils;
 import com.my.portal.model.DashboardView;
 import com.my.portal.service.DashboardService;
 
@@ -23,7 +24,7 @@ public class DashboardController {
 	@ResponseBody
 	public ResponseEntity<?> addPrescription(@RequestBody DashboardView view){
 		try{
-			return new ResponseEntity<>(dService.processPrescription(view), HttpStatus.OK);
+			return new ResponseEntity<>(CommonUtils.getResp(dService.processPrescription(view)), HttpStatus.OK);
 		}catch(Exception e){
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

@@ -72,22 +72,6 @@ public class PrescriptionHistoryServiceImpl implements PrescriptionHistoryServic
 		e.setInvestigation(v.getInvestigation());
 		e.setTsCreated(new Timestamp(System.currentTimeMillis()));
 		e.setPatientId(v.getPatientId());
-//		e.setFeesBreakups(fbService.map(v.getFeesBreakups()));
-//		List<FeesBreakup> fbl = fbService.map(v.getFeesBreakups());
-//		for(FeesBreakup fb : fbl){
-//			e.addFeesBreakup(fb);
-//		}
-//		
-//		e.setMedicineHistories(medService.mapEntities(v.getMedicineHistories()));
-//		List<MedicineHistory> medhl = medService.mapEntities(v.getMedicineHistories());
-//		for(MedicineHistory medh : medhl){
-//			e.addMedicineHistory(medh);
-//		}
-//		
-//		List<MedicalHistory> mhl = mhService.map(v.getMedicalHistories());
-//		for(MedicalHistory medh : mhl){
-//			e.addMedicalHistory(medh);
-//		}
 		return e;
 	}
 

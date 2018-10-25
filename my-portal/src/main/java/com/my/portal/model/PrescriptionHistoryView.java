@@ -15,10 +15,10 @@ public class PrescriptionHistoryView implements Serializable {
 	private String clinicalFindings;
 	private String investigation;
 	private String medicines;
-	private Timestamp nextAppointment;
+	private Long nextAppointment;
 	private String note;
 	private Long patientId;
-	private String personalDiagnosis;
+	private String provisionalDiagnosis;
 	private String treatmentDone;
 	private String treatmentPlan;
 	private Timestamp tsCreated;
@@ -76,11 +76,11 @@ public class PrescriptionHistoryView implements Serializable {
 	}
 
 	public final Timestamp getNextAppointment() {
-		return nextAppointment;
+		return null != nextAppointment ? new Timestamp(nextAppointment) : null;
 	}
 
 	public final void setNextAppointment(Timestamp nextAppointment) {
-		this.nextAppointment = nextAppointment;
+		if(null != nextAppointment) this.nextAppointment = nextAppointment.getTime();
 	}
 
 	public final String getNote() {
@@ -99,12 +99,12 @@ public class PrescriptionHistoryView implements Serializable {
 		this.patientId = patientId;
 	}
 
-	public final String getPersonalDiagnosis() {
-		return personalDiagnosis;
+	public final String getProvisionalDiagnosis() {
+		return provisionalDiagnosis;
 	}
 
-	public final void setPersonalDiagnosis(String personalDiagnosis) {
-		this.personalDiagnosis = personalDiagnosis;
+	public final void setProvisionalDiagnosis(String personalDiagnosis) {
+		this.provisionalDiagnosis = personalDiagnosis;
 	}
 
 	public final String getTreatmentDone() {

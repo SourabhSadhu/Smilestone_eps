@@ -4,75 +4,75 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 public class MedicalHistoryView implements Serializable {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 8596285564750726903L;
+	
 	private Long medicalHistoryId;
+	private String medicalHistoryName;
 	private String note;
+	private Long patientId;
+	private Long prescriptionId;
 	private String severity;
 	private Timestamp startedFrom;
-	private MedicalHistoryMasterView medicalHistoryMaster;
-	private PatientView patient;
-	private PrescriptionHistoryView prescriptionHistory;
 
 	public MedicalHistoryView() {
 	}
 
-	public Long getMedicalHistoryId() {
-		return this.medicalHistoryId;
+	public final Long getMedicalHistoryId() {
+		return medicalHistoryId;
 	}
 
-	public void setMedicalHistoryId(Long medicalHistoryId) {
+	public final void setMedicalHistoryId(Long medicalHistoryId) {
 		this.medicalHistoryId = medicalHistoryId;
 	}
 
-	public String getNote() {
-		return this.note;
+	public final String getMedicalHistoryName() {
+		return medicalHistoryName;
 	}
 
-	public void setNote(String note) {
+	public final void setMedicalHistoryName(String medicalHistoryName) {
+		this.medicalHistoryName = medicalHistoryName;
+	}
+
+	public final String getNote() {
+		return note;
+	}
+
+	public final void setNote(String note) {
 		this.note = note;
 	}
 
-	public String getSeverity() {
-		return this.severity;
+	public final Long getPatientId() {
+		return patientId;
 	}
 
-	public void setSeverity(String severity) {
+	public final void setPatientId(Long patientId) {
+		this.patientId = patientId;
+	}
+
+	public final Long getPrescriptionId() {
+		return prescriptionId;
+	}
+
+	public final void setPrescriptionId(Long prescriptionId) {
+		this.prescriptionId = prescriptionId;
+	}
+
+	public final String getSeverity() {
+		return severity;
+	}
+
+	public final void setSeverity(String severity) {
 		this.severity = severity;
 	}
 
-	public Timestamp getStartedFrom() {
-		return this.startedFrom;
+	public final Timestamp getStartedFrom() {
+		return startedFrom;
 	}
 
-	public void setStartedFrom(Timestamp startedFrom) {
+	public final void setStartedFrom(Timestamp startedFrom) {
 		this.startedFrom = startedFrom;
 	}
 
-	public MedicalHistoryMasterView getMedicalHistoryMaster() {
-		return this.medicalHistoryMaster;
-	}
-
-	public void setMedicalHistoryMaster(MedicalHistoryMasterView medicalHistoryMaster) {
-		this.medicalHistoryMaster = medicalHistoryMaster;
-	}
-
-	public PatientView getPatient() {
-		return this.patient;
-	}
-
-	public void setPatient(PatientView patient) {
-		this.patient = patient;
-	}
-
-	public PrescriptionHistoryView getPrescriptionHistory() {
-		return prescriptionHistory;
-	}
-
-	public void setPrescriptionHistory(PrescriptionHistoryView prescriptionHistory) {
-		this.prescriptionHistory = prescriptionHistory;
-	}
-
+	
 }

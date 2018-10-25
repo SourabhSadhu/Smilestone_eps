@@ -3,17 +3,20 @@ package com.my.portal.serviceImpl;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import com.my.portal.CommonConstants.BloodGroup;
 import com.my.portal.ErrorCode;
 import com.my.portal.ValidationException;
 import com.my.portal.entities.Patient;
@@ -30,19 +33,19 @@ public class PatientServiceImpl implements PatientService{
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
 	public List<PatientView> findByFirstName(String fName) {
-		return mapAll(repo.findByFirstName(fName));
+		return mapAll(repo.findByFirstName(likedQuery(fName)));
 	}
 	
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
 	public List<PatientView> findByLastName(String lName) {
-		return mapAll(repo.findByLastName(lName));
+		return mapAll(repo.findByLastName(likedQuery(lName)));
 	}
 	
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
 	public List<PatientView> findByFullName(String fName, String lName) {
-		return mapAll(repo.findByFullName(fName, lName));
+		return mapAll(repo.findByFullName(likedQuery(fName), likedQuery(lName)));
 	}
 	
 	@Override
@@ -118,6 +121,8 @@ public class PatientServiceImpl implements PatientService{
 	public PatientView map(Patient p){
 		PatientView pv = new PatientView();
 		if(null != p){
+			/*pv.setAddress1(p.getAddress1());
+			pv.setAddress2(p.getAddress2());
 			pv.setContactNo1(p.getContactNo1());
 			pv.setContactNo2(p.getContactNo2());
 			pv.setDiscount(p.getDiscount());
@@ -133,6 +138,20 @@ public class PatientServiceImpl implements PatientService{
 				pv.setBloodGroup(BloodGroup.getBloodGroup(p.getBloodGroup()));
 			}
 			pv.setImage(p.getImage());
+			pv.setSex(p.getSex());
+			pv.setHeight(p.getHeight());
+//			pv.setDobTimestamp(p.getDobTimestamp());
+			pv.setDiscountType(p.getDiscountType());
+			pv.setEmail(p.getEmail());*/
+			BeanUtils.copyProperties(p, pv);
+			
+			Date date = new Date();
+			Calendar calendar = new GregorianCalendar();
+			calendar.setTime(date);
+			int year = calendar.get(Calendar.YEAR);			
+			pv.setAge((null != p.getDobYy() && p.getDobYy().compareTo(BigDecimal.ZERO) > 0 && year > 0)
+					? year - p.getDobYy().intValue() : 0);
+
 		}
 		return pv;
 	}
@@ -153,10 +172,10 @@ public class PatientServiceImpl implements PatientService{
 		Patient p = new Patient();
 		if(null != pv){
 			if(StringUtils.hasText(pv.getFirstName())){
-				p.setFirstName(pv.getFirstName().toLowerCase());
+				p.setFirstName(pv.getFirstName());
 			}
 			if(StringUtils.hasText(pv.getLastName())){
-				p.setLastName(pv.getLastName().toLowerCase());
+				p.setLastName(pv.getLastName());
 			}
 			p.setDobDd(pv.getDobDd());
 			p.setDobMm(pv.getDobMm());
@@ -173,8 +192,16 @@ public class PatientServiceImpl implements PatientService{
 			p.setTsCreated(new Timestamp(System.currentTimeMillis()));
 			p.setImage(pv.getImage());
 //			p.setPId(pv.getPId());
+			p.setSex(pv.getSex());
+			p.setHeight(pv.getHeight());
+//			p.setDobTimestamp(pv.getDobTimestamp());
+			p.setDiscountType(pv.getDiscountType());
+			p.setEmail(pv.getEmail());
 		}
 		return p;
 	}
 
+	private String likedQuery(String s1){
+		return new StringBuilder("%").append(s1).append("%").toString();
+	}
 }

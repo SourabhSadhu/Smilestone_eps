@@ -29,18 +29,18 @@ public class MedicalHistoryMasterView implements Serializable {
 		this.medicalHistories = medicalHistories;
 	}
 
-	public MedicalHistoryView addMedicalHistory(MedicalHistoryView medicalHistory) {
-		getMedicalHistories().add(medicalHistory);
-		medicalHistory.setMedicalHistoryMaster(this);
-
-		return medicalHistory;
-	}
-
-	public MedicalHistoryView removeMedicalHistory(MedicalHistoryView medicalHistory) {
-		getMedicalHistories().remove(medicalHistory);
-		medicalHistory.setMedicalHistoryMaster(null);
-
-		return medicalHistory;
-	}
+//	public MedicalHistoryView addMedicalHistory(MedicalHistoryView medicalHistory) {
+//		getMedicalHistories().add(medicalHistory);
+//		medicalHistory.setMedicalHistoryMaster(this);
+//
+//		return medicalHistory;
+//	}
+//
+//	public MedicalHistoryView removeMedicalHistory(MedicalHistoryView medicalHistory) {
+//		getMedicalHistories().remove(medicalHistory);
+//		medicalHistory.setMedicalHistoryMaster(null);
+//
+//		return medicalHistory;
+//	}
 
 }

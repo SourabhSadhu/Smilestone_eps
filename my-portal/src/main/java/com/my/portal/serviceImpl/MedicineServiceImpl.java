@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.my.portal.entities.MedicineHistory;
 import com.my.portal.entities.MedicineMaster;
 import com.my.portal.model.MedicineHistoryView;
@@ -64,6 +66,18 @@ public class MedicineServiceImpl implements MedicineService {
 	public List<MedicineMasterView> getMedicineByTreatmentNameAndAgeGrp(Long trtmntId, String ageGrp) {
 		return map(masterRepo.getMedicineByTreatmentNameAndAgeGrp(trtmntId, ageGrp));
 	} 
+	
+	@Override
+	public List<MedicineMasterView> getMedicineByTreatmentNameAndAge (Long trtmntId, String age) {
+		
+		try{
+			String ageGrp = agService.getFromAgeToAge(BigDecimal.valueOf(Long.parseLong(age))).getGroupId();
+			return getMedicineByTreatmentNameAndAgeGrp(trtmntId, ageGrp);
+		}catch (NumberFormatException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED)
@@ -78,11 +92,14 @@ public class MedicineServiceImpl implements MedicineService {
 			v.setClinicalAvailability(e.getClinicalAvailability());
 			v.setDiseaseCode(e.getDiseaseCode());
 			v.setDiseaseName(e.getDiseaseName());
-			v.setTreatmentId(e.getId().getTreatmentId());
-			v.setDosage(e.getId().getDosage());
-			v.setMedicineName(e.getId().getMedicineName());
-			v.setAgeGroup(e.getId().getAgeGroup());
-			v.setTreatmentId(e.getId().getTreatmentId());
+			if(null != e.getId()){
+				v.setTreatmentId(e.getId().getTreatmentId());
+				v.setDosage(e.getId().getDosage());
+				v.setMedicineName(e.getId().getMedicineName());
+				v.setAgeGroup(e.getId().getAgeGroup());
+				v.setTreatmentId(e.getId().getTreatmentId());
+			}
+			v.setMedicineId(e.getMedicineId());
 		}
 		return v;
 	}
@@ -171,7 +188,7 @@ public class MedicineServiceImpl implements MedicineService {
 			e.setDiseaseCode(v.getDiseaseCode());
 			e.setDiseaseName(v.getDiseaseName());
 			e.setDosage(v.getDosage());
-			e.setMedicineName(e.getMedicineName());
+			e.setMedicineName(v.getMedicineName());
 			e.setPatientId(v.getPatientId());
 			e.setPrescriptionId(v.getPrescriptionId());
 		}

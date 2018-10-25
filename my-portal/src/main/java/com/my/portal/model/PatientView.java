@@ -17,27 +17,24 @@ public class PatientView implements Serializable {
 	private BigDecimal contactNo1;
 	private BigDecimal contactNo2;
 	private BigDecimal discount;
+	private String discountType;
 	private BigDecimal dobDd;
 	private BigDecimal dobMm;
 	private BigDecimal dobYy;
+	private Long dobTimestamp;
+	private int age;
 	private String firstName;
 	private String lastName;
 	private Timestamp tsCreated;
 	private Integer weight;
+	private Integer height;
+	private String sex;
 	private byte[] image;
 	private String email;
 	private String address1;
 	private String address2;
 
 	public PatientView() {
-	}
-
-	public Long getPId() {
-		return this.pId;
-	}
-
-	public void setPId(Long pId) {
-		this.pId = pId;
 	}
 
 	public BloodGroup getBloodGroup() {
@@ -94,6 +91,14 @@ public class PatientView implements Serializable {
 
 	public void setDobYy(BigDecimal dobYy) {
 		this.dobYy = dobYy;
+	}
+
+	public final int getAge() {
+		return age;
+	}
+
+	public final void setAge(int age) {
+		this.age = age;
 	}
 
 	public String getFirstName() {
@@ -158,6 +163,46 @@ public class PatientView implements Serializable {
 
 	public final void setAddress2(String address2) {
 		this.address2 = address2;
+	}
+
+	public final Long getPId() {
+		return pId;
+	}
+
+	public final void setPId(Long pId) {
+		this.pId = pId;
+	}
+
+	public final String getDiscountType() {
+		return discountType;
+	}
+
+	public final void setDiscountType(String discountType) {
+		this.discountType = discountType;
+	}
+
+	public final Long getDobTimestamp() {
+		return dobTimestamp;
+	}
+
+	public final void setDobTimestamp(Long dobTimestamp) {
+		this.dobTimestamp = dobTimestamp;
+	}
+
+	public final Integer getHeight() {
+		return height;
+	}
+
+	public final void setHeight(Integer height) {
+		this.height = height;
+	}
+
+	public final String getSex() {
+		return sex;
+	}
+
+	public final void setSex(String sex) {
+		this.sex = sex;
 	}
 
 }

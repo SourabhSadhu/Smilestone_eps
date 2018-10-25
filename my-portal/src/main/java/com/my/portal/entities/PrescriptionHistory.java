@@ -54,8 +54,8 @@ public class PrescriptionHistory implements Serializable {
 	@Column(name="patient_id")
 	private Long patientId;
 
-	@Column(name="personal_diagnosis")
-	private String personalDiagnosis;
+	@Column(name="provisional_diagnosis")
+	private String provisionalDiagnosis;
 
 	@Column(name="treatment_done")
 	private String treatmentDone;
@@ -145,11 +145,11 @@ public class PrescriptionHistory implements Serializable {
 	}
 
 	public String getPersonalDiagnosis() {
-		return this.personalDiagnosis;
+		return this.provisionalDiagnosis;
 	}
 
 	public void setPersonalDiagnosis(String personalDiagnosis) {
-		this.personalDiagnosis = personalDiagnosis;
+		this.provisionalDiagnosis = personalDiagnosis;
 	}
 
 	public String getTreatmentDone() {

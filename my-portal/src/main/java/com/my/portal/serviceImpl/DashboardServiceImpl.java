@@ -11,13 +11,16 @@ import com.my.portal.ErrorCode;
 import com.my.portal.ValidationException;
 import com.my.portal.entities.FeesBreakup;
 import com.my.portal.entities.MedicalHistory;
+import com.my.portal.entities.MedicineHistory;
 import com.my.portal.entities.PrescriptionHistory;
 import com.my.portal.model.DashboardRequest;
 import com.my.portal.model.DashboardView;
+import com.my.portal.model.MedicineHistoryView;
 import com.my.portal.model.PatientView;
 import com.my.portal.model.PrescriptionHistoryView;
 import com.my.portal.repositories.FeesBreakupRepository;
 import com.my.portal.repositories.MedicalHistoryRepository;
+import com.my.portal.repositories.MedicineHistoryRepository;
 import com.my.portal.repositories.PrescriptionHistoryRespository;
 import com.my.portal.service.DashboardService;
 import com.my.portal.service.FeesBreakupService;
@@ -39,6 +42,7 @@ public class DashboardServiceImpl implements DashboardService {
 	@Autowired PrescriptionHistoryRespository phRepo;
 	@Autowired MedicalHistoryRepository mhRepo;
 	@Autowired FeesBreakupRepository fbRepo;
+	@Autowired MedicineHistoryRepository medRepo;
 	
 	private final Logger log = LoggerFactory.getLogger(getClass()); 
 	
@@ -51,7 +55,7 @@ public class DashboardServiceImpl implements DashboardService {
 				if(null != phv){
 					if( null != phv.getPatientId()){
 						PatientView p1 = pService.findById(phv.getPatientId());
-						if(null == p1 || null == p1.getPId() || 0 >= p1.getPId().longValue()){
+						if(null == p1 || null == p1.getPId()/* || 0 >= p1.getPId().longValue()*/){
 							throw new ValidationException(ErrorCode.INVALID_PATIENT_ID);
 						}
 						PrescriptionHistory phEntity = phService.map(phv);
@@ -73,11 +77,14 @@ public class DashboardServiceImpl implements DashboardService {
 						}
 						mhRepo.flush();
 						
-						/*
-						List<MedicineHistoryView> medvl = v.getMedhv();
-						for(MedicineHistoryView medv : medvl){
-							medService.addMedicineHistory(medv);
-						}*/
+						List<MedicineHistory> medhl = medService.mapEntities(v.getMedhv());
+						for(MedicineHistory medh : medhl){
+							medh.setPatientId(phv.getPatientId());
+							medh.setPrescriptionId(phEntity.getPrescriptionId());
+							medRepo.save(medh);
+						};
+						medRepo.flush();
+						
 						return true;
 					}
 				}

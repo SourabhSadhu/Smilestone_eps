@@ -87,10 +87,9 @@ public class MedicalHistoryServiceImpl implements MedicalHistoryService {
 //			mhv.setPrescriptionHistory(phService.map(mh.getPrescriptionHistory()));
 			MedicalHistoryMasterView mhm = new MedicalHistoryMasterView();
 			mhm.setMedicalHistoryName(mh.getMedicalHistoryName());
-			mhv.setMedicalHistoryMaster(mhm);
 			
 			if(null != mh.getPatientId() && mh.getPatientId().longValue() > 0){				
-				mhv.setPatient(pService.findById(mh.getPatientId()));
+				mhv.setPatientId(mh.getPatientId());
 			}
 			
 			mhv.setNote(mh.getNote());
@@ -114,7 +113,7 @@ public class MedicalHistoryServiceImpl implements MedicalHistoryService {
 		
 		MedicalHistory e = new MedicalHistory();
 		if(null != v){
-			e.setMedicalHistoryName(v.getMedicalHistoryMaster().getMedicalHistoryName());
+			e.setMedicalHistoryName(v.getMedicalHistoryName());
 			e.setNote(v.getNote());
 //			if(null != v.getPatient().getPId()){
 //				e.setPatientId(v.getPatient().getPId());

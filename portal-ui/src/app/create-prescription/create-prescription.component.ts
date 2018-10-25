@@ -2,8 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { DummyResponse } from '../services/dummyresponse';
 import {
   ClinicalFindingView, MedicalMaster, Patient, PrescriptionHistoryView,
-  ToothQuadrentView, TreatmentPlan, FeesBreakupView,  FeeConfigView,
-  MedicalHistoryView,  MedicineHistoryView, DashboardView, MedicineView, FeeConfigRequestListView
+  ToothQuadrentView, TreatmentPlan, FeesBreakupView, FeeConfigView,
+  MedicalHistoryView, MedicineHistoryView, DashboardView, MedicineView, FeeConfigRequestListView
 } from '../models/models';
 import { MatSnackBar } from '@angular/material';
 import { SnackhelperComponent } from '../snackhelper/snackhelper.component';
@@ -49,7 +49,7 @@ export class CreatePrescriptionComponent implements OnInit {
   toothQuadrents: ToothQuadrentView[];
   dialogData = new CompositDialogBoxData();
   mhList: MedicalMaster[] = [];
-  
+
   medicalHistoryForm = new FormControl();
 
   cftMapArray: ClinicalFindingToothMapping[];
@@ -58,8 +58,10 @@ export class CreatePrescriptionComponent implements OnInit {
   treatmentPlanList: TreatmentPlan[] = [];
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   feesConfigListViewColumns: string[] = ['treatmentPlanId', 'baseFee', 'ageGroupId', 'ageGroupPercent', 'toothGroupId', 'toothGroupPercent', 'totalFee', 'notes'];
-  feesConfigListDataSource : MatTableDataSource<FeeConfigView>;
+  feesConfigListDataSource: MatTableDataSource<FeeConfigView>;
   commonService: CommonService;
+
+  disableTabs: boolean = true;
 
   constructor(public snackBar: MatSnackBar,
     public dialog: MatDialog, public httpCom: HttpcommService) { }
@@ -71,6 +73,15 @@ export class CreatePrescriptionComponent implements OnInit {
 
   prescriptionFromControl = new FormControl(0);
   minCharToSearch = 3;
+
+  refreshSearch() {
+    this.selectedPatient = new Patient();
+    this.isPatientLoading = false;
+    this.isPatientLoaded = false;
+    this.isPatientSelected = false;
+    this.disableTabs = true;
+    this.tabSelection(0);
+  }
 
   initializeValiables() {
     this.selectedPatient = new Patient();
@@ -99,7 +110,7 @@ export class CreatePrescriptionComponent implements OnInit {
     this.medicineMasterViewList = [];
     this.feesConfigListView = [];
     this.feesConfigListDataSource = new MatTableDataSource<FeeConfigView>();
-    
+
   }
 
   fetchPatient(event: any) {
@@ -155,6 +166,7 @@ export class CreatePrescriptionComponent implements OnInit {
 
   selectedElement(element: Patient) {
     this.selectedPatient = element;
+    this.disableTabs = false;
     this.tabSelection(1);
   }
 
@@ -223,19 +235,19 @@ export class CreatePrescriptionComponent implements OnInit {
                               feeConfigRequestListView.push(feeConfigRequestView);
                             })
                             //Print data
-                            console.log('Fee config data:', feeConfigRequestListView);
+                            // console.log('Fee config data:', feeConfigRequestListView);
 
                             this.httpCom.getFeeConfigList(this.selectedPatient.age, feeConfigRequestListView).subscribe(resp => {
                               if (resp && resp.status === 'SUCCESS') {
                                 resp.resp.forEach(element => {
-                                  let feeConfigData : FeeConfigView = element;
-                                  if(feeConfigData && feeConfigData.totalFee > 0){
+                                  let feeConfigData: FeeConfigView = element;
+                                  if (feeConfigData && feeConfigData.totalFee > 0) {
                                     this.feesConfigListView.push(element);
                                     this.feesConfigListDataSource.data = this.feesConfigListView;
                                   }
                                 });
                                 this.getTotalFee();
-                                console.log('Fee config object:', this.feesConfigListView);
+                                // console.log('Fee config object:', this.feesConfigListView);
                               }
                             });
                           }
@@ -254,9 +266,9 @@ export class CreatePrescriptionComponent implements OnInit {
     );
   }
 
-  totalFees : number = 0;
+  totalFees: number = 0;
   getTotalFee() {
-    this.totalFees = this.feesConfigListView && this.feesConfigListView.length > 0 ? 
+    this.totalFees = this.feesConfigListView && this.feesConfigListView.length > 0 ?
       this.feesConfigListView.map(fee => fee.totalFee).reduce((prevTotal, curr) => prevTotal + curr, 0) :
       0;
   }
@@ -291,8 +303,8 @@ export class CreatePrescriptionComponent implements OnInit {
     }
   };
 
-  removeFees(index : number){
-    this.feesConfigListView.splice(index,1);
+  removeFees(index: number) {
+    this.feesConfigListView.splice(index, 1);
     this.feesConfigListDataSource.data = this.feesConfigListView;
     this.getTotalFee()
   }
@@ -341,7 +353,7 @@ export class CreatePrescriptionComponent implements OnInit {
       this.dashboardView.fbl.push(fb)
     })
     this.dashboardView.medhv = []
-    this.medicineMasterViewList.map(m=>{
+    this.medicineMasterViewList.map(m => {
       let medh = new MedicineHistoryView()
       medh.medicineName = m.medicineName
       medh.diseaseCode = m.diseaseCode
@@ -350,20 +362,25 @@ export class CreatePrescriptionComponent implements OnInit {
       medh.patientId = this.selectedPatient.pid
       this.dashboardView.medhv.push(medh)
     })
-    
+
     this.dashboardView.mhv = [];
-    this.medicalHistoryForm.value.map(v => {
-      let view = new MedicalHistoryView();
-      view.medicalHistoryName = v;
-      view.patientId = this.selectedPatient.pid;
-      this.dashboardView.mhv.push(view);
-    });
+    if (this.medicalHistoryForm.value && this.medicalHistoryForm.value.length > 0) {
+      this.medicalHistoryForm.value.map(v => {
+        let view = new MedicalHistoryView();
+        view.medicalHistoryName = v;
+        view.patientId = this.selectedPatient.pid;
+        this.dashboardView.mhv.push(view);
+      });
+    }
     this.dashboardView.pHistory = this.prescriptionHistoryView
     this.dashboardView.pHistory.patientId = this.selectedPatient.pid
+    this.dashboardView.pHistory.clinicalFindings = this.clinicalFindingsView.toString()
+    this.dashboardView.pHistory.treatmentPlan = this.treatmentPlanListView.toString()
+
     console.log(JSON.stringify(this.dashboardView))
     this.httpCom.addDashBoard(this.dashboardView).subscribe(
       resp => {
-        if(resp.status === 'SUCCESS'){
+        if (resp.status === 'SUCCESS') {
           //Do something and print prescription
           console.log(JSON.stringify(resp.resp));
         }

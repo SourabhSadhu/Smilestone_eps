@@ -1,5 +1,6 @@
 package com.my.portal.serviceImpl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import org.springframework.util.StringUtils;
 import com.my.portal.ErrorCode;
 import com.my.portal.ValidationException;
 import com.my.portal.entities.FeeConfig;
+import com.my.portal.model.AgeGroupView;
 import com.my.portal.model.FeeConfigView;
 import com.my.portal.repositories.FeeConfigRepository;
 import com.my.portal.service.AgeGroupService;
@@ -27,9 +29,13 @@ public class FeeConfigServiceImpl implements FeeConfigService {
 	@Autowired FeeConfigRepository repo;
 	
 	@Override
-	public List<FeeConfigView> getFeeConfig(String ageGrp, Long trtmntPlanId, Long toothQuadrentId) {
+	public FeeConfigView getFeeConfig(Long age, Long trtmntPlanId, Long toothQuadrentId) {
 		
-		return map(repo.findFeeConfig(ageGrp, toothQuadrentId, trtmntPlanId));
+		AgeGroupView ageGrpView = agService.getFromAgeToAge(BigDecimal.valueOf(age));
+		if(null != ageGrpView && StringUtils.hasText(ageGrpView.getGroupId())){
+			return map(repo.findFeeConfig(ageGrpView.getGroupId(), toothQuadrentId, trtmntPlanId));
+		}
+		return null;
 	}
 
 	@Override

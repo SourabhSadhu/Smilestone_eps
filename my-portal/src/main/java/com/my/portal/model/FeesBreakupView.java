@@ -13,7 +13,7 @@ public class FeesBreakupView implements Serializable {
 	
 	private Long fId;
 	private BigDecimal amount;
-	private Long clinicalFindingsRef;
+	private Long trtmntPlanRef;
 	private String notes;
 	private Long patientId;
 	private Long prescriptionId;
@@ -38,12 +38,12 @@ public class FeesBreakupView implements Serializable {
 		this.amount = amount;
 	}
 
-	public Long getClinicalFindingsRef() {
-		return clinicalFindingsRef;
+	public Long getTrtmntPlanRef() {
+		return trtmntPlanRef;
 	}
 
-	public void setClinicalFindingsRef(Long clinicalFindingsRef) {
-		this.clinicalFindingsRef = clinicalFindingsRef;
+	public void setTrtmntPlanRef(Long trtmntPlanRef) {
+		this.trtmntPlanRef = trtmntPlanRef;
 	}
 
 	public String getNotes() {

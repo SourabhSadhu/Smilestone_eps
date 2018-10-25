@@ -23,10 +23,10 @@ public class MedicineController {
 	@RequestMapping(method = RequestMethod.GET, value = "/get-medicine", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<?> get(@RequestParam(required = true, value = "trtmntId") Long trtmntId,
-								@RequestParam(required = true, value = "ageGrp") String ageGrp) 
+								@RequestParam(required = true, value = "age") String age) 
 	{
 		try {
-			return new ResponseEntity<>(CommonUtils.getResp(mService.getMedicineByTreatmentNameAndAgeGrp(trtmntId, ageGrp)), HttpStatus.OK);
+			return new ResponseEntity<>(CommonUtils.getResp(mService.getMedicineByTreatmentNameAndAge (trtmntId, age)), HttpStatus.OK);
 		} catch (Exception e) {
 			if(e instanceof ValidationException) {
 				ValidationException ve = (ValidationException) e;

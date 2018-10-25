@@ -20,11 +20,11 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name="patients")
 @SequenceGenerator(name="PATIENTS_PID_GENERATOR", sequenceName="patient_id_seq")
+@Table(name="patients")
 @NamedQueries({
 	@NamedQuery(name="Patient.findByFirstName", query="SELECT p FROM Patient p WHERE lower(p.firstName) like(:fName)"),
-	@NamedQuery(name="Patient.findByLastName", query="SELECT p FROM Patient p WHERE lower(p.lastName) LIKE( :lName )"),
+	@NamedQuery(name="Patient.findByLastName", query="SELECT p FROM Patient p WHERE lower(p.lastName) LIKE(:lName)"),
 	@NamedQuery(name="Patient.findByFullName", query="SELECT p FROM Patient p WHERE lower(p.firstName) like(:fName) "+
 			"AND lower(p.lastName) like(:lName)"),
 	@NamedQuery(name="Patient.findByDOB", query="SELECT p FROM Patient p WHERE p.dobDd = :dd AND p.dobMm = :mm AND p.dobYy = :yy"),
@@ -77,6 +77,15 @@ public class Patient implements Serializable {
 	private String email;
 	private String address1;
 	private String address2;
+	
+	private Integer height;
+	private String sex;
+	@Column(name="dob_timestamp")
+	private Long dobTimestamp;
+
+	@Column(name="discount_type")
+	private String discountType;
+	
 	public Patient() {
 	}
 
@@ -214,6 +223,38 @@ public class Patient implements Serializable {
 
 	public void setAddress2(String address2) {
 		this.address2 = address2;
+	}
+
+	public final Integer getHeight() {
+		return height;
+	}
+
+	public final void setHeight(Integer height) {
+		this.height = height;
+	}
+
+	public final String getSex() {
+		return sex;
+	}
+
+	public final void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public final Long getDobTimestamp() {
+		return dobTimestamp;
+	}
+
+	public final void setDobTimestamp(Long dobTimestamp) {
+		this.dobTimestamp = dobTimestamp;
+	}
+
+	public final String getDiscountType() {
+		return discountType;
+	}
+
+	public final void setDiscountType(String discountType) {
+		this.discountType = discountType;
 	}
 
 }

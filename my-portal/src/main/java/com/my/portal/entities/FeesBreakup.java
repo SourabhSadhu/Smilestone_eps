@@ -26,12 +26,12 @@ import javax.persistence.Table;
 	@NamedQuery(name="FeesBreakup.findAll", query="SELECT f FROM FeesBreakup f"),
 	@NamedQuery(name="FeesBreakup.findByPatientId", query="SELECT f FROM FeesBreakup f WHERE f.patientId = :patientId"),
 	@NamedQuery(name="FeesBreakup.findByPrescriptionId", query="SELECT f FROM FeesBreakup f WHERE f.prescriptionId = :prescriptionId"),
-	@NamedQuery(name="FeesBreakup.findByClinicalFindingId", query="SELECT f FROM FeesBreakup f WHERE f.clinicalFindingsRef = :clinicalFindingId"),
+	@NamedQuery(name="FeesBreakup.findByClinicalFindingId", query="SELECT f FROM FeesBreakup f WHERE f.trtmntPlanRef = :clinicalFindingId"),
 	@NamedQuery(name="FeesBreakup.findByPatientAndPrescriptionId", 
 		query="SELECT f FROM FeesBreakup f WHERE f.patientId = :patientId AND f.prescriptionId = :prescriptionId"),
 	@NamedQuery(name="FeesBreakup.findByFeesBreakup", 
 			query="SELECT f FROM FeesBreakup f WHERE f.patientId = :patientId AND f.prescriptionId = :prescriptionId"+
-			" AND f.clinicalFindingsRef = :clinicalFindingId")
+			" AND f.trtmntPlanRef = :clinicalFindingId")
 })
 public class FeesBreakup implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -43,8 +43,8 @@ public class FeesBreakup implements Serializable {
 
 	private BigDecimal amount;
 
-	@Column(name="clinical_findings_ref")
-	private Long clinicalFindingsRef;
+	@Column(name="trtmnt_plan_ref")
+	private Long trtmntPlanRef;
 
 	private String notes;
 
@@ -92,12 +92,12 @@ public class FeesBreakup implements Serializable {
 		this.tsCreated = tsCreated;
 	}
 
-	public Long getClinicalFindingsRef() {
-		return clinicalFindingsRef;
+	public Long getTrtmntPlanRef() {
+		return trtmntPlanRef;
 	}
 
-	public void setClinicalFindingsRef(Long clinicalFindingsRef) {
-		this.clinicalFindingsRef = clinicalFindingsRef;
+	public void setTrtmntPlanRef(Long trtmntPlanRef) {
+		this.trtmntPlanRef = trtmntPlanRef;
 	}
 
 	public Long getPatientId() {

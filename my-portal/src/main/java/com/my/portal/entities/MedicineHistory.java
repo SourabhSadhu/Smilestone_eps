@@ -4,20 +4,15 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-
-/**
- * The persistent class for the medicine_history database table.
- * 
- * List<MedicineHistory> getMedicineHistoryByPatientId(BigDecimal patientId);
- * List<MedicineHistory> getMedicineHistoryByPrescriptionId(BigDecimal prescriptionId);
- * 
- */
 @Entity
+@SequenceGenerator(name="MEDICINE_HISTORY_ID_GENERATOR", sequenceName="medicine_history_id_seq", allocationSize = 1, schema = "eps")
 @Table(name="medicine_history")
 @NamedQueries({
 	@NamedQuery(name="MedicineHistory.findAll", query="SELECT m FROM MedicineHistory m"),
@@ -30,6 +25,7 @@ public class MedicineHistory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(generator="MEDICINE_HISTORY_ID_GENERATOR")
 	@Column(name="med_id")
 	private Long medId;
 

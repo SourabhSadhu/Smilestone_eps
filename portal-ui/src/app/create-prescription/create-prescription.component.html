@@ -69,7 +69,7 @@
               </td>
               <td>
                 <div class="example-margin">
-                  <button mat-mini-fab color="primary" (click)="initializeValiables()" matTooltip="Refresh">
+                  <button mat-mini-fab color="primary" (click)="refreshSearch()" matTooltip="Refresh">
                     <mat-icon aria-label="Refresh">refresh</mat-icon>
                   </button>
                 </div>
@@ -132,11 +132,11 @@
 
     </mat-tab>
 
-    <mat-tab label="History">
+    <mat-tab label="History" [disabled]="disableTabs">
 
     </mat-tab>
 
-    <mat-tab label="Prescription">
+    <mat-tab label="Prescription" [disabled]="disableTabs">
       <mat-card class="example-card">
         <mat-card-content>
           <mat-form-field class="example-full-width">

@@ -1,170 +1,4 @@
-http://localhost:12000/my-portal/tooth-qdr/get-all
-{
-    "status": "SUCCESS",
-    "desc": null,
-    "resp": [
-        {
-            "toothIndex": 18,
-            "toothNumber": 8,
-            "toothQdr": 1
-        },
-        {
-            "toothIndex": 17,
-            "toothNumber": 7,
-            "toothQdr": 1
-        },
-        {
-            "toothIndex": 16,
-            "toothNumber": 6,
-            "toothQdr": 1
-        },
-        {
-            "toothIndex": 15,
-            "toothNumber": 5,
-            "toothQdr": 1
-        },
-        {
-            "toothIndex": 14,
-            "toothNumber": 4,
-            "toothQdr": 1
-        },
-        {
-            "toothIndex": 13,
-            "toothNumber": 3,
-            "toothQdr": 1
-        },
-        {
-            "toothIndex": 12,
-            "toothNumber": 2,
-            "toothQdr": 1
-        },
-        {
-            "toothIndex": 11,
-            "toothNumber": 1,
-            "toothQdr": 1
-        },
-        {
-            "toothIndex": 28,
-            "toothNumber": 8,
-            "toothQdr": 2
-        },
-        {
-            "toothIndex": 27,
-            "toothNumber": 7,
-            "toothQdr": 2
-        },
-        {
-            "toothIndex": 26,
-            "toothNumber": 6,
-            "toothQdr": 2
-        },
-        {
-            "toothIndex": 25,
-            "toothNumber": 5,
-            "toothQdr": 2
-        },
-        {
-            "toothIndex": 24,
-            "toothNumber": 4,
-            "toothQdr": 2
-        },
-        {
-            "toothIndex": 23,
-            "toothNumber": 3,
-            "toothQdr": 2
-        },
-        {
-            "toothIndex": 22,
-            "toothNumber": 2,
-            "toothQdr": 2
-        },
-        {
-            "toothIndex": 21,
-            "toothNumber": 1,
-            "toothQdr": 2
-        },
-        {
-            "toothIndex": 38,
-            "toothNumber": 8,
-            "toothQdr": 3
-        },
-        {
-            "toothIndex": 37,
-            "toothNumber": 7,
-            "toothQdr": 3
-        },
-        {
-            "toothIndex": 36,
-            "toothNumber": 6,
-            "toothQdr": 3
-        },
-        {
-            "toothIndex": 35,
-            "toothNumber": 5,
-            "toothQdr": 3
-        },
-        {
-            "toothIndex": 34,
-            "toothNumber": 4,
-            "toothQdr": 3
-        },
-        {
-            "toothIndex": 33,
-            "toothNumber": 3,
-            "toothQdr": 3
-        },
-        {
-            "toothIndex": 32,
-            "toothNumber": 2,
-            "toothQdr": 3
-        },
-        {
-            "toothIndex": 31,
-            "toothNumber": 1,
-            "toothQdr": 3
-        },
-        {
-            "toothIndex": 48,
-            "toothNumber": 8,
-            "toothQdr": 4
-        },
-        {
-            "toothIndex": 47,
-            "toothNumber": 7,
-            "toothQdr": 4
-        },
-        {
-            "toothIndex": 46,
-            "toothNumber": 6,
-            "toothQdr": 4
-        },
-        {
-            "toothIndex": 45,
-            "toothNumber": 5,
-            "toothQdr": 4
-        },
-        {
-            "toothIndex": 44,
-            "toothNumber": 4,
-            "toothQdr": 4
-        },
-        {
-            "toothIndex": 43,
-            "toothNumber": 3,
-            "toothQdr": 4
-        },
-        {
-            "toothIndex": 42,
-            "toothNumber": 2,
-            "toothQdr": 4
-        },
-        {
-            "toothIndex": 41,
-            "toothNumber": 1,
-            "toothQdr": 4
-        }
-    ]
-}
+
 
 http://localhost:12000/my-portal/tooth-qdr/add-tooth-quadrent
 {
@@ -229,6 +63,268 @@ http://localhost:12000/my-portal/fee/get-config?age_grp=10to30&tooth_grp_idx=2&t
             "toothGroupPercent": 10,
             "treatmentPlanId": 1,
             "totalFee": 72
+        }
+    ]
+}
+
+http://localhost:12000/my-portal/medical-history/get-by-pID?patientID=1
+{
+    "status": "SUCCESS",
+    "desc": null,
+    "resp": [
+        {
+            "medicalHistoryId": 10,
+            "note": "note1",
+            "severity": "severity1",
+            "startedFrom": 1536119394359,
+            "medicalHistoryMaster": {
+                "medicalHistoryName": "Asthma",
+                "medicalHistories": null
+            },
+            "patient": {
+                "bloodGroup": "B_POSITIVE",
+                "contactNo1": 9046787913,
+                "contactNo2": 7980231838,
+                "discount": 20,
+                "dobDd": 27,
+                "dobMm": 3,
+                "dobYy": 1992,
+                "firstName": "sourabh",
+                "lastName": "sadhu",
+                "tsCreated": 1534695098485,
+                "weight": 80,
+                "image": null,
+                "email": null,
+                "address1": null,
+                "address2": null,
+                "pid": 1
+            },
+            "prescriptionHistory": null
+        }
+     ]
+  }
+  
+http://localhost:12000/my-portal/medical-history/get-by-name?name=Asthma
+{
+    "status": "SUCCESS",
+    "desc": null,
+    "resp": [
+        {
+            "medicalHistoryId": 10,
+            "note": "note1",
+            "severity": "severity1",
+            "startedFrom": 1536119394359,
+            "medicalHistoryMaster": {
+                "medicalHistoryName": "Asthma",
+                "medicalHistories": null
+            },
+            "patient": {
+                "bloodGroup": "B_POSITIVE",
+                "contactNo1": 9046787913,
+                "contactNo2": 7980231838,
+                "discount": 20,
+                "dobDd": 27,
+                "dobMm": 3,
+                "dobYy": 1992,
+                "firstName": "sourabh",
+                "lastName": "sadhu",
+                "tsCreated": 1534695098485,
+                "weight": 80,
+                "image": null,
+                "email": null,
+                "address1": null,
+                "address2": null,
+                "pid": 1
+            },
+            "prescriptionHistory": null
+        }
+    ]
+}  
+
+http://localhost:12000/my-portal/medical-history/get-medical-master
+{
+    "status": "SUCCESS",
+    "desc": null,
+    "resp": [
+        {
+            "medicalHistoryName": "Hyperglycaemia",
+            "medicalHistories": null
+        },
+        {
+            "medicalHistoryName": "Hypertension",
+            "medicalHistories": null
+        }
+    ]
+}
+
+http://localhost:12000/my-portal/medicine/get-medicine?trtmntId=1&ageGrp=10to30
+{
+    "status": "SUCCESS",
+    "desc": null,
+    "resp": [
+        {
+            "medicineName": "med1",
+            "ageGroup": "10to30",
+            "treatmentId": 1,
+            "dosage": "sokale bikale 1 ta khabar por",
+            "clinicalAvailability": 7,
+            "diseaseCode": "dCode1",
+            "diseaseName": "dName1",
+            "ageGroupBean": null,
+            "treatmentPlan": null
+        }
+    ]
+}
+
+http://localhost:12000/my-portal/trtmnt/get-plan?trtmntId=10
+{
+    "status": "SUCCESS",
+    "desc": null,
+    "resp": [
+        {
+            "trtId": 4,
+            "trtDesc": "Oral prophylaxis",
+            "trtName": "Oral prophylaxis",
+            "clinicalFinding": 10
+        },
+        {
+            "trtId": 6,
+            "trtDesc": "Prosthesis removable",
+            "trtName": "Prosthesis",
+            "clinicalFinding": 10
+        }
+    ]
+}
+
+http://localhost:12000/my-portal/trtmnt/get-plan?trtmntName=RCT
+{
+    "status": "SUCCESS",
+    "desc": null,
+    "resp": [
+        {
+            "trtId": 1,
+            "trtDesc": "Root canal treatment",
+            "trtName": "RCT",
+            "clinicalFinding": 1
+        },
+        {
+            "trtId": 2,
+            "trtDesc": "Root canal treatment",
+            "trtName": "RCT",
+            "clinicalFinding": 4
+        },
+        {
+            "trtId": 9,
+            "trtDesc": "Root canal treatment",
+            "trtName": "RCT",
+            "clinicalFinding": 10
+        }
+    ]
+}
+
+
+==================================Dashboard data====================================
+{
+  "fbl": [
+    {
+      "amount": 72,
+      "notes": "ass1",
+      "trtmntPlanRef": 1,
+      "patientId": 1
+    },
+    {
+      "amount": 119,
+      "notes": "ass2",
+      "trtmntPlanRef": 2,
+      "patientId": 1
+    },
+    {
+      "amount": 72,
+      "notes": "ass3",
+      "trtmntPlanRef": 1,
+      "patientId": 1
+    },
+    {
+      "amount": 119,
+      "notes": "ass4",
+      "trtmntPlanRef": 2,
+      "patientId": 1
+    }
+  ],
+  "medhv": [
+    {
+      "medicineName": "med1",
+      "diseaseCode": "dCode1",
+      "diseaseName": "dName1",
+      "dosage": "sokale bikale 1 ta khabar por",
+      "patientId": 1
+    },
+    {
+      "medicineName": "med1",
+      "diseaseCode": "dCode1",
+      "diseaseName": "dName1",
+      "dosage": "sokale bikale 1 ta khabar por",
+      "patientId": 1
+    },
+    {
+      "medicineName": "ass medicine",
+      "dosage": "ass",
+      "patientId": 1
+    }
+  ],
+  "mhv": [
+    {
+      "medicalHistoryName": "Hypertension",
+      "patientId": 1
+    },
+    {
+      "medicalHistoryName": "Hypotension",
+      "patientId": 1
+    },
+    {
+      "medicalHistoryName": "Asthma",
+      "patientId": 1
+    }
+  ],
+  "pHistory": {
+    "chiefComplaint": "Pain in ass",
+    "investigation": "ass investigation",
+    "provisionalDiagnosis": "ass diagnosis",
+    "treatmentDone": "ass treatment done",
+    "advice": "ass advice",
+    "nextAppointment": 1540837800000,
+    "note": "ass note",
+    "patientId": 1,
+    "clinicalFindings": "Caries -  32 31 33,Grossly decayed -  12 11,Grossly decayed -  22 21,Periodontities -  38",
+    "treatmentPlan": "RCT ,Extraction"
+   }
+}
+======================================================================
+http://localhost:12000/my-portal/patient/get-patient
+{
+	"firstName" : "sourabh"
+}
+{
+    "status": "SUCCESS",
+    "desc": null,
+    "resp": [
+        {
+            "bloodGroup": "B_POSITIVE",
+            "contactNo1": 9046787913,
+            "contactNo2": 7980231838,
+            "discount": 20,
+            "dobDd": 27,
+            "dobMm": 3,
+            "dobYy": 1992,
+            "firstName": "sourabh",
+            "lastName": "sadhu",
+            "tsCreated": 1534695098485,
+            "weight": 80,
+            "image": null,
+            "email": null,
+            "address1": null,
+            "address2": null,
+            "pid": 1
         }
     ]
 }

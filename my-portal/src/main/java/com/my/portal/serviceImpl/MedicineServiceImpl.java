@@ -150,13 +150,13 @@ public class MedicineServiceImpl implements MedicineService {
 
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
-	public List<MedicineHistoryView> getMedicineHistoryByPatientId(BigDecimal patientId) {
+	public List<MedicineHistoryView> getMedicineHistoryByPatientId(Long patientId) {
 		return mapAll(histRepo.getMedicineHistoryByPatientId(patientId));
 	}
 
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
-	public List<MedicineHistoryView> getMedicineHistoryByPrescriptionId(BigDecimal prescriptionId) {
+	public List<MedicineHistoryView> getMedicineHistoryByPrescriptionId(Long prescriptionId) {
 		return mapAll(histRepo.getMedicineHistoryByPrescriptionId(prescriptionId));
 	}
 
@@ -178,7 +178,7 @@ public class MedicineServiceImpl implements MedicineService {
 			v.setPatientId(e.getPatientId());
 			v.setPrescriptionId(e.getPrescriptionId());
 		}
-		return null;
+		return v;
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -80,21 +81,7 @@ public class MedicalHistoryServiceImpl implements MedicalHistoryService {
 	public MedicalHistoryView map(MedicalHistory mh){
 		MedicalHistoryView mhv = new MedicalHistoryView();
 		if(null != mh){
-			mhv.setMedicalHistoryId(mh.getMedicalHistoryId());
-			
-//			mhv.setMedicalHistoryMaster(mhmService.map(mh.getMedicalHistoryMaster()));
-//			mhv.setPatient(pService.map(mh.getPatient()));
-//			mhv.setPrescriptionHistory(phService.map(mh.getPrescriptionHistory()));
-			MedicalHistoryMasterView mhm = new MedicalHistoryMasterView();
-			mhm.setMedicalHistoryName(mh.getMedicalHistoryName());
-			
-			if(null != mh.getPatientId() && mh.getPatientId().longValue() > 0){				
-				mhv.setPatientId(mh.getPatientId());
-			}
-			
-			mhv.setNote(mh.getNote());
-			mhv.setSeverity(mh.getSeverity());
-			mhv.setStartedFrom(mh.getStartedFrom());
+			BeanUtils.copyProperties(mh, mhv);
 		}
 		return mhv;
 	}

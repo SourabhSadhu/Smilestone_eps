@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -22,14 +23,20 @@ import com.my.portal.service.TreatmentPlanService;
 @Service
 public class PrescriptionHistoryServiceImpl implements PrescriptionHistoryService {
 
-	@Autowired PrescriptionHistoryRespository repo;
-	@Autowired FeesBreakupService fbService;
-	@Autowired MedicalHistoryService mhService;
-	@Autowired MedicineService medService;
-	@Autowired TreatmentPlanService tpService;
-	
-	@Autowired PatientService pService;
-	
+	@Autowired
+	PrescriptionHistoryRespository repo;
+	@Autowired
+	FeesBreakupService fbService;
+	@Autowired
+	MedicalHistoryService mhService;
+	@Autowired
+	MedicineService medService;
+	@Autowired
+	TreatmentPlanService tpService;
+
+	@Autowired
+	PatientService pService;
+
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
 	public List<PrescriptionHistoryView> findByPatientId(Long patientId) {
@@ -58,27 +65,32 @@ public class PrescriptionHistoryServiceImpl implements PrescriptionHistoryServic
 	@Override
 	public PrescriptionHistoryView map(PrescriptionHistory e) {
 		// TODO Auto-generated method stub
-		PrescriptionHistoryView v= new PrescriptionHistoryView();
-		v.setPrescriptionId(e.getPrescriptionId());
+		PrescriptionHistoryView v = new PrescriptionHistoryView();
+		if(null != e){
+			BeanUtils.copyProperties(e, v);
+		}
 		return v;
 	}
 
 	@Override
 	public PrescriptionHistory map(PrescriptionHistoryView v) {
 		PrescriptionHistory e = new PrescriptionHistory();
-		e.setAdvice(v.getAdvice());
-		e.setChiefComplaint(v.getChiefComplaint());
-		e.setClinicalFindings(v.getClinicalFindings());		
-		e.setInvestigation(v.getInvestigation());
-		e.setTsCreated(new Timestamp(System.currentTimeMillis()));
-		e.setPatientId(v.getPatientId());
+		if (null != v) {
+//			e.setAdvice(v.getAdvice());
+//			e.setChiefComplaint(v.getChiefComplaint());
+//			e.setClinicalFindings(v.getClinicalFindings());
+//			e.setInvestigation(v.getInvestigation());
+//			e.setPatientId(v.getPatientId());
+			BeanUtils.copyProperties(v, e);
+			e.setTsCreated(new Timestamp(System.currentTimeMillis()));
+		}
 		return e;
 	}
 
 	@Override
 	public List<PrescriptionHistoryView> mapAll(List<PrescriptionHistory> el) {
 		List<PrescriptionHistoryView> vl = new ArrayList<>();
-		for(PrescriptionHistory e : el){
+		for (PrescriptionHistory e : el) {
 			vl.add(map(e));
 		}
 		return vl;

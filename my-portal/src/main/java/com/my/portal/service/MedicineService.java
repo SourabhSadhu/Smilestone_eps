@@ -22,8 +22,8 @@ public interface MedicineService {
 	List<MedicineMasterView> map(List<MedicineMaster> el);
 	
 	MedicineHistoryView addMedicineHistory(MedicineHistoryView e);
-	List<MedicineHistoryView> getMedicineHistoryByPatientId(BigDecimal patientId);
-	List<MedicineHistoryView> getMedicineHistoryByPrescriptionId(BigDecimal prescriptionId);
+	List<MedicineHistoryView> getMedicineHistoryByPatientId(Long patientId);
+	List<MedicineHistoryView> getMedicineHistoryByPrescriptionId(Long prescriptionId);
 	MedicineHistoryView getMedicineHistoryById(Long id);
 	MedicineHistoryView map(MedicineHistory e);
 	MedicineHistory map(MedicineHistoryView v);

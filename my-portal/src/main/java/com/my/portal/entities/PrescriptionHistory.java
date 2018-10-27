@@ -144,11 +144,11 @@ public class PrescriptionHistory implements Serializable {
 		this.patientId = patientId;
 	}
 
-	public String getPersonalDiagnosis() {
+	public String getProvisionalDiagnosis() {
 		return this.provisionalDiagnosis;
 	}
 
-	public void setPersonalDiagnosis(String personalDiagnosis) {
+	public void setProvisionalDiagnosis(String personalDiagnosis) {
 		this.provisionalDiagnosis = personalDiagnosis;
 	}
 

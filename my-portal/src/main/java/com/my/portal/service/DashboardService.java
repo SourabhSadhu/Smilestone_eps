@@ -1,10 +1,11 @@
 package com.my.portal.service;
 
-import com.my.portal.model.DashboardRequest;
+import java.util.List;
+
 import com.my.portal.model.DashboardView;
 
 public interface DashboardService {
 
 	boolean processPrescription(DashboardView v);
-	DashboardView getDashboard(DashboardRequest r);
+	List<DashboardView> getDashboard(Long patientId);
 }

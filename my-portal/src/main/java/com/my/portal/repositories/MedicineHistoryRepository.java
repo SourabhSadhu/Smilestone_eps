@@ -10,7 +10,7 @@ import com.my.portal.entities.MedicineHistory;
 
 public interface MedicineHistoryRepository extends JpaRepository<MedicineHistory, Long>{
 	
-	List<MedicineHistory> getMedicineHistoryByPatientId(@Param("patientId") BigDecimal patientId);
-	List<MedicineHistory> getMedicineHistoryByPrescriptionId(@Param("prescriptionId") BigDecimal prescriptionId);
+	List<MedicineHistory> getMedicineHistoryByPatientId(@Param("patientId") Long patientId);
+	List<MedicineHistory> getMedicineHistoryByPrescriptionId(@Param("prescriptionId") Long prescriptionId);
 
 }

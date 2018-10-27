@@ -19,13 +19,22 @@ public class DashboardView implements Serializable{
 		this.pHistory = pHistory;
 	}
 	public List<FeesBreakupView> getFbl() {
-		return null == fbl ? new ArrayList<>() : this.fbl;
+		if(null == this.fbl){
+			this.fbl = new ArrayList<>();
+		}
+		return this.fbl;
 	}
 	public List<MedicalHistoryView> getMhv() {
-		return null == mhv ? new ArrayList<>() : this.mhv;
+		if(null == this.mhv){
+			this.mhv = new ArrayList<>();
+		}
+		return this.mhv;
 	}
 	public List<MedicineHistoryView> getMedhv() {
-		return null == medhv ? new ArrayList<>() : this.medhv;
+		if(null == this.medhv){
+			this.medhv = new ArrayList<>();
+		}
+		return this.medhv;
 	}
 
 }

@@ -26,7 +26,9 @@ import javax.persistence.Table;
 	@NamedQuery(name="MedicalHistory.getByHistoryName", 
 			query="SELECT m FROM MedicalHistory m WHERE m.medicalHistoryName = :name"),
 	@NamedQuery(name="MedicalHistory.getByPatientId", 
-			query="SELECT m FROM MedicalHistory m WHERE m.patientId = :patient_id")
+			query="SELECT m FROM MedicalHistory m WHERE m.patientId = :patient_id"),
+	@NamedQuery(name="MedicalHistory.getByPrescriptionId", 
+			query="SELECT m FROM MedicalHistory m WHERE m.prescriptionId = :prescription_id")
 })
 public class MedicalHistory implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -1,5 +1,7 @@
 package com.my.portal.serviceImpl;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -13,8 +15,9 @@ import com.my.portal.entities.FeesBreakup;
 import com.my.portal.entities.MedicalHistory;
 import com.my.portal.entities.MedicineHistory;
 import com.my.portal.entities.PrescriptionHistory;
-import com.my.portal.model.DashboardRequest;
 import com.my.portal.model.DashboardView;
+import com.my.portal.model.FeesBreakupView;
+import com.my.portal.model.MedicalHistoryView;
 import com.my.portal.model.MedicineHistoryView;
 import com.my.portal.model.PatientView;
 import com.my.portal.model.PrescriptionHistoryView;
@@ -97,9 +100,31 @@ public class DashboardServiceImpl implements DashboardService {
 	}
 
 	@Override
-	public DashboardView getDashboard(DashboardRequest r) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<DashboardView> getDashboard(Long patientId) {
+
+		List<DashboardView> dashboardViews = new ArrayList<>();
+		PatientView p1 = pService.findById(patientId);
+		if(null == p1 || null == p1.getPId()){
+			throw new ValidationException(ErrorCode.INVALID_PATIENT_ID);
+		}
+		List<PrescriptionHistoryView> prescriptionHistoryViews = phService.mapAll(phRepo.findByPatientId(patientId));
+		prescriptionHistoryViews.stream().forEach(pView -> {
+			List<FeesBreakupView> feesBreakupViews = new ArrayList<>();
+			feesBreakupViews.addAll(fbService.mapAll(fbRepo.findByPrescriptionId(pView.getPrescriptionId())));
+			List<MedicineHistoryView> medicineHistorieViews = new ArrayList<>();
+			medicineHistorieViews.addAll(medService.mapAll(medRepo.getMedicineHistoryByPrescriptionId(pView.getPrescriptionId())));
+			List<MedicalHistoryView> medicalHistories = new ArrayList<>();
+			medicalHistories.addAll(mhService.mapAll(mhRepo.getByPrescriptionId(pView.getPrescriptionId())));
+			
+			DashboardView view = new DashboardView();
+			view.setpHistory(pView);
+			view.getFbl().addAll(feesBreakupViews);
+			view.getMedhv().addAll(medicineHistorieViews);
+			view.getMhv().addAll(medicalHistories);
+			
+			dashboardViews.add(view);
+		});
+		return dashboardViews;
 	}
 
 }

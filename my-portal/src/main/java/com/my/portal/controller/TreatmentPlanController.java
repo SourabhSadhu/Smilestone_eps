@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.my.portal.CommonUtils;
 import com.my.portal.ValidationException;
+import com.my.portal.service.TreatmentPlanHistoryService;
 import com.my.portal.service.TreatmentPlanService;
 
 @Controller
@@ -20,6 +21,7 @@ import com.my.portal.service.TreatmentPlanService;
 public class TreatmentPlanController {
 	
 	@Autowired TreatmentPlanService tpService;
+	@Autowired TreatmentPlanHistoryService tphService;
 
 	@RequestMapping(method = RequestMethod.GET, value = "/get-plan"/*, produces = MediaType.TEXT_PLAIN_VALUE*/)
 	@ResponseBody
@@ -45,14 +47,14 @@ public class TreatmentPlanController {
 		}
 	}
 	
-/*	@RequestMapping(method = RequestMethod.GET, value = "/get-medicine", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.GET, value = "/get-hist", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<?> get(@RequestParam(required = true, value = "trtmntName") String trtmntName,
-								@RequestParam(required = true, value = "ageGrp") String ageGrp) 
+	public ResponseEntity<?> get() 
 	{
 		try {
-			return new ResponseEntity<>(CommonUtils.getResp(mService.getMedicineByTreatmentNameAndAgeGrp(trtmntName, ageGrp)), HttpStatus.OK);
+			return new ResponseEntity<>(CommonUtils.getResp(tphService.findByPatientID(1L)), HttpStatus.OK);
 		} catch (Exception e) {
+			e.printStackTrace();
 			if(e instanceof ValidationException) {
 				ValidationException ve = (ValidationException) e;
 				return new ResponseEntity<>(CommonUtils.getResp(null, ve.getValidationPayload()), HttpStatus.OK);
@@ -60,5 +62,5 @@ public class TreatmentPlanController {
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			}
 		}
-	}*/
+	}
 }

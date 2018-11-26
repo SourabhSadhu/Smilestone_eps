@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.my.portal.CommonUtils;
-import com.my.portal.model.DashboardRequest;
 import com.my.portal.model.DashboardView;
 import com.my.portal.service.DashboardService;
 
@@ -35,9 +34,12 @@ public class DashboardController {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/get-dashboard", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<?> getDashboard(@RequestParam(value="patientId", required = true) Long patientId) {
+	public ResponseEntity<?> getDashboard(
+			@RequestParam(value="patientId", required = true) Long patientId,
+			@RequestParam(value="prescriptionId", required = false) Long prescriptionId
+			) {
 		try{
-			return new ResponseEntity<>(CommonUtils.getResp(dService.getDashboard(patientId)), HttpStatus.OK);
+			return new ResponseEntity<>(CommonUtils.getResp(dService.getDashboard(patientId, prescriptionId)), HttpStatus.OK);
 		}catch(Exception e){
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

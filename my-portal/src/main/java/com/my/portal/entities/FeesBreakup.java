@@ -42,6 +42,9 @@ public class FeesBreakup implements Serializable {
 	private Long fId;
 
 	private BigDecimal amount;
+	
+	@Column(name="amount_paid")
+	private BigDecimal amountPaid;
 
 	@Column(name="trtmnt_plan_ref")
 	private Long trtmntPlanRef;
@@ -74,6 +77,14 @@ public class FeesBreakup implements Serializable {
 
 	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
+	}
+
+	public final BigDecimal getAmountPaid() {
+		return amountPaid;
+	}
+
+	public final void setAmountPaid(BigDecimal amountPaid) {
+		this.amountPaid = amountPaid;
 	}
 
 	public String getNotes() {

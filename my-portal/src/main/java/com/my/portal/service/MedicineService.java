@@ -16,6 +16,7 @@ public interface MedicineService {
 	List<MedicineMasterView> getMedicineByDisease (String diseaseCode);
 	List<MedicineMasterView> getMedicineByTreatmentNameAndAgeGrp (Long trtmntId, String ageGrp);
 	List<MedicineMasterView> getMedicineByTreatmentNameAndAge (Long trtmntId, String age);
+	List<MedicineMasterView> getAll();
 	MedicineMasterView addMedicine (MedicineMasterView v);
 	MedicineMaster map(MedicineMasterView v);
 	MedicineMasterView map(MedicineMaster e);

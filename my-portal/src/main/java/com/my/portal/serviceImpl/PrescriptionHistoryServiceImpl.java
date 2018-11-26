@@ -76,11 +76,6 @@ public class PrescriptionHistoryServiceImpl implements PrescriptionHistoryServic
 	public PrescriptionHistory map(PrescriptionHistoryView v) {
 		PrescriptionHistory e = new PrescriptionHistory();
 		if (null != v) {
-//			e.setAdvice(v.getAdvice());
-//			e.setChiefComplaint(v.getChiefComplaint());
-//			e.setClinicalFindings(v.getClinicalFindings());
-//			e.setInvestigation(v.getInvestigation());
-//			e.setPatientId(v.getPatientId());
 			BeanUtils.copyProperties(v, e);
 			e.setTsCreated(new Timestamp(System.currentTimeMillis()));
 		}

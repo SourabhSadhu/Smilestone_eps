@@ -213,4 +213,9 @@ public class MedicineServiceImpl implements MedicineService {
 		return el;
 	}
 
+	@Override
+	public List<MedicineMasterView> getAll() {
+		return map(masterRepo.findAll());
+	}
+
 }

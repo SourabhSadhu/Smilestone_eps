@@ -4,9 +4,12 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 
@@ -15,6 +18,7 @@ import javax.persistence.Table;
  * 
  */
 @Entity
+@SequenceGenerator(name="CLINICAL_FINDINGS_FID_GENERATOR", initialValue=1, sequenceName="eps.findings_seq")
 @Table(name="clinical_findings")
 @NamedQueries({	
 	@NamedQuery(name="ClinicalFinding.findAll", query="SELECT c FROM ClinicalFinding c")
@@ -23,8 +27,7 @@ public class ClinicalFinding implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-//	@SequenceGenerator(name="CLINICAL_FINDINGS_FID_GENERATOR", sequenceName="REPLACE_SEQ_NAME")
-//	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CLINICAL_FINDINGS_FID_GENERATOR")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CLINICAL_FINDINGS_FID_GENERATOR")
 	@Column(name="f_id")
 	private Long fId;
 

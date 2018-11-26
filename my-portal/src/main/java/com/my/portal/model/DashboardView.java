@@ -11,6 +11,7 @@ public class DashboardView implements Serializable{
 	List<FeesBreakupView> fbl;
 	List<MedicalHistoryView> mhv;
 	List<MedicineHistoryView> medhv;
+	List<TreatmentPlanHistoryView> tphv;
 	
 	public PrescriptionHistoryView getpHistory() {
 		return pHistory;
@@ -35,6 +36,12 @@ public class DashboardView implements Serializable{
 			this.medhv = new ArrayList<>();
 		}
 		return this.medhv;
+	}
+	public List<TreatmentPlanHistoryView> getTphv() {
+		if(null == this.tphv){
+			this.tphv = new ArrayList<>();
+		}
+		return this.tphv;
 	}
 
 }

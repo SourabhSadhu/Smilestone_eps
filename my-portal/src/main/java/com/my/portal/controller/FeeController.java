@@ -30,32 +30,16 @@ public class FeeController {
 	@Autowired	FeeConfigService fcService;
 
 	
-//	@RequestMapping(method = RequestMethod.GET, value = "/get-config", produces = MediaType.APPLICATION_JSON_VALUE)
-//	@ResponseBody
-//	public ResponseEntity<?> getFeeConfig(
-//			@RequestParam(required = true, value = "age") String ageGrp,
-//			@RequestParam(required = true, value = "tooth_grp_idx") Long toothGrpIdx,
-//			@RequestParam(required = true, value = "trtmnt_id") Long trtmntId
-//			) {
-//
-//		try {
-//			return new ResponseEntity<>(CommonUtils.getResp(fcService.getFeeConfig(ageGrp, trtmntId, toothGrpIdx)), HttpStatus.OK);
-//		} catch (Exception e) {
-//			if(e instanceof ValidationException) {
-//				ValidationException ve = (ValidationException) e;
-//				return new ResponseEntity<>(CommonUtils.getResp(null, ve.getValidationPayload()), HttpStatus.OK);
-//			}else {
-//				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//			}
-//		}
-//	}
-
-	@RequestMapping(method = RequestMethod.POST, value = "/add-fee-config", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.GET, value = "/get-config", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<?> addFeeConfig(@RequestBody FeeConfigView view) {
+	public ResponseEntity<?> getFeeConfig(
+			@RequestParam(required = true, value = "age") Long age,
+			@RequestParam(required = true, value = "tooth_grp_idx") Long toothGrpIdx,
+			@RequestParam(required = true, value = "trtmnt_id") Long trtmntId
+			) {
 
 		try {
-			return new ResponseEntity<>(CommonUtils.getResp(fcService.addFeeConfig(view)), HttpStatus.OK);
+			return new ResponseEntity<>(CommonUtils.getResp(fcService.getFeeConfig(age, trtmntId, toothGrpIdx)), HttpStatus.OK);
 		} catch (Exception e) {
 			if(e instanceof ValidationException) {
 				ValidationException ve = (ValidationException) e;
@@ -65,9 +49,7 @@ public class FeeController {
 			}
 		}
 	}
-	
-	
-	
+
 	@RequestMapping(method = RequestMethod.POST, value = "/get-config-list", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<?> getFeeConfigList(
@@ -94,5 +76,21 @@ public class FeeController {
 		}
 	}
 	
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/add-fee-config", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<?> addFeeConfig(@RequestBody FeeConfigView view) {
+
+		try {
+			return new ResponseEntity<>(CommonUtils.getResp(fcService.addFeeConfig(view)), HttpStatus.OK);
+		} catch (Exception e) {
+			if(e instanceof ValidationException) {
+				ValidationException ve = (ValidationException) e;
+				return new ResponseEntity<>(CommonUtils.getResp(null, ve.getValidationPayload()), HttpStatus.OK);
+			}else {
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+		}
+	}
 	
 }

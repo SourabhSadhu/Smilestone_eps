@@ -13,11 +13,13 @@ public class FeesBreakupView implements Serializable {
 	
 	private Long fId;
 	private BigDecimal amount;
+	private BigDecimal amountPaid;
 	private Long trtmntPlanRef;
 	private String notes;
 	private Long patientId;
 	private Long prescriptionId;
 	private Timestamp tsCreated;
+	private Timestamp paymentTs;
 
 	public FeesBreakupView() {
 	}
@@ -36,6 +38,14 @@ public class FeesBreakupView implements Serializable {
 
 	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
+	}
+
+	public final BigDecimal getAmountPaid() {
+		return amountPaid;
+	}
+
+	public final void setAmountPaid(BigDecimal amountPaid) {
+		this.amountPaid = amountPaid;
 	}
 
 	public Long getTrtmntPlanRef() {
@@ -76,6 +86,14 @@ public class FeesBreakupView implements Serializable {
 
 	public void setTsCreated(Timestamp tsCreated) {
 		this.tsCreated = tsCreated;
+	}
+
+	public final Timestamp getPaymentTs() {
+		return paymentTs;
+	}
+
+	public final void setPaymentTs(Timestamp paymentTs) {
+		this.paymentTs = paymentTs;
 	}
 	
 }

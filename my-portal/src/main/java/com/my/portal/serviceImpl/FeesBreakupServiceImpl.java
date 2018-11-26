@@ -76,6 +76,7 @@ public class FeesBreakupServiceImpl implements FeesBreakupService {
 		FeesBreakupView v = new FeesBreakupView();
 		if(null != e){
 			v.setAmount(e.getAmount());
+			v.setAmountPaid(e.getAmountPaid());
 			v.setfId(e.getFId());
 			v.setNotes(e.getNotes());
 			v.setTsCreated(e.getTsCreated());
@@ -108,6 +109,7 @@ public class FeesBreakupServiceImpl implements FeesBreakupService {
 				throw new ValidationException(ErrorCode.ZERO_FEE_BREAKUP_AMOUNT);
 			}
 			e.setAmount(v.getAmount());
+			e.setAmountPaid(v.getAmountPaid());
 			e.setNotes(v.getNotes());
 			e.setTsCreated(new Timestamp(System.currentTimeMillis()));
 //			e.setClinicalFinding(cfService.map(v.getClinicalFinding()));

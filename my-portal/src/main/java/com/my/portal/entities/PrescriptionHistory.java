@@ -44,7 +44,7 @@ public class PrescriptionHistory implements Serializable {
 
 	private String investigation;
 
-	private String medicines;
+//	private String medicines;
 
 	@Column(name="next_appointment")
 	private Timestamp nextAppointment;
@@ -57,11 +57,8 @@ public class PrescriptionHistory implements Serializable {
 	@Column(name="provisional_diagnosis")
 	private String provisionalDiagnosis;
 
-	@Column(name="treatment_done")
-	private String treatmentDone;
-
-	@Column(name="treatment_plan")
-	private String treatmentPlan;
+//	@Column(name="treatment_done")
+//	private String treatmentDone;
 
 	@Column(name="ts_created")
 	private Timestamp tsCreated;
@@ -112,14 +109,6 @@ public class PrescriptionHistory implements Serializable {
 		this.investigation = investigation;
 	}
 
-	public String getMedicines() {
-		return this.medicines;
-	}
-
-	public void setMedicines(String medicines) {
-		this.medicines = medicines;
-	}
-
 	public Timestamp getNextAppointment() {
 		return this.nextAppointment;
 	}
@@ -150,22 +139,6 @@ public class PrescriptionHistory implements Serializable {
 
 	public void setProvisionalDiagnosis(String personalDiagnosis) {
 		this.provisionalDiagnosis = personalDiagnosis;
-	}
-
-	public String getTreatmentDone() {
-		return this.treatmentDone;
-	}
-
-	public void setTreatmentDone(String treatmentDone) {
-		this.treatmentDone = treatmentDone;
-	}
-
-	public String getTreatmentPlan() {
-		return this.treatmentPlan;
-	}
-
-	public void setTreatmentPlan(String treatmentPlan) {
-		this.treatmentPlan = treatmentPlan;
 	}
 
 	public Timestamp getTsCreated() {

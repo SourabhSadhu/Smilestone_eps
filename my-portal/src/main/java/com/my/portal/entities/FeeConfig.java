@@ -18,6 +18,7 @@ import javax.persistence.Table;
  * 
  */
 @Entity
+@SequenceGenerator(name="FEE_CONFIG_FEECONFIGID_GENERATOR", sequenceName="fee_config_id_seq")
 @Table(name="fee_config")
 @NamedQuery(name="FeeConfig.findFeeConfig", 
 	query="SELECT f FROM FeeConfig f WHERE f.ageGroupId = :age_grp AND f.toothGroupId = :tooth_grp_idx "
@@ -26,7 +27,6 @@ public class FeeConfig implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="FEE_CONFIG_FEECONFIGID_GENERATOR", sequenceName="fee_config_id_seq")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="FEE_CONFIG_FEECONFIGID_GENERATOR")
 	@Column(name="fee_config_id")
 	private Long feeConfigId;

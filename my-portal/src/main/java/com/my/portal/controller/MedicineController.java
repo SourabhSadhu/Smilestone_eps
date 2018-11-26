@@ -20,6 +20,22 @@ public class MedicineController {
 
 	@Autowired MedicineService mService;
 	
+	@RequestMapping(method = RequestMethod.GET, value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<?> getAll() 
+	{
+		try {
+			return new ResponseEntity<>(CommonUtils.getResp(mService.getAll()), HttpStatus.OK);
+		} catch (Exception e) {
+			if(e instanceof ValidationException) {
+				ValidationException ve = (ValidationException) e;
+				return new ResponseEntity<>(CommonUtils.getResp(null, ve.getValidationPayload()), HttpStatus.OK);
+			}else {
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+		}
+	}
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/get-medicine", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<?> get(@RequestParam(required = true, value = "trtmntId") Long trtmntId,

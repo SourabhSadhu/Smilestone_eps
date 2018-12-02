@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map,tap, catchError } from 'rxjs/operators';
-import { Response,Patient, FeeConfigRequestListView, DashboardView } from '../models/models';
+import { Response,Patient, FeeConfigRequestListView, DashboardView, ClinicalFindingView } from '../models/models';
 import { DummyResponse } from './dummyresponse';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -30,7 +30,9 @@ export class HttpcommService {
   getFeeConfigToothGrpPart2Url = '&tooth_grp_idx=';
   getFeeConfigTrtIdPart3Url = '&trtmnt_id=';
   getFeeConfigListUrl = this.baseUrl + 'fee/get-config-list';
-  addDashboardUrl = this.baseUrl + 'dashboard/add-prescription'
+  addDashboardUrl = this.baseUrl + 'dashboard/add-dashboard';
+  getDashboard = this.baseUrl + 'dashboard/get-dashboard?patientId=';
+  postAddClinicalFindingUrl = this.baseUrl + 'clinical-finding/add-clinical-finding'
   
   constructor(public http : HttpClient) {
     this.dummyResp = new DummyResponse();
@@ -46,6 +48,14 @@ export class HttpcommService {
 
   parseData(s : object) : any{
     return JSON.parse(JSON.stringify(s));
+  }
+
+  getDashboardView(patientId: number): Observable<Response>{
+    if(this.dummy){      
+      return of(this.parseData(this.dummyResp.getDashboardView));
+    }else{
+      return this.http.get<Response>(this.baseUrl+'dashboard/get-dashboard?patientId='+patientId, this.httpOptions);
+    }
   }
 
   getAgeGroup(age : string) : Observable<Response>{
@@ -139,6 +149,14 @@ export class HttpcommService {
     }
   };
 
+  getAllMedicine(): Observable<Response>{
+    if(this.dummy){
+      return of(this.parseData(this.dummyResp.getMedicine));
+    }else{
+      return this.genericGetRequest(this.baseUrl+'medicine/');
+    }
+  }
+
   getMedicineView(url : string) : Observable<Response>{
     if(this.dummy){
       return of(this.parseData(this.dummyResp.getMedicine));
@@ -147,9 +165,18 @@ export class HttpcommService {
     }
   }
 
-  getFeeConfigList(age : number, feeReqListView : FeeConfigRequestListView[]) : Observable<Response>{
+  getFeeConfig(age: number, tooth_grp_idx: number, treatmentId: number){
     if(this.dummy){
       return of(this.parseData(this.dummyResp.getFeeConfig))
+    }else{
+      let url = this.getFeeConfigUrl + this.getFeeConfigAgeGrpPart1Url + age + this.getFeeConfigToothGrpPart2Url + tooth_grp_idx + this.getFeeConfigTrtIdPart3Url + treatmentId
+      return this.genericGetRequest(url)
+    }
+  }
+
+  getFeeConfigList(age : number, feeReqListView : FeeConfigRequestListView[]) : Observable<Response>{
+    if(this.dummy){
+      return of(this.parseData(this.dummyResp.getFeeConfigList))
     }else{
       let url = this.getFeeConfigListUrl + this.getFeeConfigAgeGrpPart1Url + age;
       return this.genericPostRequest(url, feeReqListView);
@@ -159,6 +186,19 @@ export class HttpcommService {
   addDashBoard(req : DashboardView) : Observable<Response>{
     if(!this.dummy){
       return this.genericPostRequest(this.addDashboardUrl,req,'Add dashboard')
+    }else{
+      let resp = new Response()
+      resp.status = 'SUCCESS'
+      resp.resp = req
+      return of(resp)
+    }
+  }
+
+  addClinicalFinding(req: ClinicalFindingView) : Observable<Response>{
+    if(this.dummy){
+      return of(this.parseData(this.dummyResp.addonClinicalFinding))
+    }else{
+      return this.genericPostRequest(this.postAddClinicalFindingUrl, req, 'Add cf');
     }
   }
 

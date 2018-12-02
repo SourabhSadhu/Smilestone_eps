@@ -21,6 +21,27 @@
     </form>
     <mat-divider></mat-divider>
 
+    <!-- Section for adding custom clinical findings -->
+    <table *ngIf="clinicalFindingForm?.value === 'Others'">
+        <tr>
+            <td>
+                <!-- Custom clinical finding name -->
+                <mat-form-field hintLabel="Max 30 characters" class="example-full-width">
+                    <input matInput [maxlength]="30" placeholder="C/F Name" [(ngModel)]="customCFName" required>
+                    <mat-hint align="end">{{customCFName?.length || 0}}/30</mat-hint>
+                </mat-form-field>
+            </td>
+            <td>
+                <!-- Custom clinical finding desc -->
+                <mat-form-field hintLabel="Max 30 characters" class="example-full-width">
+                    <input matInput [maxlength]="30" placeholder="C/F Desc" [(ngModel)]="customCFDesc">
+                    <mat-hint align="end">{{customCFDesc?.length || 0}}/30</mat-hint>
+                </mat-form-field>
+            </td>
+        </tr>
+    </table>
+
+
     <!-- <mat-form-field>
         <mat-select placeholder="Tooth" [formControl]="toothForm" multiple>
             <mat-option *ngFor="let tooth of data.toothQuadrentsComposite" [value]="tooth.toothIndex">{{tooth.toothIndex}}</mat-option>
@@ -32,8 +53,8 @@
             <td *ngFor="let t of getOrderedList(1)" class="rcorners2" (click)="checkTooth(t)">
                 <!-- (click)="setSelect(t)" -->
                 <label>
-                    <input  class="custom_mat-radio-button" type="checkbox" name="all" value="{{t.toothIndex}}" [checked]="t.selected" disabled 
-                    />
+                    <input class="custom_mat-radio-button" type="checkbox" name="all" value="{{t.toothIndex}}"
+                        [checked]="t.selected" disabled />
                     {{t.toothIndex}}
                 </label>
             </td>

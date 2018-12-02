@@ -1,12 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { DummyResponse } from '../services/dummyresponse';
 import {
   ClinicalFindingView, MedicalMaster, Patient, PrescriptionHistoryView,
   ToothQuadrentView, TreatmentPlan, FeesBreakupView, FeeConfigView,
-  MedicalHistoryView, MedicineHistoryView, DashboardView, MedicineView, FeeConfigRequestListView
+  MedicalHistoryView, MedicineHistoryView, DashboardView, MedicineView, TreatmentPlanHistoryView
 } from '../models/models';
 import { MatSnackBar } from '@angular/material';
-import { SnackhelperComponent } from '../snackhelper/snackhelper.component';
+import { SnackbarModel } from '../snackhelper/snackbar-model';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { FormControl, Validators } from '@angular/forms';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -14,7 +13,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { HttpcommService } from '../services/httpcomm.service';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material';
-import { Observable, pipe } from 'rxjs';
+import { Observable, pipe, of } from 'rxjs';
 import { startWith, map, tap } from 'rxjs/operators';
 import { CommonService } from '../services/commonservice.service';
 import { MatTableDataSource } from '@angular/material/table';
@@ -37,13 +36,19 @@ export class CreatePrescriptionComponent implements OnInit {
   isPatientLoading: boolean; // Toggle progress bar  
   isPatientLoaded: boolean; // Toggle patient list
   isPatientSelected: boolean; // Toggle patient details view
+  isDisabledToModify: boolean //Toggle for exisiting prescription
   patientDataSource: Patient[];
   columnsToDisplay = ['firstName', 'lastName', 'age', 'weight'];
   expandedElement: Patient;
   prescriptionHistoryView: PrescriptionHistoryView;
   feesConfigListView: FeeConfigView[];
+
   medicalHistoryView: MedicalHistoryView;
+
   medicineMasterViewList: MedicineView[];
+  medicineForm = new FormControl()
+  medicineHistoryViewModel: string
+
   dashboardView: DashboardView;
   clinicalFindings: ClinicalFindingView[];
   toothQuadrents: ToothQuadrentView[];
@@ -51,17 +56,23 @@ export class CreatePrescriptionComponent implements OnInit {
   mhList: MedicalMaster[] = [];
 
   medicalHistoryForm = new FormControl();
+  medicalHistoryViewModel: string[];
 
   cftMapArray: ClinicalFindingToothMapping[];
-  clinicalFindingsView: string[]; //To show selected clinical findings to tooth mapping
+  clinicalFindingsViewForUi: string[]; //To show selected clinical findings to tooth mapping
   treatmentPlanListView: string[]; //To show selected treatment plans
   treatmentPlanList: TreatmentPlan[] = [];
+  treatmentPlanFormControl = new FormControl()
+
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  feesConfigListViewColumns: string[] = ['treatmentPlanId', 'baseFee', 'ageGroupId', 'ageGroupPercent', 'toothGroupId', 'toothGroupPercent', 'totalFee', 'notes'];
+  feesConfigListViewColumns: string[] = ['treatmentPlanId', 'baseFee', 'ageGroupId', 'ageGroupPercent', 'toothGroupId', 'toothGroupPercent', 'totalFee', 'amountPaid', 'notes'];
   feesConfigListDataSource: MatTableDataSource<FeeConfigView>;
   commonService: CommonService;
 
   disableTabs: boolean = true;
+  //Enable treatment done tab on prescription repeat or after submitting prescription
+  disableTreatmentDoneTab = true;
+  snackModel = new SnackbarModel()
 
   constructor(public snackBar: MatSnackBar,
     public dialog: MatDialog, public httpCom: HttpcommService) { }
@@ -75,12 +86,14 @@ export class CreatePrescriptionComponent implements OnInit {
   minCharToSearch = 3;
 
   refreshSearch() {
-    this.selectedPatient = new Patient();
+
     this.isPatientLoading = false;
     this.isPatientLoaded = false;
     this.isPatientSelected = false;
-    this.disableTabs = true;
     this.tabSelection(0);
+    this.disableTabs = true
+    this.initializeValiables()
+    this.patientDataSource = []
   }
 
   initializeValiables() {
@@ -89,7 +102,11 @@ export class CreatePrescriptionComponent implements OnInit {
     this.isPatientLoading = false;
     this.isPatientLoaded = false;
     this.isPatientSelected = false;
-    this.clinicalFindingsView = [];
+    this.isDisabledToModify = false;
+    this.dashboardDataSource = new MatTableDataSource<DashboardView>()
+    this.medicalHistoryViewModel = [];
+    this.clinicalFindingsViewForUi = [];
+    this.cftMapArray = [];
     this.httpCom.getMedicalMaster().subscribe(
       resp => {
         if (resp.status == 'SUCCESS') {
@@ -106,8 +123,14 @@ export class CreatePrescriptionComponent implements OnInit {
         }
       }
     );
+    this.httpCom.getAllMedicine().subscribe(
+      resp => {
+        if (resp.status == 'SUCCESS') {
+          this.medicineMasterViewList = resp.resp;
+        }
+      }
+    )
     this.treatmentPlanListView = [];
-    this.medicineMasterViewList = [];
     this.feesConfigListView = [];
     this.feesConfigListDataSource = new MatTableDataSource<FeeConfigView>();
 
@@ -168,12 +191,111 @@ export class CreatePrescriptionComponent implements OnInit {
     this.selectedPatient = element;
     this.disableTabs = false;
     this.tabSelection(1);
+    this.fetchDashboard(element.pid)
   }
 
   tabSelection(tabIndex: number) {
     this.prescriptionFromControl.setValue(tabIndex);
   }
 
+  /************************************************************************************************************
+   ************************************************************************************************************
+   ***************************************** History Section **************************************************
+   ************************************************************************************************************
+   ************************************************************************************************************
+   */
+
+  dashboardHistoryListColumns = ['Date', 'C/F', 'Treatment Plan', 'Treatment Done', 'Due', 'Next Appo']
+  dashboardDataSource: MatTableDataSource<DashboardView>
+  fetchDashboard(patientId: number) {
+
+    this.httpCom.getDashboardView(patientId).subscribe(
+      resp => {
+        if (resp.status === 'SUCCESS' && resp.resp && resp.resp.length > 0) {
+          this.dashboardDataSource = new MatTableDataSource<DashboardView>()
+          this.dashboardDataSource.data = resp.resp
+        } else {
+          this.tabSelection(2)
+        }
+      }
+    )
+  }
+
+  getDueFee(feesList: FeesBreakupView[]): number {
+    let due = 0
+    feesList.map(fee => {
+      due += fee.amount - fee.amountPaid
+    })
+    return due
+  }
+
+  //populate prescription details
+  selectPrescription(dashboard: DashboardView) {
+
+    this.tabSelection(2)
+    this.isDisabledToModify = true
+    if (dashboard.pHistory) {
+      this.prescriptionHistoryView = dashboard.pHistory
+      if (dashboard.pHistory.clinicalFindings.length > 0) {
+        this.clinicalFindingsViewForUi = dashboard.pHistory.clinicalFindings.split(',')
+      }
+      this.medicalHistoryViewModel = []
+      dashboard.mhv.forEach(e => {
+        this.medicalHistoryViewModel.push(e.medicalHistoryName)
+      })
+      this.medicineHistoryViewModel = ''
+      dashboard.medhv.forEach(e => {
+        this.medicineHistoryViewModel += (e.medicineName + ' ' + e.dosage + '\n')
+      })
+      //Create cftMapArray
+      console.log('Start of cftMapArray')
+      this.cftMapArray = []
+      if (dashboard.pHistory &&
+        dashboard.pHistory.clinicalFindings &&
+        dashboard.pHistory.clinicalFindings.length > 0) {
+
+        let clinicalFinidingToothComposite = dashboard.pHistory.clinicalFindings.split(',');
+        clinicalFinidingToothComposite.forEach(e => {
+          let clinicalFindingComposite = e.split(' -  ')
+          if (clinicalFindingComposite.length == 2) {
+            let clinicalFindingDerived = clinicalFindingComposite[0];
+            let toothComposite = clinicalFindingComposite[1].split(' ')
+            toothComposite.forEach(tooth => {
+              let cft = new ClinicalFindingToothMapping()
+              cft.teeth = new ToothQuadrentView()
+              cft.clinicalFinding = new ClinicalFindingView()
+              if (!isNaN(parseInt(tooth, 10))) {
+                cft.teeth.toothIndex = parseInt(tooth, 10)
+                cft.clinicalFinding.fname = clinicalFindingDerived
+                let treatmentPlanList = dashboard.tphv.filter(tph => tph.clinicalFinding == clinicalFindingDerived && tph.toothIndex == cft.teeth.toothIndex)
+                if (treatmentPlanList && treatmentPlanList.length > 0) {
+                  cft.treatmentPlanViewModel = treatmentPlanList[0].tname
+                }
+              }
+              this.cftMapArray.push(cft)
+            })
+          }
+        })
+        this.trtmntPlanListDataSource.data = this.cftMapArray
+      }
+    }
+  }
+
+  checkIfDisabledToModify(): boolean {
+    return this.isDisabledToModify
+  }
+
+  /************************************************************************************************************
+   ************************************************************************************************************
+   ***************************************** Prescription Section *********************************************
+   ************************************************************************************************************
+   ************************************************************************************************************
+   */
+  getOrderedClinicalFindings(cf: string): string[] {
+    if (cf && cf.length > 0) return cf.split(',')
+  }
+
+  //Prescription Section
   openDialog(): void {
     this.httpCom.getClinicalFindings().subscribe(
       response => {
@@ -193,69 +315,19 @@ export class CreatePrescriptionComponent implements OnInit {
 
                 dialogRef.afterClosed().subscribe(result => {
                   if (result && result.length > 0) {
-                    this.cftMapArray = result;
-                    for (let i = 0; i < this.cftMapArray.length; i++) {
-                      let teeths: string = '';
-                      for (let j = 0; j < this.cftMapArray[i].teeth.length; j++) {
-                        teeths += ' ' + this.cftMapArray[i].teeth[j].toothIndex;
-                      }
-                      this.clinicalFindingsView.push(this.cftMapArray[i].clinicalFinding.fname + ' - ' + teeths);
-                      if (this.treatmentPlanList && this.treatmentPlanList.length > 0) {
-                        this.treatmentPlanList.map(tpl => {
-                          if (tpl.clinicalFinding == this.cftMapArray[i].clinicalFinding.fid) {
-
-                            //Concurrency check
-                            if (this.treatmentPlanListView.indexOf(tpl.trtName) < 0) {
-                              this.treatmentPlanListView.push(tpl.trtName);
-
-                              //Getting medicines
-                              this.httpCom.getMedicineView(this.httpCom.getMedicineUrl
-                                + this.httpCom.getMedicineUrlPart1
-                                + tpl.trtId
-                                + this.httpCom.getMedicineUrlPart2
-                                + this.selectedPatient.age
-                              ).subscribe(
-                                resp => {
-                                  if (resp.status === 'SUCCESS') {
-                                    resp.resp.map(medicineMasterView => {
-                                      this.medicineMasterViewList.push(medicineMasterView);
-                                    });
-                                  } else {
-                                    console.log('resp error: ' + resp);
-                                  }
-                                }
-                              );
-                            }
-                            //Getting fees config
-                            let feeConfigRequestListView: FeeConfigRequestListView[] = [];
-                            this.cftMapArray[i].teeth.forEach(t => {
-                              let feeConfigRequestView = new FeeConfigRequestListView();
-                              feeConfigRequestView.tooth_grp_idx = t.toothGroup;
-                              feeConfigRequestView.trtmnt_id = tpl.trtId;
-                              feeConfigRequestListView.push(feeConfigRequestView);
-                            })
-                            //Print data
-                            // console.log('Fee config data:', feeConfigRequestListView);
-
-                            this.httpCom.getFeeConfigList(this.selectedPatient.age, feeConfigRequestListView).subscribe(resp => {
-                              if (resp && resp.status === 'SUCCESS') {
-                                resp.resp.forEach(element => {
-                                  let feeConfigData: FeeConfigView = element;
-                                  if (feeConfigData && feeConfigData.totalFee > 0) {
-                                    this.feesConfigListView.push(element);
-                                    this.feesConfigListDataSource.data = this.feesConfigListView;
-                                  }
-                                });
-                                this.getTotalFee();
-                                // console.log('Fee config object:', this.feesConfigListView);
-                              }
-                            });
-                          }
-                        });
-                      } else {
-                        console.log("Treatment plan empty");
-                      }
+                    if (this.cftMapArray.length == 0) {
+                      this.cftMapArray = result;
+                    } else {
+                      result.map(r => this.cftMapArray.push(r))
                     }
+                    for (let i = 0; i < this.cftMapArray.length; i++) {
+                      this.clinicalFindingsViewForUi.push(
+                        this.commonService.combineValForStringArray(
+                          this.clinicalFindingsViewForUi, this.cftMapArray[i].clinicalFinding.fname, this.cftMapArray[i].teeth.toothIndex.toString()
+                        )
+                      )
+                    }
+                    this.createTreatmentPlanTable()
                   }
                 });
               }
@@ -272,6 +344,7 @@ export class CreatePrescriptionComponent implements OnInit {
       this.feesConfigListView.map(fee => fee.totalFee).reduce((prevTotal, curr) => prevTotal + curr, 0) :
       0;
   }
+
 
   addTreatmentPlan(event: MatChipInputEvent): void {
     const input = event.input;
@@ -329,10 +402,29 @@ export class CreatePrescriptionComponent implements OnInit {
     }
   }
 
-
   createNextAppo(event: MatDatepickerInputEvent<Date>) {
-    console.log('next appo' + event.value);
-    this.prescriptionHistoryView.nextAppointment = event.value.getTime()
+    try {
+      // console.log('next appo ' + event.value.getTime());
+      this.prescriptionHistoryView.nextAppointment = event.value.getTime()
+      if (0 <= this.nextAppoHour && this.nextAppoHour <= 24 && 0 <= this.nextAppoMinute && this.nextAppoMinute <= 59) {
+        let modifiedTime = ((this.nextAppoHour * 60) + this.nextAppoMinute) * 60 * 1000 + event.value.getTime()
+        console.log('next appo ' + modifiedTime);
+      }
+    } catch (error) {
+      console.log(error)
+      this.snackModel.msg = "Invalid Date"
+      this.snackModel.action = "OK"
+      this.snackModel.callback = () => {
+        console.log("Retry allowed")
+      }
+      this.commonService.showSnackBar(this.snackBar, this.snackModel)
+    }
+  }
+
+  nextAppoHour = 0;
+  nextAppoMinute = 0;
+  createNextAppoTime() {
+    // console.log(`NextAppo Hour ${this.nextAppoHour} Minute ${this.nextAppoMinute}`)
   }
 
   minDate: Date = new Date();
@@ -341,30 +433,134 @@ export class CreatePrescriptionComponent implements OnInit {
   maxDate = new Date(this.maxMillis);
 
 
+  trtmntPlanListDataSource = new MatTableDataSource<ClinicalFindingToothMapping>()
+  trtmntPlanListViewColumns = ['cf', 'teeth', 'plan', 'newPlan']
+  // customTrtmntPlan: string
+  //Get all dialog box data from this.cftMapArray
+  createTreatmentPlanTable() {
+
+    this.trtmntPlanListDataSource.data = this.cftMapArray
+    // if (this.treatmentPlanList && this.treatmentPlanList.length > 0) {
+    //   this.treatmentPlanList.forEach(tpl => {
+    //     // if (tpl.clinicalFinding == this.cftMapArray[i].clinicalFinding.fid) {
+
+    //       //Concurrency check
+    //       if (this.treatmentPlanListView.indexOf(tpl.trtName) < 0) {
+    //         this.treatmentPlanListView.push(tpl.trtName);
+
+
+    //       //Getting fees config
+    //       // let feeConfigRequestListView: FeeConfigRequestListView[] = [];
+    //       // this.cftMapArray[i].teeth.forEach(t => {
+    //       //   let feeConfigRequestView = new FeeConfigRequestListView();
+    //       //   feeConfigRequestView.tooth_grp_idx = t.toothGroup;
+    //       //   feeConfigRequestView.trtmnt_id = tpl.trtId;
+    //       //   feeConfigRequestListView.push(feeConfigRequestView);
+    //       // })
+    //       //Print data
+    //       // console.log('Fee config data:', feeConfigRequestListView);
+
+    //       // this.httpCom.getFeeConfigList(this.selectedPatient.age, feeConfigRequestListView).subscribe(resp => {
+    //       //   if (resp && resp.status === 'SUCCESS') {
+    //       //     resp.resp.forEach(element => {
+    //       //       let feeConfigData: FeeConfigView = element;
+    //       //       if (feeConfigData && feeConfigData.totalFee > 0) {
+    //       //         this.feesConfigListView.push(element);
+    //       //         this.feesConfigListDataSource.data = this.feesConfigListView;
+    //       //       }
+    //       //     });
+    //       //     this.getTotalFee();
+    //       //     // console.log('Fee config object:', this.feesConfigListView);
+    //       //   }
+    //       // });
+    //     // }
+    //   });
+    // } else {
+    //   console.log("Treatment plan empty");
+    // }
+  }
+
+  updateTrtmntPlanSelect(value: string, index: number) {
+
+    this.treatmentPlanList.filter(data => {
+      if (data.trtname == value) {
+        if (this.cftMapArray.length > index) {
+          this.cftMapArray[index].treatmentPlanName = value
+          if (value === 'Other') {
+            this.cftMapArray[index].customTrtmntPlan = true
+          }
+          let toothGrpIndex = this.cftMapArray[index].teeth.toothGroup
+          let treatmentId = data.trtId
+
+          this.httpCom.getFeeConfig(this.selectedPatient.age, toothGrpIndex, treatmentId).subscribe(resp => {
+            if (resp && resp.status === 'SUCCESS') {
+              let feeConfigData: FeeConfigView = resp.resp;
+              this.feesConfigListView.push(feeConfigData);
+              this.feesConfigListDataSource.data = this.feesConfigListView;
+              this.getTotalFee();
+              // console.log('Fee config object:', this.feesConfigListView);
+            }
+          });
+        }
+      }
+      // console.log('Updated cft', this.cftMapArray)
+
+      //Getting filtered medicines
+      //TOBE DONE LATER
+      // this.httpCom.getMedicineView(this.httpCom.getMedicineUrl
+      //   + this.httpCom.getMedicineUrlPart1
+      //   + data.trtId
+      //   + this.httpCom.getMedicineUrlPart2
+      //   + this.selectedPatient.age
+      // ).subscribe(
+      //   resp => {
+      //     if (resp.status === 'SUCCESS') {
+      //       resp.resp.map(medicineMasterView => {
+      //         this.medicineMasterViewList.push(medicineMasterView);
+      //       });
+      //     } else {
+      //       console.log('resp error: ' + resp);
+      //     }
+      //   }
+      // );
+    })
+  }
+
+  updateTrtmntPlanI(value: string, index: number) {
+    this.cftMapArray[index].treatmentPlanName = value
+  }
+
   createAndSubmitPrescription() {
+
     this.dashboardView = new DashboardView();
     this.dashboardView.fbl = []
-    this.feesConfigListView.map(f => {
-      let fb = new FeesBreakupView()
-      fb.amount = f.totalFee
-      fb.notes = f.notes
-      fb.trtmntPlanRef = f.treatmentPlanId
-      fb.patientId = this.selectedPatient.pid
-      this.dashboardView.fbl.push(fb)
-    })
+    if (this.feesConfigListView && this.feesConfigListView.length > 0) {
+      this.feesConfigListView.map(f => {
+        let fb = new FeesBreakupView()
+        fb.amount = f.totalFee
+        fb.notes = f.notes
+        fb.trtmntPlanRef = f.treatmentPlanId
+        fb.patientId = this.selectedPatient.pid
+        fb.amountPaid = f.amountPaid
+        this.dashboardView.fbl.push(fb)
+      })
+    }
     this.dashboardView.medhv = []
-    this.medicineMasterViewList.map(m => {
-      let medh = new MedicineHistoryView()
-      medh.medicineName = m.medicineName
-      medh.diseaseCode = m.diseaseCode
-      medh.diseaseName = m.diseaseName
-      medh.dosage = m.dosage
-      medh.patientId = this.selectedPatient.pid
-      this.dashboardView.medhv.push(medh)
-    })
-
+    if (this.medicineForm.value && this.medicineForm.value.length > 0) {
+      this.medicineForm.value.map(m => {
+        let medh = new MedicineHistoryView()
+        medh.medicineName = m.medicineName
+        medh.diseaseCode = m.diseaseCode
+        medh.diseaseName = m.diseaseName
+        medh.dosage = m.dosage
+        medh.patientId = this.selectedPatient.pid
+        this.dashboardView.medhv.push(medh)
+      })
+    }
     this.dashboardView.mhv = [];
-    if (this.medicalHistoryForm.value && this.medicalHistoryForm.value.length > 0) {
+    // if (this.medicalHistoryForm.value && this.medicalHistoryForm.value.length > 0) {
+    if (this.medicalHistoryViewModel && this.medicalHistoryViewModel.length > 0) {
+      // medicalHistoryViewModel
       this.medicalHistoryForm.value.map(v => {
         let view = new MedicalHistoryView();
         view.medicalHistoryName = v;
@@ -374,8 +570,17 @@ export class CreatePrescriptionComponent implements OnInit {
     }
     this.dashboardView.pHistory = this.prescriptionHistoryView
     this.dashboardView.pHistory.patientId = this.selectedPatient.pid
-    this.dashboardView.pHistory.clinicalFindings = this.clinicalFindingsView.toString()
-    this.dashboardView.pHistory.treatmentPlan = this.treatmentPlanListView.toString()
+    // Need refactoring
+    this.dashboardView.pHistory.clinicalFindings = this.clinicalFindingsViewForUi.toString()
+    this.dashboardView.tphv = []
+    this.cftMapArray.map(cft => {
+      let tph = new TreatmentPlanHistoryView()
+      tph.patientId = this.selectedPatient.pid
+      tph.tname = cft.treatmentPlanName
+      tph.toothIndex = cft.teeth.toothIndex
+      tph.clinicalFinding = cft.clinicalFinding.fname
+      this.dashboardView.tphv.push(tph)
+    })
 
     console.log(JSON.stringify(this.dashboardView))
     this.httpCom.addDashBoard(this.dashboardView).subscribe(
@@ -383,25 +588,38 @@ export class CreatePrescriptionComponent implements OnInit {
         if (resp.status === 'SUCCESS') {
           //Do something and print prescription
           console.log(JSON.stringify(resp.resp));
+          this.printPrescription();
         }
       }
     );
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+  printPrescription() {
+    //printableContent1
+    //Need to create a separate page and populate the prescription data only
+    // var prescriptionContent = document.getElementById("printableContent1")
+    // var openWindow = window.open("","target","features")
+    // openWindow.document.write(prescriptionContent.innerHTML)
+    // openWindow.document.close
+    // openWindow.focus();
+    // openWindow.print();
+    // openWindow.close();
+  }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export class CompositDialogBoxData {
   toothQuadrentsComposite: ToothQuadrentView[];
@@ -410,7 +628,10 @@ export class CompositDialogBoxData {
 
 export class ClinicalFindingToothMapping {
   clinicalFinding: ClinicalFindingView;
-  teeth: ToothQuadrentView[];
+  teeth: ToothQuadrentView;
+  treatmentPlanName: string;
+  customTrtmntPlan: Boolean = false;
+  treatmentPlanViewModel: string = ''
 }
 //Dialog box to select clinical findings mapped with tooth index
 @Component({
@@ -430,7 +651,8 @@ export class DialogToothClinicalfindings {
 
   constructor(
     public dialogRef: MatDialogRef<DialogToothClinicalfindings>,
-    @Inject(MAT_DIALOG_DATA) public data: CompositDialogBoxData) { }
+    @Inject(MAT_DIALOG_DATA) public data: CompositDialogBoxData,
+    public httpCom: HttpcommService) { }
 
   ngOnInit() {
     for (let i = 0; i < this.data.clinicalFindingsComposite.length; i++) {
@@ -450,7 +672,7 @@ export class DialogToothClinicalfindings {
       .sort((a: ToothQuadrentView, b: ToothQuadrentView) => {
         if (isAsc && a.toothIndex > b.toothIndex) return 1;
         else if (!isAsc && a.toothIndex < b.toothIndex) return 1;
-        // return 0;
+        else return -1;
       });
   }
 
@@ -458,40 +680,61 @@ export class DialogToothClinicalfindings {
     t.selected = !t.selected;
   }
 
+  //Scope for new clinical findingds
+
+  customCFName: string = ''
+  customCFDesc: string = ''
+
+  //In case of other add the other data in db and process as usual if async add is on
   add() {
     if (this.originalCfList.includes(this.clinicalFindingForm.value)) {
 
       // let selectedToothList: number[] = this.toothForm.value;
-      let cft = new ClinicalFindingToothMapping();
-      cft.teeth = [];
 
-      // for (let i = 0; i < selectedToothList.length; i++) {
-      //   for (let j = 0; j < this.data.toothQuadrentsComposite.length; j++) {
-      //     if (this.data.toothQuadrentsComposite[j].toothIndex == selectedToothList[i]) {
-      //       cft.teeth.push(this.data.toothQuadrentsComposite[j]);
-      //       break;
-      //     }
-      //   }
-      // }
       let selectedToothIndexes: string = '';
       this.data.toothQuadrentsComposite.map(tooth => {
-        {
-          if (tooth.selected) {
-            cft.teeth.push(tooth);
-            selectedToothIndexes += ' ' + tooth.toothIndex;
+        if (tooth.selected) {
+          let cft = new ClinicalFindingToothMapping();
+          cft.teeth = tooth;
+          selectedToothIndexes = tooth.toothIndex.toString();
+
+          let formValue: string = this.clinicalFindingForm.value
+          if (formValue === 'Others') {
+            formValue = this.customCFName
+          }
+
+          //Combining tooth index for cf
+          this.cfTextToBeShownOnUi.push(new CommonService().combineValForStringArray(
+            this.cfTextToBeShownOnUi, formValue, selectedToothIndexes
+          ))
+
+          if (this.clinicalFindingForm.value === 'Others') {
+            let cf = new ClinicalFindingView();
+            cf.fname = this.customCFName;
+            cf.fdesc = this.customCFDesc;
+            cft.clinicalFinding = cf;
+
+            this.httpCom.addClinicalFinding(cf).subscribe(resp => {
+              if (resp.status === 'SUCCESS') {
+                //TODO: Show message
+                console.log('CF added')
+              }
+            })
+
+          } else {
+            this.data.clinicalFindingsComposite.map(cf => {
+              if (cf.fname === this.clinicalFindingForm.value) {
+                // console.log(`Match for ${this.clinicalFindingForm.value}`)
+                cft.clinicalFinding = cf
+              }
+            })
+
           }
           tooth.selected = false;
+          this.cftMapArray.push(cft);
         }
       });
-      this.cfTextToBeShownOnUi.push(this.clinicalFindingForm.value + '-' + selectedToothIndexes);
 
-      for (let k = 0; k < this.data.clinicalFindingsComposite.length; k++) {
-        if (this.data.clinicalFindingsComposite[k].fname === this.clinicalFindingForm.value) {
-          cft.clinicalFinding = this.data.clinicalFindingsComposite[k];
-          break;
-        }
-      }
-      this.cftMapArray.push(cft);
       // console.log(JSON.stringify(this.cftMapArray));
     } else {
       // Show error
@@ -531,6 +774,6 @@ export class DialogToothClinicalfindings {
 
   private _filter(value: string): string[] {
     return this.originalCfList.filter(option => option.toLowerCase().includes(value.toLowerCase()));
-    // return this.originalCfList.filter(option => option.toLowerCase().indexOf(value.toLowerCase()) === 0);
+
   }
 }

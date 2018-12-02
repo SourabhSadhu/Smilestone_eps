@@ -18,7 +18,7 @@ export class MaterialTestComponent implements OnInit {
   dataSource = ELEMENT_DATA;
   columnsToDisplay = ['name', 'weight', 'symbol', 'position'];
   expandedElement: PeriodicElement;
-  
+
   constructor() { }
 
   ngOnInit() {

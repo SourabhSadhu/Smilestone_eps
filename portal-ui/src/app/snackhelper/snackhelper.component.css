@@ -1,3 +1,10 @@
 .error-snack {
-    color: darkturquoise;
+    color: rgb(209, 77, 0);
+}
+.info-snack {
+    color: yellowgreen;
+}
+.snackbtn {
+    float: right;
+    padding-right: 5px;
 }

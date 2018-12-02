@@ -65,7 +65,7 @@ export class ToothQuadrentView {
 export class TreatmentPlan {
     trtId: number;
     trtDesc: string;
-    trtName: string;
+    trtname: string;
     clinicalFinding: number;
 };
 export class MedicineView {
@@ -82,11 +82,13 @@ export class MedicineView {
 export class FeesBreakupView {
     fId: number;
     amount: number;
+    amountPaid: number = 0;
     trtmntPlanRef: number;
     notes: string;
     patientId: number;
     prescriptionId: number;
     tsCreated: number;
+    paymentTs: number;
 };
 
 export class FeeConfigView {
@@ -98,6 +100,7 @@ export class FeeConfigView {
     toothGroupPercent: number;
     treatmentPlanId: number;
     totalFee: number;
+    amountPaid: number = 0;
     notes?: string;
 }
 
@@ -124,9 +127,22 @@ export class MedicineHistoryView {
     patientId: number;
     prescriptionId: number;
 }
+
+export class TreatmentPlanHistoryView{
+    tid : number;
+    tname : string;
+    clinicalFinding : string;
+    note : string;
+    patientId : number;
+    prescriptionId : number;
+    toothIndex : number;
+    tsCreated : number;
+    tsModified : number;
+}
 export class DashboardView {
     pHistory: PrescriptionHistoryView;
     fbl: FeesBreakupView[];
     mhv: MedicalHistoryView[];
     medhv: MedicineHistoryView[];
+    tphv: TreatmentPlanHistoryView[];
 }

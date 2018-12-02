@@ -11,6 +11,7 @@ import { CommonService } from '../services/commonservice.service';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { SnackbarModel } from '../snackhelper/snackbar-model';
 
 @Component({
   selector: 'app-dashboard',
@@ -60,12 +61,10 @@ export class DashboardComponent implements OnInit {
   prevStep() {
     this.step--;
   }
-  constructor( public snackBar: MatSnackBar, public httpClient: HttpClient) { 
+
+  
+  constructor(public snackBar: MatSnackBar, public httpClient: HttpClient) { 
     this.patient = new Patient();
-    // this.snackBar.openFromComponent(SnackbarComponent,{
-    //   duration : 2000,
-    // })
-    //public patientService : PatientService,
     this.httpService = new HttpcommService(httpClient);
   }
 
@@ -103,12 +102,14 @@ export class DashboardComponent implements OnInit {
     )
   }
   onKeyUp(event : any){
-    console.log(event);
-    console.log(event.key);
-    // this.snackBar.open('demo','',{
-    this.snackBar.openFromComponent(SnackhelperComponent,{
-      duration : 2000,
-    })
+    let snackbarConfig = new SnackbarModel();
+    snackbarConfig.isError = true
+    snackbarConfig.msg = 'test msg' 
+    snackbarConfig.duration = 2000
+    snackbarConfig.callback = () => {
+      console.log('Callback ok')
+    }
+    this.commonService.showSnackBar(this.snackBar, snackbarConfig)
   }
 
   dateAddEvent(type: string, event: MatDatepickerInputEvent<Date>) {

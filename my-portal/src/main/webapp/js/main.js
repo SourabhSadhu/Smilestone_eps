@@ -300,7 +300,7 @@ module.exports = ".example-stretched-tabs {\r\n  max-width: 1000px;\r\n}\r\n.exa
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- <div class=\"example-margin\">\n  <form class=\"example-form\">\n    <mat-form-field class=\"example-full-width\">\n      <input type=\"text\" matInput placeholder=\"Pick one\" aria-label=\"Number\" [formControl]=\"myControl\" [matAutocomplete]=\"auto\">\n      <mat-autocomplete autoActiveFirstOption #auto=\"matAutocomplete\">\n        <mat-option *ngFor=\"let option of filteredOptions | async\" [value]=\"option\">\n          {{option}}\n        </mat-option>\n      </mat-autocomplete>\n    </mat-form-field>\n  </form>\n  <form class=\"example-form\">\n    <mat-form-field class=\"example-full-width\">\n      <input type=\"text\" matInput placeholder=\"Pick one2\" aria-label=\"Number\" [formControl]=\"myControl2\" [matAutocomplete]=\"auto2\">\n      <mat-autocomplete autoActiveFirstOption #auto2=\"matAutocomplete\">\n        <mat-option *ngFor=\"let option2 of filteredOptions2 | async\" [value]=\"option2\">\n          {{option2}}\n        </mat-option>\n      </mat-autocomplete>\n    </mat-form-field>\n  </form>\n</div> -->\n\n<!-- Section to create presciption -->\n<mat-card class=\"example-card-parent\">\n\n  <mat-tab-group [selectedIndex]=\"prescriptionFromControl.value\" (selectedIndexChange)=\"prescriptionFromControl.setValue($event)\"\n    mat-stretch-tabs class=\"example-stretched-tabs mat-elevation-z4\">\n    <mat-tab label=\"Basic Info\">\n      <mat-card class=\"example-card\">\n        <mat-card-content>\n          <table>\n            <tr>\n              <td>\n                <!-- First Name -->\n                <div class=\"example-container example-margin\">\n                  <mat-form-field hintLabel=\"Min {{minCharToSearch}} char to search\">\n                    <input matInput cdkFocusInitial maxlength=20 placeholder=\"First name\" [(ngModel)]=\"selectedPatient.firstName\"\n                      (keyup)='fetchPatient($event)'>\n                    <mat-hint align=\"end\">{{selectedPatient.firstName?.length || 0}}/20</mat-hint>\n                  </mat-form-field>\n                </div>\n              </td>\n              <td>\n                <!-- Last Name -->\n                <div class=\"example-container example-margin\">\n                  <mat-form-field hintLabel=\"Min {{minCharToSearch}} char to search\">\n                    <input matInput maxlength=20 placeholder=\"Last name\" [(ngModel)]=\"selectedPatient.lastName\" (keyup)='fetchPatient($event)'>\n                    <mat-hint align=\"end\">{{selectedPatient.lastName?.length || 0}}/20</mat-hint>\n                  </mat-form-field>\n                </div>\n              </td>\n              <td>\n                <div class=\"example-container example-margin\">\n                  <mat-form-field>\n                    <input matInput [matDatepicker]=\"picker\" placeholder=\"Select from calender\" (dateChange)=\"dateValidate($event)\"\n                      disabled>\n                    <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\n                    <mat-datepicker #picker disabled=\"false\"></mat-datepicker>\n                  </mat-form-field>\n                </div>\n              </td>\n              <td>\n                <div class=\"\">\n                  <button mat-mini-fab color=\"primary\" (click)=\"fetchPatient($event)\" matTooltip=\"Search\">\n                    <mat-icon aria-label=\"Search\">search</mat-icon>\n                  </button>\n                </div>\n              </td>\n              <td>\n                <div class=\"example-margin\">\n                  <button mat-mini-fab color=\"primary\" (click)=\"refreshSearch()\" matTooltip=\"Refresh\">\n                    <mat-icon aria-label=\"Refresh\">refresh</mat-icon>\n                  </button>\n                </div>\n              </td>\n            </tr>\n          </table>\n          <!-- Loading progressbar -->\n          <mat-progress-bar *ngIf=\"isPatientLoading\" color=\"color\" mode=\"indeterminate\"></mat-progress-bar>\n          <!-- Patient list -->\n          <div *ngIf=\"isPatientLoaded\">\n            <table mat-table [dataSource]=\"patientDataSource\" multiTemplateDataRows class=\"mat-elevation-z8\">\n              <ng-container matColumnDef=\"{{column}}\" *ngFor=\"let column of columnsToDisplay\">\n                <th mat-header-cell *matHeaderCellDef> {{column}} </th>\n                <td mat-cell *matCellDef=\"let element\"> {{element[column]}} </td>\n              </ng-container>\n\n              <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->\n              <ng-container matColumnDef=\"expandedDetail\">\n                <td mat-cell *matCellDef=\"let element\" [attr.colspan]=\"columnsToDisplay.length\">\n                  <div class=\"example-element-detail\" [@detailExpand]=\"element == expandedElement ? 'expanded' : 'collapsed'\">\n                    <div class=\"example-element-diagram\">\n                      <div class=\"example-element-position\"> {{element.firstName}} </div>\n                      <div class=\"example-element-symbol\"> {{element.lastName}} </div>\n                      <div class=\"example-element-name\"> {{element.age}} </div>\n                      <div class=\"example-element-weight\"> {{element.contactNo1}} </div>\n                      <!-- <span>Image placeholder</span> -->\n                    </div>\n                    <div class=\"example-element-description\">\n                      <p>\n                        {{element.address1}}\n                      </p>\n                      <p>\n                        {{element.address2}}\n                      </p>\n                      <p>\n                        <!-- <span class=\"example-element-description-attribution\"> -- Wikipedia </span> -->\n                        <button mat-raised-button color=\"primary\" (click)=\"selectedElement(expandedElement)\">\n                          Select <mat-icon aria-label=\"Select\">check_circle_outline</mat-icon>\n                        </button>\n                      </p>\n                    </div>\n                  </div>\n                </td>\n              </ng-container>\n\n              <tr mat-header-row *matHeaderRowDef=\"columnsToDisplay\"></tr>\n              <tr mat-row *matRowDef=\"let element; columns: columnsToDisplay;\" class=\"example-element-row\"\n                [class.example-expanded-row]=\"expandedElement === element\" (mouseenter)=\"mouseOverFn(element)\">\n                <!-- (mouseout)=\"mouseOutFn(expandedElement)\" -->\n              </tr>\n              <tr mat-row *matRowDef=\"let row; columns: ['expandedDetail']\" class=\"example-detail-row\"></tr>\n            </table>\n          </div>\n        </mat-card-content>\n        <!-- <mat-card-actions>\n          <button mat-button>LIKE</button>\n          <button mat-button>SHARE</button>\n        </mat-card-actions> -->\n      </mat-card>\n\n    </mat-tab>\n\n    <mat-tab label=\"History\" [disabled]=\"disableTabs\">\n\n    </mat-tab>\n\n    <mat-tab label=\"Prescription\" [disabled]=\"disableTabs\">\n      <mat-card class=\"example-card\">\n        <mat-card-content>\n          <mat-form-field class=\"example-full-width\">\n            <textarea matInput placeholder=\"Chief complaint\" [(ngModel)]=\"prescriptionHistoryView.chiefComplaint\"\n              cdkTextareaAutosize cdkAutosizeMinRows=\"1\" cdkAutosizeMaxRows=\"5\"></textarea>\n            <button mat-button *ngIf=\"prescriptionHistoryView.chiefComplaint\" matSuffix mat-icon-button aria-label=\"Clear\"\n              (click)=\"prescriptionHistoryView.chiefComplaint=''\" matToolTip=\"Clear\">\n              <mat-icon>close</mat-icon>\n            </button>\n          </mat-form-field>\n\n          <mat-form-field class=\"example-full-width\">\n            <button mat-button matPrefix mat-icon-button aria-label=\"Add\" (click)=\"openDialog()\" matToolTip=\"Add\">\n              <mat-icon>add_circle_outline</mat-icon>\n            </button>\n            <!-- <textarea matInput placeholder=\"Chief findings\" disabled [(ngModel)]=\"clinicalFindingsView\" cdkTextareaAutosize\n              cdkAutosizeMinRows=\"1\" cdkAutosizeMaxRows=\"5\"></textarea> -->\n            <mat-chip-list #chipList1>\n              <mat-chip *ngFor=\"let s of clinicalFindingsView\" selectable=\"false\" removable=\"false\">\n                {{s}}\n              </mat-chip>\n              <input placeholder=\"Add C/F\" [matChipInputFor]=\"chipList1\" matChipInputAddOnBlur=\"true\" disabled>\n            </mat-chip-list>\n          </mat-form-field>\n\n          <table>\n            <tr>\n              <td>\n                <!-- Medical History -->\n                <mat-form-field class=\"example-full-width\">\n                  <mat-select placeholder=\"Medical History\" [formControl]=\"medicalHistoryForm\" \n                    multiple class=\"example-full-width\">\n                    <mat-option *ngFor=\"let mh of mhList\" [value]=\"mh\">{{mh}}</mat-option>\n                  </mat-select>\n                </mat-form-field>\n                <!-- Loading progressbar -->\n                <mat-progress-bar *ngIf=\"mhList == null || mhList?.length <= 0\" color=\"color\" mode=\"indeterminate\"></mat-progress-bar>\n              </td>\n              <td>\n                <mat-form-field hintLabel=\"Max 30 characters\" class=\"example-full-width\">\n                  <input matInput [maxlength]=\"30\" placeholder=\"Investigation\" [(ngModel)]=\"prescriptionHistoryView.investigation\">\n                  <mat-hint align=\"end\">{{prescriptionHistoryView.investigation?.length || 0}}/30</mat-hint>\n                </mat-form-field>\n              </td>\n            </tr>\n          </table>\n\n          <!-- provisionalDiagnosis -->\n          <mat-form-field class=\"example-full-width\">\n            <textarea matInput placeholder=\"Provisional diagnosis\" [(ngModel)]=\"prescriptionHistoryView.provisionalDiagnosis\"\n              cdkTextareaAutosize cdkAutosizeMinRows=\"1\" cdkAutosizeMaxRows=\"5\"></textarea>\n            <button mat-button *ngIf=\"prescriptionHistoryView.provisionalDiagnosis\" matSuffix mat-icon-button\n              aria-label=\"Clear\" (click)=\"prescriptionHistoryView.provisionalDiagnosis=''\" matToolTip=\"Clear\">\n              <mat-icon>close</mat-icon>\n            </button>\n          </mat-form-field>\n\n          <!-- Treatment Done -->\n          <mat-form-field class=\"example-full-width\">\n            <textarea matInput placeholder=\"Treatment done\" [(ngModel)]=\"prescriptionHistoryView.treatmentDone\"\n              cdkTextareaAutosize cdkAutosizeMinRows=\"1\" cdkAutosizeMaxRows=\"5\"></textarea>\n            <button mat-button *ngIf=\"prescriptionHistoryView.treatmentDone\" matSuffix mat-icon-button aria-label=\"Clear\"\n              (click)=\"prescriptionHistoryView.treatmentDone=''\" matToolTip=\"Clear\">\n              <mat-icon>close</mat-icon>\n            </button>\n          </mat-form-field>\n\n          <!-- Treatment Plan -->\n          <mat-form-field class=\"example-full-width\">\n            <mat-chip-list #chipListtrtmnt>\n              <mat-chip *ngFor=\"let s of treatmentPlanListView\" selectable=\"true\" removable=\"true\" (removed)=\"removeChip(s,1)\">\n                {{s}}\n                <mat-icon matChipRemove>cancel</mat-icon>\n              </mat-chip>\n              <input placeholder=\"Treatment Plan\" [matChipInputFor]=\"chipListtrtmnt\" matChipInputAddOnBlur=\"true\"\n                (matChipInputTokenEnd)=\"addTreatmentPlan($event)\" [matChipInputSeparatorKeyCodes]=\"separatorKeysCodes\">\n            </mat-chip-list>\n          </mat-form-field>\n\n          <!-- advice -->\n          <!-- <mat-grid-list cols=\"4\" rowHeight=\"100px\">\n            <mat-grid-tile colspan=\"3\" rowspan=\"4\"> -->\n          <mat-form-field class=\"example-full-width example-grid-margin\">\n            <textarea matInput placeholder=\"Advice\" [(ngModel)]=\"prescriptionHistoryView.advice\" cdkTextareaAutosize\n              cdkAutosizeMinRows=\"1\" cdkAutosizeMaxRows=\"5\"></textarea>\n            <button mat-button *ngIf=\"prescriptionHistoryView.advice\" matSuffix mat-icon-button aria-label=\"Clear\"\n              (click)=\"prescriptionHistoryView.advice=''\" matToolTip=\"Clear\">\n              <mat-icon>close</mat-icon>\n            </button>\n          </mat-form-field>\n          <!-- </mat-grid-tile> -->\n\n          <!-- Medicine -->\n          <!-- <mat-grid-tile colspan=\"3\" rowspan=\"4\"> -->\n          <mat-form-field class=\"example-full-width\">\n            <mat-chip-list #chipListmedicine>\n              <mat-chip *ngFor=\"let s of medicineMasterViewList\" selectable=\"true\" removable=\"true\" (removed)=\"removeChip(s,2)\">\n                {{s.medicineName}} - {{s.dosage}}\n                <mat-icon matChipRemove>cancel</mat-icon>\n              </mat-chip>\n              <input placeholder=\"Medicines\" [matChipInputFor]=\"chipListmedicine\" matChipInputAddOnBlur=\"true\"\n                (matChipInputTokenEnd)=\"addMedicine($event)\" [matChipInputSeparatorKeyCodes]=\"separatorKeysCodes\">\n            </mat-chip-list>\n          </mat-form-field>\n          <!-- </mat-grid-tile> -->\n\n          <!-- Next appointment -->\n          <!-- <mat-grid-tile colspan=\"1\" rowspan=\"8\"> -->\n          <mat-form-field class=\"example-full-width\">\n            <input matInput [min]=\"minDate\" [max]=\"maxDate\" [matDatepicker]=\"nextAppoPicker\" \n              placeholder=\"Next appointment\" (dateChange)=\"createNextAppo($event)\">\n            <mat-datepicker-toggle matSuffix [for]=\"nextAppoPicker\"></mat-datepicker-toggle>\n            <mat-datepicker #nextAppoPicker></mat-datepicker>\n          </mat-form-field>\n          <!-- </mat-grid-tile> \n          </mat-grid-list> -->\n\n          <div *ngIf=\"feesConfigListView && feesConfigListView.length > 0\">\n            <table mat-table [dataSource]=\"feesConfigListDataSource\" class=\"mat-elevation-z8\">\n\n              <!-- column list -->\n              <!-- Id Column -->\n              <ng-container matColumnDef=\"treatmentPlanId\">\n                <th mat-header-cell *matHeaderCellDef> # </th>\n                <td mat-cell *matCellDef=\"let fee\"> {{fee.treatmentPlanId}} </td>\n                <td mat-footer-cell *matFooterCellDef> </td>\n              </ng-container>\n\n              <!-- baseFee Column -->\n              <ng-container matColumnDef=\"baseFee\">\n                <th mat-header-cell *matHeaderCellDef> Base </th>\n                <td mat-cell *matCellDef=\"let fee\"> {{fee.baseFee}} </td>\n                <td mat-footer-cell *matFooterCellDef> </td>\n              </ng-container>\n              \n              <!-- ageGroupId Column -->\n              <ng-container matColumnDef=\"ageGroupId\">\n                <th mat-header-cell *matHeaderCellDef> AgeGrp </th>\n                <td mat-cell *matCellDef=\"let fee\"> {{fee.ageGroupId}} </td>\n                <td mat-footer-cell *matFooterCellDef> </td>\n              </ng-container>\n\n              <!-- ageGroupPercent Column -->\n              <ng-container matColumnDef=\"ageGroupPercent\">\n                <th mat-header-cell *matHeaderCellDef> % </th>\n                <td mat-cell *matCellDef=\"let fee\"> {{fee.ageGroupPercent}} </td>\n                <td mat-footer-cell *matFooterCellDef> </td>\n              </ng-container>\n\n              <!-- toothGroupId Column -->\n              <ng-container matColumnDef=\"toothGroupId\">\n                <th mat-header-cell *matHeaderCellDef> ToothGrp </th>\n                <td mat-cell *matCellDef=\"let fee\"> {{fee.toothGroupId}} </td>\n                <td mat-footer-cell *matFooterCellDef> </td>\n              </ng-container>\n\n              <!-- toothGroupPercent Column -->\n              <ng-container matColumnDef=\"toothGroupPercent\">\n                <th mat-header-cell *matHeaderCellDef> % </th>\n                <td mat-cell *matCellDef=\"let fee\"> {{fee.toothGroupPercent}} </td>\n                <td mat-footer-cell *matFooterCellDef> </td>\n              </ng-container>\n\n              <!-- totalFee Column -->\n              <ng-container matColumnDef=\"totalFee\">\n                <th mat-header-cell *matHeaderCellDef> Fee </th>\n                <td mat-cell *matCellDef=\"let fee\">\n                  <mat-form-field>\n                    <input matInput type=\"number\" min=1 [(ngModel)]=\"fee.totalFee\" (change)=\"getTotalFee()\">\n                  </mat-form-field>\n                </td>\n                <td mat-footer-cell *matFooterCellDef> Total </td>\n              </ng-container>\n\n              <!-- notes Column -->\n              <ng-container matColumnDef=\"notes\">\n                <th mat-header-cell *matHeaderCellDef> Note </th>\n                <td mat-cell *matCellDef=\"let fee\">\n                  <mat-form-field>\n                    <input matInput [(ngModel)]=\"fee.notes\">\n                  </mat-form-field>\n                  <button mat-button matSuffix mat-icon-button aria-label=\"Clear\"\n                    (click)=\"removeFees($index)\" matToolTip=\"Clear\">\n                    <mat-icon>close</mat-icon>\n                  </button>\n                </td>\n                <td mat-footer-cell *matFooterCellDef> {{totalFees | currency:'&#8377;' }} </td>\n              </ng-container>\n\n              <tr mat-header-row *matHeaderRowDef=\"feesConfigListViewColumns\"></tr>\n              <tr mat-row *matRowDef=\"let row; columns: feesConfigListViewColumns;\"></tr>\n              <tr mat-footer-row *matFooterRowDef=\"feesConfigListViewColumns; sticky: true\"></tr>\n            </table>\n          </div>\n\n          <!-- Note -->\n          <mat-form-field class=\"example-full-width\">\n            <textarea matInput placeholder=\"Notes\" [(ngModel)]=\"prescriptionHistoryView.note\" cdkTextareaAutosize\n              cdkAutosizeMinRows=\"1\" cdkAutosizeMaxRows=\"5\"></textarea>\n            <button mat-button *ngIf=\"prescriptionHistoryView.note\" matSuffix mat-icon-button aria-label=\"Clear\"\n              (click)=\"prescriptionHistoryView.note=''\" matToolTip=\"Clear\">\n              <mat-icon>close</mat-icon>\n            </button>\n          </mat-form-field>\n\n          <button mat-mini-fab color=\"primary\" (click)=\"createAndSubmitPrescription()\" matTooltip=\"Print\">\n            <mat-icon aria-label=\"Print\">print</mat-icon>\n          </button>\n        </mat-card-content>\n      </mat-card>\n    </mat-tab>\n\n  </mat-tab-group>\n\n</mat-card>"
+module.exports = "<!-- <div class=\"example-margin\">\n  <form class=\"example-form\">\n    <mat-form-field class=\"example-full-width\">\n      <input type=\"text\" matInput placeholder=\"Pick one\" aria-label=\"Number\" [formControl]=\"myControl\" [matAutocomplete]=\"auto\">\n      <mat-autocomplete autoActiveFirstOption #auto=\"matAutocomplete\">\n        <mat-option *ngFor=\"let option of filteredOptions | async\" [value]=\"option\">\n          {{option}}\n        </mat-option>\n      </mat-autocomplete>\n    </mat-form-field>\n  </form>\n  <form class=\"example-form\">\n    <mat-form-field class=\"example-full-width\">\n      <input type=\"text\" matInput placeholder=\"Pick one2\" aria-label=\"Number\" [formControl]=\"myControl2\" [matAutocomplete]=\"auto2\">\n      <mat-autocomplete autoActiveFirstOption #auto2=\"matAutocomplete\">\n        <mat-option *ngFor=\"let option2 of filteredOptions2 | async\" [value]=\"option2\">\n          {{option2}}\n        </mat-option>\n      </mat-autocomplete>\n    </mat-form-field>\n  </form>\n</div> -->\n\n<!-- Section to create presciption -->\n<mat-card class=\"example-card-parent\">\n\n  <mat-tab-group [selectedIndex]=\"prescriptionFromControl.value\" (selectedIndexChange)=\"prescriptionFromControl.setValue($event)\"\n    mat-stretch-tabs class=\"example-stretched-tabs mat-elevation-z4\">\n    <mat-tab label=\"Basic Info\">\n      <mat-card class=\"example-card\">\n        <mat-card-content>\n          <table>\n            <tr>\n              <td>\n                <!-- First Name -->\n                <div class=\"example-container example-margin\">\n                  <mat-form-field hintLabel=\"Min {{minCharToSearch}} char to search\">\n                    <input matInput cdkFocusInitial maxlength=20 placeholder=\"First name\" [(ngModel)]=\"selectedPatient.firstName\"\n                      (keyup)='fetchPatient($event)'>\n                    <mat-hint align=\"end\">{{selectedPatient.firstName?.length || 0}}/20</mat-hint>\n                  </mat-form-field>\n                </div>\n              </td>\n              <td>\n                <!-- Last Name -->\n                <div class=\"example-container example-margin\">\n                  <mat-form-field hintLabel=\"Min {{minCharToSearch}} char to search\">\n                    <input matInput maxlength=20 placeholder=\"Last name\" [(ngModel)]=\"selectedPatient.lastName\" (keyup)='fetchPatient($event)'>\n                    <mat-hint align=\"end\">{{selectedPatient.lastName?.length || 0}}/20</mat-hint>\n                  </mat-form-field>\n                </div>\n              </td>\n              <td>\n                <div class=\"example-container example-margin\">\n                  <mat-form-field>\n                    <input matInput [matDatepicker]=\"picker\" placeholder=\"Select from calender\" (dateChange)=\"dateValidate($event)\"\n                      disabled>\n                    <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\n                    <mat-datepicker #picker disabled=\"false\"></mat-datepicker>\n                  </mat-form-field>\n                </div>\n              </td>\n              <td>\n                <div class=\"\">\n                  <button mat-mini-fab color=\"primary\" (click)=\"fetchPatient($event)\" matTooltip=\"Search\">\n                    <mat-icon aria-label=\"Search\">search</mat-icon>\n                  </button>\n                </div>\n              </td>\n              <td>\n                <div class=\"example-margin\">\n                  <button mat-mini-fab color=\"primary\" (click)=\"refreshSearch()\" matTooltip=\"Refresh\">\n                    <mat-icon aria-label=\"Refresh\">refresh</mat-icon>\n                  </button>\n                </div>\n              </td>\n            </tr>\n          </table>\n          <!-- Loading progressbar -->\n          <mat-progress-bar *ngIf=\"isPatientLoading\" color=\"color\" mode=\"indeterminate\"></mat-progress-bar>\n          <!-- Patient list -->\n          <div *ngIf=\"isPatientLoaded\">\n            <table mat-table [dataSource]=\"patientDataSource\" multiTemplateDataRows class=\"mat-elevation-z8\">\n              <ng-container matColumnDef=\"{{column}}\" *ngFor=\"let column of columnsToDisplay\">\n                <th mat-header-cell *matHeaderCellDef> {{column}} </th>\n                <td mat-cell *matCellDef=\"let element\"> {{element[column]}} </td>\n              </ng-container>\n\n              <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->\n              <ng-container matColumnDef=\"expandedDetail\">\n                <td mat-cell *matCellDef=\"let element\" [attr.colspan]=\"columnsToDisplay.length\">\n                  <div class=\"example-element-detail\" [@detailExpand]=\"element == expandedElement ? 'expanded' : 'collapsed'\">\n                    <div class=\"example-element-diagram\">\n                      <div class=\"example-element-position\"> {{element.firstName}} </div>\n                      <div class=\"example-element-symbol\"> {{element.lastName}} </div>\n                      <div class=\"example-element-name\"> {{element.age}} </div>\n                      <div class=\"example-element-weight\"> {{element.contactNo1}} </div>\n                      <!-- <span>Image placeholder</span> -->\n                    </div>\n                    <div class=\"example-element-description\">\n                      <p>\n                        {{element.address1}}\n                      </p>\n                      <p>\n                        {{element.address2}}\n                      </p>\n                      <p>\n                        <!-- <span class=\"example-element-description-attribution\"> -- Wikipedia </span> -->\n                        <button mat-raised-button color=\"primary\" (click)=\"selectedElement(expandedElement)\">\n                          Select <mat-icon aria-label=\"Select\">check_circle_outline</mat-icon>\n                        </button>\n                      </p>\n                    </div>\n                  </div>\n                </td>\n              </ng-container>\n\n              <tr mat-header-row *matHeaderRowDef=\"columnsToDisplay\"></tr>\n              <tr mat-row *matRowDef=\"let element; columns: columnsToDisplay;\" class=\"example-element-row\"\n                [class.example-expanded-row]=\"expandedElement === element\" (mouseenter)=\"mouseOverFn(element)\">\n                <!-- (mouseout)=\"mouseOutFn(expandedElement)\" -->\n              </tr>\n              <tr mat-row *matRowDef=\"let row; columns: ['expandedDetail']\" class=\"example-detail-row\"></tr>\n            </table>\n          </div>\n        </mat-card-content>\n        <!-- <mat-card-actions>\n          <button mat-button>LIKE</button>\n          <button mat-button>SHARE</button>\n        </mat-card-actions> -->\n      </mat-card>\n\n    </mat-tab>\n\n    <mat-tab label=\"History\" [disabled]=\"disableTabs\">\n      \n      <!-- Dashboard view -->\n      <div *ngIf=\"dashboardViewList && dashboardViewList.length > 0\">\n        <table mat-table [dataSource]=\"dashboardViewList\" class=\"mat-elevation-z8\">\n\n          <!-- ['Date','C/F', 'Treatment Plan', 'Treatment Done', 'Due', 'Next Appo'] -->\n          <ng-container matColumnDef=\"Date\">\n            <th mat-header-cell *matHeaderCellDef> Date </th>\n            <td mat-cell *matCellDef=\"let dv\"> {{ dv.pHistory.tsCreated | date:'dd/MM/yy hh:mm a' }}</td>\n          </ng-container>\n\n          <ng-container matColumnDef=\"C/F\">\n            <th mat-header-cell *matHeaderCellDef> C/F </th>\n            <td mat-cell *matCellDef=\"let dv\">\n              <!--  {{ dv.pHistory.clinicalFindings }} getOrderedClinicalFindings -->\n              <ul >\n                <li style=\"list-style: none;\" *ngFor=\"let cf of getOrderedClinicalFindings(dv.pHistory.clinicalFindings)\">{{ cf }}</li>\n              </ul>\n            </td>\n          </ng-container>\n\n          <ng-container matColumnDef=\"Treatment Plan\">\n            <th mat-header-cell *matHeaderCellDef> Treatment Plan </th>\n            <td mat-cell *matCellDef=\"let dv; let i = index;\">\n              <ul>\n                <li *ngFor=\"let tph of dv.tphv\">{{ tph.tName }}</li>\n              </ul>\n            </td>\n          </ng-container>\n\n          <ng-container matColumnDef=\"Treatment Done\">\n            <th mat-header-cell *matHeaderCellDef> Treatment Done </th>\n            <td mat-cell *matCellDef=\"let dv; let i = index;\">                  \n              In Progress   \n            </td>\n          </ng-container>\n\n          <ng-container matColumnDef=\"Due\">\n            <th mat-header-cell *matHeaderCellDef> Due </th>\n            <td mat-cell *matCellDef=\"let dv; let i = index;\">                  \n              <ul >\n                <li style=\"list-style: none;\" *ngFor=\"let fb of dv.fbl\">{{ fb.amount }}</li>\n              </ul>   \n            </td>\n          </ng-container>\n\n          <!-- Next Appo -->\n          <ng-container matColumnDef=\"Next Appo\">\n            <th mat-header-cell *matHeaderCellDef> Next Appo </th>\n            <td mat-cell *matCellDef=\"let dv; let i = index;\">                  \n              {{ dv.pHistory.nextAppointment | date:'dd/MM/yy hh:mm a' }}\n            </td>\n          </ng-container>\n\n          <tr mat-header-row *matHeaderRowDef=\"dashboardHistoryListColumns\"></tr>\n          <tr mat-row *matRowDef=\"let row; columns: dashboardHistoryListColumns;\"></tr>\n        </table>\n      </div>\n    </mat-tab>\n\n    <mat-tab label=\"Prescription\" [disabled]=\"disableTabs\">\n      <mat-card class=\"example-card\">\n        <mat-card-content>\n          <mat-form-field class=\"example-full-width\">\n            <textarea matInput placeholder=\"Chief complaint\" [(ngModel)]=\"prescriptionHistoryView.chiefComplaint\"\n              cdkTextareaAutosize cdkAutosizeMinRows=\"1\" cdkAutosizeMaxRows=\"5\"></textarea>\n            <button mat-button *ngIf=\"prescriptionHistoryView.chiefComplaint\" matSuffix mat-icon-button aria-label=\"Clear\"\n              (click)=\"prescriptionHistoryView.chiefComplaint=''\" matToolTip=\"Clear\">\n              <mat-icon>close</mat-icon>\n            </button>\n          </mat-form-field>\n\n          <mat-form-field class=\"example-full-width\">\n            <button mat-button matPrefix mat-icon-button aria-label=\"Add\" (click)=\"openDialog()\" matToolTip=\"Add\">\n              <mat-icon>add_circle_outline</mat-icon>\n            </button>\n            <!-- <textarea matInput placeholder=\"Chief findings\" disabled [(ngModel)]=\"clinicalFindingsView\" cdkTextareaAutosize\n              cdkAutosizeMinRows=\"1\" cdkAutosizeMaxRows=\"5\"></textarea> -->\n            <mat-chip-list #chipList1>\n              <mat-chip *ngFor=\"let s of clinicalFindingsViewForUi\" selectable=\"false\" removable=\"false\">\n                {{s}}\n              </mat-chip>\n              <input placeholder=\"Add C/F\" [matChipInputFor]=\"chipList1\" matChipInputAddOnBlur=\"true\" disabled>\n            </mat-chip-list>\n          </mat-form-field>\n\n          <table>\n            <tr>\n              <td>\n                <!-- Medical History -->\n                <mat-form-field class=\"example-full-width\">\n                  <mat-select placeholder=\"Medical History\" [formControl]=\"medicalHistoryForm\" multiple class=\"example-full-width\">\n                    <mat-option *ngFor=\"let mh of mhList\" [value]=\"mh\">{{mh}}</mat-option>\n                  </mat-select>\n                </mat-form-field>\n                <!-- Loading progressbar -->\n                <mat-progress-bar *ngIf=\"mhList == null || mhList?.length <= 0\" color=\"color\" mode=\"indeterminate\"></mat-progress-bar>\n              </td>\n              <td>\n                <mat-form-field hintLabel=\"Max 30 characters\" class=\"example-full-width\">\n                  <input matInput [maxlength]=\"30\" placeholder=\"Investigation\" [(ngModel)]=\"prescriptionHistoryView.investigation\">\n                  <mat-hint align=\"end\">{{prescriptionHistoryView.investigation?.length || 0}}/30</mat-hint>\n                </mat-form-field>\n              </td>\n            </tr>\n          </table>\n\n          <!-- provisionalDiagnosis -->\n          <mat-form-field class=\"example-full-width\">\n            <textarea matInput placeholder=\"Provisional diagnosis\" [(ngModel)]=\"prescriptionHistoryView.provisionalDiagnosis\"\n              cdkTextareaAutosize cdkAutosizeMinRows=\"1\" cdkAutosizeMaxRows=\"5\"></textarea>\n            <button mat-button *ngIf=\"prescriptionHistoryView.provisionalDiagnosis\" matSuffix mat-icon-button\n              aria-label=\"Clear\" (click)=\"prescriptionHistoryView.provisionalDiagnosis=''\" matToolTip=\"Clear\">\n              <mat-icon>close</mat-icon>\n            </button>\n          </mat-form-field>\n\n          <!-- Treatment Plan -->\n          <!-- <mat-form-field class=\"example-full-width\">\n            <mat-chip-list #chipListtrtmnt>\n              <mat-chip *ngFor=\"let s of treatmentPlanListView\" selectable=\"true\" removable=\"true\" (removed)=\"removeChip(s,1)\">\n                {{s}}\n                <mat-icon matChipRemove>cancel</mat-icon>\n              </mat-chip>\n              <input placeholder=\"Treatment Plan\" [matChipInputFor]=\"chipListtrtmnt\" matChipInputAddOnBlur=\"true\"\n                (matChipInputTokenEnd)=\"addTreatmentPlan($event)\" [matChipInputSeparatorKeyCodes]=\"separatorKeysCodes\">\n            </mat-chip-list>\n          </mat-form-field> -->\n          \n          <!-- Treatment plan -->\n          <div *ngIf=\"cftMapArray && cftMapArray.length > 0\">\n            <table mat-table [dataSource]=\"trtmntPlanListDataSource\" class=\"mat-elevation-z8\">\n\n              <ng-container matColumnDef=\"cf\">\n                <th mat-header-cell *matHeaderCellDef> C/F </th>\n                <td mat-cell *matCellDef=\"let cftMap\"> {{cftMap.clinicalFinding.fname}} </td>\n              </ng-container>\n\n              <ng-container matColumnDef=\"teeth\">\n                <th mat-header-cell *matHeaderCellDef> Tooth </th>\n                <td mat-cell *matCellDef=\"let cftMap\"> {{cftMap.teeth.toothIndex}} \n                </td>\n              </ng-container>\n\n              <ng-container matColumnDef=\"plan\">\n                <th mat-header-cell *matHeaderCellDef> Plan </th>\n                <td mat-cell *matCellDef=\"let cftMap; let i = index;\">\n                  <mat-form-field class=\"example-full-width\">\n                    <mat-select placeholder=\"Select Treatment Plan\" [formControl]=\"treatmentPlanFormControl\" \n                        class=\"example-full-width\" (selectionChange)=\"updateTrtmntPlanSelect($event.value, i)\" >\n                        <!-- [(value)] = cftMap.treatmentPlanName -->\n                      <mat-option *ngFor=\"let tpl of treatmentPlanList\" [value]=\"tpl.trtName\">{{tpl.trtName}}</mat-option>\n                    </mat-select>\n                  </mat-form-field>\n                </td>\n              </ng-container>\n\n              <ng-container matColumnDef=\"newPlan\">\n                <th mat-header-cell *matHeaderCellDef> New Plan </th>\n                <td mat-cell *matCellDef=\"let cftMap; let i = index;\">                  \n                  <input class=\"example-full-width\" *ngIf=\"cftMap.customTrtmntPlan\" matInput placeholder=\"Custom plan\"                   \n                  (input)=\"updateTrtmntPlanI($event.target.value, i)\"\n                    required>   \n                </td>\n              </ng-container>\n\n              <tr mat-header-row *matHeaderRowDef=\"trtmntPlanListViewColumns\"></tr>\n              <tr mat-row *matRowDef=\"let row; columns: trtmntPlanListViewColumns;\"></tr>\n            </table>\n          </div>\n\n          <!-- advice -->\n          <!-- <mat-grid-list cols=\"4\" rowHeight=\"100px\">\n            <mat-grid-tile colspan=\"3\" rowspan=\"4\"> -->\n          <mat-form-field class=\"example-full-width example-grid-margin\">\n            <textarea matInput placeholder=\"Advice\" [(ngModel)]=\"prescriptionHistoryView.advice\" cdkTextareaAutosize\n              cdkAutosizeMinRows=\"1\" cdkAutosizeMaxRows=\"5\"></textarea>\n            <button mat-button *ngIf=\"prescriptionHistoryView.advice\" matSuffix mat-icon-button aria-label=\"Clear\"\n              (click)=\"prescriptionHistoryView.advice=''\" matToolTip=\"Clear\">\n              <mat-icon>close</mat-icon>\n            </button>\n          </mat-form-field>\n          <!-- </mat-grid-tile> -->\n\n          <!-- Medicine -->\n          <!-- <mat-grid-tile colspan=\"3\" rowspan=\"4\"> -->\n          <!-- <mat-form-field class=\"example-full-width\">\n            <mat-chip-list #chipListmedicine>\n              <mat-chip *ngFor=\"let s of medicineMasterViewList\" selectable=\"true\" removable=\"true\" (removed)=\"removeChip(s,2)\">\n                {{s.medicineName}} - {{s.dosage}}\n                <mat-icon matChipRemove>cancel</mat-icon>\n              </mat-chip>\n              <input placeholder=\"Medicines\" [matChipInputFor]=\"chipListmedicine\" matChipInputAddOnBlur=\"true\"\n                (matChipInputTokenEnd)=\"addMedicine($event)\" [matChipInputSeparatorKeyCodes]=\"separatorKeysCodes\">\n            </mat-chip-list>\n          </mat-form-field> -->\n          <!-- </mat-grid-tile> -->\n          <mat-form-field class=\"example-full-width\">\n            <mat-select placeholder=\"Select Medicine\" [formControl]=\"medicineForm\" multiple class=\"example-full-width\">\n              <mat-option *ngFor=\"let mh of medicineMasterViewList\" [value]=\"mh\">{{mh.medicineName}} {{mh.dosage}}</mat-option>\n            </mat-select>\n          </mat-form-field>\n\n          <!-- Next appointment -->\n          <table>\n            <tr>\n              <td >\n                <span>Next appointment</span>\n              </td>\n              <td class=\"example-full-width\">\n                <mat-form-field>\n                  <input matInput [min]=\"minDate\" [max]=\"maxDate\" [matDatepicker]=\"nextAppoPicker\" placeholder=\"Date\"\n                    (dateChange)=\"createNextAppo($event)\">\n                  <!-- <mat-datepicker-toggle matSuffix [for]=\"nextAppoPicker\"></mat-datepicker-toggle> -->\n                  <mat-datepicker #nextAppoPicker></mat-datepicker>\n                </mat-form-field>\n                <button mat-raised-button (click)=\"nextAppoPicker.open()\">Choose Date</button>\n              </td>\n              <td class=\"example-full-width\">\n                <mat-form-field hintLabel=\"Enter in digits\">\n                  <input matInput maxlength=\"2\" type=\"number\" min=0 max=24 placeholder=\"Hour\" [(ngModel)]=\"nextAppoHour\" (change)=\"createNextAppoTime()\">\n                </mat-form-field>                \n              </td>\n              <td class=\"example-full-width\">\n                <mat-form-field hintLabel=\"Enter in digits\">\n                  <input matInput maxlength=\"2\" type=\"number\" min=0 max=59 placeholder=\"Minute\" [(ngModel)]=\"nextAppoMinute\" (change)=\"createNextAppoTime()\">\n                </mat-form-field>\n              </td>\n            </tr>\n          </table>\n\n          <div *ngIf=\"feesConfigListView && feesConfigListView.length > 0\">\n            <table mat-table [dataSource]=\"feesConfigListDataSource\" class=\"mat-elevation-z8\">\n\n              <!-- column list -->\n              <!-- Id Column -->\n              <ng-container matColumnDef=\"treatmentPlanId\">\n                <th mat-header-cell *matHeaderCellDef> # </th>\n                <td mat-cell *matCellDef=\"let fee\"> {{fee.treatmentPlanId}} </td>\n                <td mat-footer-cell *matFooterCellDef> </td>\n              </ng-container>\n\n              <!-- baseFee Column -->\n              <ng-container matColumnDef=\"baseFee\">\n                <th mat-header-cell *matHeaderCellDef> Base </th>\n                <td mat-cell *matCellDef=\"let fee\"> {{fee.baseFee}} </td>\n                <td mat-footer-cell *matFooterCellDef> </td>\n              </ng-container>\n\n              <!-- ageGroupId Column -->\n              <ng-container matColumnDef=\"ageGroupId\">\n                <th mat-header-cell *matHeaderCellDef> AgeGrp </th>\n                <td mat-cell *matCellDef=\"let fee\"> {{fee.ageGroupId}} </td>\n                <td mat-footer-cell *matFooterCellDef> </td>\n              </ng-container>\n\n              <!-- ageGroupPercent Column -->\n              <ng-container matColumnDef=\"ageGroupPercent\">\n                <th mat-header-cell *matHeaderCellDef> % </th>\n                <td mat-cell *matCellDef=\"let fee\"> {{fee.ageGroupPercent}} </td>\n                <td mat-footer-cell *matFooterCellDef> </td>\n              </ng-container>\n\n              <!-- toothGroupId Column -->\n              <ng-container matColumnDef=\"toothGroupId\">\n                <th mat-header-cell *matHeaderCellDef> ToothGrp </th>\n                <td mat-cell *matCellDef=\"let fee\"> {{fee.toothGroupId}} </td>\n                <td mat-footer-cell *matFooterCellDef> </td>\n              </ng-container>\n\n              <!-- toothGroupPercent Column -->\n              <ng-container matColumnDef=\"toothGroupPercent\">\n                <th mat-header-cell *matHeaderCellDef> % </th>\n                <td mat-cell *matCellDef=\"let fee\"> {{fee.toothGroupPercent}} </td>\n                <td mat-footer-cell *matFooterCellDef> </td>\n              </ng-container>\n\n              <!-- totalFee Column -->\n              <ng-container matColumnDef=\"totalFee\">\n                <th mat-header-cell *matHeaderCellDef> Fee </th>\n                <td mat-cell *matCellDef=\"let fee\">\n                  <mat-form-field>\n                    <input matInput type=\"number\" min=1 [(ngModel)]=\"fee.totalFee\" (change)=\"getTotalFee()\">\n                  </mat-form-field>\n                </td>\n                <td mat-footer-cell *matFooterCellDef> Total </td>\n              </ng-container>\n\n              <!-- notes Column -->\n              <ng-container matColumnDef=\"notes\">\n                <th mat-header-cell *matHeaderCellDef> Note </th>\n                <td mat-cell *matCellDef=\"let fee\">\n                  <mat-form-field>\n                    <input matInput [(ngModel)]=\"fee.notes\">\n                  </mat-form-field>\n                  <button mat-button matSuffix mat-icon-button aria-label=\"Clear\" (click)=\"removeFees($index)\"\n                    matToolTip=\"Clear\">\n                    <mat-icon>close</mat-icon>\n                  </button>\n                </td>\n                <td mat-footer-cell *matFooterCellDef> {{totalFees | currency:'&#8377;' }} </td>\n              </ng-container>\n\n              <tr mat-header-row *matHeaderRowDef=\"feesConfigListViewColumns\"></tr>\n              <tr mat-row *matRowDef=\"let row; columns: feesConfigListViewColumns;\"></tr>\n              <tr mat-footer-row *matFooterRowDef=\"feesConfigListViewColumns; sticky: true\"></tr>\n            </table>\n          </div>\n\n          <!-- Note -->\n          <mat-form-field class=\"example-full-width\">\n            <textarea matInput placeholder=\"Notes\" [(ngModel)]=\"prescriptionHistoryView.note\" cdkTextareaAutosize\n              cdkAutosizeMinRows=\"1\" cdkAutosizeMaxRows=\"5\"></textarea>\n            <button mat-button *ngIf=\"prescriptionHistoryView.note\" matSuffix mat-icon-button aria-label=\"Clear\"\n              (click)=\"prescriptionHistoryView.note=''\" matToolTip=\"Clear\">\n              <mat-icon>close</mat-icon>\n            </button>\n          </mat-form-field>\n\n          <button mat-mini-fab color=\"primary\" (click)=\"createAndSubmitPrescription()\" matTooltip=\"Print\">\n            <mat-icon aria-label=\"Print\">print</mat-icon>\n          </button>\n        </mat-card-content>\n      </mat-card>\n    </mat-tab>\n    \n    <mat-tab label=\"Treatment Done\" [disabled]=\"disableTreatmentDoneTab\">\n      <mat-card class=\"example-card\">\n        <mat-card-content>\n          <!-- Treatment Done -->\n          <!-- Need new table and apis to store -->\n          <mat-form-field class=\"example-full-width\">\n            <textarea matInput placeholder=\"Treatment done\" [(ngModel)]=\"prescriptionHistoryView.treatmentDone\"\n              cdkTextareaAutosize cdkAutosizeMinRows=\"1\" cdkAutosizeMaxRows=\"5\"></textarea>\n            <button mat-button *ngIf=\"prescriptionHistoryView.treatmentDone\" matSuffix mat-icon-button aria-label=\"Clear\"\n              (click)=\"prescriptionHistoryView.treatmentDone=''\" matToolTip=\"Clear\">\n              <mat-icon>close</mat-icon>\n            </button>\n          </mat-form-field>\n        </mat-card-content>\n      </mat-card>\n    </mat-tab>\n\n  </mat-tab-group>\n\n</mat-card>"
 
 /***/ }),
 
@@ -320,13 +320,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _models_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../models/models */ "./src/app/models/models.ts");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _angular_animations__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/animations */ "./node_modules/@angular/animations/fesm5/animations.js");
-/* harmony import */ var _services_httpcomm_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../services/httpcomm.service */ "./src/app/services/httpcomm.service.ts");
-/* harmony import */ var _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/cdk/keycodes */ "./node_modules/@angular/cdk/esm5/keycodes.es5.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var _services_commonservice_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../services/commonservice.service */ "./src/app/services/commonservice.service.ts");
-/* harmony import */ var _angular_material_table__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/material/table */ "./node_modules/@angular/material/esm5/table.es5.js");
+/* harmony import */ var _snackhelper_snackbar_model__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../snackhelper/snackbar-model */ "./src/app/snackhelper/snackbar-model.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _angular_animations__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/animations */ "./node_modules/@angular/animations/fesm5/animations.js");
+/* harmony import */ var _services_httpcomm_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../services/httpcomm.service */ "./src/app/services/httpcomm.service.ts");
+/* harmony import */ var _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/cdk/keycodes */ "./node_modules/@angular/cdk/esm5/keycodes.es5.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _services_commonservice_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../services/commonservice.service */ "./src/app/services/commonservice.service.ts");
+/* harmony import */ var _angular_material_table__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/material/table */ "./node_modules/@angular/material/esm5/table.es5.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -350,37 +351,49 @@ var __param = (undefined && undefined.__param) || function (paramIndex, decorato
 
 
 
+
 var CreatePrescriptionComponent = /** @class */ (function () {
     function CreatePrescriptionComponent(snackBar, dialog, httpCom) {
         this.snackBar = snackBar;
         this.dialog = dialog;
         this.httpCom = httpCom;
         this.columnsToDisplay = ['firstName', 'lastName', 'age', 'weight'];
+        this.medicineForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"]();
         this.dialogData = new CompositDialogBoxData();
         this.mhList = [];
-        this.medicalHistoryForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]();
+        this.medicalHistoryForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"]();
         this.treatmentPlanList = [];
-        this.separatorKeysCodes = [_angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_6__["ENTER"], _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_6__["COMMA"]];
+        this.treatmentPlanFormControl = new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"]();
+        this.separatorKeysCodes = [_angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_7__["ENTER"], _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_7__["COMMA"]];
         this.feesConfigListViewColumns = ['treatmentPlanId', 'baseFee', 'ageGroupId', 'ageGroupPercent', 'toothGroupId', 'toothGroupPercent', 'totalFee', 'notes'];
         this.disableTabs = true;
-        this.prescriptionFromControl = new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"](0);
+        //Enable treatment done tab on prescription repeat or after submitting prescription
+        this.disableTreatmentDoneTab = true;
+        this.snackModel = new _snackhelper_snackbar_model__WEBPACK_IMPORTED_MODULE_3__["SnackbarModel"]();
+        this.prescriptionFromControl = new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"](0);
         this.minCharToSearch = 3;
+        //History Section
+        this.dashboardHistoryListColumns = ['Date', 'C/F', 'Treatment Plan', 'Treatment Done', 'Due', 'Next Appo'];
+        this.dashboardViewList = [];
         this.totalFees = 0;
+        this.nextAppoHour = 0;
+        this.nextAppoMinute = 0;
         this.minDate = new Date();
         this.todayMillis = this.minDate.getTime();
         this.maxMillis = this.todayMillis + (5 * 86400 * 1000);
         this.maxDate = new Date(this.maxMillis);
+        this.trtmntPlanListDataSource = new _angular_material_table__WEBPACK_IMPORTED_MODULE_10__["MatTableDataSource"]();
+        this.trtmntPlanListViewColumns = ['cf', 'teeth', 'plan', 'newPlan'];
     }
     CreatePrescriptionComponent.prototype.ngOnInit = function () {
         this.initializeValiables();
-        this.commonService = new _services_commonservice_service__WEBPACK_IMPORTED_MODULE_8__["CommonService"]();
+        this.commonService = new _services_commonservice_service__WEBPACK_IMPORTED_MODULE_9__["CommonService"]();
     };
     CreatePrescriptionComponent.prototype.refreshSearch = function () {
         this.selectedPatient = new _models_models__WEBPACK_IMPORTED_MODULE_1__["Patient"]();
         this.isPatientLoading = false;
         this.isPatientLoaded = false;
         this.isPatientSelected = false;
-        this.disableTabs = true;
         this.tabSelection(0);
     };
     CreatePrescriptionComponent.prototype.initializeValiables = function () {
@@ -390,7 +403,8 @@ var CreatePrescriptionComponent = /** @class */ (function () {
         this.isPatientLoading = false;
         this.isPatientLoaded = false;
         this.isPatientSelected = false;
-        this.clinicalFindingsView = [];
+        this.clinicalFindingsViewForUi = [];
+        this.cftMapArray = [];
         this.httpCom.getMedicalMaster().subscribe(function (resp) {
             if (resp.status == 'SUCCESS') {
                 for (var i = 0; i < resp.resp.length; i++) {
@@ -403,10 +417,14 @@ var CreatePrescriptionComponent = /** @class */ (function () {
                 _this.treatmentPlanList = resp.resp;
             }
         });
+        this.httpCom.getAllMedicine().subscribe(function (resp) {
+            if (resp.status == 'SUCCESS') {
+                _this.medicineMasterViewList = resp.resp;
+            }
+        });
         this.treatmentPlanListView = [];
-        this.medicineMasterViewList = [];
         this.feesConfigListView = [];
-        this.feesConfigListDataSource = new _angular_material_table__WEBPACK_IMPORTED_MODULE_9__["MatTableDataSource"]();
+        this.feesConfigListDataSource = new _angular_material_table__WEBPACK_IMPORTED_MODULE_10__["MatTableDataSource"]();
     };
     CreatePrescriptionComponent.prototype.fetchPatient = function (event) {
         // console.log(event.key);
@@ -462,10 +480,27 @@ var CreatePrescriptionComponent = /** @class */ (function () {
         this.selectedPatient = element;
         this.disableTabs = false;
         this.tabSelection(1);
+        this.fetchDashboard(element.pid);
     };
     CreatePrescriptionComponent.prototype.tabSelection = function (tabIndex) {
         this.prescriptionFromControl.setValue(tabIndex);
     };
+    CreatePrescriptionComponent.prototype.fetchDashboard = function (patientId) {
+        var _this = this;
+        this.httpCom.getDashboardView(patientId).subscribe(function (resp) {
+            if (resp.status === 'SUCCESS' && resp.resp && resp.resp.length > 0) {
+                _this.dashboardViewList = resp.resp;
+            }
+            else {
+                _this.tabSelection(2);
+            }
+        });
+    };
+    CreatePrescriptionComponent.prototype.getOrderedClinicalFindings = function (cf) {
+        if (cf && cf.length > 0)
+            return cf.split(',');
+    };
+    //Prescription Section
     CreatePrescriptionComponent.prototype.openDialog = function () {
         var _this = this;
         this.httpCom.getClinicalFindings().subscribe(function (response) {
@@ -482,68 +517,16 @@ var CreatePrescriptionComponent = /** @class */ (function () {
                         });
                         dialogRef.afterClosed().subscribe(function (result) {
                             if (result && result.length > 0) {
-                                _this.cftMapArray = result;
-                                var _loop_1 = function (i) {
-                                    var teeths = '';
-                                    for (var j = 0; j < _this.cftMapArray[i].teeth.length; j++) {
-                                        teeths += ' ' + _this.cftMapArray[i].teeth[j].toothIndex;
-                                    }
-                                    _this.clinicalFindingsView.push(_this.cftMapArray[i].clinicalFinding.fname + ' - ' + teeths);
-                                    if (_this.treatmentPlanList && _this.treatmentPlanList.length > 0) {
-                                        _this.treatmentPlanList.map(function (tpl) {
-                                            if (tpl.clinicalFinding == _this.cftMapArray[i].clinicalFinding.fid) {
-                                                //Concurrency check
-                                                if (_this.treatmentPlanListView.indexOf(tpl.trtName) < 0) {
-                                                    _this.treatmentPlanListView.push(tpl.trtName);
-                                                    //Getting medicines
-                                                    _this.httpCom.getMedicineView(_this.httpCom.getMedicineUrl
-                                                        + _this.httpCom.getMedicineUrlPart1
-                                                        + tpl.trtId
-                                                        + _this.httpCom.getMedicineUrlPart2
-                                                        + _this.selectedPatient.age).subscribe(function (resp) {
-                                                        if (resp.status === 'SUCCESS') {
-                                                            resp.resp.map(function (medicineMasterView) {
-                                                                _this.medicineMasterViewList.push(medicineMasterView);
-                                                            });
-                                                        }
-                                                        else {
-                                                            console.log('resp error: ' + resp);
-                                                        }
-                                                    });
-                                                }
-                                                //Getting fees config
-                                                var feeConfigRequestListView_1 = [];
-                                                _this.cftMapArray[i].teeth.forEach(function (t) {
-                                                    var feeConfigRequestView = new _models_models__WEBPACK_IMPORTED_MODULE_1__["FeeConfigRequestListView"]();
-                                                    feeConfigRequestView.tooth_grp_idx = t.toothGroup;
-                                                    feeConfigRequestView.trtmnt_id = tpl.trtId;
-                                                    feeConfigRequestListView_1.push(feeConfigRequestView);
-                                                });
-                                                //Print data
-                                                // console.log('Fee config data:', feeConfigRequestListView);
-                                                _this.httpCom.getFeeConfigList(_this.selectedPatient.age, feeConfigRequestListView_1).subscribe(function (resp) {
-                                                    if (resp && resp.status === 'SUCCESS') {
-                                                        resp.resp.forEach(function (element) {
-                                                            var feeConfigData = element;
-                                                            if (feeConfigData && feeConfigData.totalFee > 0) {
-                                                                _this.feesConfigListView.push(element);
-                                                                _this.feesConfigListDataSource.data = _this.feesConfigListView;
-                                                            }
-                                                        });
-                                                        _this.getTotalFee();
-                                                        // console.log('Fee config object:', this.feesConfigListView);
-                                                    }
-                                                });
-                                            }
-                                        });
-                                    }
-                                    else {
-                                        console.log("Treatment plan empty");
-                                    }
-                                };
-                                for (var i = 0; i < _this.cftMapArray.length; i++) {
-                                    _loop_1(i);
+                                if (_this.cftMapArray.length == 0) {
+                                    _this.cftMapArray = result;
                                 }
+                                else {
+                                    result.map(function (r) { return _this.cftMapArray.push(r); });
+                                }
+                                for (var i = 0; i < _this.cftMapArray.length; i++) {
+                                    _this.clinicalFindingsViewForUi.push(_this.commonService.combineValForStringArray(_this.clinicalFindingsViewForUi, _this.cftMapArray[i].clinicalFinding.fname, _this.cftMapArray[i].teeth.toothIndex.toString()));
+                                }
+                                _this.createTreatmentPlanTable();
                             }
                         });
                     }
@@ -609,8 +592,111 @@ var CreatePrescriptionComponent = /** @class */ (function () {
         }
     };
     CreatePrescriptionComponent.prototype.createNextAppo = function (event) {
-        console.log('next appo' + event.value);
-        this.prescriptionHistoryView.nextAppointment = event.value.getTime();
+        try {
+            // console.log('next appo ' + event.value.getTime());
+            this.prescriptionHistoryView.nextAppointment = event.value.getTime();
+            if (0 <= this.nextAppoHour && this.nextAppoHour <= 24 && 0 <= this.nextAppoMinute && this.nextAppoMinute <= 59) {
+                var modifiedTime = ((this.nextAppoHour * 60) + this.nextAppoMinute) * 60 * 1000 + event.value.getTime();
+                console.log('next appo ' + modifiedTime);
+            }
+        }
+        catch (error) {
+            console.log(error);
+            this.snackModel.msg = "Invalid Date";
+            this.snackModel.action = "OK";
+            this.snackModel.callback = function () {
+                console.log("Retry allowed");
+            };
+            this.commonService.showSnackBar(this.snackBar, this.snackModel);
+        }
+    };
+    CreatePrescriptionComponent.prototype.createNextAppoTime = function () {
+        // console.log(`NextAppo Hour ${this.nextAppoHour} Minute ${this.nextAppoMinute}`)
+    };
+    // customTrtmntPlan: string
+    //Get all dialog box data from this.cftMapArray
+    CreatePrescriptionComponent.prototype.createTreatmentPlanTable = function () {
+        this.trtmntPlanListDataSource.data = this.cftMapArray;
+        // if (this.treatmentPlanList && this.treatmentPlanList.length > 0) {
+        //   this.treatmentPlanList.forEach(tpl => {
+        //     // if (tpl.clinicalFinding == this.cftMapArray[i].clinicalFinding.fid) {
+        //       //Concurrency check
+        //       if (this.treatmentPlanListView.indexOf(tpl.trtName) < 0) {
+        //         this.treatmentPlanListView.push(tpl.trtName);
+        //       //Getting fees config
+        //       // let feeConfigRequestListView: FeeConfigRequestListView[] = [];
+        //       // this.cftMapArray[i].teeth.forEach(t => {
+        //       //   let feeConfigRequestView = new FeeConfigRequestListView();
+        //       //   feeConfigRequestView.tooth_grp_idx = t.toothGroup;
+        //       //   feeConfigRequestView.trtmnt_id = tpl.trtId;
+        //       //   feeConfigRequestListView.push(feeConfigRequestView);
+        //       // })
+        //       //Print data
+        //       // console.log('Fee config data:', feeConfigRequestListView);
+        //       // this.httpCom.getFeeConfigList(this.selectedPatient.age, feeConfigRequestListView).subscribe(resp => {
+        //       //   if (resp && resp.status === 'SUCCESS') {
+        //       //     resp.resp.forEach(element => {
+        //       //       let feeConfigData: FeeConfigView = element;
+        //       //       if (feeConfigData && feeConfigData.totalFee > 0) {
+        //       //         this.feesConfigListView.push(element);
+        //       //         this.feesConfigListDataSource.data = this.feesConfigListView;
+        //       //       }
+        //       //     });
+        //       //     this.getTotalFee();
+        //       //     // console.log('Fee config object:', this.feesConfigListView);
+        //       //   }
+        //       // });
+        //     // }
+        //   });
+        // } else {
+        //   console.log("Treatment plan empty");
+        // }
+    };
+    CreatePrescriptionComponent.prototype.updateTrtmntPlanSelect = function (value, index) {
+        var _this = this;
+        this.treatmentPlanList.filter(function (data) {
+            if (data.trtname == value) {
+                if (_this.cftMapArray.length > index) {
+                    _this.cftMapArray[index].treatmentPlanName = value;
+                    if (value === 'Other') {
+                        _this.cftMapArray[index].customTrtmntPlan = true;
+                    }
+                    var toothGrpIndex = _this.cftMapArray[index].teeth.toothGroup;
+                    var treatmentId = data.trtId;
+                    _this.httpCom.getFeeConfig(_this.selectedPatient.age, toothGrpIndex, treatmentId).subscribe(function (resp) {
+                        if (resp && resp.status === 'SUCCESS') {
+                            var feeConfigData = resp.resp;
+                            _this.feesConfigListView.push(feeConfigData);
+                            _this.feesConfigListDataSource.data = _this.feesConfigListView;
+                            _this.getTotalFee();
+                            // console.log('Fee config object:', this.feesConfigListView);
+                        }
+                    });
+                }
+            }
+            // console.log('Updated cft', this.cftMapArray)
+            //Getting filtered medicines
+            //TOBE DONE LATER
+            // this.httpCom.getMedicineView(this.httpCom.getMedicineUrl
+            //   + this.httpCom.getMedicineUrlPart1
+            //   + data.trtId
+            //   + this.httpCom.getMedicineUrlPart2
+            //   + this.selectedPatient.age
+            // ).subscribe(
+            //   resp => {
+            //     if (resp.status === 'SUCCESS') {
+            //       resp.resp.map(medicineMasterView => {
+            //         this.medicineMasterViewList.push(medicineMasterView);
+            //       });
+            //     } else {
+            //       console.log('resp error: ' + resp);
+            //     }
+            //   }
+            // );
+        });
+    };
+    CreatePrescriptionComponent.prototype.updateTrtmntPlanI = function (value, index) {
+        this.cftMapArray[index].treatmentPlanName = value;
     };
     CreatePrescriptionComponent.prototype.createAndSubmitPrescription = function () {
         var _this = this;
@@ -625,7 +711,7 @@ var CreatePrescriptionComponent = /** @class */ (function () {
             _this.dashboardView.fbl.push(fb);
         });
         this.dashboardView.medhv = [];
-        this.medicineMasterViewList.map(function (m) {
+        this.medicineForm.value.map(function (m) {
             var medh = new _models_models__WEBPACK_IMPORTED_MODULE_1__["MedicineHistoryView"]();
             medh.medicineName = m.medicineName;
             medh.diseaseCode = m.diseaseCode;
@@ -645,8 +731,17 @@ var CreatePrescriptionComponent = /** @class */ (function () {
         }
         this.dashboardView.pHistory = this.prescriptionHistoryView;
         this.dashboardView.pHistory.patientId = this.selectedPatient.pid;
-        this.dashboardView.pHistory.clinicalFindings = this.clinicalFindingsView.toString();
-        this.dashboardView.pHistory.treatmentPlan = this.treatmentPlanListView.toString();
+        // Need refactoring
+        this.dashboardView.pHistory.clinicalFindings = this.clinicalFindingsViewForUi.toString();
+        this.dashboardView.tphv = [];
+        this.cftMapArray.map(function (cft) {
+            var tph = new _models_models__WEBPACK_IMPORTED_MODULE_1__["TreatmentPlanHistoryView"]();
+            tph.patientId = _this.selectedPatient.pid;
+            tph.tname = cft.treatmentPlanName;
+            tph.toothIndex = cft.teeth.toothIndex;
+            tph.clinicalFinding = cft.clinicalFinding.fname;
+            _this.dashboardView.tphv.push(tph);
+        });
         console.log(JSON.stringify(this.dashboardView));
         this.httpCom.addDashBoard(this.dashboardView).subscribe(function (resp) {
             if (resp.status === 'SUCCESS') {
@@ -661,15 +756,15 @@ var CreatePrescriptionComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./create-prescription.component.html */ "./src/app/create-prescription/create-prescription.component.html"),
             styles: [__webpack_require__(/*! ./create-prescription.component.css */ "./src/app/create-prescription/create-prescription.component.css")],
             animations: [
-                Object(_angular_animations__WEBPACK_IMPORTED_MODULE_4__["trigger"])('detailExpand', [
-                    Object(_angular_animations__WEBPACK_IMPORTED_MODULE_4__["state"])('collapsed', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_4__["style"])({ height: '0px', minHeight: '0', display: 'none' })),
-                    Object(_angular_animations__WEBPACK_IMPORTED_MODULE_4__["state"])('expanded', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_4__["style"])({ height: '*' })),
-                    Object(_angular_animations__WEBPACK_IMPORTED_MODULE_4__["transition"])('expanded <=> collapsed', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_4__["animate"])('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+                Object(_angular_animations__WEBPACK_IMPORTED_MODULE_5__["trigger"])('detailExpand', [
+                    Object(_angular_animations__WEBPACK_IMPORTED_MODULE_5__["state"])('collapsed', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_5__["style"])({ height: '0px', minHeight: '0', display: 'none' })),
+                    Object(_angular_animations__WEBPACK_IMPORTED_MODULE_5__["state"])('expanded', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_5__["style"])({ height: '*' })),
+                    Object(_angular_animations__WEBPACK_IMPORTED_MODULE_5__["transition"])('expanded <=> collapsed', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_5__["animate"])('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
                 ]),
             ]
         }),
         __metadata("design:paramtypes", [_angular_material__WEBPACK_IMPORTED_MODULE_2__["MatSnackBar"],
-            _angular_material__WEBPACK_IMPORTED_MODULE_2__["MatDialog"], _services_httpcomm_service__WEBPACK_IMPORTED_MODULE_5__["HttpcommService"]])
+            _angular_material__WEBPACK_IMPORTED_MODULE_2__["MatDialog"], _services_httpcomm_service__WEBPACK_IMPORTED_MODULE_6__["HttpcommService"]])
     ], CreatePrescriptionComponent);
     return CreatePrescriptionComponent;
 }());
@@ -682,21 +777,26 @@ var CompositDialogBoxData = /** @class */ (function () {
 
 var ClinicalFindingToothMapping = /** @class */ (function () {
     function ClinicalFindingToothMapping() {
+        this.customTrtmntPlan = false;
     }
     return ClinicalFindingToothMapping;
 }());
 
 //Dialog box to select clinical findings mapped with tooth index
 var DialogToothClinicalfindings = /** @class */ (function () {
-    function DialogToothClinicalfindings(dialogRef, data) {
+    function DialogToothClinicalfindings(dialogRef, data, httpCom) {
         this.dialogRef = dialogRef;
         this.data = data;
+        this.httpCom = httpCom;
         this.cfTextToBeShownOnUi = [];
         this.originalCfList = [];
-        this.toothForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]();
-        this.clinicalFindingForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]();
+        this.toothForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"]();
+        this.clinicalFindingForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"]();
         // readonly separatorKeysCodes: number[] = [ENTER, COMMA];
         this.cftMapArray = [];
+        //Scope for new clinical findingds
+        this.customCFName = '';
+        this.customCFDesc = '';
     }
     DialogToothClinicalfindings.prototype.ngOnInit = function () {
         for (var i = 0; i < this.data.clinicalFindingsComposite.length; i++) {
@@ -718,43 +818,54 @@ var DialogToothClinicalfindings = /** @class */ (function () {
                 return 1;
             else if (!isAsc && a.toothIndex < b.toothIndex)
                 return 1;
-            // return 0;
+            else
+                return -1;
         });
     };
     DialogToothClinicalfindings.prototype.checkTooth = function (t) {
         t.selected = !t.selected;
     };
+    //In case of other add the other data in db and process as usual if async add is on
     DialogToothClinicalfindings.prototype.add = function () {
+        var _this = this;
         if (this.originalCfList.includes(this.clinicalFindingForm.value)) {
             // let selectedToothList: number[] = this.toothForm.value;
-            var cft_1 = new ClinicalFindingToothMapping();
-            cft_1.teeth = [];
-            // for (let i = 0; i < selectedToothList.length; i++) {
-            //   for (let j = 0; j < this.data.toothQuadrentsComposite.length; j++) {
-            //     if (this.data.toothQuadrentsComposite[j].toothIndex == selectedToothList[i]) {
-            //       cft.teeth.push(this.data.toothQuadrentsComposite[j]);
-            //       break;
-            //     }
-            //   }
-            // }
             var selectedToothIndexes_1 = '';
             this.data.toothQuadrentsComposite.map(function (tooth) {
-                {
-                    if (tooth.selected) {
-                        cft_1.teeth.push(tooth);
-                        selectedToothIndexes_1 += ' ' + tooth.toothIndex;
+                if (tooth.selected) {
+                    var cft_1 = new ClinicalFindingToothMapping();
+                    cft_1.teeth = tooth;
+                    selectedToothIndexes_1 = tooth.toothIndex.toString();
+                    var formValue = _this.clinicalFindingForm.value;
+                    if (formValue === 'Others') {
+                        formValue = _this.customCFName;
+                    }
+                    //Combining tooth index for cf
+                    _this.cfTextToBeShownOnUi.push(new _services_commonservice_service__WEBPACK_IMPORTED_MODULE_9__["CommonService"]().combineValForStringArray(_this.cfTextToBeShownOnUi, formValue, selectedToothIndexes_1));
+                    if (_this.clinicalFindingForm.value === 'Others') {
+                        var cf = new _models_models__WEBPACK_IMPORTED_MODULE_1__["ClinicalFindingView"]();
+                        cf.fname = _this.customCFName;
+                        cf.fdesc = _this.customCFDesc;
+                        cft_1.clinicalFinding = cf;
+                        _this.httpCom.addClinicalFinding(cf).subscribe(function (resp) {
+                            if (resp.status === 'SUCCESS') {
+                                //TODO: Show message
+                                console.log('CF added');
+                            }
+                        });
+                    }
+                    else {
+                        _this.data.clinicalFindingsComposite.map(function (cf) {
+                            if (cf.fname === _this.clinicalFindingForm.value) {
+                                // console.log(`Match for ${this.clinicalFindingForm.value}`)
+                                cft_1.clinicalFinding = cf;
+                            }
+                        });
                     }
                     tooth.selected = false;
+                    _this.cftMapArray.push(cft_1);
                 }
             });
-            this.cfTextToBeShownOnUi.push(this.clinicalFindingForm.value + '-' + selectedToothIndexes_1);
-            for (var k = 0; k < this.data.clinicalFindingsComposite.length; k++) {
-                if (this.data.clinicalFindingsComposite[k].fname === this.clinicalFindingForm.value) {
-                    cft_1.clinicalFinding = this.data.clinicalFindingsComposite[k];
-                    break;
-                }
-            }
-            this.cftMapArray.push(cft_1);
             // console.log(JSON.stringify(this.cftMapArray));
         }
         else {
@@ -784,11 +895,10 @@ var DialogToothClinicalfindings = /** @class */ (function () {
     };
     DialogToothClinicalfindings.prototype.startFilter1 = function () {
         var _this = this;
-        this.filteredCfList = this.clinicalFindingForm.valueChanges.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["startWith"])(''), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (value) { return _this._filter(value); }));
+        this.filteredCfList = this.clinicalFindingForm.valueChanges.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["startWith"])(''), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["map"])(function (value) { return _this._filter(value); }));
     };
     DialogToothClinicalfindings.prototype._filter = function (value) {
         return this.originalCfList.filter(function (option) { return option.toLowerCase().includes(value.toLowerCase()); });
-        // return this.originalCfList.filter(option => option.toLowerCase().indexOf(value.toLowerCase()) === 0);
     };
     DialogToothClinicalfindings = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -798,7 +908,8 @@ var DialogToothClinicalfindings = /** @class */ (function () {
         }),
         __param(1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"])(_angular_material__WEBPACK_IMPORTED_MODULE_2__["MAT_DIALOG_DATA"])),
         __metadata("design:paramtypes", [_angular_material__WEBPACK_IMPORTED_MODULE_2__["MatDialogRef"],
-            CompositDialogBoxData])
+            CompositDialogBoxData,
+            _services_httpcomm_service__WEBPACK_IMPORTED_MODULE_6__["HttpcommService"]])
     ], DialogToothClinicalfindings);
     return DialogToothClinicalfindings;
 }());
@@ -814,7 +925,7 @@ var DialogToothClinicalfindings = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1 mat-dialog-title>Create Clinical Findings</h1>\r\n<div mat-dialog-content>\r\n    <!-- <mat-list>\r\n        <h3 mat-subheader>Clinical Findings</h3>\r\n        <mat-list-item *ngFor=\"let cf of data.clinicalFindingsComposite\">\r\n            <mat-icon mat-list-icon>notes</mat-icon>\r\n            <h4 mat-line>Name : {{cf.fname}}</h4>\r\n            <p mat-line>Desc : {{cf.fdesc}} </p>\r\n        </mat-list-item>\r\n    </mat-list> -->\r\n    <form class=\"example-form\">\r\n        <mat-form-field class=\"example-full-width\">\r\n            <input type=\"text\" matInput placeholder=\"Pick one\" aria-label=\"Number\" [formControl]=\"clinicalFindingForm\"\r\n                [matAutocomplete]=\"auto2\">\r\n            <mat-autocomplete autoActiveFirstOption #auto2=\"matAutocomplete\">\r\n                <mat-option *ngFor=\"let cfdd of filteredCfList | async\" [value]=\"cfdd\">\r\n                    {{cfdd}}\r\n                </mat-option>\r\n            </mat-autocomplete>\r\n        </mat-form-field>\r\n    </form>\r\n    <mat-divider></mat-divider>\r\n\r\n    <!-- <mat-form-field>\r\n        <mat-select placeholder=\"Tooth\" [formControl]=\"toothForm\" multiple>\r\n            <mat-option *ngFor=\"let tooth of data.toothQuadrentsComposite\" [value]=\"tooth.toothIndex\">{{tooth.toothIndex}}</mat-option>\r\n        </mat-select>\r\n    </mat-form-field> -->\r\n\r\n    <table>\r\n        <tr>\r\n            <td *ngFor=\"let t of getOrderedList(1)\" class=\"rcorners2\" (click)=\"checkTooth(t)\">\r\n                <!-- (click)=\"setSelect(t)\" -->\r\n                <label>\r\n                    <input  class=\"custom_mat-radio-button\" type=\"checkbox\" name=\"all\" value=\"{{t.toothIndex}}\" [checked]=\"t.selected\" disabled \r\n                    />\r\n                    {{t.toothIndex}}\r\n                </label>\r\n            </td>\r\n            <td *ngFor=\"let t of getOrderedList(2, true)\" class=\"rcorners2\" (click)=\"checkTooth(t)\">\r\n                <label>\r\n                    <input type=\"checkbox\" name=\"all\" value=\"{{t.toothIndex}}\" [checked]=\"t.selected\" disabled />\r\n                    <!-- (change)=\"checkTooth(t)\" -->\r\n                    {{t.toothIndex}}\r\n                </label>\r\n            </td>\r\n        </tr>\r\n        <tr>\r\n            <td *ngFor=\"let t of getOrderedList(3)\" class=\"rcorners2\" (click)=\"checkTooth(t)\">\r\n                <input type=\"checkbox\" name=\"all\" value=\"{{t.toothIndex}}\" [checked]=\"t.selected\" disabled />\r\n                <!-- (change)=\"checkTooth(t)\" -->\r\n                {{t.toothIndex}}\r\n            </td>\r\n            <td *ngFor=\"let t of getOrderedList(4, true)\" class=\"rcorners2\" (click)=\"checkTooth(t)\">\r\n                <input type=\"checkbox\" name=\"all\" value=\"{{t.toothIndex}}\" [checked]=\"t.selected\" disabled />\r\n                <!-- (change)=\"checkTooth(t)\" -->\r\n                {{t.toothIndex}}\r\n            </td>\r\n        </tr>\r\n    </table>\r\n\r\n\r\n    <p>\r\n        <button mat-raised-button color=\"primary\" (click)=\"add()\">\r\n            Select <mat-icon aria-label=\"Select\">check_circle_outline</mat-icon>\r\n        </button>\r\n    </p>\r\n    <p>\r\n        <mat-form-field>\r\n            <mat-chip-list #chipList>\r\n                <mat-chip *ngFor=\"let cf of cfTextToBeShownOnUi\" selectable=\"true\" removable=\"true\" (removed)=\"remove(cf)\">\r\n                    {{cf}}\r\n                    <mat-icon matChipRemove>cancel</mat-icon>\r\n                </mat-chip>\r\n                <input placeholder=\"Result\" disabled [matChipInputFor]=\"chipList\" matChipInputAddOnBlur=\"true\">\r\n                <!-- \r\n                    (matChipInputTokenEnd)=\"addChip($event)\" \r\n                    [matChipInputSeparatorKeyCodes]=\"separatorKeysCodes\"\r\n                -->\r\n            </mat-chip-list>\r\n        </mat-form-field>\r\n    </p>\r\n</div>\r\n<div mat-dialog-actions>\r\n    <button mat-button (click)=\"onNoClick()\">Close</button>\r\n    <button mat-button (click)=\"closeDialog()\">Done</button>\r\n</div>"
+module.exports = "<h1 mat-dialog-title>Create Clinical Findings</h1>\r\n<div mat-dialog-content>\r\n    <!-- <mat-list>\r\n        <h3 mat-subheader>Clinical Findings</h3>\r\n        <mat-list-item *ngFor=\"let cf of data.clinicalFindingsComposite\">\r\n            <mat-icon mat-list-icon>notes</mat-icon>\r\n            <h4 mat-line>Name : {{cf.fname}}</h4>\r\n            <p mat-line>Desc : {{cf.fdesc}} </p>\r\n        </mat-list-item>\r\n    </mat-list> -->\r\n    <form class=\"example-form\">\r\n        <mat-form-field class=\"example-full-width\">\r\n            <input type=\"text\" matInput placeholder=\"Pick one\" aria-label=\"Number\" [formControl]=\"clinicalFindingForm\"\r\n                [matAutocomplete]=\"auto2\">\r\n            <mat-autocomplete autoActiveFirstOption #auto2=\"matAutocomplete\">\r\n                <mat-option *ngFor=\"let cfdd of filteredCfList | async\" [value]=\"cfdd\">\r\n                    {{cfdd}}\r\n                </mat-option>\r\n            </mat-autocomplete>\r\n        </mat-form-field>\r\n    </form>\r\n    <mat-divider></mat-divider>\r\n\r\n    <!-- Section for adding custom clinical findings -->\r\n    <table *ngIf=\"clinicalFindingForm?.value === 'Others'\">\r\n        <tr>\r\n            <td>\r\n                <!-- Custom clinical finding name -->\r\n                <mat-form-field hintLabel=\"Max 30 characters\" class=\"example-full-width\">\r\n                    <input matInput [maxlength]=\"30\" placeholder=\"C/F Name\" [(ngModel)]=\"customCFName\" required>\r\n                    <mat-hint align=\"end\">{{customCFName?.length || 0}}/30</mat-hint>\r\n                </mat-form-field>\r\n            </td>\r\n            <td>\r\n                <!-- Custom clinical finding desc -->\r\n                <mat-form-field hintLabel=\"Max 30 characters\" class=\"example-full-width\">\r\n                    <input matInput [maxlength]=\"30\" placeholder=\"C/F Desc\" [(ngModel)]=\"customCFDesc\">\r\n                    <mat-hint align=\"end\">{{customCFDesc?.length || 0}}/30</mat-hint>\r\n                </mat-form-field>\r\n            </td>\r\n        </tr>\r\n    </table>\r\n\r\n\r\n    <!-- <mat-form-field>\r\n        <mat-select placeholder=\"Tooth\" [formControl]=\"toothForm\" multiple>\r\n            <mat-option *ngFor=\"let tooth of data.toothQuadrentsComposite\" [value]=\"tooth.toothIndex\">{{tooth.toothIndex}}</mat-option>\r\n        </mat-select>\r\n    </mat-form-field> -->\r\n\r\n    <table>\r\n        <tr>\r\n            <td *ngFor=\"let t of getOrderedList(1)\" class=\"rcorners2\" (click)=\"checkTooth(t)\">\r\n                <!-- (click)=\"setSelect(t)\" -->\r\n                <label>\r\n                    <input class=\"custom_mat-radio-button\" type=\"checkbox\" name=\"all\" value=\"{{t.toothIndex}}\"\r\n                        [checked]=\"t.selected\" disabled />\r\n                    {{t.toothIndex}}\r\n                </label>\r\n            </td>\r\n            <td *ngFor=\"let t of getOrderedList(2, true)\" class=\"rcorners2\" (click)=\"checkTooth(t)\">\r\n                <label>\r\n                    <input type=\"checkbox\" name=\"all\" value=\"{{t.toothIndex}}\" [checked]=\"t.selected\" disabled />\r\n                    <!-- (change)=\"checkTooth(t)\" -->\r\n                    {{t.toothIndex}}\r\n                </label>\r\n            </td>\r\n        </tr>\r\n        <tr>\r\n            <td *ngFor=\"let t of getOrderedList(3)\" class=\"rcorners2\" (click)=\"checkTooth(t)\">\r\n                <input type=\"checkbox\" name=\"all\" value=\"{{t.toothIndex}}\" [checked]=\"t.selected\" disabled />\r\n                <!-- (change)=\"checkTooth(t)\" -->\r\n                {{t.toothIndex}}\r\n            </td>\r\n            <td *ngFor=\"let t of getOrderedList(4, true)\" class=\"rcorners2\" (click)=\"checkTooth(t)\">\r\n                <input type=\"checkbox\" name=\"all\" value=\"{{t.toothIndex}}\" [checked]=\"t.selected\" disabled />\r\n                <!-- (change)=\"checkTooth(t)\" -->\r\n                {{t.toothIndex}}\r\n            </td>\r\n        </tr>\r\n    </table>\r\n\r\n\r\n    <p>\r\n        <button mat-raised-button color=\"primary\" (click)=\"add()\">\r\n            Select <mat-icon aria-label=\"Select\">check_circle_outline</mat-icon>\r\n        </button>\r\n    </p>\r\n    <p>\r\n        <mat-form-field>\r\n            <mat-chip-list #chipList>\r\n                <mat-chip *ngFor=\"let cf of cfTextToBeShownOnUi\" selectable=\"true\" removable=\"true\" (removed)=\"remove(cf)\">\r\n                    {{cf}}\r\n                    <mat-icon matChipRemove>cancel</mat-icon>\r\n                </mat-chip>\r\n                <input placeholder=\"Result\" disabled [matChipInputFor]=\"chipList\" matChipInputAddOnBlur=\"true\">\r\n                <!-- \r\n                    (matChipInputTokenEnd)=\"addChip($event)\" \r\n                    [matChipInputSeparatorKeyCodes]=\"separatorKeysCodes\"\r\n                -->\r\n            </mat-chip-list>\r\n        </mat-form-field>\r\n    </p>\r\n</div>\r\n<div mat-dialog-actions>\r\n    <button mat-button (click)=\"onNoClick()\">Close</button>\r\n    <button mat-button (click)=\"closeDialog()\">Done</button>\r\n</div>"
 
 /***/ }),
 
@@ -906,11 +1017,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _models_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../models/models */ "./src/app/models/models.ts");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var _snackhelper_snackhelper_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../snackhelper/snackhelper.component */ "./src/app/snackhelper/snackhelper.component.ts");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _services_httpcomm_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../services/httpcomm.service */ "./src/app/services/httpcomm.service.ts");
-/* harmony import */ var _services_commonservice_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../services/commonservice.service */ "./src/app/services/commonservice.service.ts");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _services_httpcomm_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/httpcomm.service */ "./src/app/services/httpcomm.service.ts");
+/* harmony import */ var _services_commonservice_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../services/commonservice.service */ "./src/app/services/commonservice.service.ts");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _snackhelper_snackbar_model__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../snackhelper/snackbar-model */ "./src/app/snackhelper/snackbar-model.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -932,7 +1043,7 @@ var DashboardComponent = /** @class */ (function () {
     function DashboardComponent(snackBar, httpClient) {
         this.snackBar = snackBar;
         this.httpClient = httpClient;
-        this.commonService = new _services_commonservice_service__WEBPACK_IMPORTED_MODULE_6__["CommonService"]();
+        this.commonService = new _services_commonservice_service__WEBPACK_IMPORTED_MODULE_5__["CommonService"]();
         //Place holder for dynamic field validation
         this.config = {
             "first_name_len": 20,
@@ -948,18 +1059,14 @@ var DashboardComponent = /** @class */ (function () {
             { value: 'O_POSITIVE', viewValue: 'O+' },
             { value: 'O_NEGETIVE', viewValue: 'O-' },
         ];
-        this.patientEmailControl = new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"]('', [
-            _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].email,
-            _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required
+        this.patientEmailControl = new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]('', [
+            _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].email,
+            _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required
         ]);
         //Accordian expansion bar control
         this.step = 0;
         this.patient = new _models_models__WEBPACK_IMPORTED_MODULE_1__["Patient"]();
-        // this.snackBar.openFromComponent(SnackbarComponent,{
-        //   duration : 2000,
-        // })
-        //public patientService : PatientService,
-        this.httpService = new _services_httpcomm_service__WEBPACK_IMPORTED_MODULE_5__["HttpcommService"](httpClient);
+        this.httpService = new _services_httpcomm_service__WEBPACK_IMPORTED_MODULE_4__["HttpcommService"](httpClient);
     }
     DashboardComponent.prototype.setStep = function (index) {
         this.step = index;
@@ -999,12 +1106,14 @@ var DashboardComponent = /** @class */ (function () {
         });
     };
     DashboardComponent.prototype.onKeyUp = function (event) {
-        console.log(event);
-        console.log(event.key);
-        // this.snackBar.open('demo','',{
-        this.snackBar.openFromComponent(_snackhelper_snackhelper_component__WEBPACK_IMPORTED_MODULE_3__["SnackhelperComponent"], {
-            duration: 2000,
-        });
+        var snackbarConfig = new _snackhelper_snackbar_model__WEBPACK_IMPORTED_MODULE_7__["SnackbarModel"]();
+        snackbarConfig.isError = true;
+        snackbarConfig.msg = 'test msg';
+        snackbarConfig.duration = 2000;
+        snackbarConfig.callback = function () {
+            console.log('Callback ok');
+        };
+        this.commonService.showSnackBar(this.snackBar, snackbarConfig);
     };
     DashboardComponent.prototype.dateAddEvent = function (type, event) {
         var parsedDate = this.commonService.getParsedDate(event.value);
@@ -1020,7 +1129,7 @@ var DashboardComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./dashboard.component.html */ "./src/app/dashboard/dashboard.component.html"),
             styles: [__webpack_require__(/*! ./dashboard.component.css */ "./src/app/dashboard/dashboard.component.css")]
         }),
-        __metadata("design:paramtypes", [_angular_material__WEBPACK_IMPORTED_MODULE_2__["MatSnackBar"], _angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpClient"]])
+        __metadata("design:paramtypes", [_angular_material__WEBPACK_IMPORTED_MODULE_2__["MatSnackBar"], _angular_common_http__WEBPACK_IMPORTED_MODULE_6__["HttpClient"]])
     ], DashboardComponent);
     return DashboardComponent;
 }());
@@ -1047,7 +1156,7 @@ module.exports = "table {\r\n    width: 100%;\r\n  }\r\n  \r\n  tr.example-detai
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<table mat-table\n       [dataSource]=\"dataSource\" multiTemplateDataRows\n       class=\"mat-elevation-z8\">\n  <ng-container matColumnDef=\"{{column}}\" *ngFor=\"let column of columnsToDisplay\">\n    <th mat-header-cell *matHeaderCellDef> {{column}} </th>\n    <td mat-cell *matCellDef=\"let element\"> {{element[column]}} </td>\n  </ng-container>\n\n  <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->\n  <ng-container matColumnDef=\"expandedDetail\">\n    <td mat-cell *matCellDef=\"let element\" [attr.colspan]=\"columnsToDisplay.length\">\n      <div class=\"example-element-detail\"\n           [@detailExpand]=\"element == expandedElement ? 'expanded' : 'collapsed'\">\n        <div class=\"example-element-diagram\">\n          <div class=\"example-element-position\"> {{element.position}} </div>\n          <div class=\"example-element-symbol\"> {{element.symbol}} </div>\n          <div class=\"example-element-name\"> {{element.name}} </div>\n          <div class=\"example-element-weight\"> {{element.weight}} </div>\n        </div>\n        <div class=\"example-element-description\">\n          {{element.description}}\n          <p>\n            <!-- <span class=\"example-element-description-attribution\"> -- Wikipedia </span> -->\n            <button mat-raised-button color=\"primary\" (click)=\"selectedElement(expandedElement)\">\n                Select <mat-icon aria-label=\"Example icon-button with a heart icon\">check_circle_outline</mat-icon>\n            </button>\n          </p>\n        </div>\n      </div>\n    </td>\n  </ng-container>\n\n  <tr mat-header-row *matHeaderRowDef=\"columnsToDisplay\"></tr>\n  <tr mat-row *matRowDef=\"let element; columns: columnsToDisplay;\"\n      class=\"example-element-row\"\n      [class.example-expanded-row]=\"expandedElement === element\"\n      (mouseenter)=\"mouseOverFn(element)\"\n      (mouseout)=\"mouseOutFn(expandedElement)\">\n  </tr>\n  <tr mat-row *matRowDef=\"let row; columns: ['expandedDetail']\" class=\"example-detail-row\"></tr>\n</table>\n\n\n<!-- Copyright 2018 Google Inc. All Rights Reserved.\n    Use of this source code is governed by an MIT-style license that\n    can be found in the LICENSE file at http://angular.io/license -->"
+module.exports = "\n\n\n<table mat-table\n       [dataSource]=\"dataSource\" multiTemplateDataRows\n       class=\"mat-elevation-z8\">\n  <ng-container matColumnDef=\"{{column}}\" *ngFor=\"let column of columnsToDisplay\">\n    <th mat-header-cell *matHeaderCellDef> {{column}} </th>\n    <td mat-cell *matCellDef=\"let element\"> {{element[column]}} </td>\n  </ng-container>\n\n  <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->\n  <ng-container matColumnDef=\"expandedDetail\">\n    <td mat-cell *matCellDef=\"let element\" [attr.colspan]=\"columnsToDisplay.length\">\n      <div class=\"example-element-detail\"\n           [@detailExpand]=\"element == expandedElement ? 'expanded' : 'collapsed'\">\n        <div class=\"example-element-diagram\">\n          <div class=\"example-element-position\"> {{element.position}} </div>\n          <div class=\"example-element-symbol\"> {{element.symbol}} </div>\n          <div class=\"example-element-name\"> {{element.name}} </div>\n          <div class=\"example-element-weight\"> {{element.weight}} </div>\n        </div>\n        <div class=\"example-element-description\">\n          {{element.description}}\n          <p>\n            <!-- <span class=\"example-element-description-attribution\"> -- Wikipedia </span> -->\n            <button mat-raised-button color=\"primary\" (click)=\"selectedElement(expandedElement)\">\n                Select <mat-icon aria-label=\"Example icon-button with a heart icon\">check_circle_outline</mat-icon>\n            </button>\n          </p>\n        </div>\n      </div>\n    </td>\n  </ng-container>\n\n  <tr mat-header-row *matHeaderRowDef=\"columnsToDisplay\"></tr>\n  <tr mat-row *matRowDef=\"let element; columns: columnsToDisplay;\"\n      class=\"example-element-row\"\n      [class.example-expanded-row]=\"expandedElement === element\"\n      (mouseenter)=\"mouseOverFn(element)\"\n      (mouseout)=\"mouseOutFn(expandedElement)\">\n  </tr>\n  <tr mat-row *matRowDef=\"let row; columns: ['expandedDetail']\" class=\"example-detail-row\"></tr>\n</table>\n\n\n<!-- Copyright 2018 Google Inc. All Rights Reserved.\n    Use of this source code is governed by an MIT-style license that\n    can be found in the LICENSE file at http://angular.io/license -->"
 
 /***/ }),
 
@@ -1181,7 +1290,7 @@ var ELEMENT_DATA = [
 /*!**********************************!*\
   !*** ./src/app/models/models.ts ***!
   \**********************************/
-/*! exports provided: Response, ClinicalFindingView, MedicalMaster, Patient, PrescriptionHistoryView, ToothQuadrentView, TreatmentPlan, MedicineView, FeesBreakupView, FeeConfigView, FeeConfigRequestListView, MedicalHistoryView, MedicineHistoryView, DashboardView */
+/*! exports provided: Response, ClinicalFindingView, MedicalMaster, Patient, PrescriptionHistoryView, ToothQuadrentView, TreatmentPlan, MedicineView, FeesBreakupView, FeeConfigView, FeeConfigRequestListView, MedicalHistoryView, MedicineHistoryView, TreatmentPlanHistoryView, DashboardView */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1199,6 +1308,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FeeConfigRequestListView", function() { return FeeConfigRequestListView; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MedicalHistoryView", function() { return MedicalHistoryView; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MedicineHistoryView", function() { return MedicineHistoryView; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TreatmentPlanHistoryView", function() { return TreatmentPlanHistoryView; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DashboardView", function() { return DashboardView; });
 var Response = /** @class */ (function () {
     function Response() {
@@ -1260,6 +1370,7 @@ var MedicineView = /** @class */ (function () {
 ;
 var FeesBreakupView = /** @class */ (function () {
     function FeesBreakupView() {
+        this.amountPaid = 0;
     }
     return FeesBreakupView;
 }());
@@ -1289,6 +1400,12 @@ var MedicineHistoryView = /** @class */ (function () {
     return MedicineHistoryView;
 }());
 
+var TreatmentPlanHistoryView = /** @class */ (function () {
+    function TreatmentPlanHistoryView() {
+    }
+    return TreatmentPlanHistoryView;
+}());
+
 var DashboardView = /** @class */ (function () {
     function DashboardView() {
     }
@@ -1310,6 +1427,7 @@ var DashboardView = /** @class */ (function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CommonService", function() { return CommonService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _snackhelper_snackhelper_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../snackhelper/snackhelper.component */ "./src/app/snackhelper/snackhelper.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1319,6 +1437,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 var CommonService = /** @class */ (function () {
     function CommonService() {
@@ -1348,7 +1467,7 @@ var CommonService = /** @class */ (function () {
     };
     CommonService.prototype.getParsedDate = function (date) {
         var pd = null;
-        console.log('Date validation: ' + this.validateDate(date));
+        // console.log('Date validation: ' + this.validateDate(date));
         if (this.validateDate(date)) {
             pd = [];
             pd.push(date.getDate());
@@ -1356,6 +1475,52 @@ var CommonService = /** @class */ (function () {
             pd.push(date.getFullYear());
         }
         return pd;
+    };
+    CommonService.prototype.combineValForStringArray = function (stringArr, key, addVal, keyValueSeperator, valueSeperator) {
+        if (keyValueSeperator === void 0) { keyValueSeperator = ' - '; }
+        if (valueSeperator === void 0) { valueSeperator = ','; }
+        var combinedVal = '';
+        for (var index = 0; index <= stringArr.length - 1; index++) {
+            if (stringArr[index].includes(key)) {
+                var insertedVal = stringArr.splice(index, 1)[0];
+                if (insertedVal.includes(addVal)) {
+                    return insertedVal;
+                }
+                else {
+                    combinedVal = this.getSortedValues(insertedVal + valueSeperator + addVal, keyValueSeperator, valueSeperator);
+                    // console.log('Return', combinedVal)
+                    return combinedVal;
+                }
+            }
+        }
+        // console.log('Return', key + keyValueSeperator + addVal)
+        return key + keyValueSeperator + addVal;
+    };
+    CommonService.prototype.getSortedValues = function (values, keyValueSeperator, valueSeperator, isAsync) {
+        if (isAsync === void 0) { isAsync = true; }
+        var keyValueArray = values.split(keyValueSeperator);
+        if (keyValueArray && keyValueArray.length == 2) {
+            var key = keyValueArray[0];
+            var valueStringArray = keyValueArray[1].split(valueSeperator);
+            var valueNumberArray_1 = [];
+            valueStringArray.map(function (vs) {
+                valueNumberArray_1.push(Number(vs));
+            });
+            var sortedNumberArray = valueNumberArray_1.sort(function (n1, n2) {
+                if (isAsync && n1 > n2)
+                    return 1;
+                else
+                    return -1;
+            });
+            return key + keyValueSeperator + sortedNumberArray;
+        }
+        else
+            return values;
+    };
+    CommonService.prototype.showSnackBar = function (snackBar, snackBarModel) {
+        snackBar.openFromComponent(_snackhelper_snackhelper_component__WEBPACK_IMPORTED_MODULE_1__["SnackhelperComponent"], {
+            data: snackBarModel, duration: snackBarModel.duration
+        });
     };
     CommonService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
@@ -1441,12 +1606,6 @@ var DummyResponse = /** @class */ (function () {
                     "clinicalFinding": 1
                 },
                 {
-                    "trtId": 2,
-                    "trtDesc": "Root canal treatment",
-                    "trtName": "RCT",
-                    "clinicalFinding": 4
-                },
-                {
                     "trtId": 3,
                     "trtDesc": "Extraction",
                     "trtName": "Extraction",
@@ -1483,9 +1642,9 @@ var DummyResponse = /** @class */ (function () {
                     "clinicalFinding": 10
                 },
                 {
-                    "trtId": 9,
-                    "trtDesc": "Root canal treatment",
-                    "trtName": "RCT",
+                    "trtId": 10,
+                    "trtDesc": "Other treatment",
+                    "trtName": "Other",
                     "clinicalFinding": 10
                 }
             ]
@@ -1505,6 +1664,26 @@ var DummyResponse = /** @class */ (function () {
                     "ageGroupBean": null,
                     "treatmentPlan": null,
                     "medicineId": 1
+                },
+                {
+                    "medicineName": "med2",
+                    "ageGroup": "10to30",
+                    "treatmentId": 1,
+                    "dosage": "sokale bikale 1 ta khabar por",
+                    "clinicalAvailability": 7,
+                    "diseaseCode": "dCode2",
+                    "ageGroupBean": null,
+                    "treatmentPlan": null,
+                    "medicineId": 2
+                },
+                {
+                    "medicineName": "med3",
+                    "ageGroup": "10to30",
+                    "treatmentId": 1,
+                    "dosage": "sokale bikale 1 ta khabar por",
+                    "clinicalAvailability": 7,
+                    "diseaseCode": "dCode3",
+                    "medicineId": 3
                 }
             ]
         };
@@ -1547,10 +1726,28 @@ var DummyResponse = /** @class */ (function () {
                 {
                     "medicalHistoryName": "Drug hypersensitivity",
                     "medicalHistories": null
+                },
+                {
+                    "medicalHistoryName": "Other",
+                    "medicalHistories": null
                 }
             ]
         };
         this.getFeeConfig = {
+            "status": "SUCCESS",
+            "desc": null,
+            "resp": {
+                "feeConfigId": 18,
+                "ageGroupId": "10to30",
+                "ageGroupPercent": 10,
+                "baseFee": 60,
+                "toothGroupId": 2,
+                "toothGroupPercent": 10,
+                "treatmentPlanId": 1,
+                "totalFee": 72,
+            }
+        };
+        this.getFeeConfigList = {
             "status": "SUCCESS",
             "desc": null,
             "resp": [
@@ -1635,11 +1832,20 @@ var DummyResponse = /** @class */ (function () {
                     "fname": "Stain"
                 },
                 {
-                    "fdesc": "Not known",
+                    "fdesc": "other desc",
                     "fid": 10,
-                    "fname": "Unknown"
+                    "fname": "Others"
                 }
             ]
+        };
+        this.addonClinicalFinding = {
+            "status": "SUCCESS",
+            "desc": null,
+            "resp": {
+                "fdesc": "desc Caries",
+                "fid": 1,
+                "fname": "Caries"
+            }
         };
         this.toothQuadrentList = {
             "status": "SUCCESS",
@@ -1839,6 +2045,709 @@ var DummyResponse = /** @class */ (function () {
                 }
             ]
         };
+        this.getDashboardView = {
+            "status": "SUCCESS",
+            "desc": null,
+            "resp": [
+                {
+                    "pHistory": {
+                        "prescriptionId": 21,
+                        "advice": null,
+                        "chiefComplaint": "Daignose - 06/09/2018",
+                        "clinicalFindings": null,
+                        "investigation": "investigation",
+                        "medicines": null,
+                        "nextAppointment": null,
+                        "note": null,
+                        "patientId": 1,
+                        "provisionalDiagnosis": null,
+                        "treatmentDone": null,
+                        "treatmentPlan": null,
+                        "tsCreated": 1536202734237,
+                        "tsModified": null
+                    },
+                    "fbl": [],
+                    "mhv": [],
+                    "medhv": []
+                },
+                {
+                    "pHistory": {
+                        "prescriptionId": 22,
+                        "advice": null,
+                        "chiefComplaint": "Daignose - 06/09/2018",
+                        "clinicalFindings": null,
+                        "investigation": "investigation",
+                        "medicines": null,
+                        "nextAppointment": null,
+                        "note": null,
+                        "patientId": 1,
+                        "provisionalDiagnosis": null,
+                        "treatmentDone": null,
+                        "treatmentPlan": null,
+                        "tsCreated": 1536202914612,
+                        "tsModified": null
+                    },
+                    "fbl": [
+                        {
+                            "fId": 2,
+                            "amount": 220,
+                            "trtmntPlanRef": 1,
+                            "notes": "testing",
+                            "patientId": 1,
+                            "prescriptionId": null,
+                            "tsCreated": 1536202949447
+                        },
+                        {
+                            "fId": 3,
+                            "amount": 250,
+                            "trtmntPlanRef": 1,
+                            "notes": "testing",
+                            "patientId": 1,
+                            "prescriptionId": null,
+                            "tsCreated": 1536202950009
+                        }
+                    ],
+                    "mhv": [
+                        {
+                            "medicalHistoryId": 13,
+                            "medicalHistoryName": "Asthma",
+                            "note": "note1",
+                            "patientId": 1,
+                            "prescriptionId": 22,
+                            "severity": "severity1",
+                            "startedFrom": 1536203024066
+                        },
+                        {
+                            "medicalHistoryId": 14,
+                            "medicalHistoryName": "Hypertension",
+                            "note": "note2",
+                            "patientId": 1,
+                            "prescriptionId": 22,
+                            "severity": "severity2",
+                            "startedFrom": 1536203072319
+                        }
+                    ],
+                    "medhv": []
+                },
+                {
+                    "pHistory": {
+                        "prescriptionId": 23,
+                        "advice": null,
+                        "chiefComplaint": "Daignose - 06/09/2018",
+                        "clinicalFindings": null,
+                        "investigation": "investigation",
+                        "medicines": null,
+                        "nextAppointment": null,
+                        "note": null,
+                        "patientId": 1,
+                        "provisionalDiagnosis": null,
+                        "treatmentDone": null,
+                        "treatmentPlan": null,
+                        "tsCreated": 1536203437114,
+                        "tsModified": null
+                    },
+                    "fbl": [],
+                    "mhv": [],
+                    "medhv": []
+                },
+                {
+                    "pHistory": {
+                        "prescriptionId": 24,
+                        "advice": "vice",
+                        "chiefComplaint": "SG",
+                        "clinicalFindings": null,
+                        "investigation": "iv",
+                        "medicines": null,
+                        "nextAppointment": null,
+                        "note": null,
+                        "patientId": 1,
+                        "provisionalDiagnosis": null,
+                        "treatmentDone": null,
+                        "treatmentPlan": null,
+                        "tsCreated": 1540350301717,
+                        "tsModified": null
+                    },
+                    "fbl": [
+                        {
+                            "fId": 5,
+                            "amount": 72,
+                            "trtmntPlanRef": 1,
+                            "notes": "aoidv",
+                            "patientId": 1,
+                            "prescriptionId": null,
+                            "tsCreated": 1540350306032
+                        },
+                        {
+                            "fId": 6,
+                            "amount": 72,
+                            "trtmntPlanRef": 1,
+                            "notes": "JVN",
+                            "patientId": 1,
+                            "prescriptionId": null,
+                            "tsCreated": 1540350306032
+                        },
+                        {
+                            "fId": 7,
+                            "amount": 66,
+                            "trtmntPlanRef": 1,
+                            "notes": "KJSDbvu",
+                            "patientId": 1,
+                            "prescriptionId": null,
+                            "tsCreated": 1540350306032
+                        }
+                    ],
+                    "mhv": [
+                        {
+                            "medicalHistoryId": 15,
+                            "medicalHistoryName": "Hypotension",
+                            "note": null,
+                            "patientId": 1,
+                            "prescriptionId": 24,
+                            "severity": null,
+                            "startedFrom": 1540350316701
+                        },
+                        {
+                            "medicalHistoryId": 16,
+                            "medicalHistoryName": "Asthma",
+                            "note": null,
+                            "patientId": 1,
+                            "prescriptionId": 24,
+                            "severity": null,
+                            "startedFrom": 1540350316701
+                        }
+                    ],
+                    "medhv": []
+                },
+                {
+                    "pHistory": {
+                        "prescriptionId": 25,
+                        "advice": "vice",
+                        "chiefComplaint": "SG",
+                        "clinicalFindings": null,
+                        "investigation": "iv",
+                        "medicines": null,
+                        "nextAppointment": null,
+                        "note": null,
+                        "patientId": 1,
+                        "provisionalDiagnosis": null,
+                        "treatmentDone": null,
+                        "treatmentPlan": null,
+                        "tsCreated": 1540351459261,
+                        "tsModified": null
+                    },
+                    "fbl": [
+                        {
+                            "fId": 8,
+                            "amount": 72,
+                            "trtmntPlanRef": 1,
+                            "notes": "aoidv",
+                            "patientId": 1,
+                            "prescriptionId": null,
+                            "tsCreated": 1540351459368
+                        },
+                        {
+                            "fId": 9,
+                            "amount": 72,
+                            "trtmntPlanRef": 1,
+                            "notes": "JVN",
+                            "patientId": 1,
+                            "prescriptionId": null,
+                            "tsCreated": 1540351459368
+                        },
+                        {
+                            "fId": 10,
+                            "amount": 66,
+                            "trtmntPlanRef": 1,
+                            "notes": "KJSDbvu",
+                            "patientId": 1,
+                            "prescriptionId": null,
+                            "tsCreated": 1540351459368
+                        }
+                    ],
+                    "mhv": [
+                        {
+                            "medicalHistoryId": 17,
+                            "medicalHistoryName": "Hypotension",
+                            "note": null,
+                            "patientId": 1,
+                            "prescriptionId": 25,
+                            "severity": null,
+                            "startedFrom": 1540351459391
+                        },
+                        {
+                            "medicalHistoryId": 18,
+                            "medicalHistoryName": "Asthma",
+                            "note": null,
+                            "patientId": 1,
+                            "prescriptionId": 25,
+                            "severity": null,
+                            "startedFrom": 1540351459391
+                        }
+                    ],
+                    "medhv": []
+                },
+                {
+                    "pHistory": {
+                        "prescriptionId": 26,
+                        "advice": "take care",
+                        "chiefComplaint": "test complaint",
+                        "clinicalFindings": null,
+                        "investigation": "done none investigation",
+                        "medicines": null,
+                        "nextAppointment": null,
+                        "note": null,
+                        "patientId": 1,
+                        "provisionalDiagnosis": null,
+                        "treatmentDone": null,
+                        "treatmentPlan": null,
+                        "tsCreated": 1540486813119,
+                        "tsModified": null
+                    },
+                    "fbl": [
+                        {
+                            "fId": 11,
+                            "amount": 96,
+                            "trtmntPlanRef": 1,
+                            "notes": "test one",
+                            "patientId": 1,
+                            "prescriptionId": null,
+                            "tsCreated": 1540486849300
+                        },
+                        {
+                            "fId": 12,
+                            "amount": 72,
+                            "trtmntPlanRef": 1,
+                            "notes": "test two",
+                            "patientId": 1,
+                            "prescriptionId": null,
+                            "tsCreated": 1540486849300
+                        },
+                        {
+                            "fId": 13,
+                            "amount": 72,
+                            "trtmntPlanRef": 1,
+                            "notes": "three",
+                            "patientId": 1,
+                            "prescriptionId": null,
+                            "tsCreated": 1540486849300
+                        }
+                    ],
+                    "mhv": [
+                        {
+                            "medicalHistoryId": 19,
+                            "medicalHistoryName": "Hypotension",
+                            "note": null,
+                            "patientId": 1,
+                            "prescriptionId": 26,
+                            "severity": null,
+                            "startedFrom": 1540486849466
+                        },
+                        {
+                            "medicalHistoryId": 20,
+                            "medicalHistoryName": "Drug hypersensitivity",
+                            "note": null,
+                            "patientId": 1,
+                            "prescriptionId": 26,
+                            "severity": null,
+                            "startedFrom": 1540486849466
+                        }
+                    ],
+                    "medhv": []
+                },
+                {
+                    "pHistory": {
+                        "prescriptionId": 27,
+                        "advice": "take care",
+                        "chiefComplaint": "test complaint",
+                        "clinicalFindings": null,
+                        "investigation": "done none investigation",
+                        "medicines": null,
+                        "nextAppointment": null,
+                        "note": null,
+                        "patientId": 1,
+                        "provisionalDiagnosis": null,
+                        "treatmentDone": null,
+                        "treatmentPlan": null,
+                        "tsCreated": 1540487210384,
+                        "tsModified": null
+                    },
+                    "fbl": [
+                        {
+                            "fId": 14,
+                            "amount": 96,
+                            "trtmntPlanRef": 1,
+                            "notes": "test one",
+                            "patientId": 1,
+                            "prescriptionId": null,
+                            "tsCreated": 1540487210417
+                        },
+                        {
+                            "fId": 15,
+                            "amount": 72,
+                            "trtmntPlanRef": 1,
+                            "notes": "test two",
+                            "patientId": 1,
+                            "prescriptionId": null,
+                            "tsCreated": 1540487210417
+                        },
+                        {
+                            "fId": 16,
+                            "amount": 72,
+                            "trtmntPlanRef": 1,
+                            "notes": "three",
+                            "patientId": 1,
+                            "prescriptionId": null,
+                            "tsCreated": 1540487210417
+                        }
+                    ],
+                    "mhv": [
+                        {
+                            "medicalHistoryId": 21,
+                            "medicalHistoryName": "Hypotension",
+                            "note": null,
+                            "patientId": 1,
+                            "prescriptionId": 27,
+                            "severity": null,
+                            "startedFrom": 1540487210448
+                        },
+                        {
+                            "medicalHistoryId": 22,
+                            "medicalHistoryName": "Drug hypersensitivity",
+                            "note": null,
+                            "patientId": 1,
+                            "prescriptionId": 27,
+                            "severity": null,
+                            "startedFrom": 1540487210448
+                        }
+                    ],
+                    "medhv": []
+                },
+                {
+                    "pHistory": {
+                        "prescriptionId": 28,
+                        "advice": "take care",
+                        "chiefComplaint": "test complaint",
+                        "clinicalFindings": null,
+                        "investigation": "done none investigation",
+                        "medicines": null,
+                        "nextAppointment": null,
+                        "note": null,
+                        "patientId": 1,
+                        "provisionalDiagnosis": null,
+                        "treatmentDone": null,
+                        "treatmentPlan": null,
+                        "tsCreated": 1540487380443,
+                        "tsModified": null
+                    },
+                    "fbl": [
+                        {
+                            "fId": 17,
+                            "amount": 96,
+                            "trtmntPlanRef": 1,
+                            "notes": "test one",
+                            "patientId": 1,
+                            "prescriptionId": null,
+                            "tsCreated": 1540487380455
+                        },
+                        {
+                            "fId": 18,
+                            "amount": 72,
+                            "trtmntPlanRef": 1,
+                            "notes": "test two",
+                            "patientId": 1,
+                            "prescriptionId": null,
+                            "tsCreated": 1540487380455
+                        },
+                        {
+                            "fId": 19,
+                            "amount": 72,
+                            "trtmntPlanRef": 1,
+                            "notes": "three",
+                            "patientId": 1,
+                            "prescriptionId": null,
+                            "tsCreated": 1540487380455
+                        }
+                    ],
+                    "mhv": [
+                        {
+                            "medicalHistoryId": 23,
+                            "medicalHistoryName": "Hypotension",
+                            "note": null,
+                            "patientId": 1,
+                            "prescriptionId": 28,
+                            "severity": null,
+                            "startedFrom": 1540487380482
+                        },
+                        {
+                            "medicalHistoryId": 24,
+                            "medicalHistoryName": "Drug hypersensitivity",
+                            "note": null,
+                            "patientId": 1,
+                            "prescriptionId": 28,
+                            "severity": null,
+                            "startedFrom": 1540487380482
+                        }
+                    ],
+                    "medhv": [
+                        {
+                            "medId": -45,
+                            "diseaseCode": "dCode1",
+                            "diseaseName": "dName1",
+                            "dosage": "sokale bikale 1 ta khabar por",
+                            "medicineName": "med1",
+                            "patientId": 1,
+                            "prescriptionId": 28
+                        },
+                        {
+                            "medId": -44,
+                            "diseaseCode": null,
+                            "diseaseName": null,
+                            "dosage": "once a day",
+                            "medicineName": "aspirin",
+                            "patientId": 1,
+                            "prescriptionId": 28
+                        },
+                        {
+                            "medId": 8,
+                            "diseaseCode": null,
+                            "diseaseName": null,
+                            "dosage": null,
+                            "medicineName": "Test medicine",
+                            "patientId": 1,
+                            "prescriptionId": 28
+                        }
+                    ]
+                },
+                {
+                    "pHistory": {
+                        "prescriptionId": 30,
+                        "advice": "ass advice",
+                        "chiefComplaint": "Pain in ass",
+                        "clinicalFindings": "Caries -  32 31 33,Grossly decayed -  12 11,Grossly decayed -  22 21,Periodontities -  38",
+                        "investigation": "ass investigation",
+                        "medicines": null,
+                        "nextAppointment": null,
+                        "note": null,
+                        "patientId": 1,
+                        "provisionalDiagnosis": null,
+                        "treatmentDone": null,
+                        "treatmentPlan": null,
+                        "tsCreated": 1540496880752,
+                        "tsModified": null
+                    },
+                    "fbl": [
+                        {
+                            "fId": 24,
+                            "amount": 72,
+                            "trtmntPlanRef": 1,
+                            "notes": "ass1",
+                            "patientId": 1,
+                            "prescriptionId": null,
+                            "tsCreated": 1540496931672
+                        },
+                        {
+                            "fId": 25,
+                            "amount": 119,
+                            "trtmntPlanRef": 2,
+                            "notes": "ass2",
+                            "patientId": 1,
+                            "prescriptionId": null,
+                            "tsCreated": 1540496931672
+                        },
+                        {
+                            "fId": 26,
+                            "amount": 72,
+                            "trtmntPlanRef": 1,
+                            "notes": "ass3",
+                            "patientId": 1,
+                            "prescriptionId": null,
+                            "tsCreated": 1540496931672
+                        },
+                        {
+                            "fId": 27,
+                            "amount": 119,
+                            "trtmntPlanRef": 2,
+                            "notes": "ass4",
+                            "patientId": 1,
+                            "prescriptionId": null,
+                            "tsCreated": 1540496931672
+                        }
+                    ],
+                    "mhv": [
+                        {
+                            "medicalHistoryId": 27,
+                            "medicalHistoryName": "Hypertension",
+                            "note": null,
+                            "patientId": 1,
+                            "prescriptionId": 30,
+                            "severity": null,
+                            "startedFrom": 1540496931905
+                        },
+                        {
+                            "medicalHistoryId": 28,
+                            "medicalHistoryName": "Hypotension",
+                            "note": null,
+                            "patientId": 1,
+                            "prescriptionId": 30,
+                            "severity": null,
+                            "startedFrom": 1540496931905
+                        },
+                        {
+                            "medicalHistoryId": 29,
+                            "medicalHistoryName": "Asthma",
+                            "note": null,
+                            "patientId": 1,
+                            "prescriptionId": 30,
+                            "severity": null,
+                            "startedFrom": 1540496931905
+                        }
+                    ],
+                    "medhv": [
+                        {
+                            "medId": 10,
+                            "diseaseCode": "dCode1",
+                            "diseaseName": "dName1",
+                            "dosage": "sokale bikale 1 ta khabar por",
+                            "medicineName": "med1",
+                            "patientId": 1,
+                            "prescriptionId": 30
+                        },
+                        {
+                            "medId": 11,
+                            "diseaseCode": "dCode1",
+                            "diseaseName": "dName1",
+                            "dosage": "sokale bikale 1 ta khabar por",
+                            "medicineName": "med1",
+                            "patientId": 1,
+                            "prescriptionId": 30
+                        },
+                        {
+                            "medId": 12,
+                            "diseaseCode": null,
+                            "diseaseName": null,
+                            "dosage": "ass",
+                            "medicineName": "ass medicine",
+                            "patientId": 1,
+                            "prescriptionId": 30
+                        }
+                    ]
+                },
+                {
+                    "pHistory": {
+                        "prescriptionId": 31,
+                        "advice": "ass advice",
+                        "chiefComplaint": "Pain in ass",
+                        "clinicalFindings": "Caries -  32 31 33,Grossly decayed -  12 11,Grossly decayed -  22 21,Periodontities -  38",
+                        "investigation": "ass investigation",
+                        "medicines": null,
+                        "nextAppointment": 1540837800000,
+                        "note": "ass note",
+                        "patientId": 1,
+                        "provisionalDiagnosis": "ass diagnosis",
+                        "treatmentDone": "ass treatment done",
+                        "treatmentPlan": "RCT,Extraction",
+                        "tsCreated": 1540517815418,
+                        "tsModified": null
+                    },
+                    "fbl": [
+                        {
+                            "fId": 28,
+                            "amount": 10,
+                            "trtmntPlanRef": 1,
+                            "notes": "ass1",
+                            "patientId": 1,
+                            "prescriptionId": null,
+                            "tsCreated": 1540517834920
+                        },
+                        {
+                            "fId": 29,
+                            "amount": 20,
+                            "trtmntPlanRef": 2,
+                            "notes": "ass2",
+                            "patientId": 1,
+                            "prescriptionId": null,
+                            "tsCreated": 1540517834920
+                        },
+                        {
+                            "fId": 30,
+                            "amount": 40,
+                            "trtmntPlanRef": 1,
+                            "notes": "ass3",
+                            "patientId": 1,
+                            "prescriptionId": null,
+                            "tsCreated": 1540517834920
+                        },
+                        {
+                            "fId": 31,
+                            "amount": 60,
+                            "trtmntPlanRef": 2,
+                            "notes": "ass4",
+                            "patientId": 1,
+                            "prescriptionId": null,
+                            "tsCreated": 1540517834920
+                        }
+                    ],
+                    "mhv": [
+                        {
+                            "medicalHistoryId": 30,
+                            "medicalHistoryName": "Hypertension",
+                            "note": null,
+                            "patientId": 1,
+                            "prescriptionId": 31,
+                            "severity": null,
+                            "startedFrom": 1540517835116
+                        },
+                        {
+                            "medicalHistoryId": 31,
+                            "medicalHistoryName": "Hypotension",
+                            "note": null,
+                            "patientId": 1,
+                            "prescriptionId": 31,
+                            "severity": null,
+                            "startedFrom": 1540517835116
+                        },
+                        {
+                            "medicalHistoryId": 32,
+                            "medicalHistoryName": "Asthma",
+                            "note": null,
+                            "patientId": 1,
+                            "prescriptionId": 31,
+                            "severity": null,
+                            "startedFrom": 1540517835116
+                        }
+                    ],
+                    "medhv": [
+                        {
+                            "medId": 13,
+                            "diseaseCode": "dCode1",
+                            "diseaseName": "dName1",
+                            "dosage": "sokale bikale 1 ta khabar por",
+                            "medicineName": "med1",
+                            "patientId": 1,
+                            "prescriptionId": 31
+                        },
+                        {
+                            "medId": 14,
+                            "diseaseCode": "dCode1",
+                            "diseaseName": "dName1",
+                            "dosage": "sokale bikale 1 ta khabar por",
+                            "medicineName": "med1",
+                            "patientId": 1,
+                            "prescriptionId": 31
+                        },
+                        {
+                            "medId": 15,
+                            "diseaseCode": null,
+                            "diseaseName": null,
+                            "dosage": "ass",
+                            "medicineName": "ass medicine",
+                            "patientId": 1,
+                            "prescriptionId": 31
+                        }
+                    ]
+                }
+            ]
+        };
     }
     return DummyResponse;
 }());
@@ -1899,7 +2808,9 @@ var HttpcommService = /** @class */ (function () {
         this.getFeeConfigToothGrpPart2Url = '&tooth_grp_idx=';
         this.getFeeConfigTrtIdPart3Url = '&trtmnt_id=';
         this.getFeeConfigListUrl = this.baseUrl + 'fee/get-config-list';
-        this.addDashboardUrl = this.baseUrl + 'dashboard/add-prescription';
+        this.addDashboardUrl = this.baseUrl + 'dashboard/add-dashboard';
+        this.getDashboard = this.baseUrl + 'dashboard/get-dashboard?patientId=';
+        this.postAddClinicalFindingUrl = this.baseUrl + 'clinical-finding/add-clinical-finding';
         this.httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpHeaders"]({
                 'Accept': 'application/json',
@@ -1911,6 +2822,14 @@ var HttpcommService = /** @class */ (function () {
     }
     HttpcommService.prototype.parseData = function (s) {
         return JSON.parse(JSON.stringify(s));
+    };
+    HttpcommService.prototype.getDashboardView = function (patientId) {
+        if (this.dummy) {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(this.parseData(this.dummyResp.getDashboardView));
+        }
+        else {
+            return this.http.get(this.baseUrl + 'dashboard/get-dashboard?patientId=' + patientId, this.httpOptions);
+        }
     };
     HttpcommService.prototype.getAgeGroup = function (age) {
         if (this.dummy) {
@@ -1994,6 +2913,14 @@ var HttpcommService = /** @class */ (function () {
         }
     };
     ;
+    HttpcommService.prototype.getAllMedicine = function () {
+        if (this.dummy) {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(this.parseData(this.dummyResp.getMedicine));
+        }
+        else {
+            return this.genericGetRequest(this.baseUrl + 'medicine/');
+        }
+    };
     HttpcommService.prototype.getMedicineView = function (url) {
         if (this.dummy) {
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(this.parseData(this.dummyResp.getMedicine));
@@ -2002,9 +2929,18 @@ var HttpcommService = /** @class */ (function () {
             return this.genericGetRequest(url);
         }
     };
-    HttpcommService.prototype.getFeeConfigList = function (age, feeReqListView) {
+    HttpcommService.prototype.getFeeConfig = function (age, tooth_grp_idx, treatmentId) {
         if (this.dummy) {
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(this.parseData(this.dummyResp.getFeeConfig));
+        }
+        else {
+            var url = this.getFeeConfigUrl + this.getFeeConfigAgeGrpPart1Url + age + this.getFeeConfigToothGrpPart2Url + tooth_grp_idx + this.getFeeConfigTrtIdPart3Url + treatmentId;
+            return this.genericGetRequest(url);
+        }
+    };
+    HttpcommService.prototype.getFeeConfigList = function (age, feeReqListView) {
+        if (this.dummy) {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(this.parseData(this.dummyResp.getFeeConfigList));
         }
         else {
             var url = this.getFeeConfigListUrl + this.getFeeConfigAgeGrpPart1Url + age;
@@ -2014,6 +2950,20 @@ var HttpcommService = /** @class */ (function () {
     HttpcommService.prototype.addDashBoard = function (req) {
         if (!this.dummy) {
             return this.genericPostRequest(this.addDashboardUrl, req, 'Add dashboard');
+        }
+        else {
+            var resp = new _models_models__WEBPACK_IMPORTED_MODULE_3__["Response"]();
+            resp.status = 'SUCCESS';
+            resp.resp = req;
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(resp);
+        }
+    };
+    HttpcommService.prototype.addClinicalFinding = function (req) {
+        if (this.dummy) {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(this.parseData(this.dummyResp.addonClinicalFinding));
+        }
+        else {
+            return this.genericPostRequest(this.postAddClinicalFindingUrl, req, 'Add cf');
         }
     };
     HttpcommService.prototype.genericGetRequest = function (url, notation) {
@@ -2042,6 +2992,30 @@ var HttpcommService = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/snackhelper/snackbar-model.ts":
+/*!***********************************************!*\
+  !*** ./src/app/snackhelper/snackbar-model.ts ***!
+  \***********************************************/
+/*! exports provided: SnackbarModel */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SnackbarModel", function() { return SnackbarModel; });
+var SnackbarModel = /** @class */ (function () {
+    function SnackbarModel() {
+        this.msg = '';
+        this.duration = 3000;
+        this.isError = false;
+        this.action = 'OK';
+    }
+    return SnackbarModel;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/snackhelper/snackhelper.component.css":
 /*!*******************************************************!*\
   !*** ./src/app/snackhelper/snackhelper.component.css ***!
@@ -2049,7 +3023,7 @@ var HttpcommService = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".error-snack {\r\n    color: darkturquoise;\r\n}"
+module.exports = ".error-snack {\r\n    color: rgb(209, 77, 0);\r\n}\r\n.info-snack {\r\n    color: yellowgreen;\r\n}\r\n.snackbtn {\r\n    float: right;\r\n    padding-right: 5px;\r\n}"
 
 /***/ }),
 
@@ -2060,7 +3034,7 @@ module.exports = ".error-snack {\r\n    color: darkturquoise;\r\n}"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<span class=\"error-snack\">Oops! Something went wrong</span>\n"
+module.exports = "<div *ngIf=\"isError\">\n    <span *ngIf=\"msg?.length > 0\" class=\"error-snack\">{{msg}}\n        <button class=\"snackbtn\" mat-raised-button color=\"primary\" (click)=\"actionCallback()\">{{action}}</button>\n    </span>\n    <span *ngIf=\"msg?.length == 0\" class=\"error-snack\">Oops! Something went wrong\n        <button class=\"snackbtn\" mat-raised-button color=\"primary\" (click)=\"actionCallback()\">{{action}}</button>\n    </span>\n</div>\n<span *ngIf=\"!isError\" class=\"info-snack\">{{msg}}\n    <button class=\"snackbtn\" mat-raised-button color=\"primary\" (click)=\"actionCallback()\">{{action}}</button>\n</span>"
 
 /***/ }),
 
@@ -2075,6 +3049,8 @@ module.exports = "<span class=\"error-snack\">Oops! Something went wrong</span>\
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SnackhelperComponent", function() { return SnackhelperComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
+/* harmony import */ var _snackbar_model__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./snackbar-model */ "./src/app/snackhelper/snackbar-model.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2084,11 +3060,30 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (undefined && undefined.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+
+
 
 var SnackhelperComponent = /** @class */ (function () {
-    function SnackhelperComponent() {
+    function SnackhelperComponent(data) {
+        this.data = data;
+        // snackBarRef: MatSnackBarRef<SimpleSnackBar>
+        // snackBarOnDismissal: () => void
+        // snackBarOnAction: () => void
+        //public snackBar: MatSnackBar,
+        this.isError = false;
+        this.msg = '';
+        this.isError = data.isError;
+        this.action = data.action;
+        if (data.msg && data.msg.length > 0) {
+            this.msg = data.msg;
+        }
     }
-    SnackhelperComponent.prototype.ngOnInit = function () {
+    SnackhelperComponent.prototype.ngOnInit = function () { };
+    SnackhelperComponent.prototype.actionCallback = function () {
+        this.data.callback();
     };
     SnackhelperComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -2096,7 +3091,8 @@ var SnackhelperComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./snackhelper.component.html */ "./src/app/snackhelper/snackhelper.component.html"),
             styles: [__webpack_require__(/*! ./snackhelper.component.css */ "./src/app/snackhelper/snackhelper.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __param(0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"])(_angular_material__WEBPACK_IMPORTED_MODULE_1__["MAT_SNACK_BAR_DATA"])),
+        __metadata("design:paramtypes", [_snackbar_model__WEBPACK_IMPORTED_MODULE_2__["SnackbarModel"]])
     ], SnackhelperComponent);
     return SnackhelperComponent;
 }());

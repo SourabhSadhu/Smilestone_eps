@@ -1,1 +1,11 @@
-<span class="error-snack">Oops! Something went wrong</span>
+<div *ngIf="isError">
+    <span *ngIf="msg?.length > 0" class="error-snack">{{msg}}
+        <button class="snackbtn" mat-raised-button color="primary" (click)="actionCallback()">{{action}}</button>
+    </span>
+    <span *ngIf="msg?.length == 0" class="error-snack">Oops! Something went wrong
+        <button class="snackbtn" mat-raised-button color="primary" (click)="actionCallback()">{{action}}</button>
+    </span>
+</div>
+<span *ngIf="!isError" class="info-snack">{{msg}}
+    <button class="snackbtn" mat-raised-button color="primary" (click)="actionCallback()">{{action}}</button>
+</span>

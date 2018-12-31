@@ -45,6 +45,8 @@ public class TreatmentPlanHistory implements Serializable {
 
 	@Column(name = "ts_modified")
 	private Timestamp tsModified;
+	
+	private String status;
 
 	public TreatmentPlanHistory() {
 	}
@@ -119,6 +121,14 @@ public class TreatmentPlanHistory implements Serializable {
 
 	public void setTsModified(Timestamp tsModified) {
 		this.tsModified = tsModified;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

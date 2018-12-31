@@ -19,6 +19,7 @@ import com.my.portal.ErrorCode;
 import com.my.portal.ValidationException;
 import com.my.portal.model.FeeConfigRequestListView;
 import com.my.portal.model.FeeConfigView;
+import com.my.portal.model.FeesBreakupView;
 import com.my.portal.service.FeeConfigService;
 import com.my.portal.service.FeesBreakupService;
 
@@ -88,6 +89,23 @@ public class FeeController {
 				ValidationException ve = (ValidationException) e;
 				return new ResponseEntity<>(CommonUtils.getResp(null, ve.getValidationPayload()), HttpStatus.OK);
 			}else {
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+		}
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/update-fee-config", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<?> updateFeeConfig(@RequestBody FeesBreakupView view) {
+
+		try {
+			return new ResponseEntity<>(CommonUtils.getResp(fbService.updateFeePaid(view)), HttpStatus.OK);
+		} catch (Exception e) {
+			if(e instanceof ValidationException) {
+				ValidationException ve = (ValidationException) e;
+				return new ResponseEntity<>(CommonUtils.getResp(null, ve.getValidationPayload()), HttpStatus.OK);
+			}else {
+				e.printStackTrace();
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			}
 		}

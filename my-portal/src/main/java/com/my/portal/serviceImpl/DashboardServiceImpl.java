@@ -21,6 +21,7 @@ import com.my.portal.model.DashboardView;
 import com.my.portal.model.PatientView;
 import com.my.portal.model.PrescriptionHistoryView;
 import com.my.portal.model.TreatmentPlanHistoryView;
+import com.my.portal.model.TreatmentPlanStatus;
 import com.my.portal.repositories.FeesBreakupRepository;
 import com.my.portal.repositories.MedicalHistoryRepository;
 import com.my.portal.repositories.MedicineHistoryRepository;
@@ -106,6 +107,7 @@ public class DashboardServiceImpl implements DashboardService {
 
 						for (TreatmentPlanHistoryView tphv : v.getTphv()) {
 							TreatmentPlanHistory tphEntity = tphService.map(tphv);
+							tphEntity.setStatus(TreatmentPlanStatus.PENDING.getDesc());
 							tphEntity.setPatientId(phv.getPatientId());
 							tphEntity.setPrescriptionId(phEntity.getPrescriptionId());
 							tphRepo.save(tphEntity);

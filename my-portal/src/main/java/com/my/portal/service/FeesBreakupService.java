@@ -27,4 +27,6 @@ public interface FeesBreakupService {
 	FeesBreakup map(FeesBreakupView view);
 	List<FeesBreakupView> mapAll(List<FeesBreakup> el);
 	List<FeesBreakup> map(List<FeesBreakupView> vl);
+
+	FeesBreakupView updateFeePaid(FeesBreakupView view);
 }

@@ -1,5 +1,7 @@
 package com.my.portal.repositories;
 
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,4 +22,5 @@ public interface FeesBreakupRepository extends JpaRepository<FeesBreakup, Long> 
 
 	List<FeesBreakup> findByFeesBreakup(@Param("patientId") Long patientId,
 			@Param("prescriptionId") Long prescriptionId, @Param("clinicalFindingId") Long clinicalFindingId);
+	
 }

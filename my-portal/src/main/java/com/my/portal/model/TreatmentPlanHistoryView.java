@@ -14,6 +14,7 @@ public class TreatmentPlanHistoryView implements Serializable {
 	private String toothIndex;
 	private Long tsCreated;
 	private Long tsModified;
+	private String status;
 
 	public TreatmentPlanHistoryView() {
 	}
@@ -90,4 +91,13 @@ public class TreatmentPlanHistoryView implements Serializable {
 		this.tsModified = tsModified;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	
 }

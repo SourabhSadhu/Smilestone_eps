@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -72,10 +73,27 @@ public class FeesBreakupServiceImpl implements FeesBreakupService {
 	}
 	
 	@Override
+	@Transactional(isolation = Isolation.READ_COMMITTED)
+	public FeesBreakupView updateFeePaid(FeesBreakupView view){
+		if(null != view && view.getAmountPaid() != null && view.getfId() != null){
+			FeesBreakup prevEntry = repo.findOne(view.getfId());
+			if(null != prevEntry){
+				prevEntry.setAmountPaid(view.getAmountPaid());
+				prevEntry.setPaymentTs(new Timestamp(System.currentTimeMillis()));
+				return map(repo.saveAndFlush(prevEntry));
+			}else{
+				throw new ValidationException(ErrorCode.NOT_FOUND);
+			}
+		}else{
+			throw new ValidationException(ErrorCode.INVALID_INPUT);
+		}
+	}
+	
+	@Override
 	public FeesBreakupView map(FeesBreakup e){
 		FeesBreakupView v = new FeesBreakupView();
 		if(null != e){
-			v.setAmount(e.getAmount());
+			/*v.setAmount(e.getAmount());
 			v.setAmountPaid(e.getAmountPaid());
 			v.setfId(e.getFId());
 			v.setNotes(e.getNotes());
@@ -85,7 +103,8 @@ public class FeesBreakupServiceImpl implements FeesBreakupService {
 //			v.setPrescriptionHistory(phService.map(e.getPrescriptionHistory()));
 			v.setTrtmntPlanRef(e.getTrtmntPlanRef());
 			v.setPatientId(e.getPatientId());
-			v.setPrescriptionId(v.getPrescriptionId());
+			v.setPrescriptionId(v.getPrescriptionId());*/
+			BeanUtils.copyProperties(e, v);
 		}
 		return v;
 	}
@@ -130,5 +149,18 @@ public class FeesBreakupServiceImpl implements FeesBreakupService {
 		}
 		return el;
 	}
-	
+
+	public static void main(String[] args) {
+		List<String> test = new ArrayList<>();
+		test.add("Sam");
+		test.add("Jam");
+		test.add("Jam");
+		for(String str : test){
+			str += "50";
+		}
+		System.out.println(test);
+		char ch;
+		ch = "Test".charAt(-1);
+		System.out.println(ch);
+	}
 }

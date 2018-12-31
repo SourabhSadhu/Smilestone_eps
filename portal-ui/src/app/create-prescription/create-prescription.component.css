@@ -36,7 +36,9 @@
 .example-margin {
   /* margin: 0 10px; */
   margin-top: 20px;
-  margin : 5px 10px;
+  margin-left : 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 .mat-radio-button ~ .mat-radio-button {
   padding: 36px;
@@ -156,3 +158,36 @@ tr.mat-footer-row {
   display: block;
   /* Other styles here */
 }
+.icon-add-fee {
+  background: url("../images/icons8-plus.svg");
+  height: 27px;
+  width: 27px;
+  display: block;
+}
+.svg-icon{
+  margin: 5px auto auto;
+  padding: 0;
+  display: inline-block;
+  background-repeat: no-repeat no-repeat;
+  pointer-events: none;
+}
+.md-button.logo {
+  height: 7rem;
+  width: 7rem;
+}
+.logo-image {
+  height: 100%;
+  width: 100%;
+}
+/* Putting table headers in center */
+/* mat-cell{
+  display:flex !important;
+  justify-content:center!important;
+  
+}
+
+mat-header-cell {
+  display:flex;
+  justify-content:center;
+  text-align: center;
+} */

@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>Add Fee</h1>
+<div mat-dialog-content>
+    <form class="example-form">
+        <mat-form-field class="example-full-width">
+            <input type="text" matInput placeholder="Select treatment plan" aria-label="Number" [formControl]="treatmentPlanForm"
+                [matAutocomplete]="auto3">
+            <mat-autocomplete autoActiveFirstOption #auto3="matAutocomplete">
+                <mat-option *ngFor="let treatmentPlanDesc of treatmentPlanDescsObservable | async" [value]="treatmentPlanDesc">
+                    {{treatmentPlanDesc}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </form>
+    <mat-divider></mat-divider>
+
+    <mat-form-field class="example-margin">
+        <input matInput type="number" placeholder="Total Fee" min=1 [(ngModel)]="feeConfigView.totalFee" style="text-align:center" required>
+    </mat-form-field>
+    <mat-form-field class="example-margin">
+        <input matInput type="number" placeholder="Amount Paid" min=1 [(ngModel)]="feeConfigView.amountPaid" style="text-align:center">
+    </mat-form-field>
+    <mat-form-field class="example-margin">
+        <input matInput placeholder="Note" [(ngModel)]="feeConfigView.notes" style="text-align:center">
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Close</button>
+    <button mat-button (click)="closeDialog()">Done</button>
+</div>

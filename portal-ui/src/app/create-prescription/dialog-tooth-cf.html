@@ -10,7 +10,7 @@
     </mat-list> -->
     <form class="example-form">
         <mat-form-field class="example-full-width">
-            <input type="text" matInput placeholder="Pick one" aria-label="Number" [formControl]="clinicalFindingForm"
+            <input type="text" matInput placeholder="Select C/F" aria-label="Number" [formControl]="clinicalFindingForm"
                 [matAutocomplete]="auto2">
             <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
                 <mat-option *ngFor="let cfdd of filteredCfList | async" [value]="cfdd">

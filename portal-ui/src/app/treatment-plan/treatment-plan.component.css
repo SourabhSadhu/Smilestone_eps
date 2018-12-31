@@ -1,0 +1,144 @@
+.example-stretched-tabs {
+    max-width: 1000px;
+  }
+  .example-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .example-container > * {
+    width: 100%;
+  }
+  .example-card-parent {
+    /* max-width: 800px; */
+    min-width: 50px;
+    margin-left: 50px;
+    margin-top: 30px;
+    width : 100%;
+  }
+  .example-card {
+    /* max-width: 800px; */
+    min-width: 50px;
+    margin: 30px;
+    /* width : 100%; */
+  }
+  .expansion-margin {
+    max-width: 500px;
+    margin-left: 150px;
+    margin-top: 30px;
+  }
+  .example-section {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 60px;
+  }
+  .example-margin {
+    /* margin: 0 10px; */
+    margin-top: 20px;
+    margin-left : 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+  .example-short-margin {    
+    margin-right: 10px;
+  }
+  .mat-radio-button ~ .mat-radio-button {
+    padding: 36px;
+  }
+  
+  table {
+    width: 100%;
+  }
+  
+  tr.example-detail-row {
+    height: 0;
+  }
+  
+  tr.example-element-row:not(.example-expanded-row):hover {
+    background: #f5f5f5;
+  }
+  
+  tr.example-element-row:not(.example-expanded-row):active {
+    background: #efefef;
+  }
+  
+  .example-element-row td {
+    border-bottom-width: 0;
+  }
+  
+  .example-element-detail {
+    overflow: hidden;
+    display: flex;
+  }
+  
+  .example-element-diagram {
+    min-width: 80px;
+    border: 2px solid black;
+    padding: 8px;
+    font-weight: lighter;
+    margin: 8px 0;
+    height: 104px;
+  }
+  
+  .example-element-symbol {
+    font-weight: bold;
+    font-size: 40px;
+    line-height: normal;
+  }
+  
+  .example-element-description {
+    padding: 16px;
+  }
+  
+  /* .example-element-description-attribution {
+    opacity: 0.5;
+  } */
+  .example-full-width {
+    width: 100%;
+  }
+  .example-half-width{
+    width : 50%;
+  }
+  .example-grid-margin{
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-right: 50px;
+  }
+  .rcorners2 {
+    border-radius: 25px;
+    border: 2px solid #73AD21;
+    /* padding-left: 4px;  
+    width: 200px;
+    height: 150px;     */
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+ 
+  table {
+    width: 100%;
+  }
+  
+  tr.mat-footer-row {
+    font-weight: bold;
+  }
+ 
+  tr{
+    text-align:center !important
+  }
+  th th.mat-header-cell{
+    text-align:center !important
+  }
+  td{
+    text-align:center !important
+  }
+
+  .mat-table-sticky {
+    border-top: 1px solid #e0e0e0;
+  }
+  .example-section {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 60px;
+  }

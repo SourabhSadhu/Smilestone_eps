@@ -93,7 +93,7 @@ export class FeesBreakupView {
 
 export class FeeConfigView {
     feeConfigId: number;
-    ageGroupid: string;
+    ageGroupId: string;
     ageGroupPercent: number;
     baseFee: number;
     toothGroupid: number;
@@ -138,7 +138,14 @@ export class TreatmentPlanHistoryView{
     toothIndex : number;
     tsCreated : number;
     tsModified : number;
+    status : TreatmentPlanStatus;
 }
+
+export enum TreatmentPlanStatus {
+    COMPLETED = "Completed", 
+    PENDING = "Pending"
+}
+
 export class DashboardView {
     pHistory: PrescriptionHistoryView;
     fbl: FeesBreakupView[];
@@ -146,3 +153,20 @@ export class DashboardView {
     medhv: MedicineHistoryView[];
     tphv: TreatmentPlanHistoryView[];
 }
+
+
+
+
+
+export class CompositDialogBoxData {
+    toothQuadrentsComposite: ToothQuadrentView[];
+    clinicalFindingsComposite: ClinicalFindingView[];
+  }
+  
+  export class ClinicalFindingToothMapping {
+    clinicalFinding: ClinicalFindingView;
+    teeth: ToothQuadrentView;
+    treatmentPlanName: string;
+    customTrtmntPlan: Boolean = false;
+    treatmentPlanViewModel: string = ''
+  }

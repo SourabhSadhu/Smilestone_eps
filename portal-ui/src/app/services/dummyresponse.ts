@@ -582,36 +582,39 @@ export class DummyResponse {
         "tphv": [
           {
             "clinicalFinding": "Periodontities",
-            "note": null,
+            "note": "Test check",
             "patientId": 1,
             "prescriptionId": 34,
             "toothIndex": "35",
             "tsCreated": 1542426513622,
             "tsModified": null,
             "tid": 3,
-            "tname": "RCT"
+            "tname": "RCT",
+            "status": "Completed"
           },
           {
             "clinicalFinding": "Periodontities",
-            "note": null,
+            "note": "Test check",
             "patientId": 1,
             "prescriptionId": 34,
             "toothIndex": "34",
             "tsCreated": 1542426534816,
             "tsModified": null,
             "tid": 4,
-            "tname": "Extraction"
+            "tname": "Extraction",
+            "status": "Completed"
           },
           {
             "clinicalFinding": "Periodontities",
-            "note": null,
+            "note": "Test check",
             "patientId": 1,
             "prescriptionId": 34,
             "toothIndex": "33",
             "tsCreated": 1542426536451,
             "tsModified": null,
             "tid": 5,
-            "tname": "Extraction"
+            "tname": "Extraction",
+            "status": "Completed"
           },
           {
             "clinicalFinding": "Stain",
@@ -622,7 +625,8 @@ export class DummyResponse {
             "tsCreated": 1542426537785,
             "tsModified": null,
             "tid": 6,
-            "tname": "RCT"
+            "tname": "RCT",
+            "status": "Pending"
           },
           {
             "clinicalFinding": "Stain",
@@ -633,7 +637,8 @@ export class DummyResponse {
             "tsCreated": 1542426542147,
             "tsModified": null,
             "tid": 7,
-            "tname": "RCT"
+            "tname": "RCT",
+            "status": "Pending"
           }
         ]
       }

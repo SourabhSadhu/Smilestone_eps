@@ -33,6 +33,7 @@ export class HttpcommService {
   addDashboardUrl = this.baseUrl + 'dashboard/add-dashboard';
   getDashboard = this.baseUrl + 'dashboard/get-dashboard?patientId=';
   postAddClinicalFindingUrl = this.baseUrl + 'clinical-finding/add-clinical-finding'
+  getAddTreatmentPlanUrl = this.baseUrl + 'trtmnt/add-treatment-plan'
   
   constructor(public http : HttpClient) {
     this.dummyResp = new DummyResponse();
@@ -60,7 +61,7 @@ export class HttpcommService {
 
   getAgeGroup(age : string) : Observable<Response>{
     if(this.dummy){      
-      return of(this.parseData(this.dummyResp.getPatient));
+      return of(this.parseData(this.dummyResp.getAgeGroup));
     }else{
       return this.http.get<Response>(this.ageGrpUrl+age, this.httpOptions);
     }

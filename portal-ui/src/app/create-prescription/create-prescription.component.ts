@@ -2,7 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import {
   ClinicalFindingView, MedicalMaster, Patient, PrescriptionHistoryView,
   ToothQuadrentView, TreatmentPlan, FeesBreakupView, FeeConfigView,
-  MedicalHistoryView, MedicineHistoryView, DashboardView, MedicineView, TreatmentPlanHistoryView
+  MedicalHistoryView, MedicineHistoryView, DashboardView, MedicineView, TreatmentPlanHistoryView,
+  CompositDialogBoxData, ClinicalFindingToothMapping
 } from '../models/models';
 import { MatSnackBar } from '@angular/material';
 import { SnackbarModel } from '../snackhelper/snackbar-model';
@@ -16,6 +17,7 @@ import { MatChipInputEvent } from '@angular/material';
 import { Observable, pipe, of } from 'rxjs';
 import { startWith, map, tap } from 'rxjs/operators';
 import { CommonService } from '../services/commonservice.service';
+import { TreatmentPlanService } from '../services/treatment-plan.service'
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
@@ -69,13 +71,15 @@ export class CreatePrescriptionComponent implements OnInit {
   feesConfigListDataSource: MatTableDataSource<FeeConfigView>;
   commonService: CommonService;
 
-  disableTabs: boolean = true;
+  disableTabs: boolean = false;
   //Enable treatment done tab on prescription repeat or after submitting prescription
-  disableTreatmentDoneTab = true;
+  disableTreatmentDoneTab = false;
   snackModel = new SnackbarModel()
-
+  ageGroup = ""
+  
   constructor(public snackBar: MatSnackBar,
-    public dialog: MatDialog, public httpCom: HttpcommService) { }
+    public dialog: MatDialog, public httpCom: HttpcommService, 
+    public treatmentPlanService : TreatmentPlanService) { }
 
   ngOnInit() {
     this.initializeValiables();
@@ -277,6 +281,28 @@ export class CreatePrescriptionComponent implements OnInit {
           }
         })
         this.trtmntPlanListDataSource.data = this.cftMapArray
+        
+        //Creating Treatment Plan History Data
+        this.treatmentPlanService.setTreatmentData(
+          dashboard.pHistory.patientId, dashboard.pHistory.prescriptionId, dashboard.tphv          
+          )
+      
+        this.httpCom.getAgeGroup(this.selectedPatient.age.toString()).subscribe(resp =>{
+          if(resp && resp.status === 'SUCCESS'){
+            this.ageGroup = resp.resp.groupId
+          }
+        })
+        dashboard.fbl.forEach(fee => {
+          let feeConf = new FeeConfigView()
+          feeConf.treatmentPlanId = fee.trtmntPlanRef
+          feeConf.totalFee = fee.amount
+          feeConf.amountPaid = fee.amountPaid
+          feeConf.notes = fee.notes
+          feeConf.ageGroupId = this.ageGroup
+          this.feesConfigListView.push(feeConf)
+        })
+        this.getTotalFee()
+        this.feesConfigListDataSource.data = this.feesConfigListView
       }
     }
   }
@@ -345,6 +371,27 @@ export class CreatePrescriptionComponent implements OnInit {
       0;
   }
 
+  addCustomFee(){
+    
+    const dialogFeeRef = this.dialog.open(CustomFeeInsertionDialog, {
+      width: '700px',
+      data: this.treatmentPlanList
+    });
+
+    dialogFeeRef.afterClosed().subscribe(result => {
+      console.log(result)
+      if(result){
+        let customFeeConfigView: FeeConfigView = result;
+        customFeeConfigView.ageGroupId = this.ageGroup
+        if(this.feesConfigListView == undefined || this.feesConfigListView.length == 0){
+          this.feesConfigListView = []
+        }
+        this.feesConfigListView.push(customFeeConfigView)
+        this.feesConfigListDataSource.data = this.feesConfigListView
+        this.getTotalFee()
+      }
+    });
+  }
 
   addTreatmentPlan(event: MatChipInputEvent): void {
     const input = event.input;
@@ -435,7 +482,7 @@ export class CreatePrescriptionComponent implements OnInit {
 
   trtmntPlanListDataSource = new MatTableDataSource<ClinicalFindingToothMapping>()
   trtmntPlanListViewColumns = ['cf', 'teeth', 'plan', 'newPlan']
-  // customTrtmntPlan: string
+  
   //Get all dialog box data from this.cftMapArray
   createTreatmentPlanTable() {
 
@@ -497,8 +544,15 @@ export class CreatePrescriptionComponent implements OnInit {
               let feeConfigData: FeeConfigView = resp.resp;
               this.feesConfigListView.push(feeConfigData);
               this.feesConfigListDataSource.data = this.feesConfigListView;
-              this.getTotalFee();
-              // console.log('Fee config object:', this.feesConfigListView);
+              this.getTotalFee();              
+            }else{
+              //Show error and open custom feeaddition section
+              this.snackModel.msg = "Please add custom fee"
+              this.snackModel.action = "OK"
+              this.snackModel.callback = () => {
+                this.addCustomFee()
+              }
+              this.commonService.showSnackBar(this.snackBar, this.snackModel)
             }
           });
         }
@@ -596,12 +650,43 @@ export class CreatePrescriptionComponent implements OnInit {
 
   printPrescription() {
     //printableContent1
-    //Need to create a separate page and populate the prescription data only
-    // var prescriptionContent = document.getElementById("printableContent1")
-    // var openWindow = window.open("","target","features")
-    // openWindow.document.write(prescriptionContent.innerHTML)
-    // openWindow.document.close
-    // openWindow.focus();
+    //Need to create a separate page and populate the prescription data only    
+    var prescriptionContent = document.getElementById("printableContent1").outerHTML;
+    var openWindow = window.open("","target","width=800, height=800")
+    // let printablePage = `<!doctype html>
+    // <html lang="en">
+    // <head>
+    //   <meta charset="utf-8">
+    //   <title>EpsDashboard</title>
+    //   <base href="/">
+    //   <meta name="viewport" content="width=device-width, initial-scale=1">
+    //   <link rel="icon" type="image/x-icon" href="favicon.ico">
+    //   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    //   <link rel="stylesheet" href="create-prescription.component.css">
+    //   <link rel="stylesheet" href="../dashboard/dashboard.component.css">
+    // </head>
+    // <body> ${prescriptionContent} </body></html>`;
+    let printablePage = '<html>'+
+      '<head>'+
+        '<title>Prescription</title>'+
+        '<script type="text/javascript" src="runtime.js"></script>'+
+        '<script type="text/javascript" src="polyfills.js"></script>'+
+        '<script type="text/javascript" src="styles.js"></script>'+
+        // '<script type="text/javascript" src="vendor.js"></script>'+
+        '<script type="text/javascript" src="main.js"></script>'+
+        '<link rel="stylesheet" href="../dashboard/dashboard.component.css"/>'+
+        '<link rel="icon" type="image/x-icon" href="favicon.ico"/>'+
+        '</head>'+
+        '<body '+
+        // 'onload="window.print()"'+
+        '>'
+    + prescriptionContent
+    + '</body></html>';
+    console.log("printPrescription", JSON.stringify(printablePage))
+    openWindow.document.open()
+    openWindow.document.write(printablePage)
+    openWindow.document.close
+    openWindow.focus();
     // openWindow.print();
     // openWindow.close();
   }
@@ -619,20 +704,6 @@ export class CreatePrescriptionComponent implements OnInit {
 
 
 
-
-
-export class CompositDialogBoxData {
-  toothQuadrentsComposite: ToothQuadrentView[];
-  clinicalFindingsComposite: ClinicalFindingView[];
-}
-
-export class ClinicalFindingToothMapping {
-  clinicalFinding: ClinicalFindingView;
-  teeth: ToothQuadrentView;
-  treatmentPlanName: string;
-  customTrtmntPlan: Boolean = false;
-  treatmentPlanViewModel: string = ''
-}
 //Dialog box to select clinical findings mapped with tooth index
 @Component({
   selector: 'dialog-tooth-cf',
@@ -734,12 +805,9 @@ export class DialogToothClinicalfindings {
           this.cftMapArray.push(cft);
         }
       });
-
-      // console.log(JSON.stringify(this.cftMapArray));
     } else {
       // Show error
     }
-    // this.toothForm.setValue('');
     this.clinicalFindingForm.setValue('');
   }
 
@@ -758,7 +826,6 @@ export class DialogToothClinicalfindings {
         this.cftMapArray.splice(l, 1);
       }
     }
-    // console.log(JSON.stringify(this.cftMapArray));
   }
 
   setSelect(t: ToothQuadrentView) {
@@ -774,6 +841,65 @@ export class DialogToothClinicalfindings {
 
   private _filter(value: string): string[] {
     return this.originalCfList.filter(option => option.toLowerCase().includes(value.toLowerCase()));
+  }
+}
 
+
+@Component({
+  selector: 'custom-fee-insert',
+  templateUrl: 'custom-fee-insert.html',
+  styleUrls: ['./create-prescription.component.css'],
+})
+export class CustomFeeInsertionDialog {
+
+  treatmentPlanDescsObservable: Observable<string[]>;
+  treatmentPlanDescs: string[];
+  treatmentPlanForm = new FormControl();
+  feeConfigView = new FeeConfigView()
+  
+  constructor(
+    public dialogRef: MatDialogRef<CustomFeeInsertionDialog>,
+    @Inject(MAT_DIALOG_DATA) public treatmentPlans: TreatmentPlan[]) {
+      if(treatmentPlans && treatmentPlans.length > 0){
+        this.treatmentPlanDescs = [];        
+        treatmentPlans.forEach(tpls => {
+          this.treatmentPlanDescs.push(tpls.trtDesc);
+        })
+      }
+    }
+
+  ngOnInit() {
+    this.startTreatmentPlanFilter();
+  }
+
+  onNoClick() : void{
+    this.dialogRef.close();
+  };
+
+  closeDialog() {
+    if(!isNaN(this.feeConfigView.totalFee) && !isNaN(this.feeConfigView.amountPaid)){
+      this.getCustomFee()
+      this.dialogRef.close(this.feeConfigView);
+    }
+  }
+
+  startTreatmentPlanFilter() {
+    this.treatmentPlanDescsObservable = this.treatmentPlanForm.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
+  }
+
+  private _filter(value: string): string[] {
+    return this.treatmentPlanDescs.filter(desc => desc.toLowerCase().includes(value.toLowerCase()));
+  }
+
+  getCustomFee(){
+    if(this.treatmentPlanForm.value && this.treatmentPlanForm.value.length > 0){
+      let filterdList = this.treatmentPlans.filter(tDesc => this.treatmentPlanForm.value == tDesc.trtDesc)
+      if(filterdList && filterdList.length > 0){
+        this.feeConfigView.treatmentPlanId = filterdList[0].trtId        
+      }
+    }
   }
 }

@@ -52,7 +52,9 @@ import { AdminComponent } from './admin/admin.component';
 import { SnackhelperComponent } from './snackhelper/snackhelper.component';
 import { CreatePrescriptionComponent } from './create-prescription/create-prescription.component';
 import { MaterialTestComponent } from './material-test/material-test.component';
-import { DialogToothClinicalfindings } from './create-prescription/create-prescription.component';
+import { DialogToothClinicalfindings, CustomFeeInsertionDialog } from './create-prescription/create-prescription.component';
+import { PrintPrescriptionComponent } from './print-prescription/print-prescription.component';
+import { TreatmentPlanComponent } from './treatment-plan/treatment-plan.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +64,10 @@ import { DialogToothClinicalfindings } from './create-prescription/create-prescr
     SnackhelperComponent,
     CreatePrescriptionComponent,
     MaterialTestComponent,
-    DialogToothClinicalfindings
+    DialogToothClinicalfindings,
+    CustomFeeInsertionDialog,
+    PrintPrescriptionComponent,
+    TreatmentPlanComponent
   ],
   imports: [
     BrowserModule,
@@ -111,6 +116,6 @@ import { DialogToothClinicalfindings } from './create-prescription/create-prescr
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [SnackhelperComponent,DialogToothClinicalfindings]
+  entryComponents: [SnackhelperComponent,DialogToothClinicalfindings,CustomFeeInsertionDialog]
 })
 export class AppModule { }

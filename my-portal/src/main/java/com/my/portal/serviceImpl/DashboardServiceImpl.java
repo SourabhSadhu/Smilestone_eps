@@ -17,6 +17,7 @@ import com.my.portal.entities.MedicalHistory;
 import com.my.portal.entities.MedicineHistory;
 import com.my.portal.entities.PrescriptionHistory;
 import com.my.portal.entities.TreatmentPlanHistory;
+import com.my.portal.model.DashboardResponse;
 import com.my.portal.model.DashboardView;
 import com.my.portal.model.PatientView;
 import com.my.portal.model.PrescriptionHistoryView;
@@ -66,15 +67,16 @@ public class DashboardServiceImpl implements DashboardService {
 
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
-	public boolean processPrescription(DashboardView v) {
+	public DashboardResponse processPrescription(DashboardView v) {
+		DashboardResponse response = new DashboardResponse();
+
 		if (null != v) {
 			try {
 				PrescriptionHistoryView phv = v.getpHistory();
 				if (null != phv) {
 					if (null != phv.getPatientId()) {
 						PatientView p1 = pService.findById(phv.getPatientId());
-						if (null == p1 || null == p1
-								.getPId()/* || 0 >= p1.getPId().longValue() */) {
+						if (null == p1 || null == p1.getPId()/* || 0 >= p1.getPId().longValue() */) {
 							throw new ValidationException(ErrorCode.INVALID_PATIENT_ID);
 						}
 						PrescriptionHistory phEntity = phService.map(phv);
@@ -88,6 +90,7 @@ public class DashboardServiceImpl implements DashboardService {
 						}
 						fbRepo.flush();
 
+						//TODO: Check if already exists and then insert
 						List<MedicalHistory> mhl = mhService.map(v.getMhv());
 						for (MedicalHistory mh : mhl) {
 							mh.setPatientId(phv.getPatientId());
@@ -114,8 +117,10 @@ public class DashboardServiceImpl implements DashboardService {
 						}
 						;
 						tphRepo.flush();
-
-						return true;
+						response.setPatientId(phEntity.getPatientId());
+						response.setPrescriptionId(phEntity.getPrescriptionId());
+						response.setStatus(true);
+						return response;
 					}
 				}
 			} catch (Exception e) {
@@ -123,7 +128,8 @@ public class DashboardServiceImpl implements DashboardService {
 				log.error(e.getMessage());
 			}
 		}
-		return false;
+		response.setRespMsg("Server error");
+		return response;
 	}
 
 	@Override

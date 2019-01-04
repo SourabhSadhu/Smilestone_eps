@@ -70,7 +70,7 @@
   <table mat-table [dataSource]="trtmntPlanListDataSource" class="mat-elevation-z8">
 
     <ng-container matColumnDef="tname">
-      <th mat-header-cell *matHeaderCellDef style="text-align:center"> Name </th>
+      <th mat-header-cell *matHeaderCellDef style="text-align:center"> Treatment Plan </th>
       <td mat-cell *matCellDef="let tphv"> {{tphv.tname}} </td>
     </ng-container>
 
@@ -83,6 +83,12 @@
       <th mat-header-cell *matHeaderCellDef style="text-align:center"> Tooth </th>
       <td mat-cell *matCellDef="let tphv; let i = index;">
         {{tphv.toothIndex}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef style="text-align:center"> Action </th>
+      <td mat-cell *matCellDef="let tphv; let i = index;">
         <button class="rcorners2" mat-stroked-button color="primary" (click)="addTphv(tphv, i)">Select</button>
       </td>
     </ng-container>
@@ -116,7 +122,7 @@
       </mat-form-field>
 
       <mat-form-field class="example-short-margin">
-        <mat-select placeholder="Status" [formControl]="treatmentStatusForm">
+        <mat-select placeholder="Status" [formControl]="treatmentStatusForm" [(ngModel)]="selectedTreatmentPlanStatus" required>
           <mat-option *ngFor="let statusList of treatmentStatusList" [value]="statusList">{{statusList}}</mat-option>
         </mat-select>
       </mat-form-field>

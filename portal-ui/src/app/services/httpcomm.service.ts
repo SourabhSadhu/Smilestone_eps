@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map,tap, catchError } from 'rxjs/operators';
-import { Response,Patient, FeeConfigRequestListView, DashboardView, ClinicalFindingView } from '../models/models';
+import { Response,Patient, FeeConfigRequestListView, DashboardView, ClinicalFindingView, DashboardResponse } from '../models/models';
 import { DummyResponse } from './dummyresponse';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -190,7 +190,11 @@ export class HttpcommService {
     }else{
       let resp = new Response()
       resp.status = 'SUCCESS'
-      resp.resp = req
+      let response = new DashboardResponse()
+      response.patientId = req.pHistory.patientId
+      response.prescriptionId = 99
+      response.status = true
+      resp.resp = response
       return of(resp)
     }
   }

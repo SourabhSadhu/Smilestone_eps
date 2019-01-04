@@ -18,7 +18,7 @@ export class TreatmentPlanComponent implements OnInit {
   trtmntPlanHistListViewColumns = ['tname', 'clinicalFinding', 'toothIndex', 'note', 'tsCreated']
 
   trtmntPlanListDataSource = new MatTableDataSource<TreatmentPlanHistoryView>()
-  trtmntPlanListViewColumns = ['tname', 'clinicalFinding', 'toothIndex']
+  trtmntPlanListViewColumns = ['tname', 'clinicalFinding', 'toothIndex', 'action']
   showTrtmentPlanSuggestionList = false
   showTrtmentPlanAdditionSection = false
   selectedTreatmentPlanHistView = new TreatmentPlanHistoryView()
@@ -26,6 +26,7 @@ export class TreatmentPlanComponent implements OnInit {
   treatmentPlanHistories: TreatmentPlanHistoryView[] = [];
   treatmentStatusForm = new FormControl()
   treatmentStatusList : string[] = []
+  selectedTreatmentPlanStatus : string //selector value
 
   constructor(public treatmentPlanService: TreatmentPlanService, public httpComService : HttpcommService) { }
 
@@ -48,9 +49,11 @@ export class TreatmentPlanComponent implements OnInit {
     this.showTrtmentPlanSuggestionList = false
     this.showTrtmentPlanAdditionSection = true
     if (tphv || tphv != null) {
-      this.selectedTreatmentPlanHistView = tphv;
+      this.selectedTreatmentPlanHistView = tphv
+      this.selectedTreatmentPlanStatus = tphv.status
     }else{
       this.selectedTreatmentPlanHistView = new TreatmentPlanHistoryView()
+      this.selectedTreatmentPlanStatus = ''
     }
   }
 
@@ -61,7 +64,7 @@ export class TreatmentPlanComponent implements OnInit {
 
   //Fetch previous entries
   fetchTphvList() {
-    this.treatmentPlanHistories = this.treatmentPlanService.getTreatmentPlanHistoryViewList()
+    this.treatmentPlanHistories = this.treatmentPlanService.getTreatmentDoneHistoryViewList()
     if (this.treatmentPlanHistories && this.treatmentPlanHistories.length > 0) {
       this.trtmntPlanHistListDataSource.data = this.treatmentPlanHistories;
     }

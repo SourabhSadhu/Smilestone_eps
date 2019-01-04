@@ -6,9 +6,9 @@ import { TreatmentPlanHistoryView, TreatmentPlanStatus } from '../models/models'
 })
 export class TreatmentPlanService {
 
-  treatmentPlanHistoryViewList: TreatmentPlanHistoryView[]
-  patientId: number
-  prescriptionId: number
+  private treatmentPlanHistoryViewList: TreatmentPlanHistoryView[]
+  private patientId: number
+  private prescriptionId: number
 
   constructor() { }
 
@@ -21,16 +21,16 @@ export class TreatmentPlanService {
     this.treatmentPlanHistoryViewList = treatmentPlanHistoryViewList;
   }
 
-  setPrescriptionDetails(patientId: number, prescriptionId: number) {
-    this.patientId = patientId
-    this.prescriptionId = prescriptionId
-  }
+  // setPrescriptionDetails(patientId: number, prescriptionId: number) {
+  //   this.patientId = patientId
+  //   this.prescriptionId = prescriptionId
+  // }
 
   getTreatmentPlanSuggestionViewList(): TreatmentPlanHistoryView[] {
     return (this.treatmentPlanHistoryViewList.length > 0) ? this.treatmentPlanHistoryViewList.filter(tph => tph.status == TreatmentPlanStatus.PENDING) : []
   }
 
-  getTreatmentPlanHistoryViewList(): TreatmentPlanHistoryView[] {
+  getTreatmentDoneHistoryViewList(): TreatmentPlanHistoryView[] {
     return (this.treatmentPlanHistoryViewList.length > 0) ? this.treatmentPlanHistoryViewList.filter(tph => tph.status == TreatmentPlanStatus.COMPLETED) : []
   }
 

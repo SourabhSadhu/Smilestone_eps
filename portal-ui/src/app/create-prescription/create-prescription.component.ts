@@ -3,7 +3,7 @@ import {
   ClinicalFindingView, MedicalMaster, Patient, PrescriptionHistoryView,
   ToothQuadrentView, TreatmentPlan, FeesBreakupView, FeeConfigView,
   MedicalHistoryView, MedicineHistoryView, DashboardView, MedicineView, TreatmentPlanHistoryView,
-  CompositDialogBoxData, ClinicalFindingToothMapping
+  CompositDialogBoxData, ClinicalFindingToothMapping, DashboardResponse, TreatmentPlanStatus
 } from '../models/models';
 import { MatSnackBar } from '@angular/material';
 import { SnackbarModel } from '../snackhelper/snackbar-model';
@@ -71,9 +71,9 @@ export class CreatePrescriptionComponent implements OnInit {
   feesConfigListDataSource: MatTableDataSource<FeeConfigView>;
   commonService: CommonService;
 
-  disableTabs: boolean = false;
+  disableTabs: boolean = true;
   //Enable treatment done tab on prescription repeat or after submitting prescription
-  disableTreatmentDoneTab = false;
+  disableTreatmentDoneTab = true;
   snackModel = new SnackbarModel()
   ageGroup = ""
   
@@ -142,8 +142,11 @@ export class CreatePrescriptionComponent implements OnInit {
 
   fetchPatient(event: any) {
     // console.log(event.key);
-    if ((this.selectedPatient.firstName !== undefined && this.selectedPatient.firstName.length >= this.minCharToSearch) ||
-      (this.selectedPatient.lastName !== undefined && this.selectedPatient.lastName.length >= this.minCharToSearch)) {
+    if (
+      (this.selectedPatient.firstName !== undefined && 
+        this.selectedPatient.firstName.length >= this.minCharToSearch) ||
+      (this.selectedPatient.lastName !== undefined && 
+        this.selectedPatient.lastName.length >= this.minCharToSearch)) {
       this.searchPatient();
     } else {
       if (this.selectedPatient && this.selectedPatient.firstName && this.selectedPatient.firstName.length > 0
@@ -175,11 +178,11 @@ export class CreatePrescriptionComponent implements OnInit {
       if (resp && resp.status === 'SUCCESS') {
         if (resp.status && resp.status.length > 0)
           this.patientDataSource = resp.resp;
-        this.isPatientLoaded = true;
-        this.isPatientLoading = false;
       } else {
         //TODO: navigate to add patient tab
       }
+      this.isPatientLoaded = true;
+      this.isPatientLoading = false;
     });
   }
 
@@ -229,8 +232,13 @@ export class CreatePrescriptionComponent implements OnInit {
     let due = 0
     feesList.map(fee => {
       due += fee.amount - fee.amountPaid
+      // error
     })
     return due
+  }
+
+  getTreatmentDoneHistoryView(treatmentPlanHistoryViews : TreatmentPlanHistoryView[]) : TreatmentPlanHistoryView[]{
+    return (treatmentPlanHistoryViews && treatmentPlanHistoryViews.length > 0) ? treatmentPlanHistoryViews.filter(tph => tph.status == TreatmentPlanStatus.COMPLETED) : []
   }
 
   //populate prescription details
@@ -283,9 +291,8 @@ export class CreatePrescriptionComponent implements OnInit {
         this.trtmntPlanListDataSource.data = this.cftMapArray
         
         //Creating Treatment Plan History Data
-        this.treatmentPlanService.setTreatmentData(
-          dashboard.pHistory.patientId, dashboard.pHistory.prescriptionId, dashboard.tphv          
-          )
+        this.treatmentPlanService.setTreatmentData(dashboard.pHistory.patientId, dashboard.pHistory.prescriptionId, dashboard.tphv)
+        this.disableTreatmentDoneTab = false
       
         this.httpCom.getAgeGroup(this.selectedPatient.age.toString()).subscribe(resp =>{
           if(resp && resp.status === 'SUCCESS'){
@@ -365,10 +372,27 @@ export class CreatePrescriptionComponent implements OnInit {
   }
 
   totalFees: number = 0;
+  totalPaidFees : number = 0
+  totalDueFees : number = 0
   getTotalFee() {
     this.totalFees = this.feesConfigListView && this.feesConfigListView.length > 0 ?
       this.feesConfigListView.map(fee => fee.totalFee).reduce((prevTotal, curr) => prevTotal + curr, 0) :
       0;
+    this.getTotalPaidFee()
+    // return this.totalFees;
+  }
+
+  getTotalPaidFee() {
+    this.totalPaidFees = this.feesConfigListView && this.feesConfigListView.length > 0 ?
+      this.feesConfigListView.map(fee => fee.amountPaid).reduce((prevTotal, curr) => prevTotal + curr, 0) :
+      0;
+      this.getTotalDueFee()
+    // return this.totalPaidFees
+  }
+
+  getTotalDueFee() {
+    this.totalDueFees = this.totalFees - this.totalPaidFees
+    return this.totalDueFees
   }
 
   addCustomFee(){
@@ -485,52 +509,13 @@ export class CreatePrescriptionComponent implements OnInit {
   
   //Get all dialog box data from this.cftMapArray
   createTreatmentPlanTable() {
-
     this.trtmntPlanListDataSource.data = this.cftMapArray
-    // if (this.treatmentPlanList && this.treatmentPlanList.length > 0) {
-    //   this.treatmentPlanList.forEach(tpl => {
-    //     // if (tpl.clinicalFinding == this.cftMapArray[i].clinicalFinding.fid) {
-
-    //       //Concurrency check
-    //       if (this.treatmentPlanListView.indexOf(tpl.trtName) < 0) {
-    //         this.treatmentPlanListView.push(tpl.trtName);
-
-
-    //       //Getting fees config
-    //       // let feeConfigRequestListView: FeeConfigRequestListView[] = [];
-    //       // this.cftMapArray[i].teeth.forEach(t => {
-    //       //   let feeConfigRequestView = new FeeConfigRequestListView();
-    //       //   feeConfigRequestView.tooth_grp_idx = t.toothGroup;
-    //       //   feeConfigRequestView.trtmnt_id = tpl.trtId;
-    //       //   feeConfigRequestListView.push(feeConfigRequestView);
-    //       // })
-    //       //Print data
-    //       // console.log('Fee config data:', feeConfigRequestListView);
-
-    //       // this.httpCom.getFeeConfigList(this.selectedPatient.age, feeConfigRequestListView).subscribe(resp => {
-    //       //   if (resp && resp.status === 'SUCCESS') {
-    //       //     resp.resp.forEach(element => {
-    //       //       let feeConfigData: FeeConfigView = element;
-    //       //       if (feeConfigData && feeConfigData.totalFee > 0) {
-    //       //         this.feesConfigListView.push(element);
-    //       //         this.feesConfigListDataSource.data = this.feesConfigListView;
-    //       //       }
-    //       //     });
-    //       //     this.getTotalFee();
-    //       //     // console.log('Fee config object:', this.feesConfigListView);
-    //       //   }
-    //       // });
-    //     // }
-    //   });
-    // } else {
-    //   console.log("Treatment plan empty");
-    // }
   }
 
   updateTrtmntPlanSelect(value: string, index: number) {
 
     this.treatmentPlanList.filter(data => {
-      if (data.trtname == value) {
+      if (data.trtName == value) {
         if (this.cftMapArray.length > index) {
           this.cftMapArray[index].treatmentPlanName = value
           if (value === 'Other') {
@@ -542,9 +527,11 @@ export class CreatePrescriptionComponent implements OnInit {
           this.httpCom.getFeeConfig(this.selectedPatient.age, toothGrpIndex, treatmentId).subscribe(resp => {
             if (resp && resp.status === 'SUCCESS') {
               let feeConfigData: FeeConfigView = resp.resp;
-              this.feesConfigListView.push(feeConfigData);
-              this.feesConfigListDataSource.data = this.feesConfigListView;
-              this.getTotalFee();              
+              if(feeConfigData && feeConfigData.totalFee > 0){
+                this.feesConfigListView.push(feeConfigData);
+                this.feesConfigListDataSource.data = this.feesConfigListView;
+                this.getTotalFee();              
+              }
             }else{
               //Show error and open custom feeaddition section
               this.snackModel.msg = "Please add custom fee"
@@ -642,7 +629,17 @@ export class CreatePrescriptionComponent implements OnInit {
         if (resp.status === 'SUCCESS') {
           //Do something and print prescription
           console.log(JSON.stringify(resp.resp));
-          this.printPrescription();
+          // this.printPrescription();
+          let dashboardResponse : DashboardResponse = resp.resp
+          this.treatmentPlanService.setTreatmentData(dashboardResponse.patientId, dashboardResponse.prescriptionId,this.dashboardView.tphv)
+          this.snackModel.isError = false
+          this.snackModel.msg = "Prescription added"
+          this.snackModel.action = "OK"
+          this.snackModel.callback = () => {
+            //navigate to treatment plan tab
+            this.tabSelection(3)
+          }
+          this.commonService.showSnackBar(this.snackBar, this.snackModel)
         }
       }
     );

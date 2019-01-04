@@ -55,49 +55,49 @@ export class DummyResponse {
       {
         "trtId": 1,
         "trtDesc": "Root canal treatment",
-        "trtname": "RCT",
+        "trtName": "RCT",
         "clinicalFinding": 1
       },
       {
         "trtId": 3,
         "trtDesc": "Extraction",
-        "trtname": "Extraction",
+        "trtName": "Extraction",
         "clinicalFinding": 2
       },
       {
         "trtId": 4,
         "trtDesc": "Oral prophylaxis",
-        "trtname": "Oral prophylaxis",
+        "trtName": "Oral prophylaxis",
         "clinicalFinding": 10
       },
       {
         "trtId": 5,
         "trtDesc": "Restoration statined teeth",
-        "trtname": "Restoration Stain",
+        "trtName": "Restoration Stain",
         "clinicalFinding": 9
       },
       {
         "trtId": 6,
         "trtDesc": "Prosthesis removable",
-        "trtname": "Prosthesis Remove",
+        "trtName": "Prosthesis Remove",
         "clinicalFinding": 10
       },
       {
         "trtId": 7,
         "trtDesc": "Prosthesis fixed",
-        "trtname": "Prosthesis Fixed",
+        "trtName": "Prosthesis Fixed",
         "clinicalFinding": 10
       },
       {
         "trtId": 8,
         "trtDesc": "Prosthesis implant",
-        "trtname": "Prosthesis Implant",
+        "trtName": "Prosthesis Implant",
         "clinicalFinding": 10
       },
       {
         "trtId": 10,
         "trtDesc": "Other treatment",
-        "trtname": "Other",
+        "trtName": "Other",
         "clinicalFinding": 10
       }
     ]
@@ -201,6 +201,7 @@ export class DummyResponse {
       "toothGroupPercent": 10,
       "treatmentPlanId": 1,
       "totalFee": 72,
+      "amountPaid": 0
     }
   }
 
@@ -530,7 +531,18 @@ export class DummyResponse {
           {
             "fId": 34,
             "amount": 500,
-            "amountPaid": 0,
+            "amountPaid": 390,
+            "trtmntPlanRef": 2,
+            "notes": "general test fee",
+            "patientId": 1,
+            "prescriptionId": null,
+            "tsCreated": 1542426489787,
+            "paymentTs": null
+          },
+          {
+            "fId": 35,
+            "amount": 356,
+            "amountPaid": 70,
             "trtmntPlanRef": 2,
             "notes": "general test fee",
             "patientId": 1,
@@ -582,63 +594,27 @@ export class DummyResponse {
         "tphv": [
           {
             "clinicalFinding": "Periodontities",
-            "note": "Test check",
+            "note": null,
             "patientId": 1,
-            "prescriptionId": 34,
+            "prescriptionId": 40,
             "toothIndex": "35",
-            "tsCreated": 1542426513622,
+            "tsCreated": 1546330807107,
             "tsModified": null,
-            "tid": 3,
-            "tname": "RCT",
-            "status": "Completed"
+            "status": "Pending",
+            "tname": "Prosthesis removable",
+            "tid": 8
           },
           {
             "clinicalFinding": "Periodontities",
-            "note": "Test check",
+            "note": null,
             "patientId": 1,
-            "prescriptionId": 34,
+            "prescriptionId": 40,
             "toothIndex": "34",
-            "tsCreated": 1542426534816,
+            "tsCreated": 1546330836694,
             "tsModified": null,
-            "tid": 4,
-            "tname": "Extraction",
-            "status": "Completed"
-          },
-          {
-            "clinicalFinding": "Periodontities",
-            "note": "Test check",
-            "patientId": 1,
-            "prescriptionId": 34,
-            "toothIndex": "33",
-            "tsCreated": 1542426536451,
-            "tsModified": null,
-            "tid": 5,
-            "tname": "Extraction",
-            "status": "Completed"
-          },
-          {
-            "clinicalFinding": "Stain",
-            "note": null,
-            "patientId": 1,
-            "prescriptionId": 34,
-            "toothIndex": "11",
-            "tsCreated": 1542426537785,
-            "tsModified": null,
-            "tid": 6,
+            "status": "Completed",
             "tname": "RCT",
-            "status": "Pending"
-          },
-          {
-            "clinicalFinding": "Stain",
-            "note": null,
-            "patientId": 1,
-            "prescriptionId": 34,
-            "toothIndex": "32",
-            "tsCreated": 1542426542147,
-            "tsModified": null,
-            "tid": 7,
-            "tname": "RCT",
-            "status": "Pending"
+            "tid": 9
           }
         ]
       }

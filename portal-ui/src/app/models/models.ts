@@ -65,7 +65,7 @@ export class ToothQuadrentView {
 export class TreatmentPlan {
     trtId: number;
     trtDesc: string;
-    trtname: string;
+    trtName: string;
     clinicalFinding: number;
 };
 export class MedicineView {
@@ -138,7 +138,7 @@ export class TreatmentPlanHistoryView{
     toothIndex : number;
     tsCreated : number;
     tsModified : number;
-    status : TreatmentPlanStatus;
+    status : TreatmentPlanStatus = TreatmentPlanStatus.PENDING;
 }
 
 export enum TreatmentPlanStatus {
@@ -152,6 +152,13 @@ export class DashboardView {
     mhv: MedicalHistoryView[];
     medhv: MedicineHistoryView[];
     tphv: TreatmentPlanHistoryView[];
+}
+
+export class DashboardResponse{
+    prescriptionId : number
+    patientId : number
+	status : boolean
+	respMsg : string
 }
 
 

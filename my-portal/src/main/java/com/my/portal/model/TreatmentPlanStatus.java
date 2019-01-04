@@ -1,28 +1,21 @@
 package com.my.portal.model;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.springframework.util.StringUtils;
-
 public enum TreatmentPlanStatus {
-	COMPLETED("COM"),PENDING("PEN");
-	
+	COMPLETED("Completed"),PENDING("Pending");
+	 
 	private String desc;
-	private Map<String, TreatmentPlanStatus> map;
 	
-	TreatmentPlanStatus(String desc) {
+	private TreatmentPlanStatus(String desc) {
 		this.desc = desc;
-		if(StringUtils.hasText(desc)){
-			map = new HashMap<>();
-			for(TreatmentPlanStatus tps : TreatmentPlanStatus.values()){
-				map.put(tps.desc, tps);
-			}
-		}
 	}
 	
 	public TreatmentPlanStatus getFromDesc(String desc){
-		return map.get(desc);
+		for(TreatmentPlanStatus tps : TreatmentPlanStatus.values()){
+			if(tps.desc.equals(desc)){
+				return tps;
+			}
+		}
+		return null;
 	}
 	
 	public String getDesc(){

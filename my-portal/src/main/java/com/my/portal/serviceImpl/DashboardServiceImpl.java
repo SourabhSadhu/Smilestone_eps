@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.my.portal.ErrorCode;
@@ -66,7 +67,7 @@ public class DashboardServiceImpl implements DashboardService {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@Override
-	@Transactional(isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
+	@Transactional(isolation = Isolation.READ_COMMITTED,propagation=Propagation.REQUIRED, rollbackFor = Exception.class)
 	public DashboardResponse processPrescription(DashboardView v) {
 		DashboardResponse response = new DashboardResponse();
 

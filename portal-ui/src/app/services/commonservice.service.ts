@@ -50,47 +50,97 @@ export class CommonService {
     return pd;
   }
 
+  /**
+   * Method to create array to view clinical finding and corresponding teeth
+   * @param stringArr 
+   * @param key 
+   * @param addVal 
+   * @param keyValueSeperator 
+   * @param valueSeperator 
+   */
   combineValForStringArray(stringArr: string[], key: string, addVal: string,
     keyValueSeperator: string = ' - ', valueSeperator: string = ','): string {
 
     let combinedVal: string = ''
-    for (let index = 0; index <= stringArr.length - 1; index++) {
+    for (let index = 0; index < stringArr.length; index++) {
       if (stringArr[index].includes(key)) {
         let insertedVal = stringArr.splice(index, 1)[0]
-        if(insertedVal.includes(addVal)){
+        if (insertedVal.includes(addVal)) {
           return insertedVal
-        }else{
-          combinedVal = this.getSortedValues(insertedVal + valueSeperator + addVal , keyValueSeperator, valueSeperator)
+        } else {
+          combinedVal = this.getSortedValues(insertedVal + valueSeperator + addVal, keyValueSeperator, valueSeperator)
           // console.log('Return', combinedVal)
           return combinedVal
         }
       }
     }
-    // console.log('Return', key + keyValueSeperator + addVal)
-    return key + keyValueSeperator + addVal
+    let response = key + keyValueSeperator + addVal
+    return response
   }
 
-  getSortedValues(values: string, keyValueSeperator: string, valueSeperator: string, isAsync: Boolean = true): string{
+  /**
+   * Method to sort teeths in ascending order for a clinical finding
+   * @param values 
+   * @param keyValueSeperator 
+   * @param valueSeperator 
+   * @param isAsync 
+   */
+  getSortedValues(values: string, keyValueSeperator: string, valueSeperator: string, isAsync: Boolean = true): string {
 
-    let keyValueArray : string[] = values.split(keyValueSeperator)
-    if(keyValueArray && keyValueArray.length == 2){
+    let keyValueArray: string[] = values.split(keyValueSeperator)
+    if (keyValueArray && keyValueArray.length == 2) {
       let key = keyValueArray[0]
       let valueStringArray: string[] = keyValueArray[1].split(valueSeperator)
-      let valueNumberArray : number[] = []
+      let valueNumberArray: number[] = []
       valueStringArray.map(vs => {
         valueNumberArray.push(Number(vs))
       })
-      let sortedNumberArray : number[] = valueNumberArray.sort((n1, n2) => {
-        if(isAsync && n1 > n2) return 1
+      let sortedNumberArray: number[] = valueNumberArray.sort((n1, n2) => {
+        if (isAsync && n1 > n2) return 1
         else return -1
       })
       return key + keyValueSeperator + sortedNumberArray
-    }else return values
+    } else return values
   }
 
-  showSnackBar(snackBar: MatSnackBar, snackBarModel: SnackbarModel){
+  getFormattedClinicalFindingsForPost(stringArray : string[]) : string{
+    let response = ''
+    if(stringArray && stringArray.length > 0){
+      stringArray.forEach((str, index) => {
+        response += str.replace(/,/g, " ")
+        if(index +1 < stringArray.length){
+          response += ","        
+        }
+      })
+    }
+    // console.log(`Response getFormattedClinicalFindingsForPost ${response}`)
+    return response;
+  }
+
+  showSnackBar(snackBar: MatSnackBar, snackBarModel: SnackbarModel) {
     snackBar.openFromComponent(SnackhelperComponent, {
-      data: snackBarModel, duration : snackBarModel.duration
+      data: snackBarModel, duration: snackBarModel.duration
+    })
+  }
+
+  showSuccessSnackBar(snackBar: MatSnackBar, callback : () => void = null) {
+    let snackBarModel = new SnackbarModel()
+    snackBarModel.action = "OK"
+    snackBarModel.msg = "Data updated successfully"
+    snackBarModel.callback = callback
+    snackBar.openFromComponent(SnackhelperComponent, {
+      data: snackBarModel, duration: snackBarModel.duration
+    })
+  }
+
+  showErrorSnackBar(snackBar: MatSnackBar, errorMsg: string = 'Server error', callback : () => void = null) {
+    let snackBarModel = new SnackbarModel()
+    snackBarModel.action = "OK"
+    snackBarModel.isError = true
+    snackBarModel.msg = errorMsg
+    snackBarModel.callback = callback
+    snackBar.openFromComponent(SnackhelperComponent, {
+      data: snackBarModel, duration: snackBarModel.duration
     })
   }
 }

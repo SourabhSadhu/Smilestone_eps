@@ -1,16 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { PatientService } from '../services/patient.service';
-import { Patient, BloodGroup } from '../models/models';
 import { MatSnackBar } from '@angular/material';
-import { SnackhelperComponent } from '../snackhelper/snackhelper.component';
-import {MatDatepickerInputEvent} from '@angular/material/datepicker';
-import {FormControl, Validators} from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { FormControl, Validators } from '@angular/forms';
+
+import { Patient, BloodGroup } from '../models/models';
 import { HttpcommService } from '../services/httpcomm.service'
 import { CommonService } from '../services/commonservice.service';
-
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
 import { SnackbarModel } from '../snackhelper/snackbar-model';
 
 @Component({
@@ -21,8 +17,7 @@ import { SnackbarModel } from '../snackhelper/snackbar-model';
 export class DashboardComponent implements OnInit {
 
   patient : Patient;
-  commonService = new CommonService();
-  
+  dashboardTabControl = new FormControl(0) //Dynamica tab selection
   //Place holder for dynamic field validation
   config = {
     "first_name_len" : 20,
@@ -62,56 +57,33 @@ export class DashboardComponent implements OnInit {
     this.step--;
   }
 
-  
-  constructor(public snackBar: MatSnackBar, public httpClient: HttpClient) { 
+  constructor(public snackBar: MatSnackBar, public httpClient: HttpClient,
+    public commonService : CommonService) { 
     this.patient = new Patient();
     this.httpService = new HttpcommService(httpClient);
   }
 
-  ngOnInit() {          
-    this.getRealPatient();
-  }
+  ngOnInit() { }
 
-  getRealPatient(){
-
-    this.httpService.getPatient(this.patient).subscribe(
-      resp => {
-        if(resp && resp.status === 'SUCCESS'){
-          if(resp.resp && resp.resp.length > 0){
-            this.patient = resp.resp[0];
-            this.firstName = this.patient.firstName;
-            this.lastName = this.patient.lastName;
-          }else{
-
-          }
+  submitPatient(){
+    this.nextStep();
+    this.httpService.addPatient(this.patient).subscribe( resp => {
+        if(resp && resp.status == 'SUCCESS'){
+          this.commonService.showSuccessSnackBar(this.snackBar)
+          this.dashboardTabControl.setValue(0) //Go back to add prescription page
         }else{
-          
+          this.commonService.showErrorSnackBar(this.snackBar)
         }
       }
     )
   }
-  submitPatient(){
-    this.nextStep();
-    console.log('Sending from dash');
-    console.log(this.patient);
-    this.httpService.addPatient(this.patient).subscribe(
-      s => {
-        console.log('Receieved response');
-        console.log('s');
-      }
-    )
+  onKeyUp(event : any){  }
+  getSelectedTabChange(event : any){
+    console.log(event)
   }
-  onKeyUp(event : any){
-    let snackbarConfig = new SnackbarModel();
-    snackbarConfig.isError = true
-    snackbarConfig.msg = 'test msg' 
-    snackbarConfig.duration = 2000
-    snackbarConfig.callback = () => {
-      console.log('Callback ok')
-    }
-    this.commonService.showSnackBar(this.snackBar, snackbarConfig)
+  getFocusChange(event : any){
+    console.log(event)
   }
-
   dateAddEvent(type: string, event: MatDatepickerInputEvent<Date>) {
     
     let parsedDate : number[] = this.commonService.getParsedDate(event.value);

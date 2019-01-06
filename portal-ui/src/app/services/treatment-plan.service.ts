@@ -21,6 +21,14 @@ export class TreatmentPlanService {
     this.treatmentPlanHistoryViewList = treatmentPlanHistoryViewList;
   }
 
+  getPatientId(): number {
+    return this.patientId
+  }
+
+  getPrescriptionId(): number {
+    return this.prescriptionId
+  }
+
   // setPrescriptionDetails(patientId: number, prescriptionId: number) {
   //   this.patientId = patientId
   //   this.prescriptionId = prescriptionId
@@ -34,11 +42,14 @@ export class TreatmentPlanService {
     return (this.treatmentPlanHistoryViewList.length > 0) ? this.treatmentPlanHistoryViewList.filter(tph => tph.status == TreatmentPlanStatus.COMPLETED) : []
   }
 
-  getPatientId(): number {
-    return this.patientId
-  }
-  
-  getPrescriptionId(): number {
-    return this.prescriptionId
+  updateTreatmentPlan(treatmentPlan : TreatmentPlanHistoryView){
+    console.log(`Before splice ${this.treatmentPlanHistoryViewList}`)
+    let existingTreatmentPlanIndex = this.treatmentPlanHistoryViewList.findIndex(tph => tph.tid == treatmentPlan.tid)
+    console.log(`index = ${existingTreatmentPlanIndex}`)
+    if(existingTreatmentPlanIndex && existingTreatmentPlanIndex >= 0){
+      this.treatmentPlanHistoryViewList.splice(existingTreatmentPlanIndex, 1)
+    }
+    this.treatmentPlanHistoryViewList.push(treatmentPlan)    
+    console.log(`After update ${this.treatmentPlanHistoryViewList}`)
   }
 }

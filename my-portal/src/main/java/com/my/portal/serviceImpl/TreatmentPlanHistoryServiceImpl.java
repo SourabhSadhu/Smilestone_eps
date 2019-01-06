@@ -75,6 +75,7 @@ public class TreatmentPlanHistoryServiceImpl implements TreatmentPlanHistoryServ
 			if(v.getTsCreated() == null || v.getTsCreated().longValue() == 0){
 				e.setTsCreated(new Timestamp(System.currentTimeMillis()));
 			}else{
+				e.setTsCreated(new Timestamp(v.getTsCreated()));
 				e.setTsModified(new Timestamp(System.currentTimeMillis()));
 			}
 		}

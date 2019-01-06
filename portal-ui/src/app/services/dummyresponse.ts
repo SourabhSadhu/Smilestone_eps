@@ -518,7 +518,7 @@ export class DummyResponse {
           "prescriptionId": 34,
           "advice": "general test  advice",
           "chiefComplaint": "general test cc",
-          "clinicalFindings": "Periodontities -  33 34 35,Stain -  11 32",
+          "clinicalFindings": "Periodontities - 34 35",
           "investigation": "general test iv",
           "nextAppointment": 1542393000000,
           "note": "general test notes",

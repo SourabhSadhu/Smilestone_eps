@@ -1,10 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormControl } from '@angular/forms';
 
-import { TreatmentPlanHistoryView, TreatmentPlanStatus, TreatmentPlan } from '../models/models';
+import { TreatmentPlanHistoryView, TreatmentPlanStatus } from '../models/models';
 import { TreatmentPlanService } from '../services/treatment-plan.service'
+import { EventServiceService } from '../services/event-service.service'
 import { HttpcommService } from '../services/httpcomm.service';
+import { SnackbarModel } from '../snackhelper/snackbar-model';
+import { CommonService } from '../services/commonservice.service';
+import { from, Subscription } from 'rxjs';
 
 
 @Component({
@@ -12,7 +17,15 @@ import { HttpcommService } from '../services/httpcomm.service';
   templateUrl: './treatment-plan.component.html',
   styleUrls: ['./treatment-plan.component.css']
 })
-export class TreatmentPlanComponent implements OnInit {
+export class TreatmentPlanComponent implements OnInit, OnDestroy {
+
+  /**
+   * As event emitter is working, so need to send reference as we need to operate on data
+   * Hence communicating via server
+   */
+  // @Input() treatmentTabPatientId : number
+  // @Input() treatmentTabPrescriptionId : number
+  // @Input() treatmentTabTreatmentPlanHistoryViews : TreatmentPlanHistoryView[]
 
   trtmntPlanHistListDataSource = new MatTableDataSource<TreatmentPlanHistoryView>()
   trtmntPlanHistListViewColumns = ['tname', 'clinicalFinding', 'toothIndex', 'note', 'tsCreated']
@@ -27,17 +40,40 @@ export class TreatmentPlanComponent implements OnInit {
   treatmentStatusForm = new FormControl()
   treatmentStatusList : string[] = []
   selectedTreatmentPlanStatus : string //selector value
+  snackBarModel : SnackbarModel
 
-  constructor(public treatmentPlanService: TreatmentPlanService, public httpComService : HttpcommService) { }
+  //Event emitter via subscribe method
+  subscription: Subscription;
+
+  constructor(
+    public treatmentPlanService: TreatmentPlanService,
+    private eventService : EventServiceService,
+    public httpComService : HttpcommService,
+    public snackBar: MatSnackBar, public commonService : CommonService
+    ) { 
+      this.subscription = eventService.getEvent().subscribe(isDataLoaded => {
+        if(isDataLoaded){
+          //Prepare the list
+          // this.getSuggestionList()
+          this.fetchTphvList()
+        }
+      })
+    }
 
   ngOnInit() { 
     this.treatmentStatusList.push(TreatmentPlanStatus.COMPLETED.valueOf())
     this.treatmentStatusList.push(TreatmentPlanStatus.PENDING.valueOf())
+    this.snackBarModel = new SnackbarModel()
+  }
+
+  ngOnDestroy(){
+    this.subscription.unsubscribe()
   }
 
   // Show treatment plan list from prescription history
   getSuggestionList() {
     let suggestions = this.treatmentPlanService.getTreatmentPlanSuggestionViewList();
+    // let suggestions = this.treatmentTabTreatmentPlanHistoryViews.filter(tph => tph.status == TreatmentPlanStatus.PENDING)
     if (suggestions && suggestions.length > 0) {
       this.showTrtmentPlanSuggestionList = true
       this.trtmntPlanListDataSource.data = suggestions;
@@ -65,6 +101,7 @@ export class TreatmentPlanComponent implements OnInit {
   //Fetch previous entries
   fetchTphvList() {
     this.treatmentPlanHistories = this.treatmentPlanService.getTreatmentDoneHistoryViewList()
+    // this.treatmentPlanHistories = this.treatmentTabTreatmentPlanHistoryViews
     if (this.treatmentPlanHistories && this.treatmentPlanHistories.length > 0) {
       this.trtmntPlanHistListDataSource.data = this.treatmentPlanHistories;
     }
@@ -74,9 +111,11 @@ export class TreatmentPlanComponent implements OnInit {
     if(this.validateData()){
       this.selectedTreatmentPlanHistView.patientId = this.treatmentPlanService.getPatientId()
       this.selectedTreatmentPlanHistView.prescriptionId = this.treatmentPlanService.getPrescriptionId()
+      // this.selectedTreatmentPlanHistView.patientId = this.treatmentTabPatientId
+      // this.selectedTreatmentPlanHistView.prescriptionId = this.treatmentTabPrescriptionId
       this.selectedTreatmentPlanHistView.status = this.treatmentStatusForm.value
       console.log("Add Treatment Plan", JSON.stringify(this.selectedTreatmentPlanHistView))
-      let url : string = this.httpComService.getAddTreatmentPlanUrl+'?patientId='+this.treatmentPlanService.getPatientId()+'&prescriptionId='+this.treatmentPlanService.getPrescriptionId()
+      let url : string = this.httpComService.getAddTreatmentPlanUrl+'?patientId='+this.selectedTreatmentPlanHistView.patientId + '&prescriptionId='+ this.selectedTreatmentPlanHistView.prescriptionId
       console.log("URL", JSON.stringify(url))
       this.httpComService.genericPostRequest(
         url, 
@@ -85,6 +124,12 @@ export class TreatmentPlanComponent implements OnInit {
         ).subscribe( resp => {
         if(resp.status == "SUCCESS"){
           //Update History
+          this.showTrtmentPlanAdditionSection = false
+          // this.treatmentPlanService.updateTreatmentPlan(this.selectedTreatmentPlanHistView)
+          this.commonService.showSuccessSnackBar(this.snackBar)
+          this.selectedTreatmentPlanHistView = new TreatmentPlanHistoryView()
+        }else{
+          this.commonService.showErrorSnackBar(this.snackBar)
         }
       })
     }
@@ -96,8 +141,8 @@ export class TreatmentPlanComponent implements OnInit {
     if(!this.selectedTreatmentPlanHistView.tname || this.selectedTreatmentPlanHistView.tname.length <= 0) return false
     if(!this.selectedTreatmentPlanHistView.toothIndex) return false
     if(!this.treatmentStatusForm.value || this.treatmentStatusForm.value.length <= 0) return false
-    if(!this.treatmentPlanService.getPatientId()) return false
-    if(!this.treatmentPlanService.getPrescriptionId()) return false
+    if(!this.selectedTreatmentPlanHistView.patientId) return false
+    if(!this.selectedTreatmentPlanHistView.prescriptionId) return false
     return true
   }
 

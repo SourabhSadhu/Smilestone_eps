@@ -1,27 +1,66 @@
 <!-- Treatment plan history section -->
-<p>
-  <span class="example-margin">Treatment plan history</span>
-</p>
-<button 
-    class="example-margin rcorners2" 
-    mat-stroked-button color="primary" 
-    (click)="fetchTphvList()">Check History
+<!-- <div *ngIf="treatmentTabPatientId && treatmentTabPrescriptionId && treatmentTabTreatmentPlanHistoryViews && treatmentTabTreatmentPlanHistoryViews.length > 0"> -->
+  <p>
+    <span class="example-margin">Treatment plan history</span>
+  </p>
+  <button class="example-margin rcorners2" mat-stroked-button color="primary" (click)="fetchTphvList()">Check History
   </button>
-<div *ngIf="requestLoading">
-  <section class="example-section">
-    <mat-progress-bar
-        class="example-margin"
-        color="primary"
-        mode="indeterminate">
-    </mat-progress-bar>
-  </section>
-</div>
-<div class="example-full-width">
-  <div *ngIf="treatmentPlanHistories && treatmentPlanHistories.length > 0">
-    <table mat-table [dataSource]="trtmntPlanHistListDataSource" class="mat-elevation-z8">
+  <div *ngIf="requestLoading">
+    <section class="example-section">
+      <mat-progress-bar class="example-margin" color="primary" mode="indeterminate">
+      </mat-progress-bar>
+    </section>
+  </div>
+  <div class="example-full-width">
+    <div *ngIf="treatmentPlanHistories && treatmentPlanHistories.length > 0">
+      <table mat-table [dataSource]="trtmntPlanHistListDataSource" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="tname">
+          <th mat-header-cell *matHeaderCellDef style="text-align:center"> Name </th>
+          <td mat-cell *matCellDef="let tphv"> {{tphv.tname}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="clinicalFinding">
+          <th mat-header-cell *matHeaderCellDef style="text-align:center"> C/F </th>
+          <td mat-cell *matCellDef="let tphv"> {{tphv.clinicalFinding}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="toothIndex">
+          <th mat-header-cell *matHeaderCellDef style="text-align:center"> Tooth </th>
+          <td mat-cell *matCellDef="let tphv"> {{tphv.toothIndex}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="note">
+          <th mat-header-cell *matHeaderCellDef style="text-align:center"> Note </th>
+          <td mat-cell *matCellDef="let tphv"> {{tphv.note}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="tsCreated">
+          <th mat-header-cell *matHeaderCellDef style="text-align:center"> Time </th>
+          <td mat-cell *matCellDef="let tphv"> {{tphv.tsCreated | date:'dd/MM/yy hh:mm a'}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="trtmntPlanHistListViewColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: trtmntPlanHistListViewColumns;"></tr>
+      </table>
+    </div>
+  </div>
+
+  <div>
+    <button class="example-margin rcorners2" mat-stroked-button color="primary" (click)="getSuggestionList()">Select
+      from suggestion
+    </button>
+    OR
+    <button class="example-margin rcorners2" mat-stroked-button color="primary" (click)="addTphv()">Add manually
+    </button>
+  </div>
+
+  <!-- Suggestion to add from Treatment Plan List -->
+  <div class="example-full-width" *ngIf="showTrtmentPlanSuggestionList">
+    <table mat-table [dataSource]="trtmntPlanListDataSource" class="mat-elevation-z8">
 
       <ng-container matColumnDef="tname">
-        <th mat-header-cell *matHeaderCellDef style="text-align:center"> Name </th>
+        <th mat-header-cell *matHeaderCellDef style="text-align:center"> Treatment Plan </th>
         <td mat-cell *matCellDef="let tphv"> {{tphv.tname}} </td>
       </ng-container>
 
@@ -32,110 +71,63 @@
 
       <ng-container matColumnDef="toothIndex">
         <th mat-header-cell *matHeaderCellDef style="text-align:center"> Tooth </th>
-        <td mat-cell *matCellDef="let tphv"> {{tphv.toothIndex}} </td>
+        <td mat-cell *matCellDef="let tphv; let i = index;">
+          {{tphv.toothIndex}}
+        </td>
       </ng-container>
 
-      <ng-container matColumnDef="note">
-        <th mat-header-cell *matHeaderCellDef style="text-align:center"> Note </th>
-        <td mat-cell *matCellDef="let tphv"> {{tphv.note}} </td>
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef style="text-align:center"> Action </th>
+        <td mat-cell *matCellDef="let tphv; let i = index;">
+          <button class="rcorners2" mat-stroked-button color="primary" (click)="addTphv(tphv, i)">Select</button>
+        </td>
       </ng-container>
 
-      <ng-container matColumnDef="tsCreated">
-        <th mat-header-cell *matHeaderCellDef style="text-align:center"> Time </th>
-        <td mat-cell *matCellDef="let tphv"> {{tphv.tsCreated | date:'dd/MM/yy hh:mm a'}} </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="trtmntPlanHistListViewColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: trtmntPlanHistListViewColumns;"></tr>
+      <tr mat-header-row *matHeaderRowDef="trtmntPlanListViewColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: trtmntPlanListViewColumns;"></tr>
     </table>
   </div>
-</div>
+  <!-- selectedTreatmentPlanHistView -->
+  <div *ngIf="showTrtmentPlanAdditionSection">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <mat-card-title>Treatment Plan</mat-card-title>
+        <mat-card-subtitle> {{selectedTreatmentPlanHistView.treatmentPlanViewModel}} </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field class="example-short-margin" hintLabel="Max 30 characters">
+          <input matInput [maxlength]="30" placeholder="Treatment name" [(ngModel)]="selectedTreatmentPlanHistView.tname"
+            required>
+          <mat-hint align="end">{{selectedTreatmentPlanHistView.tname?.length || 0}}/30</mat-hint>
+        </mat-form-field>
+        <mat-form-field class="example-short-margin" hintLabel="Max 30 characters">
+          <input matInput [maxlength]="30" placeholder="C/F" [(ngModel)]="selectedTreatmentPlanHistView.clinicalFinding"
+            required>
+          <mat-hint align="end">{{selectedTreatmentPlanHistView.clinicalFinding?.length || 0}}/30</mat-hint>
+        </mat-form-field>
+        <mat-form-field class="example-short-margin" hintLabel="Max 30 characters">
+          <input matInput [maxlength]="30" placeholder="Tooth" [(ngModel)]="selectedTreatmentPlanHistView.toothIndex"
+            required>
+          <mat-hint align="end">{{selectedTreatmentPlanHistView.toothIndex?.length || 0}}/30</mat-hint>
+        </mat-form-field>
 
-<div>
-  <button 
-    class="example-margin rcorners2" 
-    mat-stroked-button color="primary" 
-    (click)="getSuggestionList()">Select from suggestion
-  </button>
-  OR
-  <button 
-    class="example-margin rcorners2" 
-    mat-stroked-button color="primary" 
-    (click)="addTphv()">Add manually
-  </button>
-</div>
+        <mat-form-field class="example-short-margin">
+          <mat-select placeholder="Status" [formControl]="treatmentStatusForm" [(ngModel)]="selectedTreatmentPlanStatus"
+            required>
+            <mat-option *ngFor="let statusList of treatmentStatusList" [value]="statusList">{{statusList}}</mat-option>
+          </mat-select>
+        </mat-form-field>
 
-<!-- Suggestion to add from Treatment Plan List -->
-<div class="example-full-width" *ngIf="showTrtmentPlanSuggestionList">
-  <table mat-table [dataSource]="trtmntPlanListDataSource" class="mat-elevation-z8">
+        <mat-form-field hintLabel="Max 30 characters">
+          <input matInput [maxlength]="30" placeholder="Note" [(ngModel)]="selectedTreatmentPlanHistView.note">
+          <mat-hint align="end">{{selectedTreatmentPlanHistView.note?.length || 0}}/30</mat-hint>
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-stroked-button class="example-margin rcorners2" color="primary" (click)="addTreatmentPlan()">ADD</button>
+        <button mat-stroked-button class="example-margin rcorners2" color="warn" (click)="deleteSelectedTphv()">DELETE</button>
+      </mat-card-actions>
+    </mat-card>
 
-    <ng-container matColumnDef="tname">
-      <th mat-header-cell *matHeaderCellDef style="text-align:center"> Treatment Plan </th>
-      <td mat-cell *matCellDef="let tphv"> {{tphv.tname}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="clinicalFinding">
-      <th mat-header-cell *matHeaderCellDef style="text-align:center"> C/F </th>
-      <td mat-cell *matCellDef="let tphv"> {{tphv.clinicalFinding}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="toothIndex">
-      <th mat-header-cell *matHeaderCellDef style="text-align:center"> Tooth </th>
-      <td mat-cell *matCellDef="let tphv; let i = index;">
-        {{tphv.toothIndex}}
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef style="text-align:center"> Action </th>
-      <td mat-cell *matCellDef="let tphv; let i = index;">
-        <button class="rcorners2" mat-stroked-button color="primary" (click)="addTphv(tphv, i)">Select</button>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="trtmntPlanListViewColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: trtmntPlanListViewColumns;"></tr>
-  </table>
-</div>
-<!-- selectedTreatmentPlanHistView -->
-<div *ngIf="showTrtmentPlanAdditionSection">
-  <mat-card class="example-card">
-    <mat-card-header>
-      <mat-card-title>Treatment Plan</mat-card-title>
-      <mat-card-subtitle> {{selectedTreatmentPlanHistView.treatmentPlanViewModel}} </mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <mat-form-field class="example-short-margin" hintLabel="Max 30 characters">
-        <input matInput [maxlength]="30" placeholder="Treatment name" [(ngModel)]="selectedTreatmentPlanHistView.tname"
-          required>
-        <mat-hint align="end">{{selectedTreatmentPlanHistView.tname?.length || 0}}/30</mat-hint>
-      </mat-form-field>
-      <mat-form-field class="example-short-margin" hintLabel="Max 30 characters">
-        <input matInput [maxlength]="30" placeholder="C/F" [(ngModel)]="selectedTreatmentPlanHistView.clinicalFinding"
-          required>
-        <mat-hint align="end">{{selectedTreatmentPlanHistView.clinicalFinding?.length || 0}}/30</mat-hint>
-      </mat-form-field>
-      <mat-form-field class="example-short-margin" hintLabel="Max 30 characters">
-        <input matInput [maxlength]="30" placeholder="Tooth" [(ngModel)]="selectedTreatmentPlanHistView.toothIndex"
-          required>
-        <mat-hint align="end">{{selectedTreatmentPlanHistView.toothIndex?.length || 0}}/30</mat-hint>
-      </mat-form-field>
-
-      <mat-form-field class="example-short-margin">
-        <mat-select placeholder="Status" [formControl]="treatmentStatusForm" [(ngModel)]="selectedTreatmentPlanStatus" required>
-          <mat-option *ngFor="let statusList of treatmentStatusList" [value]="statusList">{{statusList}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field hintLabel="Max 30 characters">
-        <input matInput [maxlength]="30" placeholder="Note" [(ngModel)]="selectedTreatmentPlanHistView.note">
-        <mat-hint align="end">{{selectedTreatmentPlanHistView.note?.length || 0}}/30</mat-hint>
-      </mat-form-field>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-stroked-button class="example-margin rcorners2" color="primary" (click)="addTreatmentPlan()" >ADD</button>
-      <button mat-stroked-button class="example-margin rcorners2" color="warn" (click)="deleteSelectedTphv()" >DELETE</button>
-    </mat-card-actions>
-  </mat-card>
-
-</div>
+  </div>
+<!-- </div> -->

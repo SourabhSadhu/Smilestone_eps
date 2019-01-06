@@ -19,6 +19,7 @@ import { startWith, map, tap } from 'rxjs/operators';
 import { CommonService } from '../services/commonservice.service';
 import { TreatmentPlanService } from '../services/treatment-plan.service'
 import { MatTableDataSource } from '@angular/material/table';
+import { EventServiceService } from '../services/event-service.service';
 
 @Component({
   selector: 'app-create-prescription',
@@ -46,19 +47,18 @@ export class CreatePrescriptionComponent implements OnInit {
   feesConfigListView: FeeConfigView[];
 
   medicalHistoryView: MedicalHistoryView;
+  medicalHistoryForm = new FormControl();
+  medicalHistoryViewModel: string[];
 
   medicineMasterViewList: MedicineView[];
   medicineForm = new FormControl()
   medicineHistoryViewModel: string
+  mhList: MedicalMaster[] = [];
 
   dashboardView: DashboardView;
   clinicalFindings: ClinicalFindingView[];
   toothQuadrents: ToothQuadrentView[];
   dialogData = new CompositDialogBoxData();
-  mhList: MedicalMaster[] = [];
-
-  medicalHistoryForm = new FormControl();
-  medicalHistoryViewModel: string[];
 
   cftMapArray: ClinicalFindingToothMapping[];
   clinicalFindingsViewForUi: string[]; //To show selected clinical findings to tooth mapping
@@ -69,28 +69,77 @@ export class CreatePrescriptionComponent implements OnInit {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   feesConfigListViewColumns: string[] = ['treatmentPlanId', 'baseFee', 'ageGroupId', 'ageGroupPercent', 'toothGroupId', 'toothGroupPercent', 'totalFee', 'amountPaid', 'notes'];
   feesConfigListDataSource: MatTableDataSource<FeeConfigView>;
-  commonService: CommonService;
 
   disableTabs: boolean = true;
   //Enable treatment done tab on prescription repeat or after submitting prescription
   disableTreatmentDoneTab = true;
   snackModel = new SnackbarModel()
   ageGroup = ""
-  
-  constructor(public snackBar: MatSnackBar,
-    public dialog: MatDialog, public httpCom: HttpcommService, 
-    public treatmentPlanService : TreatmentPlanService) { }
-
-  ngOnInit() {
-    this.initializeValiables();
-    this.commonService = new CommonService();
-  }
 
   prescriptionFromControl = new FormControl(0);
   minCharToSearch = 3;
 
-  refreshSearch() {
+  // treatmentTabPatientId: number
+  // treatmentTabPrescriptionId: number
+  // treatmentTabTreatmentPlanHistoryViews: TreatmentPlanHistoryView[]
 
+  constructor(public snackBar: MatSnackBar,
+    public dialog: MatDialog, public httpCom: HttpcommService,
+    public treatmentPlanService: TreatmentPlanService, public commonService: CommonService
+    , private eventService: EventServiceService
+  ) { }
+
+  ngOnInit() {
+    this.initializeValiables();
+    // this.commonService = new CommonService();
+  }
+
+  loadTabSpecificData(tabIndex: number) {
+    switch (tabIndex) {
+      //Patient search page
+      case 0:
+        break
+      //Patient history page
+      case 1:
+        break
+      //Prescription page
+      case 2:
+        this.httpCom.getMedicalMaster().subscribe(
+          resp => {
+            if (resp.status == 'SUCCESS') {
+              for (let i = 0; i < resp.resp.length; i++) {
+                this.mhList.push(resp.resp[i].medicalHistoryName);
+              }
+            }
+          }
+        );
+        this.httpCom.getTreatmentPlan().subscribe(
+          resp => {
+            if (resp.status == 'SUCCESS') {
+              this.treatmentPlanList = resp.resp;
+            }
+          }
+        );
+        this.httpCom.getAllMedicine().subscribe(
+          resp => {
+            if (resp.status == 'SUCCESS') {
+              this.medicineMasterViewList = resp.resp;
+            }
+          }
+        )
+        break
+      //Treatment done page
+      case 3:
+
+        //Event emit
+        this.eventService.sendEvent(true)
+        break
+      default:
+        break
+    }
+  }
+
+  refreshSearch() {
     this.isPatientLoading = false;
     this.isPatientLoaded = false;
     this.isPatientSelected = false;
@@ -111,41 +160,17 @@ export class CreatePrescriptionComponent implements OnInit {
     this.medicalHistoryViewModel = [];
     this.clinicalFindingsViewForUi = [];
     this.cftMapArray = [];
-    this.httpCom.getMedicalMaster().subscribe(
-      resp => {
-        if (resp.status == 'SUCCESS') {
-          for (let i = 0; i < resp.resp.length; i++) {
-            this.mhList.push(resp.resp[i].medicalHistoryName);
-          }
-        }
-      }
-    );
-    this.httpCom.getTreatmentPlan().subscribe(
-      resp => {
-        if (resp.status == 'SUCCESS') {
-          this.treatmentPlanList = resp.resp;
-        }
-      }
-    );
-    this.httpCom.getAllMedicine().subscribe(
-      resp => {
-        if (resp.status == 'SUCCESS') {
-          this.medicineMasterViewList = resp.resp;
-        }
-      }
-    )
     this.treatmentPlanListView = [];
     this.feesConfigListView = [];
     this.feesConfigListDataSource = new MatTableDataSource<FeeConfigView>();
-
   }
 
   fetchPatient(event: any) {
     // console.log(event.key);
     if (
-      (this.selectedPatient.firstName !== undefined && 
+      (this.selectedPatient.firstName !== undefined &&
         this.selectedPatient.firstName.length >= this.minCharToSearch) ||
-      (this.selectedPatient.lastName !== undefined && 
+      (this.selectedPatient.lastName !== undefined &&
         this.selectedPatient.lastName.length >= this.minCharToSearch)) {
       this.searchPatient();
     } else {
@@ -237,7 +262,7 @@ export class CreatePrescriptionComponent implements OnInit {
     return due
   }
 
-  getTreatmentDoneHistoryView(treatmentPlanHistoryViews : TreatmentPlanHistoryView[]) : TreatmentPlanHistoryView[]{
+  getTreatmentDoneHistoryView(treatmentPlanHistoryViews: TreatmentPlanHistoryView[]): TreatmentPlanHistoryView[] {
     return (treatmentPlanHistoryViews && treatmentPlanHistoryViews.length > 0) ? treatmentPlanHistoryViews.filter(tph => tph.status == TreatmentPlanStatus.COMPLETED) : []
   }
 
@@ -268,7 +293,7 @@ export class CreatePrescriptionComponent implements OnInit {
 
         let clinicalFinidingToothComposite = dashboard.pHistory.clinicalFindings.split(',');
         clinicalFinidingToothComposite.forEach(e => {
-          let clinicalFindingComposite = e.split(' -  ')
+          let clinicalFindingComposite = e.split(' - ')
           if (clinicalFindingComposite.length == 2) {
             let clinicalFindingDerived = clinicalFindingComposite[0];
             let toothComposite = clinicalFindingComposite[1].split(' ')
@@ -289,13 +314,22 @@ export class CreatePrescriptionComponent implements OnInit {
           }
         })
         this.trtmntPlanListDataSource.data = this.cftMapArray
-        
+
         //Creating Treatment Plan History Data
-        this.treatmentPlanService.setTreatmentData(dashboard.pHistory.patientId, dashboard.pHistory.prescriptionId, dashboard.tphv)
         this.disableTreatmentDoneTab = false
-      
-        this.httpCom.getAgeGroup(this.selectedPatient.age.toString()).subscribe(resp =>{
-          if(resp && resp.status === 'SUCCESS'){
+        this.treatmentPlanService.setTreatmentData(dashboard.pHistory.patientId, dashboard.pHistory.prescriptionId, dashboard.tphv)
+
+        /**
+         * As event emitter is working, so need to send reference as we need to operate on data
+         * Hence communicating via server
+         */
+        // Injecting variable references
+        // this.treatmentTabPatientId = dashboard.pHistory.patientId
+        // this.treatmentTabPrescriptionId = dashboard.pHistory.prescriptionId
+        // this.treatmentTabTreatmentPlanHistoryViews = dashboard.tphv
+
+        this.httpCom.getAgeGroup(this.selectedPatient.age.toString()).subscribe(resp => {
+          if (resp && resp.status === 'SUCCESS') {
             this.ageGroup = resp.resp.groupId
           }
         })
@@ -356,7 +390,8 @@ export class CreatePrescriptionComponent implements OnInit {
                     for (let i = 0; i < this.cftMapArray.length; i++) {
                       this.clinicalFindingsViewForUi.push(
                         this.commonService.combineValForStringArray(
-                          this.clinicalFindingsViewForUi, this.cftMapArray[i].clinicalFinding.fname, this.cftMapArray[i].teeth.toothIndex.toString()
+                          this.clinicalFindingsViewForUi, this.cftMapArray[i].clinicalFinding.fname,
+                          this.cftMapArray[i].teeth.toothIndex.toString()
                         )
                       )
                     }
@@ -372,8 +407,8 @@ export class CreatePrescriptionComponent implements OnInit {
   }
 
   totalFees: number = 0;
-  totalPaidFees : number = 0
-  totalDueFees : number = 0
+  totalPaidFees: number = 0
+  totalDueFees: number = 0
   getTotalFee() {
     this.totalFees = this.feesConfigListView && this.feesConfigListView.length > 0 ?
       this.feesConfigListView.map(fee => fee.totalFee).reduce((prevTotal, curr) => prevTotal + curr, 0) :
@@ -386,7 +421,7 @@ export class CreatePrescriptionComponent implements OnInit {
     this.totalPaidFees = this.feesConfigListView && this.feesConfigListView.length > 0 ?
       this.feesConfigListView.map(fee => fee.amountPaid).reduce((prevTotal, curr) => prevTotal + curr, 0) :
       0;
-      this.getTotalDueFee()
+    this.getTotalDueFee()
     // return this.totalPaidFees
   }
 
@@ -395,8 +430,8 @@ export class CreatePrescriptionComponent implements OnInit {
     return this.totalDueFees
   }
 
-  addCustomFee(){
-    
+  addCustomFee() {
+
     const dialogFeeRef = this.dialog.open(CustomFeeInsertionDialog, {
       width: '700px',
       data: this.treatmentPlanList
@@ -404,10 +439,10 @@ export class CreatePrescriptionComponent implements OnInit {
 
     dialogFeeRef.afterClosed().subscribe(result => {
       console.log(result)
-      if(result){
+      if (result) {
         let customFeeConfigView: FeeConfigView = result;
         customFeeConfigView.ageGroupId = this.ageGroup
-        if(this.feesConfigListView == undefined || this.feesConfigListView.length == 0){
+        if (this.feesConfigListView == undefined || this.feesConfigListView.length == 0) {
           this.feesConfigListView = []
         }
         this.feesConfigListView.push(customFeeConfigView)
@@ -479,7 +514,7 @@ export class CreatePrescriptionComponent implements OnInit {
       this.prescriptionHistoryView.nextAppointment = event.value.getTime()
       if (0 <= this.nextAppoHour && this.nextAppoHour <= 24 && 0 <= this.nextAppoMinute && this.nextAppoMinute <= 59) {
         let modifiedTime = ((this.nextAppoHour * 60) + this.nextAppoMinute) * 60 * 1000 + event.value.getTime()
-        console.log('next appo ' + modifiedTime);
+        // console.log('next appo ' + modifiedTime);
       }
     } catch (error) {
       console.log(error)
@@ -506,7 +541,7 @@ export class CreatePrescriptionComponent implements OnInit {
 
   trtmntPlanListDataSource = new MatTableDataSource<ClinicalFindingToothMapping>()
   trtmntPlanListViewColumns = ['cf', 'teeth', 'plan', 'newPlan']
-  
+
   //Get all dialog box data from this.cftMapArray
   createTreatmentPlanTable() {
     this.trtmntPlanListDataSource.data = this.cftMapArray
@@ -527,12 +562,12 @@ export class CreatePrescriptionComponent implements OnInit {
           this.httpCom.getFeeConfig(this.selectedPatient.age, toothGrpIndex, treatmentId).subscribe(resp => {
             if (resp && resp.status === 'SUCCESS') {
               let feeConfigData: FeeConfigView = resp.resp;
-              if(feeConfigData && feeConfigData.totalFee > 0){
+              if (feeConfigData && feeConfigData.totalFee > 0) {
                 this.feesConfigListView.push(feeConfigData);
                 this.feesConfigListDataSource.data = this.feesConfigListView;
-                this.getTotalFee();              
+                this.getTotalFee();
               }
-            }else{
+            } else {
               //Show error and open custom feeaddition section
               this.snackModel.msg = "Please add custom fee"
               this.snackModel.action = "OK"
@@ -611,8 +646,7 @@ export class CreatePrescriptionComponent implements OnInit {
     }
     this.dashboardView.pHistory = this.prescriptionHistoryView
     this.dashboardView.pHistory.patientId = this.selectedPatient.pid
-    // Need refactoring
-    this.dashboardView.pHistory.clinicalFindings = this.clinicalFindingsViewForUi.toString()
+    this.dashboardView.pHistory.clinicalFindings = this.commonService.getFormattedClinicalFindingsForPost(this.clinicalFindingsViewForUi)
     this.dashboardView.tphv = []
     this.cftMapArray.map(cft => {
       let tph = new TreatmentPlanHistoryView()
@@ -630,16 +664,34 @@ export class CreatePrescriptionComponent implements OnInit {
           //Do something and print prescription
           console.log(JSON.stringify(resp.resp));
           // this.printPrescription();
-          let dashboardResponse : DashboardResponse = resp.resp
-          this.treatmentPlanService.setTreatmentData(dashboardResponse.patientId, dashboardResponse.prescriptionId,this.dashboardView.tphv)
-          this.snackModel.isError = false
-          this.snackModel.msg = "Prescription added"
-          this.snackModel.action = "OK"
-          this.snackModel.callback = () => {
-            //navigate to treatment plan tab
-            this.tabSelection(3)
+          let dashboardResponse: DashboardResponse = resp.resp
+          if (dashboardResponse && dashboardResponse.status) {
+
+            this.treatmentPlanService.setTreatmentData(dashboardResponse.patientId, dashboardResponse.prescriptionId, this.dashboardView.tphv)
+
+            /**
+             * As event emitter is working, so need to send reference as we need to operate on data
+             * Hence communicating via server
+             */
+            //Injecting variable references
+            // this.treatmentTabPatientId = dashboardResponse.patientId
+            // this.treatmentTabPrescriptionId = dashboardResponse.prescriptionId
+            // this.treatmentTabTreatmentPlanHistoryViews = this.dashboardView.tphv
+
+            this.snackModel.isError = false
+            this.snackModel.msg = "Prescription added"
+            this.snackModel.action = "OK"
+            this.snackModel.callback = () => {
+              //navigate to treatment plan tab
+              this.tabSelection(3)
+            }
+            this.commonService.showSnackBar(this.snackBar, this.snackModel)
+          } else {
+            this.snackModel.isError = true
+            this.snackModel.msg = "Server error"
+            this.snackModel.action = "OK"
+            this.commonService.showSnackBar(this.snackBar, this.snackModel)
           }
-          this.commonService.showSnackBar(this.snackBar, this.snackModel)
         }
       }
     );
@@ -649,7 +701,7 @@ export class CreatePrescriptionComponent implements OnInit {
     //printableContent1
     //Need to create a separate page and populate the prescription data only    
     var prescriptionContent = document.getElementById("printableContent1").outerHTML;
-    var openWindow = window.open("","target","width=800, height=800")
+    var openWindow = window.open("", "target", "width=800, height=800")
     // let printablePage = `<!doctype html>
     // <html lang="en">
     // <head>
@@ -663,22 +715,22 @@ export class CreatePrescriptionComponent implements OnInit {
     //   <link rel="stylesheet" href="../dashboard/dashboard.component.css">
     // </head>
     // <body> ${prescriptionContent} </body></html>`;
-    let printablePage = '<html>'+
-      '<head>'+
-        '<title>Prescription</title>'+
-        '<script type="text/javascript" src="runtime.js"></script>'+
-        '<script type="text/javascript" src="polyfills.js"></script>'+
-        '<script type="text/javascript" src="styles.js"></script>'+
-        // '<script type="text/javascript" src="vendor.js"></script>'+
-        '<script type="text/javascript" src="main.js"></script>'+
-        '<link rel="stylesheet" href="../dashboard/dashboard.component.css"/>'+
-        '<link rel="icon" type="image/x-icon" href="favicon.ico"/>'+
-        '</head>'+
-        '<body '+
-        // 'onload="window.print()"'+
-        '>'
-    + prescriptionContent
-    + '</body></html>';
+    let printablePage = '<html>' +
+      '<head>' +
+      '<title>Prescription</title>' +
+      '<script type="text/javascript" src="runtime.js"></script>' +
+      '<script type="text/javascript" src="polyfills.js"></script>' +
+      '<script type="text/javascript" src="styles.js"></script>' +
+      // '<script type="text/javascript" src="vendor.js"></script>'+
+      '<script type="text/javascript" src="main.js"></script>' +
+      '<link rel="stylesheet" href="../dashboard/dashboard.component.css"/>' +
+      '<link rel="icon" type="image/x-icon" href="favicon.ico"/>' +
+      '</head>' +
+      '<body ' +
+      // 'onload="window.print()"'+
+      '>'
+      + prescriptionContent
+      + '</body></html>';
     console.log("printPrescription", JSON.stringify(printablePage))
     openWindow.document.open()
     openWindow.document.write(printablePage)
@@ -853,28 +905,28 @@ export class CustomFeeInsertionDialog {
   treatmentPlanDescs: string[];
   treatmentPlanForm = new FormControl();
   feeConfigView = new FeeConfigView()
-  
+
   constructor(
     public dialogRef: MatDialogRef<CustomFeeInsertionDialog>,
     @Inject(MAT_DIALOG_DATA) public treatmentPlans: TreatmentPlan[]) {
-      if(treatmentPlans && treatmentPlans.length > 0){
-        this.treatmentPlanDescs = [];        
-        treatmentPlans.forEach(tpls => {
-          this.treatmentPlanDescs.push(tpls.trtDesc);
-        })
-      }
+    if (treatmentPlans && treatmentPlans.length > 0) {
+      this.treatmentPlanDescs = [];
+      treatmentPlans.forEach(tpls => {
+        this.treatmentPlanDescs.push(tpls.trtDesc);
+      })
     }
+  }
 
   ngOnInit() {
     this.startTreatmentPlanFilter();
   }
 
-  onNoClick() : void{
+  onNoClick(): void {
     this.dialogRef.close();
   };
 
   closeDialog() {
-    if(!isNaN(this.feeConfigView.totalFee) && !isNaN(this.feeConfigView.amountPaid)){
+    if (!isNaN(this.feeConfigView.totalFee) && !isNaN(this.feeConfigView.amountPaid)) {
       this.getCustomFee()
       this.dialogRef.close(this.feeConfigView);
     }
@@ -891,11 +943,11 @@ export class CustomFeeInsertionDialog {
     return this.treatmentPlanDescs.filter(desc => desc.toLowerCase().includes(value.toLowerCase()));
   }
 
-  getCustomFee(){
-    if(this.treatmentPlanForm.value && this.treatmentPlanForm.value.length > 0){
+  getCustomFee() {
+    if (this.treatmentPlanForm.value && this.treatmentPlanForm.value.length > 0) {
       let filterdList = this.treatmentPlans.filter(tDesc => this.treatmentPlanForm.value == tDesc.trtDesc)
-      if(filterdList && filterdList.length > 0){
-        this.feeConfigView.treatmentPlanId = filterdList[0].trtId        
+      if (filterdList && filterdList.length > 0) {
+        this.feeConfigView.treatmentPlanId = filterdList[0].trtId
       }
     }
   }

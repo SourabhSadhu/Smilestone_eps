@@ -1,7 +1,9 @@
 <!-- Section to create presciption -->
 <mat-card class="example-card-parent">
 
-  <mat-tab-group [selectedIndex]="prescriptionFromControl.value" (selectedIndexChange)="prescriptionFromControl.setValue($event)"
+  <mat-tab-group [selectedIndex]="prescriptionFromControl.value" 
+      (selectedIndexChange)="prescriptionFromControl.setValue($event)"
+      (selectedTabChange)="loadTabSpecificData($event.index)"
     mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4">
     <mat-tab label="Basic Info">
       <mat-card class="example-card">
@@ -333,7 +335,7 @@
 
           <!-- Medicine -->
           <mat-form-field class="example-full-width">
-            <mat-select placeholder="Select Medicine" [formControl]="medicineForm" multiple class="example-full-width">
+            <mat-select placeholder="Add Medicine" [formControl]="medicineForm" multiple class="example-full-width">
               <mat-option *ngFor="let mh of medicineMasterViewList" [value]="mh">{{mh.medicineName}} {{mh.dosage}}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -342,7 +344,7 @@
           <table>
             <tr>
               <td>
-                <span>Next appointment</span>
+                <span>Next appo</span>
               </td>
               <td class="example-full-width">
                 <mat-form-field>
@@ -452,11 +454,11 @@
                       <input matInput [(ngModel)]="fee.notes" style="text-align:center">
                     </mat-form-field>
                     <button mat-button matSuffix mat-icon-button aria-label="Remove" (click)="removeFees($index)"
-                      matToolTip="Remove">
+                      matToolTip="Remove" [disabled]="checkIfDisabledToModify()">
                       <mat-icon>close</mat-icon>
                     </button>
                   </td>
-                  <td mat-footer-cell *matFooterCellDef> Due {{totalDueFees | currency:'&#8377;' }} </td>
+                  <td mat-footer-cell *matFooterCellDef style="color: red;"> Due {{totalDueFees | currency:'&#8377;' }} </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="feesConfigListViewColumns"></tr>
@@ -489,16 +491,15 @@
       <mat-card class="example-card">
         <mat-card-content>
           <!-- Treatment Done -->
-          <!-- Need new table and apis to store -->
+          <!-- this.treatmentTabPatientId = dashboardResponse.patientId
+            this.treatmentTabPrescriptionId = dashboardResponse.prescriptionId
+            this.treatmentTabTreatmentPlanHistoryViews -->
+          <!-- <app-treatment-plan 
+              [treatmentTabPatientId] = "treatmentTabPatientId"
+              [treatmentTabPrescriptionId] = "treatmentTabPrescriptionId"
+              [treatmentTabTreatmentPlanHistoryViews] = "treatmentTabTreatmentPlanHistoryViews"
+            >Loading..</app-treatment-plan> -->
           <app-treatment-plan>Loading..</app-treatment-plan>
-          <!-- <mat-form-field class="example-full-width">            
-            <textarea matInput placeholder="Treatment done" [(ngModel)]="prescriptionHistoryView.treatmentDone"
-              cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
-            <button mat-button *ngIf="prescriptionHistoryView.treatmentDone" matSuffix mat-icon-button aria-label="Clear"
-              (click)="prescriptionHistoryView.treatmentDone=''" matToolTip="Clear">
-              <mat-icon>close</mat-icon>
-            </button>
-          </mat-form-field> -->
         </mat-card-content>
       </mat-card>
     </mat-tab>

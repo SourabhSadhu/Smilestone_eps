@@ -11,7 +11,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class HttpcommService {
 
   dummyResp : DummyResponse;
-  dummy = true;
+  dummy = false;
   resp : Response;
   baseUrl = 'http://localhost:12000/my-portal/';
   ageGrpUrl = this.baseUrl + 'age-group/get-age-group?age=';
@@ -68,12 +68,9 @@ export class HttpcommService {
   }
 
   getPatient(patient : Patient) : Observable<Response>{
-    //console.log('http service called');
     if(this.dummy){
-      //console.log(this.parseData(this.dummyResp.getPatient));
       return of(this.parseData(this.dummyResp.getPatient));
     }else{
-      //console.log(1.2);
       return this.http.post<Response>(this.getPatientUrl,patient,this.httpOptions)
         .pipe(
           catchError(this.handleError('test', new Response()))
@@ -83,13 +80,9 @@ export class HttpcommService {
   }
 
   addPatient(p : Patient) : Observable<Response>{
-    //console.log('Posting patient');
-    //console.log(p);
     if(this.dummy){
-      //console.log('Dummy post');
       return of(this.parseData(this.dummyResp.getPatient));
     }else{
-      //console.log('Real post');
       return this.http.post<Response>(this.addPatientUrl,p,this.httpOptions)
         .pipe(
           catchError(this.handleError('post patient', new Response()))

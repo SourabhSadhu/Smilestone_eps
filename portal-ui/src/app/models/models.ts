@@ -148,6 +148,7 @@ export enum TreatmentPlanStatus {
 
 export class DashboardView {
     pHistory: PrescriptionHistoryView;
+    patientView: Patient
     fbl: FeesBreakupView[];
     mhv: MedicalHistoryView[];
     medhv: MedicineHistoryView[];

@@ -527,6 +527,28 @@ export class DummyResponse {
           "tsCreated": 1542426489661,
           "tsModified": null
         },
+        "patientView": {
+          "bloodGroup": "B_POSITIVE",
+          "contactNo1": 9046787913,
+          "contactNo2": 7980231838,
+          "discountType": "flat",
+          "discount": 20,
+          "dobDd": 27,
+          "dobMm": 3,
+          "dobYy": 1992,
+          "firstName": "sourabh",
+          "lastName": "sadhu",
+          "tsCreated": 1534695098485,
+          "age": 24,
+          "height": 169,
+          "sex": "male",
+          "weight": 80,
+          "image": null,
+          "email": "sadhuait@gmail.com",
+          "address1": "Habra Jaigachi Rathtala North 24 Parganas",
+          "address2": "Trying to write a pretty looooooooooooooooooooong text",
+          "pid": 1
+        },
         "fbl": [
           {
             "fId": 34,

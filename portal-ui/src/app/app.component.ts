@@ -15,7 +15,8 @@ export class AppComponent {
   navMenus = [
     {"name": "Dashboard", "path":"dashboard"},
     {"name": "Admin", "path":"admin"},
-    {"name": "Test", "path":"test"}
+    {"name": "Test", "path":"test"},
+    // {"name": "Print", "path":"print?patientId=1&prescriptionId=12"}
   ]
   constructor(){
   }

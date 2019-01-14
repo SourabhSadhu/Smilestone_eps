@@ -1,23 +1,37 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-print-prescription',
-  templateUrl: './print-prescription.component.html',
-  styleUrls: [
-    './print-prescription.component.css'
-  ]
+  selector: 'app-print',
+  templateUrl: './print.component.html',
+  styleUrls: ['./print.component.css']
 })
-export class PrintPrescriptionComponent implements OnInit {
+export class PrintComponent implements OnInit {
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) { }
 
-  ngOnInit() {    
-    this.printPrescription()
+  ngOnInit() {
+    // this.printPrescription()
+    // const patientId = +this.route.snapshot.paramMap.get('patientId');
+    // const prescriptionId = +this.route.snapshot.paramMap.get('prescriptionId');
+
+    const patientId = +this.route.snapshot.queryParamMap.get('patientId');
+    const prescriptionId = +this.route.snapshot.queryParamMap.get('prescriptionId');
+    console.log(`Data patient ${patientId} prescription ${prescriptionId}`)
+    
+    /**
+     * More details on route and queryparams
+     * https://www.tektutorialshub.com/angular/angular-passing-optional-query-parameters-to-route/
+     * https://www.tektutorialshub.com/angular/angular-passing-parameters-to-route/
+     */
   }
 
   printPrescription() {
-    var prescriptionContent = document.getElementById("printableContent").innerHTML;
-    var openWindow = window.open("", "_blank", "width=auto, height=100%")
+    var prescriptionContent = document.getElementById("printableContent");
+    if (prescriptionContent.requestFullscreen) {
+      prescriptionContent.requestFullscreen();
+    }
+    var openWindow = window.open("", "_blank", "fullscreen=yes,width=1200,height=800")
     let printablePage =
       `<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"> 
         <html lang="en"> 
@@ -105,12 +119,12 @@ export class PrintPrescriptionComponent implements OnInit {
                 padding-top: 5px;
                 padding-bottom: 5px;
                 margin-top: 2cm;
-                counter-increment: chapter;
+                // counter-increment: chapter;
                 }
                 
-             h2:before {
-                content: "Chapter " counter(chapter) ": ";
-                }
+            //  h2:before {
+            //     content: "Chapter " counter(chapter) ": ";
+            //     }
             
              hr { 
                 width: 50%;
@@ -160,8 +174,8 @@ export class PrintPrescriptionComponent implements OnInit {
             
             </style>
           </head> 
-          <body>
-       ${prescriptionContent}
+          <body onload="window.print()">
+       ${prescriptionContent.innerHTML}
        </body></html>`;
     // console.log("printPrescription", JSON.stringify(printablePage))
     openWindow.document.open()

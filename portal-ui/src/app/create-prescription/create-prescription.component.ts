@@ -333,6 +333,7 @@ export class CreatePrescriptionComponent implements OnInit {
             this.ageGroup = resp.resp.groupId
           }
         })
+        this.feesConfigListView = []
         dashboard.fbl.forEach(fee => {
           let feeConf = new FeeConfigView()
           feeConf.treatmentPlanId = fee.trtmntPlanRef
@@ -698,6 +699,12 @@ export class CreatePrescriptionComponent implements OnInit {
   }
 
   printPrescription() {
+    /**
+     * Go to print page for printing with input of patientId and prescriptionId
+     * goToPage(pageNum) {
+          this.router.navigate(['/product'], { queryParams: { page: pageNum } });
+      }
+     */
     //printableContent1
     //Need to create a separate page and populate the prescription data only    
     var prescriptionContent = document.getElementById("printableContent1").outerHTML;

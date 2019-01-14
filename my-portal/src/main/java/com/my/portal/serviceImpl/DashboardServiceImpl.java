@@ -147,6 +147,7 @@ public class DashboardServiceImpl implements DashboardService {
 				
 				DashboardView view = new DashboardView();
 				view.setpHistory(pView);
+				view.setPatientView(p1);
 				view.getFbl().addAll(fbService.mapAll(fbRepo.findByPrescriptionId(pView.getPrescriptionId())));
 				view.getMedhv().addAll(medService.mapAll(medRepo.getMedicineHistoryByPrescriptionId(pView.getPrescriptionId())));
 				view.getMhv().addAll(mhService.mapAll(mhRepo.getByPrescriptionId(pView.getPrescriptionId())));
@@ -158,6 +159,7 @@ public class DashboardServiceImpl implements DashboardService {
 			PrescriptionHistoryView pView = phService.findOne(prescriptionId);
 			DashboardView view = new DashboardView();
 			view.setpHistory(pView);
+			view.setPatientView(p1);
 			view.getFbl().addAll(fbService.mapAll(fbRepo.findByPrescriptionId(pView.getPrescriptionId())));
 			view.getMedhv().addAll(medService.mapAll(medRepo.getMedicineHistoryByPrescriptionId(pView.getPrescriptionId())));
 			view.getMhv().addAll(mhService.mapAll(mhRepo.getByPrescriptionId(pView.getPrescriptionId())));

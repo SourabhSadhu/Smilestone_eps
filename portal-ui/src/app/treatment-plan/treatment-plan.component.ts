@@ -141,8 +141,8 @@ export class TreatmentPlanComponent implements OnInit, OnDestroy {
     if(!this.selectedTreatmentPlanHistView.tname || this.selectedTreatmentPlanHistView.tname.length <= 0) return false
     if(!this.selectedTreatmentPlanHistView.toothIndex) return false
     if(!this.treatmentStatusForm.value || this.treatmentStatusForm.value.length <= 0) return false
-    if(!this.selectedTreatmentPlanHistView.patientId) return false
-    if(!this.selectedTreatmentPlanHistView.prescriptionId) return false
+    if(!this.treatmentPlanService.getPatientId()) return false
+    if(!this.treatmentPlanService.getPrescriptionId()) return false
     return true
   }
 

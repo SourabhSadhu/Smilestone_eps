@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.my.portal.ErrorCode;
@@ -67,12 +66,12 @@ public class DashboardServiceImpl implements DashboardService {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@Override
-	@Transactional(isolation = Isolation.READ_COMMITTED,propagation=Propagation.REQUIRED, rollbackFor = Exception.class)
+	@Transactional(isolation = Isolation.READ_COMMITTED,value = "transactionManager", rollbackFor = Exception.class)
 	public DashboardResponse processPrescription(DashboardView v) {
 		DashboardResponse response = new DashboardResponse();
 
 		if (null != v) {
-			try {
+//			try {
 				PrescriptionHistoryView phv = v.getpHistory();
 				if (null != phv) {
 					if (null != phv.getPatientId()) {
@@ -106,7 +105,6 @@ public class DashboardServiceImpl implements DashboardService {
 							medh.setPrescriptionId(phEntity.getPrescriptionId());
 							medRepo.save(medh);
 						}
-						;
 						medRepo.flush();
 
 						for (TreatmentPlanHistoryView tphv : v.getTphv()) {
@@ -116,7 +114,6 @@ public class DashboardServiceImpl implements DashboardService {
 							tphEntity.setPrescriptionId(phEntity.getPrescriptionId());
 							tphRepo.save(tphEntity);
 						}
-						;
 						tphRepo.flush();
 						response.setPatientId(phEntity.getPatientId());
 						response.setPrescriptionId(phEntity.getPrescriptionId());
@@ -124,10 +121,10 @@ public class DashboardServiceImpl implements DashboardService {
 						return response;
 					}
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				log.error(e.getMessage());
-			}
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//				log.error(e.getMessage());
+//			}
 		}
 		response.setRespMsg("Server error");
 		return response;
@@ -147,7 +144,6 @@ public class DashboardServiceImpl implements DashboardService {
 				
 				DashboardView view = new DashboardView();
 				view.setpHistory(pView);
-				view.setPatientView(p1);
 				view.getFbl().addAll(fbService.mapAll(fbRepo.findByPrescriptionId(pView.getPrescriptionId())));
 				view.getMedhv().addAll(medService.mapAll(medRepo.getMedicineHistoryByPrescriptionId(pView.getPrescriptionId())));
 				view.getMhv().addAll(mhService.mapAll(mhRepo.getByPrescriptionId(pView.getPrescriptionId())));
@@ -159,7 +155,6 @@ public class DashboardServiceImpl implements DashboardService {
 			PrescriptionHistoryView pView = phService.findOne(prescriptionId);
 			DashboardView view = new DashboardView();
 			view.setpHistory(pView);
-			view.setPatientView(p1);
 			view.getFbl().addAll(fbService.mapAll(fbRepo.findByPrescriptionId(pView.getPrescriptionId())));
 			view.getMedhv().addAll(medService.mapAll(medRepo.getMedicineHistoryByPrescriptionId(pView.getPrescriptionId())));
 			view.getMhv().addAll(mhService.mapAll(mhRepo.getByPrescriptionId(pView.getPrescriptionId())));

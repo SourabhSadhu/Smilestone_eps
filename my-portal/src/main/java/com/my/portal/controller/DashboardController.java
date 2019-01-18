@@ -24,12 +24,12 @@ public class DashboardController {
 	@RequestMapping(method = RequestMethod.POST, value = "/add-dashboard", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<?> addPrescription(@RequestBody DashboardView view){
-		try{
+//		try{
 			return new ResponseEntity<>(CommonUtils.getResp(dService.processPrescription(view)), HttpStatus.OK);
-		}catch(Exception e){
-			e.printStackTrace();
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
+//		}catch(Exception e){
+//			e.printStackTrace();
+//			return new ResponseEntity<>(CommonUtils.getResp(null), HttpStatus.OK);
+//		}
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/get-dashboard", produces = MediaType.APPLICATION_JSON_VALUE)

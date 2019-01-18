@@ -7,6 +7,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.my.portal.model.FeesBreakupView;
 import com.my.portal.model.PatientView;
@@ -20,6 +21,7 @@ import com.my.portal.service.PrescriptionHistoryService;
 import com.my.portal.service.PrescriptionPrintService;
 import com.my.portal.service.TreatmentPlanHistoryService;
 
+@Service
 public class PrescriptionPrintServiceImpl implements PrescriptionPrintService {
 
 	@Autowired PatientService pService;
@@ -65,7 +67,7 @@ public class PrescriptionPrintServiceImpl implements PrescriptionPrintService {
 	PrescriptionPrintModel mapTo(PatientView reqPatient, PrescriptionHistoryView reqPrescription){
 		PrescriptionPrintModel response = new PrescriptionPrintModel();
 		response.setAdvice(reqPrescription.getAdvice());
-		long patientAge = reqPatient.getAge() - System.currentTimeMillis();
+		long patientAge = System.currentTimeMillis() - reqPatient.getDobTimestamp();
 		response.setAge(getPatientAge((int) patientAge));
 		response.setChiefComplain(reqPrescription.getChiefComplaint());
 		response.setClinicalFindings(reqPrescription.getClinicalFindings());

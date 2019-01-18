@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.my.portal.model.ApiResponse;
 import com.my.portal.model.ResponseStatus;
-import com.my.portal.service.PatientService;
+import com.my.portal.service.PrescriptionPrintService;
 
 @Controller
 @RequestMapping(value = "/prescription-print")
 public class PrescriptionPrintController {
 
 	@Autowired
-	PatientService patientService;
+	PrescriptionPrintService prescriptionPrintService;
 
 	@RequestMapping(method = RequestMethod.GET, value = "/get", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -28,7 +28,7 @@ public class PrescriptionPrintController {
 		ApiResponse resp = new ApiResponse();
 		resp.setDesc("Dummy API");
 		resp.setStatus(ResponseStatus.SUCCESS);
-		return new ResponseEntity<>(resp, HttpStatus.OK);
+		return new ResponseEntity<>(prescriptionPrintService.getPrescrition(patientId, prescriptionId), HttpStatus.OK);
 	}
 
 }

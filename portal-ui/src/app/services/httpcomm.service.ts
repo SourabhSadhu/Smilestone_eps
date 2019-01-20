@@ -34,6 +34,7 @@ export class HttpcommService {
   getDashboard = this.baseUrl + 'dashboard/get-dashboard?patientId=';
   postAddClinicalFindingUrl = this.baseUrl + 'clinical-finding/add-clinical-finding'
   getAddTreatmentPlanUrl = this.baseUrl + 'trtmnt/add-treatment-plan'
+  getPrescriptionPrintViewUrl = this.baseUrl + 'prescription-print/get?'
   
   constructor(public http : HttpClient) {
     this.dummyResp = new DummyResponse();
@@ -212,5 +213,14 @@ export class HttpcommService {
 
   sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  getPrescriptionPrintView(patientId:number, prescriptionId:number ) : Observable<Response> {
+    // if(this.dummy){
+    //   return of(this.parseData(this.dummyResp.prescriptionPrintView))
+    // }else{
+    //   return this.genericGetRequest(this.getPrescriptionPrintViewUrl+'patientId'+patientId+'prescriptionId'+prescriptionId,'Prescription Print')
+    // }
+    return this.genericGetRequest('http://demo4369803.mockable.io/prescription-print/get')
   }
 }

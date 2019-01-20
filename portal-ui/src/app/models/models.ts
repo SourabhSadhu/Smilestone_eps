@@ -48,6 +48,7 @@ export class PrescriptionHistoryView {
     medicines: string;
     nextAppointment: number;
     note: string;
+    printableNotes: string;
     patientId: number;
     provisionalDiagnosis: string;
     treatmentDone: string;
@@ -111,10 +112,10 @@ export class FeeConfigRequestListView {
 
 export class MedicalHistoryView {
     medicalHistoryId: number;
-    medicalHistoryName : string
+    medicalHistoryName: string
     note: string;
-    patientId : number;
-    prescriptionId : number;
+    patientId: number;
+    prescriptionId: number;
     severity: string;
     startedFrom: number;
 }
@@ -128,38 +129,37 @@ export class MedicineHistoryView {
     prescriptionId: number;
 }
 
-export class TreatmentPlanHistoryView{
-    tid : number;
-    tname : string;
-    clinicalFinding : string;
-    note : string;
-    patientId : number;
-    prescriptionId : number;
-    toothIndex : number;
-    tsCreated : number;
-    tsModified : number;
-    status : TreatmentPlanStatus = TreatmentPlanStatus.PENDING;
+export class TreatmentPlanHistoryView {
+    tid: number;
+    tname: string;
+    clinicalFinding: string;
+    note: string;
+    patientId: number;
+    prescriptionId: number;
+    toothIndex: number;
+    tsCreated: number;
+    tsModified: number;
+    status: TreatmentPlanStatus = TreatmentPlanStatus.PENDING;
 }
 
 export enum TreatmentPlanStatus {
-    COMPLETED = "Completed", 
+    COMPLETED = "Completed",
     PENDING = "Pending"
 }
 
 export class DashboardView {
     pHistory: PrescriptionHistoryView;
-    patientView: Patient
     fbl: FeesBreakupView[];
     mhv: MedicalHistoryView[];
     medhv: MedicineHistoryView[];
     tphv: TreatmentPlanHistoryView[];
 }
 
-export class DashboardResponse{
-    prescriptionId : number
-    patientId : number
-	status : boolean
-	respMsg : string
+export class DashboardResponse {
+    prescriptionId: number
+    patientId: number
+    status: boolean
+    respMsg: string
 }
 
 
@@ -169,12 +169,32 @@ export class DashboardResponse{
 export class CompositDialogBoxData {
     toothQuadrentsComposite: ToothQuadrentView[];
     clinicalFindingsComposite: ClinicalFindingView[];
-  }
-  
-  export class ClinicalFindingToothMapping {
+}
+
+export class ClinicalFindingToothMapping {
     clinicalFinding: ClinicalFindingView;
     teeth: ToothQuadrentView;
     treatmentPlanName: string;
     customTrtmntPlan: Boolean = false;
     treatmentPlanViewModel: string = ''
-  }
+}
+
+export class PrescriptionPrintView {
+    name: string;
+    sex: string;
+    age: string;
+    phoneNo: string;
+    department: string;
+    doctor: string;
+    prescriptionId: string;
+    regDate: string;
+    visitNo: string;
+    visitDateTime: string;
+    nextAppointmentDateTime: string;
+    printableNotes: string;
+    chiefComplain: string;
+    medicalHistory: string;
+    clinicalFindings: string;
+    advice: string;
+    medicine: string[];
+}

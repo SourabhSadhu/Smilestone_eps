@@ -1,6 +1,5 @@
-<div id="printableContent">
-
-  
+<div *ngIf="!printView">Loading...</div>
+<div id="printableContent" *ngIf="printView">
 
   <h1>JUST SO STORIES</h1>
   <p class="heading">By Rudyard Kipling</p>
@@ -49,6 +48,15 @@
     'Then fetch me some,' said the Whale, and he made the sea froth up with
     his tail.
   </p>
+
+  <table style="width:100%;">
+    <tr style="width:100%;">
+      <td class="left">Left</td>
+      <td class="center">Center</td>
+      <td class="right">Right</td>
+    </tr>
+  </table>
+
   <p>
     'One at a time is enough,' said the 'Stute Fish. 'If you swim to
     latitude Fifty North, longitude Forty West (that is magic), you will

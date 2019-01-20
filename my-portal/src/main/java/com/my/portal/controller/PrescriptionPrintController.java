@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.my.portal.model.ApiResponse;
-import com.my.portal.model.ResponseStatus;
+import com.my.portal.CommonUtils;
 import com.my.portal.service.PrescriptionPrintService;
 
 @Controller
@@ -25,10 +24,8 @@ public class PrescriptionPrintController {
 	@ResponseBody
 	public ResponseEntity<?> get(@RequestParam(required = true, value = "patientId") long patientId,
 			@RequestParam(required = true, value = "prescriptionId") long prescriptionId) {
-		ApiResponse resp = new ApiResponse();
-		resp.setDesc("Dummy API");
-		resp.setStatus(ResponseStatus.SUCCESS);
-		return new ResponseEntity<>(prescriptionPrintService.getPrescrition(patientId, prescriptionId), HttpStatus.OK);
+		return new ResponseEntity<>(
+				CommonUtils.getResp(prescriptionPrintService.getPrescrition(patientId, prescriptionId)), HttpStatus.OK);
 	}
 
 }

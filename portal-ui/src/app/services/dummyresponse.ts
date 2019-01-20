@@ -136,7 +136,7 @@ export class DummyResponse {
         "treatmentId": 1,
         "dosage": "sokale bikale 1 ta khabar por",
         "clinicalAvailability": 7,
-        "diseaseCode": "dCode3",                
+        "diseaseCode": "dCode3",
         "medicineId": 3
       }
     ]
@@ -522,32 +522,11 @@ export class DummyResponse {
           "investigation": "general test iv",
           "nextAppointment": 1542393000000,
           "note": "general test notes",
+          "printableNotes": "Printed",
           "patientId": 1,
           "provisionalDiagnosis": "general test pd",
           "tsCreated": 1542426489661,
           "tsModified": null
-        },
-        "patientView": {
-          "bloodGroup": "B_POSITIVE",
-          "contactNo1": 9046787913,
-          "contactNo2": 7980231838,
-          "discountType": "flat",
-          "discount": 20,
-          "dobDd": 27,
-          "dobMm": 3,
-          "dobYy": 1992,
-          "firstName": "sourabh",
-          "lastName": "sadhu",
-          "tsCreated": 1534695098485,
-          "age": 24,
-          "height": 169,
-          "sex": "male",
-          "weight": 80,
-          "image": null,
-          "email": "sadhuait@gmail.com",
-          "address1": "Habra Jaigachi Rathtala North 24 Parganas",
-          "address2": "Trying to write a pretty looooooooooooooooooooong text",
-          "pid": 1
         },
         "fbl": [
           {
@@ -641,5 +620,34 @@ export class DummyResponse {
         ]
       }
     ]
+  };
+
+  public prescriptionPrintView = {
+    "status": "SUCCESS",
+    "desc": null,
+    "resp": {
+      "name": "Sourabh Sadhu",
+      "sex": "Male",
+      "age": "26 Yrs 9 Months 23 Days",
+      "phoneNo": "9046787913 / 7980231838",
+      "department": "Oral and Maxillofacial Surgery OPD",
+      "doctor": "Dr. Aparna Gupta / Dr. Mitrasen Manna",
+      "prescriptionId": "41",
+      "regDate": "19-08-2018 09:41 PM",
+      "visitNo": "1",
+      "visitDateTime": "05-01-2019 11:35 AM",
+      "nextAppointmentDateTime": "09-01-2019 12:00 AM",
+      "printableNotes":"Printed",
+      "chiefComplain": "Dental Pain",
+      "medicalHistory": "Asthma, Cardiac diseases, Hypertension, Hypotension, Hyperthyroidism, Drug hypersensitivity",
+      "clinicalFindings": "RETAINED ROOT IN 23,32,36,37,45 \n CARIOUS 13,14",
+      "advice": "Extraction in 23, 36, 37, 45, 13, 14.\n Come within 9:30 AM after having full meal with an adult addendent except SUNDAYs and enlisted holidays.\n EXTRACTION OF 23 HAS BEEN DONE UNDER L.A.\n HEMOSTASIS HAS BEEN ACHIEVED.\n MOIST COTTON PACK GIVEN.\n SOFT AND COLD DIET FOR NEXT 24 HOURS.\n WARM SALINE MOUTH WASH FREQUENTLY AFTER 24 HOURS.\n IN CASE OF ANY EMERGENCY, ADVISED TO GO TO ANY NEARBY GOVT HOSPITAL.",
+      "medicine": [
+        "Amoxycilin 500mg + Clavulenic Acid 125mg Tab 3 after meal 5 days",
+        "Metronidazole Tab I.P. 400mg (Flim coated) 3 after meal 5 days",
+        "Paracetamol I.P. 650mg. Tab 3 after meal 5 days",
+        "Rantidine Tab. I.P. 150mg 2 before meal 5 days"
+      ]
+    }
   };
 }

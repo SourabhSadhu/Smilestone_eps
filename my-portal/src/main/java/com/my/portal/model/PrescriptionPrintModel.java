@@ -13,15 +13,11 @@ public class PrescriptionPrintModel implements Serializable {
 	private String department; 
 	private String doctor;
 	private String prescriptionId;
-	private String amountTotal;
-	private String amountPaid;
-	private String amountDue;
 	private String regDate;
 	private String visitNo;
-	private String visitDate;
-	private String time;
-	private String day;
+	private String visitDateTime;
 	private String nextAppointmentDateTime;
+	private String printableNotes;
 	private String chiefComplain;
 	private String medicalHistory; 
 	private String clinicalFindings;
@@ -74,24 +70,6 @@ public class PrescriptionPrintModel implements Serializable {
 	public void setPrescriptionId(String prescriptionId) {
 		this.prescriptionId = prescriptionId;
 	}
-	public String getAmountTotal() {
-		return amountTotal;
-	}
-	public void setAmountTotal(String amountTotal) {
-		this.amountTotal = amountTotal;
-	}
-	public String getAmountPaid() {
-		return amountPaid;
-	}
-	public void setAmountPaid(String amountPaid) {
-		this.amountPaid = amountPaid;
-	}
-	public String getAmountDue() {
-		return amountDue;
-	}
-	public void setAmountDue(String amountDue) {
-		this.amountDue = amountDue;
-	}
 	public String getRegDate() {
 		return regDate;
 	}
@@ -104,29 +82,23 @@ public class PrescriptionPrintModel implements Serializable {
 	public void setVisitNo(String visitNo) {
 		this.visitNo = visitNo;
 	}
-	public String getVisitDate() {
-		return visitDate;
+	public String getVisitDateTime() {
+		return visitDateTime;
 	}
-	public void setVisitDate(String visitDate) {
-		this.visitDate = visitDate;
-	}
-	public String getTime() {
-		return time;
-	}
-	public void setTime(String time) {
-		this.time = time;
-	}
-	public String getDay() {
-		return day;
-	}
-	public void setDay(String day) {
-		this.day = day;
+	public void setVisitDateTime(String visitDateTime) {
+		this.visitDateTime = visitDateTime;
 	}
 	public String getNextAppointmentDateTime() {
 		return nextAppointmentDateTime;
 	}
 	public void setNextAppointmentDateTime(String nextAppointmentDateTime) {
 		this.nextAppointmentDateTime = nextAppointmentDateTime;
+	}
+	public final String getPrintableNotes() {
+		return printableNotes;
+	}
+	public final void setPrintableNotes(String printableNotes) {
+		this.printableNotes = printableNotes;
 	}
 	public String getChiefComplain() {
 		return chiefComplain;
@@ -153,11 +125,9 @@ public class PrescriptionPrintModel implements Serializable {
 		this.advice = advice;
 	}
 	public List<String> getMedicine() {
-		return medicine;
+		return this.medicine;
 	}
 	public void setMedicine(List<String> medicine) {
 		this.medicine = medicine;
 	}
-	
-	
 }

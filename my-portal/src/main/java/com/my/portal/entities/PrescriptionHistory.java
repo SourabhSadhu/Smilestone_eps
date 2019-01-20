@@ -38,18 +38,19 @@ public class PrescriptionHistory implements Serializable {
 
 	@Column(name="chief_complaint")
 	private String chiefComplaint;
-
+	
 	@Column(name="clinical_findings")
 	private String clinicalFindings;
 
 	private String investigation;
 
-//	private String medicines;
-
 	@Column(name="next_appointment")
 	private Timestamp nextAppointment;
 
 	private String note;
+	
+	@Column(name="printable_notes")
+	private String printableNotes;
 
 	@Column(name="patient_id")
 	private Long patientId;
@@ -57,14 +58,14 @@ public class PrescriptionHistory implements Serializable {
 	@Column(name="provisional_diagnosis")
 	private String provisionalDiagnosis;
 
-//	@Column(name="treatment_done")
-//	private String treatmentDone;
-
 	@Column(name="ts_created")
 	private Timestamp tsCreated;
 
 	@Column(name="ts_modified")
 	private Timestamp tsModified;
+	
+	@Column(name="visit_count")
+	private long visitCount;
 
 	public PrescriptionHistory() {
 	}
@@ -93,11 +94,11 @@ public class PrescriptionHistory implements Serializable {
 		this.chiefComplaint = chiefComplaint;
 	}
 
-	public String getClinicalFindings() {
-		return this.clinicalFindings;
+	public final String getClinicalFindings() {
+		return clinicalFindings;
 	}
 
-	public void setClinicalFindings(String clinicalFindings) {
+	public final void setClinicalFindings(String clinicalFindings) {
 		this.clinicalFindings = clinicalFindings;
 	}
 
@@ -123,6 +124,14 @@ public class PrescriptionHistory implements Serializable {
 
 	public void setNote(String note) {
 		this.note = note;
+	}
+
+	public final String getPrintableNotes() {
+		return printableNotes;
+	}
+
+	public final void setPrintableNotes(String printableNotes) {
+		this.printableNotes = printableNotes;
 	}
 
 	public Long getPatientId() {
@@ -155,6 +164,14 @@ public class PrescriptionHistory implements Serializable {
 
 	public void setTsModified(Timestamp tsModified) {
 		this.tsModified = tsModified;
+	}
+
+	public final long getVisitCount() {
+		return visitCount;
+	}
+
+	public final void setVisitCount(long visitCount) {
+		this.visitCount = visitCount;
 	}
 
 }

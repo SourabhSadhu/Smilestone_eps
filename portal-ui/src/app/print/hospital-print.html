@@ -1,0 +1,157 @@
+<!-- <div *ngIf="!printView">Loading...</div>
+<div id="printableContent" *ngIf="printView">
+</div> -->
+<button mat-button class="noPrint" (click)="printPrescription()">Print</button>
+<div id="printableContent">
+    <!-- <h1>SMILESTONE DENTAL CARE</h1>
+    <p class="center">Kajialpara Bus Stand, Rajarhat, Kol - 700 135</p>
+    <p class="center"><u>Tuesday to Saturday :</u> Morning: 10AM to 1PM, Evening: 5:30 PM to 9 PM</p>
+    <p class="center"><u>Sunday :</u> Morning only: 10AM to 1AM</p>
+    <p class="center"><u>Sunday Evening and Monday:</u> Full day closed</p> -->
+    <!-- <div> <img src="../images/letterhead.jpg" alt="Letter Head" height="42" width="42"> </div> -->
+    <div><span class="icon-letterhead"></span></div>
+    <div class="border"></div>
+    <p class="left">Prescription ID: {{printView.prescriptionId}}</p>
+    <p class="left"><b>PATIENT INFORMATION</b></p>
+    <table>
+        <tr>
+            <td>
+                Name: <b>{{printView.name}}</b>
+            </td>
+            <td>
+                Reg: {{printView.regDate}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Sex: {{printView.sex}}
+            </td>
+            <td>
+                Visited: {{printView.visitDateTime}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Age: {{printView.age}}
+            </td>
+            <td>
+                Visit No: {{printView.visitNo}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td>
+                            Phone No. {{printView.phoneNo}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Department: {{printView.department}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Doctor: {{printView.doctor}}
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                Others: {{printView.printableNotes}}
+            </td>
+        </tr>
+    </table>
+    <div class="border"></div>
+    <table>
+        <tr>
+            <td style="width:40%">
+                CHIEF COMPLAIN:
+            </td>
+            <td style="width:70%">
+                {{printView.chiefComplain}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="smaller-border"></p>
+            </td>
+            <td>
+                <p class="smaller-border"></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:40%">
+                MEDICAL HISTORY:
+            </td>
+            <td style="width:70%">
+                {{printView.medicalHistory}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="smaller-border"></p>
+            </td>
+            <td>
+                <p class="smaller-border"></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:40%">
+                CLINICAL EXAMINATION:
+            </td>
+            <td style="width:70%">
+                {{printView.clinicalFindings}}
+            </td>
+        </tr>
+    </table>
+    <div class="border"></div>
+    <p><b>ADVICE</b></p>
+    <div>
+        <ul>
+            <li *ngFor="let advice of getOrderedAdviceList()">{{advice}}</li>
+        </ul>
+    </div>
+    <div class="smaller-border"></div>
+    <p><b>MEDICINE</b></p>
+    <div>
+        <ol>
+            <li *ngFor="let med of printView.medicine">
+                {{med}}
+            </li>
+        </ol>
+    </div>
+    <div class="border"></div>
+    <br />
+    <table>
+        <tr>
+            <td style="color:red"><h3><i>Dr. Mitrasen Manna</i></h3></td>
+            <td style="color:red"><h3><i>Dr. Aparna Gupta</i></h3></td>
+        </tr>
+        <tr>
+            <td class="right" style="color:red"><b>B.D.S. (W.B.U.H.S)</b></td>
+            <td class="right" style="color:red"><b>B.D.S., M.D.S. (W.B.U.H.S)</b></td>
+        </tr>
+        <tr>
+            <td style="color:blue">Regd No: 3350A</td>
+            <td style="color:blue">Regd No: 5883-A</td>
+        </tr>
+        <tr>
+            <td style="color:blue">
+                Ex-House Surgeon, R. G. Kar Medical College & Hospital, Kolkata
+            </td>
+            <td style="color:blue">
+                Ex-Resident, Dr. R. Ahmed Dental College & Hospital, Sealdah, Kolkata
+            </td>
+        </tr>
+        <tr>
+            <td style="color:blue">
+                Contact No. 7044074579, 8697969918
+            </td>
+            <td style="color:blue">
+                Ex-House Surgeon, GTB Hospital New Delhi
+            </td>
+        </tr>
+    </table>
+</div>

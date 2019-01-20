@@ -8,7 +8,6 @@ public class DashboardView implements Serializable{
 	
 	private static final long serialVersionUID = 1885077771464172149L;
 	PrescriptionHistoryView pHistory;
-	PatientView patientView;
 	List<FeesBreakupView> fbl;
 	List<MedicalHistoryView> mhv;
 	List<MedicineHistoryView> medhv;
@@ -19,12 +18,6 @@ public class DashboardView implements Serializable{
 	}
 	public void setpHistory(PrescriptionHistoryView pHistory) {
 		this.pHistory = pHistory;
-	}
-	public final PatientView getPatientView() {
-		return patientView;
-	}
-	public final void setPatientView(PatientView patientView) {
-		this.patientView = patientView;
 	}
 	public List<FeesBreakupView> getFbl() {
 		if(null == this.fbl){

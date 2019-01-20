@@ -5,24 +5,22 @@ import java.sql.Timestamp;
 
 
 public class PrescriptionHistoryView implements Serializable {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 2022178289084986726L;
 	private Long prescriptionId;
 	private String advice;
 	private String chiefComplaint;
 	private String clinicalFindings;
 	private String investigation;
-//	private String medicines;
 	private Long nextAppointment;
 	private String note;
+	private String printableNotes;
 	private Long patientId;
 	private String provisionalDiagnosis;
-//	private String treatmentDone;
 	private Timestamp tsCreated;
 	private Timestamp tsModified;
-
+	private long visitCount;
+	
 	public PrescriptionHistoryView() {
 	}
 
@@ -82,6 +80,14 @@ public class PrescriptionHistoryView implements Serializable {
 		this.note = note;
 	}
 
+	public final String getPrintableNotes() {
+		return printableNotes;
+	}
+
+	public final void setPrintableNotes(String printableNotes) {
+		this.printableNotes = printableNotes;
+	}
+
 	public final Long getPatientId() {
 		return patientId;
 	}
@@ -112,6 +118,14 @@ public class PrescriptionHistoryView implements Serializable {
 
 	public final void setTsModified(Timestamp tsModified) {
 		this.tsModified = tsModified;
+	}
+
+	public final long getVisitCount() {
+		return visitCount;
+	}
+
+	public final void setVisitCount(long visitCount) {
+		this.visitCount = visitCount;
 	}
 
 }

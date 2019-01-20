@@ -150,17 +150,4 @@ public class FeesBreakupServiceImpl implements FeesBreakupService {
 		return el;
 	}
 
-	public static void main(String[] args) {
-		List<String> test = new ArrayList<>();
-		test.add("Sam");
-		test.add("Jam");
-		test.add("Jam");
-		for(String str : test){
-			str += "50";
-		}
-		System.out.println(test);
-		char ch;
-		ch = "Test".charAt(-1);
-		System.out.println(ch);
-	}
 }

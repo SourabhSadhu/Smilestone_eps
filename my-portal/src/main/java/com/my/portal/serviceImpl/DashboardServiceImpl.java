@@ -80,6 +80,7 @@ public class DashboardServiceImpl implements DashboardService {
 							throw new ValidationException(ErrorCode.INVALID_PATIENT_ID);
 						}
 						PrescriptionHistory phEntity = phService.map(phv);
+						phEntity.setVisitCount(1);
 						phEntity = phRepo.saveAndFlush(phEntity);
 
 						List<FeesBreakup> fbl = fbService.map(v.getFbl());

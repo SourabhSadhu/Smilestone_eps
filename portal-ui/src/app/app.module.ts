@@ -55,7 +55,7 @@ import { MaterialTestComponent } from './material-test/material-test.component';
 import { DialogToothClinicalfindings, CustomFeeInsertionDialog } from './create-prescription/create-prescription.component';
 import { PrintPrescriptionComponent } from './print-prescription/print-prescription.component';
 import { TreatmentPlanComponent } from './treatment-plan/treatment-plan.component';
-import { PrintComponent } from './print/print.component';
+import { PrintComponent,DoctorSelectionDialog } from './print/print.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +69,8 @@ import { PrintComponent } from './print/print.component';
     CustomFeeInsertionDialog,
     PrintPrescriptionComponent,
     TreatmentPlanComponent,
-    PrintComponent
+    PrintComponent,
+    DoctorSelectionDialog
   ],
   imports: [
     BrowserModule,
@@ -118,6 +119,6 @@ import { PrintComponent } from './print/print.component';
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [SnackhelperComponent,DialogToothClinicalfindings,CustomFeeInsertionDialog]
+  entryComponents: [SnackhelperComponent,DialogToothClinicalfindings,CustomFeeInsertionDialog,DoctorSelectionDialog]
 })
 export class AppModule { }

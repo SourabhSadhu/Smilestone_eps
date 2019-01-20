@@ -143,4 +143,8 @@ export class CommonService {
       data: snackBarModel, duration: snackBarModel.duration
     })
   }
+
+  getNewLineSeperatedArrayString(input:string) : string[]{
+    return (input && input.length>0) ? input.split(/\n/g) : []
+  }
 }

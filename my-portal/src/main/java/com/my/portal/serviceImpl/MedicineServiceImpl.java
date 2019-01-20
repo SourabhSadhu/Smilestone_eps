@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.my.portal.entities.MedicineHistory;
 import com.my.portal.entities.MedicineMaster;
 import com.my.portal.model.MedicineHistoryView;

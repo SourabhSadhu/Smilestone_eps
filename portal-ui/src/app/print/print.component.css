@@ -2,7 +2,7 @@
 
 * {
     font-family: Cambria, Georgia, serif;
-    background-color: #ffffe0;
+    /* background-color: #ffffe0; */
     }
 
 body {
@@ -27,11 +27,11 @@ p {
 
 /* First page, 10 cm margin on top */
 @page :first {
-margin-top: 10cm 
+/* margin-top: 10cm  */
 }
 
 /* Left pages, a wider margin on the left */
-@page :left {
+/* @page :left {
 margin-left: 3cm;
 margin-right: 2cm;
 }
@@ -39,7 +39,7 @@ margin-right: 2cm;
 @page :right {
 margin-left: 2cm;
 margin-right: 3cm;
-}
+} */
 
 /* ------ Normal elements */
     
@@ -63,11 +63,13 @@ h2+p:first-letter {
     line-height: 50%;
     }
 
-h1,h2,h3,h4,h5,h6 { 
+h1,h2,h4,h5,h6 { 
     text-align: center; 
     letter-spacing: 0.1em;
     }
-
+h3{
+    letter-spacing: 0.1em;
+}
  h1 {
     /* margin-top: 3cm; */
     color: red;
@@ -155,10 +157,10 @@ table,tr{
 .block1,.block2{
     display: inline;
 }
-.icon-letterhead {
+/* .icon-letterhead {
     background: url("../images/letterhead.svg");
     height: 200px;
     width: 100%;
     display: block;
     background-repeat:no-repeat;
-}
+} */

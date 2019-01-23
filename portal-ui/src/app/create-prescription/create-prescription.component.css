@@ -137,26 +137,23 @@ tr.mat-footer-row {
   border-top: 1px solid #e0e0e0;
 }
 
-.icon-search {
+/* .icon-search {
   background: url("../images/search.svg");
   height: 27px;
   width: 22px;
   display: block;
-  /* Other styles here */
 }
 .icon-refresh {
   background: url("../images/refresh.svg");
   height: 27px;
   width: 22px;
   display: block;
-  /* Other styles here */
 }
 .icon-print {
   background: url("../images/print.svg");
   height: 27px;
   width: 22px;
   display: block;
-  /* Other styles here */
 }
 .icon-add-fee {
   background: url("../images/icons8-plus.svg");
@@ -170,7 +167,7 @@ tr.mat-footer-row {
   display: inline-block;
   background-repeat: no-repeat no-repeat;
   pointer-events: none;
-}
+} */
 .md-button.logo {
   height: 7rem;
   width: 7rem;
@@ -191,3 +188,9 @@ mat-header-cell {
   justify-content:center;
   text-align: center;
 } */
+
+.fab {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+}

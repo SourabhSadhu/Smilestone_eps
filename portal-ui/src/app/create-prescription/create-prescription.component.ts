@@ -245,8 +245,13 @@ export class CreatePrescriptionComponent implements OnInit {
       resp => {
         if (resp.status === 'SUCCESS' && resp.resp && resp.resp.length > 0) {
           this.dashboardDataSource = new MatTableDataSource<DashboardView>()
-          this.dashboardDataSource.data = resp.resp
+          if (resp.resp && resp.resp.length > 0) {
+            this.dashboardDataSource.data = resp.resp
+          } else {
+            this.tabSelection(2)
+          }
         } else {
+          this.commonService.showErrorSnackBar(this.snackBar, resp.desc, () => { this.tabSelection(2) })
           this.tabSelection(2)
         }
       }
@@ -285,7 +290,6 @@ export class CreatePrescriptionComponent implements OnInit {
         this.medicineHistoryViewModel += (e.medicineName + ' ' + e.dosage + '\n')
       })
       //Create cftMapArray
-      console.log('Start of cftMapArray')
       this.cftMapArray = []
       if (dashboard.pHistory &&
         dashboard.pHistory.clinicalFindings &&
@@ -359,6 +363,22 @@ export class CreatePrescriptionComponent implements OnInit {
    ************************************************************************************************************
    ************************************************************************************************************
    */
+
+  resetPrescriptionData() {
+    this.commonService.showSuccessSnackBar(this.snackBar, "Are you sure to reset all data? ", () => {
+      this.isDisabledToModify = false;
+      this.dashboardView = new DashboardView();
+      this.prescriptionHistoryView = new PrescriptionHistoryView();
+      this.medicalHistoryViewModel = [];
+      this.medicalHistoryForm = new FormControl();
+      this.clinicalFindingsViewForUi = [];
+      this.cftMapArray = [];
+      this.treatmentPlanListView = [];
+      this.feesConfigListView = [];
+      this.feesConfigListDataSource = new MatTableDataSource<FeeConfigView>();
+    });
+  }
+
   getOrderedClinicalFindings(cf: string): string[] {
     if (cf && cf.length > 0) return cf.split(',')
   }

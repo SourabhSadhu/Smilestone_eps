@@ -216,11 +216,11 @@ export class HttpcommService {
   }
 
   getPrescriptionPrintView(patientId:number, prescriptionId:number ) : Observable<Response> {
-    // if(this.dummy){
-    //   return of(this.parseData(this.dummyResp.prescriptionPrintView))
-    // }else{
-    //   return this.genericGetRequest(this.getPrescriptionPrintViewUrl+'patientId'+patientId+'prescriptionId'+prescriptionId,'Prescription Print')
-    // }
-    return this.genericGetRequest('http://demo4369803.mockable.io/prescription-print/get')
+    if(this.dummy){
+      return of(this.parseData(this.dummyResp.prescriptionPrintView))
+    }else{
+      return this.genericGetRequest(this.getPrescriptionPrintViewUrl+'patientId'+patientId+'prescriptionId'+prescriptionId,'Prescription Print')
+    }
+    // return this.genericGetRequest('https://demo5063914.mockable.io/prescription-print/get')
   }
 }

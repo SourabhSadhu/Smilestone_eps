@@ -123,11 +123,13 @@ export class CommonService {
     })
   }
 
-  showSuccessSnackBar(snackBar: MatSnackBar, callback : () => void = null) {
+  showSuccessSnackBar(snackBar: MatSnackBar, successMsg: string = 'Data updated successfully', callback : () => void = null) {
     let snackBarModel = new SnackbarModel()
     snackBarModel.action = "OK"
-    snackBarModel.msg = "Data updated successfully"
-    snackBarModel.callback = callback
+    snackBarModel.msg = successMsg
+    if(callback){
+      snackBarModel.callback = callback
+    }
     snackBar.openFromComponent(SnackhelperComponent, {
       data: snackBarModel, duration: snackBarModel.duration
     })
@@ -138,7 +140,9 @@ export class CommonService {
     snackBarModel.action = "OK"
     snackBarModel.isError = true
     snackBarModel.msg = errorMsg
-    snackBarModel.callback = callback
+    if(callback){
+      snackBarModel.callback = callback
+    }
     snackBar.openFromComponent(SnackhelperComponent, {
       data: snackBarModel, duration: snackBarModel.duration
     })

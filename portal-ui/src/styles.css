@@ -15,7 +15,7 @@ body {
 }
 
 
-/* Material icons OFFLINE */
+/* Material icons OFFLINE start*/
 @font-face {
   font-family: 'Material Icons';
   font-style: normal;
@@ -51,4 +51,5 @@ body {
 
   /* Support for IE. */
   font-feature-settings: 'liga';
+  /* Material icons OFFLINE END */
 }

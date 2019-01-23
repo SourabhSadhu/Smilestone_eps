@@ -192,6 +192,11 @@
     <mat-tab label="Prescription" [disabled]="disableTabs">
       <mat-card id="printableContent1" class="example-card">
         <mat-card-content>
+          <div class="fab">
+            <button mat-mini-fab color="primary" (click)="resetPrescriptionData()" matTooltip="Reset">
+              <mat-icon aria-label="Reset">restore</mat-icon>
+            </button>
+          </div>
           <mat-form-field class="example-full-width">
             <textarea matInput [disabled]="checkIfDisabledToModify()" placeholder="Chief complaint" [(ngModel)]="prescriptionHistoryView.chiefComplaint"
               cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
@@ -481,8 +486,8 @@
           <!-- Printable notes -->
           <div class="example-margin">
             <mat-form-field class="example-full-width">
-              <textarea matInput placeholder="Notes to be printed" [(ngModel)]="prescriptionHistoryView.printableNotes" cdkTextareaAutosize
-                cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5" [disabled]="checkIfDisabledToModify()"></textarea>
+              <textarea matInput placeholder="Notes to be printed" [(ngModel)]="prescriptionHistoryView.printableNotes"
+                cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5" [disabled]="checkIfDisabledToModify()"></textarea>
               <button mat-button *ngIf="prescriptionHistoryView.printableNotes" matSuffix mat-icon-button aria-label="Clear"
                 (click)="prescriptionHistoryView.printableNotes=''" matToolTip="Clear" [disabled]="checkIfDisabledToModify()">
                 <mat-icon>close</mat-icon>

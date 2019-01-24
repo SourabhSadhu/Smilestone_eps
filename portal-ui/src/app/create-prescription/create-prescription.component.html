@@ -9,6 +9,11 @@
           <table>
             <tr>
               <td>
+                <i>Search by Patient details</i>
+              </td>
+            </tr>
+            <tr>
+              <td>
                 <!-- First Name -->
                 <div class="example-container example-margin">
                   <mat-form-field hintLabel="Min {{minCharToSearch}} char to search">
@@ -28,6 +33,7 @@
                 </div>
               </td>
               <td>
+                <!-- Date of birth -->
                 <div class="example-container example-margin">
                   <mat-form-field>
                     <input matInput [matDatepicker]="picker" placeholder="Select from calender" (dateChange)="dateValidate($event)"
@@ -38,6 +44,7 @@
                 </div>
               </td>
               <td>
+                <!-- Search patients -->
                 <div class="example-margin">
                   <button mat-mini-fab color="primary" (click)="fetchPatient($event)" matTooltip="Search">
                     <mat-icon aria-label="Search">search</mat-icon>
@@ -45,9 +52,38 @@
                 </div>
               </td>
               <td>
+                <!-- Reset all details -->
                 <div class="example-margin">
                   <button mat-mini-fab color="primary" (click)="refreshSearch()" matTooltip="Refresh">
                     <mat-icon aria-label="Refresh">refresh</mat-icon>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <mat-divider></mat-divider>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <i>Search by Prescription number</i>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <!-- Prescription id -->
+                <div class="example-container example-margin">
+                  <mat-form-field>
+                    <input matInput maxlength=20 placeholder="Enter Prescription ID" [(ngModel)]="prescriptionId">
+                    <mat-hint align="end">Enter in number</mat-hint>
+                  </mat-form-field>
+                </div>
+              </td>
+              <td>
+                <div class="example-margin">
+                  <button mat-mini-fab color="primary" (click)="searchPrescription()" matTooltip="Search">
+                    <mat-icon aria-label="Search">pageview</mat-icon>
                   </button>
                 </div>
               </td>
@@ -495,9 +531,15 @@
             </mat-form-field>
           </div>
 
-          <button mat-mini-fab color="primary" (click)="createAndSubmitPrescription()" matTooltip="Print" [disabled]="checkIfDisabledToModify()">
-            <mat-icon aria-label="Print">print</mat-icon>
+
+          <button mat-mini-fab color="primary" (click)="createAndSubmitPrescription()" matTooltip="Upload" [disabled]="checkIfDisabledToModify()">
+            <mat-icon aria-label="Upload">cloud_upload</mat-icon>
           </button>
+
+          <button mat-mini-fab color="primary" (click)="printPrescription()" matTooltip="Print" [disabled]="!checkIfDisabledToModify()">
+            <mat-icon aria-label="Print">local_printshop</mat-icon>
+          </button>
+
         </mat-card-content>
       </mat-card>
     </mat-tab>

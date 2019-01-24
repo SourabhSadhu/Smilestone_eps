@@ -35,6 +35,7 @@ export class HttpcommService {
   postAddClinicalFindingUrl = this.baseUrl + 'clinical-finding/add-clinical-finding'
   getAddTreatmentPlanUrl = this.baseUrl + 'trtmnt/add-treatment-plan'
   getPrescriptionPrintViewUrl = this.baseUrl + 'prescription-print/get?'
+  getSinglePrescriptionViewUrl = this.baseUrl + 'dashboard/get-prescription-by-id?id='
   
   constructor(public http : HttpClient) {
     this.dummyResp = new DummyResponse();
@@ -222,5 +223,13 @@ export class HttpcommService {
       return this.genericGetRequest(this.getPrescriptionPrintViewUrl+'patientId'+patientId+'prescriptionId'+prescriptionId,'Prescription Print')
     }
     // return this.genericGetRequest('https://demo5063914.mockable.io/prescription-print/get')
+  }
+
+  getSinglePrescriptionDetail(prescriptionId: number) : Observable<Response>{
+    if(this.dummy){
+      return of(this.dummyResp.getSinglePrescriptionView);
+    }else{
+      return this.genericGetRequest(this.getSinglePrescriptionViewUrl+prescriptionId,'Single prescription request')
+    }
   }
 }

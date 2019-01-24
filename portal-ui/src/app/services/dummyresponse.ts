@@ -622,6 +622,118 @@ export class DummyResponse {
     ]
   };
 
+  public getSinglePrescriptionView = {
+    "status": "SUCCESS",
+    "desc": null,
+    "resp": {
+      "pHistory": {
+        "prescriptionId": 34,
+        "advice": "general test  advice",
+        "chiefComplaint": "general test cc",
+        "clinicalFindings": "Periodontities - 34 35",
+        "investigation": "general test iv",
+        "nextAppointment": 1542393000000,
+        "note": "general test notes",
+        "printableNotes": "Printed",
+        "patientId": 1,
+        "provisionalDiagnosis": "general test pd",
+        "tsCreated": 1542426489661,
+        "tsModified": null
+      },
+      "fbl": [
+        {
+          "fId": 34,
+          "amount": 500,
+          "amountPaid": 390,
+          "trtmntPlanRef": 2,
+          "notes": "general test fee",
+          "patientId": 1,
+          "prescriptionId": null,
+          "tsCreated": 1542426489787,
+          "paymentTs": null
+        },
+        {
+          "fId": 35,
+          "amount": 356,
+          "amountPaid": 70,
+          "trtmntPlanRef": 2,
+          "notes": "general test fee",
+          "patientId": 1,
+          "prescriptionId": null,
+          "tsCreated": 1542426489787,
+          "paymentTs": null
+        }
+      ],
+      "mhv": [
+        {
+          "medicalHistoryId": 37,
+          "medicalHistoryName": "Hypotension",
+          "note": null,
+          "patientId": 1,
+          "prescriptionId": 34,
+          "severity": null,
+          "startedFrom": 1542426489878
+        },
+        {
+          "medicalHistoryId": 38,
+          "medicalHistoryName": "Asthma",
+          "note": null,
+          "patientId": 1,
+          "prescriptionId": 34,
+          "severity": null,
+          "startedFrom": 1542426489878
+        }
+      ],
+      "medhv": [
+        {
+          "medId": 20,
+          "diseaseCode": "dCode2",
+          "diseaseName": null,
+          "dosage": "dose",
+          "medicineName": "med2",
+          "patientId": 1,
+          "prescriptionId": 34
+        },
+        {
+          "medId": 21,
+          "diseaseCode": "dCode3",
+          "diseaseName": null,
+          "dosage": "dose",
+          "medicineName": "med3",
+          "patientId": 1,
+          "prescriptionId": 34
+        }
+      ],
+      "tphv": [
+        {
+          "clinicalFinding": "Periodontities",
+          "note": null,
+          "patientId": 1,
+          "prescriptionId": 40,
+          "toothIndex": "35",
+          "tsCreated": 1546330807107,
+          "tsModified": null,
+          "status": "Pending",
+          "tname": "Prosthesis removable",
+          "tid": 8
+        },
+        {
+          "clinicalFinding": "Periodontities",
+          "note": null,
+          "patientId": 1,
+          "prescriptionId": 40,
+          "toothIndex": "34",
+          "tsCreated": 1546330836694,
+          "tsModified": null,
+          "status": "Completed",
+          "tname": "RCT",
+          "tid": 9
+        }
+      ]
+    }
+  };
+
+
   public prescriptionPrintView = {
     "status": "SUCCESS",
     "desc": null,
@@ -637,7 +749,7 @@ export class DummyResponse {
       "visitNo": "1",
       "visitDateTime": "05-01-2019 11:35 AM",
       "nextAppointmentDateTime": "09-01-2019 12:00 AM",
-      "printableNotes":"Printed",
+      "printableNotes": "Printed",
       "chiefComplain": "Dental Pain",
       "medicalHistory": "Asthma, Cardiac diseases, Hypertension, Hypotension, Hyperthyroidism, Drug hypersensitivity",
       "clinicalFindings": "RETAINED ROOT IN 23,32,36,37,45 \n CARIOUS 13,14",

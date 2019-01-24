@@ -92,6 +92,11 @@ public class PatientServiceImpl implements PatientService{
 
 	@Override
 	public List<PatientView> getPatient(PatientView p) {
+		if(null != p.getPId()) {
+			List<PatientView> resp = new ArrayList<>();
+			resp.add(this.findById(p.getPId()));
+			return resp;
+		}
 		if (null != p.getDobDd() && null != p.getDobMm() && null != p.getDobYy()
 				&& (StringUtils.isEmpty(p.getFirstName()) || StringUtils.isEmpty(p.getLastName()))) {
 			return findByDOB(p.getDobDd(), p.getDobMm(), p.getDobYy());

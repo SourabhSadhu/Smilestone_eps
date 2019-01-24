@@ -33,10 +33,10 @@ export class PrintComponent implements OnInit, AfterViewInit {
         
         if (patientId > 0 && prescriptionId > 0) {
             this.httpService.getPrescriptionPrintView(patientId, prescriptionId).subscribe(resp => {
+                this.requestLoading = false
                 if (resp && resp.status == 'SUCCESS') {
                     this.printView = resp.resp;
-                } else {
-                    this.requestLoading = false
+                } else {                    
                     this.commonService.showErrorSnackBar(this.matSnackbar,resp.desc,() =>{
                         this.router.navigate([''])
                     })

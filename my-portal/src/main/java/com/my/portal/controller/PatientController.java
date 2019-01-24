@@ -1,5 +1,6 @@
 package com.my.portal.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.my.portal.CommonUtils;
+import com.my.portal.ErrorCode;
 import com.my.portal.ValidationException;
 import com.my.portal.model.ApiResponse;
 import com.my.portal.model.PatientView;
@@ -40,11 +42,14 @@ public class PatientController {
 	public ResponseEntity<?> getPatient(@RequestBody PatientView p) {
 			
 		try {
+			if(null == p) {
+				throw new ValidationException(ErrorCode.INVALID_INPUT);
+			}
 			List<PatientView> pList = patientService.getPatient(p);
 			if(null != pList && !pList.isEmpty()) {
 				return new ResponseEntity<>(CommonUtils.getResp(pList), HttpStatus.OK);
 			}else {
-				return new ResponseEntity<>(new ApiResponse(), HttpStatus.OK);
+				return new ResponseEntity<>(CommonUtils.getResp(new ArrayList<>()), HttpStatus.OK);
 			}
 		} catch (Exception e) {
 			if(e instanceof ValidationException) {

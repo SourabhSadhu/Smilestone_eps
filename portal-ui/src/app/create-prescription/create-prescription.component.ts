@@ -20,6 +20,7 @@ import { CommonService } from '../services/commonservice.service';
 import { TreatmentPlanService } from '../services/treatment-plan.service'
 import { MatTableDataSource } from '@angular/material/table';
 import { EventServiceService } from '../services/event-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-prescription',
@@ -86,7 +87,7 @@ export class CreatePrescriptionComponent implements OnInit {
   constructor(public snackBar: MatSnackBar,
     public dialog: MatDialog, public httpCom: HttpcommService,
     public treatmentPlanService: TreatmentPlanService, public commonService: CommonService
-    , private eventService: EventServiceService
+    , private eventService: EventServiceService, public router: Router
   ) { }
 
   ngOnInit() {
@@ -147,6 +148,7 @@ export class CreatePrescriptionComponent implements OnInit {
     this.disableTabs = true
     this.initializeValiables()
     this.patientDataSource = []
+    this.prescriptionId = undefined
   }
 
   initializeValiables() {
@@ -195,16 +197,23 @@ export class CreatePrescriptionComponent implements OnInit {
       this.searchPatient();
     }
   }
-  searchPatient() {
+  searchPatient(){
     //search patient
     this.isPatientLoading = true;
     this.isPatientLoaded = false;
     this.httpCom.getPatient(this.selectedPatient).subscribe(resp => {
-      if (resp && resp.status === 'SUCCESS') {
-        if (resp.status && resp.status.length > 0)
-          this.patientDataSource = resp.resp;
+      if (resp) {
+        if (resp.status && resp.status === 'SUCCESS') {
+          if (resp.status.length > 0) {
+            this.patientDataSource = resp.resp;
+          }else{
+            this.commonService.showSuccessSnackBar(this.snackBar, "No record found")
+          }
+        }else{
+          this.commonService.showErrorSnackBar(this.snackBar, resp.desc)
+        }
       } else {
-        //TODO: navigate to add patient tab
+        this.commonService.showErrorSnackBar(this.snackBar)
       }
       this.isPatientLoaded = true;
       this.isPatientLoading = false;
@@ -224,6 +233,39 @@ export class CreatePrescriptionComponent implements OnInit {
     this.disableTabs = false;
     this.tabSelection(1);
     this.fetchDashboard(element.pid)
+  }
+
+  prescriptionId : number
+  searchPrescription() {
+    console.log('Prescription ID: ' + this.prescriptionId)
+    if (this.prescriptionId && this.prescriptionId > 0) {
+      this.httpCom.getSinglePrescriptionDetail(this.prescriptionId).subscribe(resp => {
+        if (resp) {
+          if (resp.status == 'SUCCESS') {
+            this.tabSelection(2)
+            if (resp.resp) {
+              //Fetch patient details
+              let dashboard :DashboardView = resp.resp;
+              let patient = new Patient()
+              patient.pid = dashboard.pHistory.patientId
+              this.httpCom.getPatient(patient).subscribe(patientResp => {
+                if(patientResp && patientResp.status == 'SUCCESS'){
+                  this.selectedPatient = patientResp.resp[0];
+                  this.disableTabs = false;
+                  this.selectPrescription(resp.resp);
+                }
+              })
+            } else {
+              this.commonService.showSuccessSnackBar(this.snackBar, 'No prescription found')
+            }
+          } else {
+            this.commonService.showErrorSnackBar(this.snackBar, resp.desc)
+          }
+        } else {
+          this.commonService.showErrorSnackBar(this.snackBar)
+        }
+      })
+    }
   }
 
   tabSelection(tabIndex: number) {
@@ -276,6 +318,7 @@ export class CreatePrescriptionComponent implements OnInit {
 
     this.tabSelection(2)
     this.isDisabledToModify = true
+    this.prescriptionId = dashboard.pHistory.prescriptionId
     if (dashboard.pHistory) {
       this.prescriptionHistoryView = dashboard.pHistory
       if (dashboard.pHistory.clinicalFindings.length > 0) {
@@ -376,6 +419,7 @@ export class CreatePrescriptionComponent implements OnInit {
       this.treatmentPlanListView = [];
       this.feesConfigListView = [];
       this.feesConfigListDataSource = new MatTableDataSource<FeeConfigView>();
+      this.checkIfDisabledToModify()
     });
   }
 
@@ -627,6 +671,7 @@ export class CreatePrescriptionComponent implements OnInit {
     this.cftMapArray[index].treatmentPlanName = value
   }
 
+  dashboardResponse: DashboardResponse
   createAndSubmitPrescription() {
 
     this.dashboardView = new DashboardView();
@@ -685,10 +730,10 @@ export class CreatePrescriptionComponent implements OnInit {
           //Do something and print prescription
           console.log(JSON.stringify(resp.resp));
           // this.printPrescription();
-          let dashboardResponse: DashboardResponse = resp.resp
-          if (dashboardResponse && dashboardResponse.status) {
-
-            this.treatmentPlanService.setTreatmentData(dashboardResponse.patientId, dashboardResponse.prescriptionId, this.dashboardView.tphv)
+          this.dashboardResponse = resp.resp
+          if (this.dashboardResponse && this.dashboardResponse.status) {
+            this.isDisabledToModify = true
+            this.treatmentPlanService.setTreatmentData(this.dashboardResponse.patientId, this.dashboardResponse.prescriptionId, this.dashboardView.tphv)
 
             /**
              * As event emitter is working, so need to send reference as we need to operate on data
@@ -719,52 +764,13 @@ export class CreatePrescriptionComponent implements OnInit {
   }
 
   printPrescription() {
-    /**
-     * Go to print page for printing with input of patientId and prescriptionId
-     * goToPage(pageNum) {
-          this.router.navigate(['/product'], { queryParams: { page: pageNum } });
-      }
-     */
-    //printableContent1
-    //Need to create a separate page and populate the prescription data only    
-    var prescriptionContent = document.getElementById("printableContent1").outerHTML;
-    var openWindow = window.open("", "target", "width=800, height=800")
-    // let printablePage = `<!doctype html>
-    // <html lang="en">
-    // <head>
-    //   <meta charset="utf-8">
-    //   <title>EpsDashboard</title>
-    //   <base href="/">
-    //   <meta name="viewport" content="width=device-width, initial-scale=1">
-    //   <link rel="icon" type="image/x-icon" href="favicon.ico">
-    //   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    //   <link rel="stylesheet" href="create-prescription.component.css">
-    //   <link rel="stylesheet" href="../dashboard/dashboard.component.css">
-    // </head>
-    // <body> ${prescriptionContent} </body></html>`;
-    let printablePage = '<html>' +
-      '<head>' +
-      '<title>Prescription</title>' +
-      '<script type="text/javascript" src="runtime.js"></script>' +
-      '<script type="text/javascript" src="polyfills.js"></script>' +
-      '<script type="text/javascript" src="styles.js"></script>' +
-      // '<script type="text/javascript" src="vendor.js"></script>'+
-      '<script type="text/javascript" src="main.js"></script>' +
-      '<link rel="stylesheet" href="../dashboard/dashboard.component.css"/>' +
-      '<link rel="icon" type="image/x-icon" href="favicon.ico"/>' +
-      '</head>' +
-      '<body ' +
-      // 'onload="window.print()"'+
-      '>'
-      + prescriptionContent
-      + '</body></html>';
-    console.log("printPrescription", JSON.stringify(printablePage))
-    openWindow.document.open()
-    openWindow.document.write(printablePage)
-    openWindow.document.close
-    openWindow.focus();
-    // openWindow.print();
-    // openWindow.close();
+    console.log('Patient ID'+this.selectedPatient.pid)
+    console.log('Prescription ID'+this.prescriptionId)
+    if(this.dashboardResponse && this.dashboardResponse.patientId && this.dashboardResponse.prescriptionId){
+      this.router.navigate(['print'],{queryParams: { patientId:this.dashboardResponse.patientId , prescriptionId:this.dashboardResponse.prescriptionId}})
+    }else if(this.isDisabledToModify){
+      this.router.navigate(['print'],{queryParams: { patientId:this.selectedPatient.pid , prescriptionId:this.prescriptionId}})
+    }
   }
 }
 

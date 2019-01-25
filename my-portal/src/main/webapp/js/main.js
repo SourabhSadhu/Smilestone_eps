@@ -233,8 +233,7 @@ var AppModule = /** @class */ (function () {
                 _create_prescription_create_prescription_component__WEBPACK_IMPORTED_MODULE_13__["CustomFeeInsertionDialog"],
                 _print_prescription_print_prescription_component__WEBPACK_IMPORTED_MODULE_15__["PrintPrescriptionComponent"],
                 _treatment_plan_treatment_plan_component__WEBPACK_IMPORTED_MODULE_16__["TreatmentPlanComponent"],
-                _print_print_component__WEBPACK_IMPORTED_MODULE_17__["PrintComponent"],
-                _print_print_component__WEBPACK_IMPORTED_MODULE_17__["DoctorSelectionDialog"]
+                _print_print_component__WEBPACK_IMPORTED_MODULE_17__["PrintComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -283,7 +282,7 @@ var AppModule = /** @class */ (function () {
             ],
             providers: [],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"]],
-            entryComponents: [_snackhelper_snackhelper_component__WEBPACK_IMPORTED_MODULE_12__["SnackhelperComponent"], _create_prescription_create_prescription_component__WEBPACK_IMPORTED_MODULE_13__["DialogToothClinicalfindings"], _create_prescription_create_prescription_component__WEBPACK_IMPORTED_MODULE_13__["CustomFeeInsertionDialog"], _print_print_component__WEBPACK_IMPORTED_MODULE_17__["DoctorSelectionDialog"]]
+            entryComponents: [_snackhelper_snackhelper_component__WEBPACK_IMPORTED_MODULE_12__["SnackhelperComponent"], _create_prescription_create_prescription_component__WEBPACK_IMPORTED_MODULE_13__["DialogToothClinicalfindings"], _create_prescription_create_prescription_component__WEBPACK_IMPORTED_MODULE_13__["CustomFeeInsertionDialog"]]
         })
     ], AppModule);
     return AppModule;
@@ -300,7 +299,7 @@ var AppModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".example-stretched-tabs {\r\n  max-width: 1000px;\r\n}\r\n.example-container {\r\n  display: flex;\r\n  flex-direction: column;\r\n}\r\n.example-container > * {\r\n  width: 100%;\r\n}\r\n.example-card-parent {\r\n  /* max-width: 800px; */\r\n  min-width: 50px;\r\n  margin-left: 50px;\r\n  margin-top: 30px;\r\n  width : 100%;\r\n}\r\n.example-card {\r\n  /* max-width: 800px; */\r\n  min-width: 50px;\r\n  margin: 30px;\r\n  /* width : 100%; */\r\n}\r\n.expansion-margin {\r\n  max-width: 500px;\r\n  margin-left: 150px;\r\n  margin-top: 30px;\r\n}\r\n.example-section {\r\n  display: flex;\r\n  align-content: center;\r\n  align-items: center;\r\n  height: 60px;\r\n}\r\n.example-margin {\r\n  /* margin: 0 10px; */\r\n  margin-top: 20px;\r\n  margin-left : 10px;\r\n  margin-right: 10px;\r\n  margin-bottom: 10px;\r\n}\r\n.mat-radio-button ~ .mat-radio-button {\r\n  padding: 36px;\r\n}\r\ntable {\r\n  width: 100%;\r\n}\r\ntr.example-detail-row {\r\n  height: 0;\r\n}\r\ntr.example-element-row:not(.example-expanded-row):hover {\r\n  background: #f5f5f5;\r\n}\r\ntr.example-element-row:not(.example-expanded-row):active {\r\n  background: #efefef;\r\n}\r\n.example-element-row td {\r\n  border-bottom-width: 0;\r\n}\r\n.example-element-detail {\r\n  overflow: hidden;\r\n  display: flex;\r\n}\r\n.example-element-diagram {\r\n  min-width: 80px;\r\n  border: 2px solid black;\r\n  padding: 8px;\r\n  font-weight: lighter;\r\n  margin: 8px 0;\r\n  height: 104px;\r\n}\r\n.example-element-symbol {\r\n  font-weight: bold;\r\n  font-size: 40px;\r\n  line-height: normal;\r\n}\r\n.example-element-description {\r\n  padding: 16px;\r\n}\r\n/* .example-element-description-attribution {\r\n  opacity: 0.5;\r\n} */\r\n.example-full-width {\r\n  width: 100%;\r\n}\r\n.example-half-width{\r\n  width : 50%;\r\n}\r\n.example-grid-margin{\r\n  margin-top: 20px;\r\n  margin-bottom: 10px;\r\n  margin-right: 50px;\r\n}\r\n.rcorners2 {\r\n  border-radius: 25px;\r\n  border: 2px solid #73AD21;\r\n  padding-left: 4px; \r\n  /* width: 200px;\r\n  height: 150px;     */\r\n  margin-left: 4px;\r\n  margin-right: 4px;\r\n}\r\n/* label > input{ HIDE RADIO \r\n  visibility: hidden; Makes input not-clickable\r\n  position: absolute; Remove input from document flow\r\n}\r\nlabel > input { IMAGE STYLES\r\n  cursor:pointer;\r\n  border:2px solid transparent;\r\n}\r\nlabel > input:checked { (RADIO CHECKED) IMAGE STYLES\r\n  border:20px solid #f00;\r\n} */\r\n/* Fees table properties */\r\ntable {\r\n  width: 100%;\r\n}\r\ntr.mat-footer-row {\r\n  font-weight: bold;\r\n}\r\n.mat-table-sticky {\r\n  border-top: 1px solid #e0e0e0;\r\n}\r\n.icon-search {\r\n  background: url(\"data:image/svg+xml,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 width%3D%2224%22 height%3D%2224%22 viewBox%3D%220 0 24 24%22%3E%3Cpath d%3D%22M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z%22%2F%3E%3Cpath d%3D%22M0 0h24v24H0z%22 fill%3D%22none%22%2F%3E%3C%2Fsvg%3E\");\r\n  height: 27px;\r\n  width: 22px;\r\n  display: block;\r\n  /* Other styles here */\r\n}\r\n.icon-refresh {\r\n  background: url(\"data:image/svg+xml,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 width%3D%2224%22 height%3D%2224%22 viewBox%3D%220 0 24 24%22%3E%3Cpath d%3D%22M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z%22%2F%3E%3Cpath d%3D%22M0 0h24v24H0z%22 fill%3D%22none%22%2F%3E%3C%2Fsvg%3E\");\r\n  height: 27px;\r\n  width: 22px;\r\n  display: block;\r\n  /* Other styles here */\r\n}\r\n.icon-print {\r\n  background: url(\"data:image/svg+xml,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 width%3D%2224%22 height%3D%2224%22 viewBox%3D%220 0 24 24%22%3E%3Cpath d%3D%22M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z%22%2F%3E%3Cpath d%3D%22M0 0h24v24H0z%22 fill%3D%22none%22%2F%3E%3C%2Fsvg%3E\");\r\n  height: 27px;\r\n  width: 22px;\r\n  display: block;\r\n  /* Other styles here */\r\n}\r\n.icon-add-fee {\r\n  background: url(\"data:image/svg+xml,%3C%3Fxml version%3D%221.0%22 encoding%3D%22utf-8%22%3F%3E%3C!-- Generator%3A Adobe Illustrator 16.0.0%2C SVG Export Plug-In . SVG Version%3A 6.00 Build 0)  --%3E%3C!DOCTYPE svg PUBLIC %22-%2F%2FW3C%2F%2FDTD SVG 1.1%2F%2FEN%22 %22http%3A%2F%2Fwww.w3.org%2FGraphics%2FSVG%2F1.1%2FDTD%2Fsvg11.dtd%22%3E%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22 version%3D%221.1%22 id%3D%22Layer_1%22 x%3D%220px%22 y%3D%220px%22 width%3D%22480px%22 height%3D%22480px%22 viewBox%3D%220 0 512 512%22 enable-background%3D%22new 0 0 512 512%22 xml%3Aspace%3D%22preserve%22%3E%3Cg%3E%09%3Cg%3E%09%09%3Cg%3E%09%09%09%3Cpath fill%3D%22%23D6E5E5%22 d%3D%22M389.2%2C204.5l-0.1-7.2c-29-0.9-57.8%2C0.8-86.7%2C2.5c-0.1-0.8-0.2-1.5-0.4-2.3h-0.4c0-0.9%2C0-1.7%2C0-2.6     c-0.1-0.4-0.1-0.8-0.2-1.2c0-1.3-0.1-2.6-0.2-3.9c0.1%2C0%2C0.3%2C0%2C0.4%2C0c0-23.1%2C0.2-46.2%2C0.2-69.3c-20.9-0.1-41.8-1-62.8-1h-39.6     c-0.1%2C0.7-0.2%2C1.5-0.2%2C2.2c-0.2%2C3.7-0.2%2C7.3-0.1%2C11c0.1%2C7%2C0.4%2C14%2C0.6%2C21c0.4%2C13.2%2C0.9%2C26.4%2C1.4%2C39.6h0l0%2C0c0%2C1.4%2C0.1%2C2.8%2C0.1%2C4.1     h-0.7l-0.8%2C5.8c-27.6%2C0.3-55.2%2C0.2-82.8%2C0.4c0%2C20.9-0.6%2C41.8-0.5%2C62.8L117%2C306c0.7%2C0.1%2C1.5%2C0.1%2C2.2%2C0.2c3.7%2C0.1%2C7.3%2C0.1%2C11%2C0     c7-0.1%2C14-0.5%2C21-0.7c16.3-0.6%2C33.8-1.4%2C50.1-2l-0.3%2C2h0.1c0%2C2.1%2C0%2C4.3-0.1%2C6.4c-0.2%2C26-0.7%2C52.1%2C1.5%2C78     c17.6%2C1.7%2C35.9%2C1.4%2C53.4%2C0.4c13.9-0.8%2C29.7-3.4%2C43%2C2.2h7.2c1.1-29.1-0.4-58-1.8-87h0.6v-2.4c1.5%2C0%2C2.9%2C0%2C4.4%2C0     c26%2C0%2C52.1%2C0.3%2C78-2.1c1.5-17.6%2C1.1-35.9%2C0-53.4C386.5%2C233.6%2C383.7%2C217.8%2C389.2%2C204.5z%22%2F%3E%09%09%3C%2Fg%3E%09%3C%2Fg%3E%09%3Cg%3E%09%09%3Cg%3E%09%09%09%3Cpath fill%3D%22%2371C598%22 d%3D%22M474.2%2C161.7c-16.1-46.6-46.7-87.1-91.3-109.6C332%2C26.5%2C272%2C24.1%2C216.5%2C32.9C166.8%2C40.8%2C114.3%2C58.8%2C77%2C94     c-19.6%2C18.5-34.7%2C40.9-42.7%2C66.8c-8%2C26-10.4%2C53.1-12.1%2C80.1c-0.1%2C1.1-0.4%2C2-1%2C2.7c0%2C0.2%2C0.1%2C0.5%2C0.1%2C0.8     c0%2C52.9-1.1%2C108.3%2C30.1%2C153.9c25.3%2C37.1%2C64.5%2C61.5%2C107.2%2C73.7c88%2C25.2%2C194.2%2C9.6%2C264.9-50.8C497.6%2C357.9%2C504.4%2C248.9%2C474.2%2C161.7     z M397.6%2C251.9c0.3%2C18.2%2C1.2%2C36.4-0.6%2C54.6c-0.2%2C2.2-2.4%2C3.8-4.5%2C4.1c-25.7%2C2.7-51.7%2C2.6-77.6%2C2.6c1.4%2C28%2C2.5%2C56%2C1.2%2C84     c-0.1%2C2.5-1.6%2C5.4-4.6%2C5.4h-15c-1.7%2C0-3.1-0.7-4-1.8c-12.7-4.1-28-0.3-40.8-0.2c-18.2%2C0.1-36.4%2C0.9-54.6-1.1     c-2.2-0.2-3.8-2.4-4-4.5c-2.6-27-2.2-54.2-1.9-81.3c-14.8%2C0.6-29.6%2C1.5-44.4%2C2.1c-7.9%2C0.3-15.9%2C0.7-23.9%2C0.6     c-4.1-0.1-12.4%2C0.7-14.9-3.7c-0.2-0.4-0.4-0.7-0.5-1.1c-0.2-0.6-0.4-1.2-0.4-1.9l-0.3-42.2c-0.2-22.4%2C0.6-44.8%2C0.5-67.2     c0-0.5%2C0.1-0.9%2C0.2-1.3c-0.2-2.5%2C1.2-5%2C4.4-5.1c26.1-0.2%2C53.4-0.1%2C79.8-0.3c-0.5-14.8-1.2-29.6-1.7-44.3     c-0.3-7.9-0.6-15.9-0.4-23.9c0.1-4.1-0.6-12.4%2C3.8-14.8c0.4-0.2%2C0.7-0.4%2C1.1-0.5c0.6-0.2%2C1.2-0.4%2C1.9-0.4h42.2     c22.4%2C0%2C44.8%2C1%2C67.2%2C1c0.5%2C0%2C0.9%2C0.1%2C1.3%2C0.2c2.5-0.2%2C5%2C1.2%2C5%2C4.4c0%2C24.7-0.2%2C49.4-0.3%2C74.1c27.3-1.5%2C54.6-2.8%2C82-1.7     c2.5%2C0.1%2C5.4%2C1.6%2C5.4%2C4.6l0.1%2C13.5c0%2C0%2C0%2C0%2C0%2C0.1l0%2C1.5c0%2C1.7-0.7%2C3.1-1.8%2C4C393.4%2C223.8%2C397.4%2C239%2C397.6%2C251.9z%22%2F%3E%09%09%3C%2Fg%3E%09%3C%2Fg%3E%09%3Cg%3E%09%09%3Cg%3E%09%09%09%3Cpath d%3D%22M487.9%2C168.7c-14.2-46.9-40.9-88.3-82-115.7c-46.4-31-105.3-38.4-159.8-34.4c-51.7%2C3.8-104.6%2C17.9-148.6%2C46     c-21.6%2C13.8-40.9%2C31.9-55%2C53.4C27.7%2C140.5%2C20%2C166.6%2C16%2C193.2c-2.3%2C15.1-3.4%2C30.3-4.4%2C45.6c-0.1%2C0.9%2C0.1%2C1.8%2C0.4%2C2.6     c-0.9%2C0.9-1.5%2C2.2-1.5%2C3.8c0%2C30.1-0.6%2C60.4%2C4.6%2C90.2c4.8%2C27.1%2C15.2%2C52.9%2C31.6%2C75.1c29.2%2C39.5%2C73.5%2C63.3%2C120.4%2C75     c88.9%2C22.2%2C194.2%2C3.7%2C264.5-57.1C505.6%2C364.4%2C514.8%2C257.6%2C487.9%2C168.7z M423.5%2C421.2c-70.8%2C60.4-176.9%2C76-264.9%2C50.8     c-42.7-12.2-81.9-36.6-107.2-73.7c-31.1-45.6-30.1-101-30.1-153.9c0-0.3%2C0-0.5-0.1-0.8c0.5-0.7%2C0.9-1.6%2C1-2.7     c1.7-27%2C4.1-54.1%2C12.1-80.1C42.2%2C134.9%2C57.4%2C112.4%2C77%2C94c37.3-35.2%2C89.8-53.2%2C139.6-61.1C272%2C24.1%2C332%2C26.5%2C383%2C52.1     c44.6%2C22.5%2C75.1%2C63.1%2C91.3%2C109.6C504.4%2C248.9%2C497.6%2C357.9%2C423.5%2C421.2z%22%2F%3E%09%09%3C%2Fg%3E%09%3C%2Fg%3E%09%3Cg%3E%09%09%3Cg%3E%09%09%09%3Cpath d%3D%22M397.4%2C211.1c1.1-0.9%2C1.8-2.2%2C1.8-4l0-1.5c0%2C0%2C0%2C0%2C0-0.1l-0.1-13.5c0-3-2.9-4.5-5.4-4.6c-27.4-1.1-54.7%2C0.1-82%2C1.7     c0-24.7%2C0.3-49.4%2C0.3-74.1c0-3.2-2.5-4.6-5-4.4c-0.4-0.1-0.9-0.2-1.3-0.2c-22.4%2C0-44.8-1-67.2-1h-42.2c-0.7%2C0-1.4%2C0.1-1.9%2C0.4     c-0.4%2C0.1-0.7%2C0.3-1.1%2C0.5c-4.4%2C2.5-3.7%2C10.7-3.8%2C14.8c-0.2%2C8%2C0.1%2C15.9%2C0.4%2C23.9c0.5%2C14.8%2C1.3%2C29.5%2C1.7%2C44.3     c-26.4%2C0.2-53.6%2C0.1-79.8%2C0.3c-3.2%2C0-4.6%2C2.6-4.4%2C5.1c-0.1%2C0.4-0.2%2C0.9-0.2%2C1.3c0.1%2C22.4-0.7%2C44.8-0.5%2C67.2l0.3%2C42.2     c0%2C0.7%2C0.1%2C1.4%2C0.4%2C1.9c0.1%2C0.4%2C0.3%2C0.7%2C0.5%2C1.1c2.5%2C4.4%2C10.8%2C3.6%2C14.9%2C3.7c8%2C0.2%2C15.9-0.2%2C23.9-0.6c14.8-0.6%2C29.6-1.5%2C44.4-2.1     c-0.3%2C27.1-0.7%2C54.4%2C1.9%2C81.3c0.2%2C2.1%2C1.8%2C4.3%2C4%2C4.5c18.1%2C2%2C36.4%2C1.2%2C54.6%2C1.1c12.9-0.1%2C28.2-3.9%2C40.8%2C0.2c0.9%2C1.1%2C2.2%2C1.8%2C4%2C1.8     h15c3%2C0%2C4.5-2.8%2C4.6-5.4c1.4-28.1%2C0.2-56-1.2-84c25.9%2C0.1%2C51.9%2C0.1%2C77.6-2.6c2.1-0.2%2C4.3-1.8%2C4.5-4.1c1.9-18.1%2C0.9-36.4%2C0.6-54.6     C397.4%2C239%2C393.4%2C223.8%2C397.4%2C211.1z M387.4%2C247.5c1.1%2C17.6%2C1.6%2C35.8%2C0%2C53.4c-25.9%2C2.4-52%2C2.1-78%2C2.1c-1.5%2C0-2.9%2C0-4.4%2C0v2.4     h-0.6c1.5%2C29%2C2.9%2C58%2C1.8%2C87H299c-13.3-5.6-29.1-3-43-2.2c-17.6%2C1-35.8%2C1.3-53.4-0.4c-2.2-25.9-1.7-52-1.5-78c0-2.1%2C0-4.3%2C0.1-6.4     H201l0.3-2c-16.3%2C0.6-33.8%2C1.4-50.1%2C2c-7%2C0.2-14%2C0.6-21%2C0.7c-3.7%2C0.1-7.3%2C0.1-11%2C0c-0.7%2C0-1.5-0.1-2.2-0.2l-0.3-39.6     c-0.2-20.9%2C0.5-41.9%2C0.5-62.8c27.6-0.2%2C55.2-0.1%2C82.8-0.4l0.8-5.8h0.7c0-1.4-0.1-2.8-0.1-4.1l0%2C0h0c-0.4-13.2-1-26.4-1.4-39.6     c-0.2-7-0.5-14-0.6-21c0-3.7%2C0-7.3%2C0.1-11c0-0.7%2C0.1-1.5%2C0.2-2.2h39.6c20.9%2C0%2C41.8%2C0.8%2C62.8%2C1c0%2C23.1-0.2%2C46.2-0.2%2C69.3     c-0.1%2C0-0.3%2C0-0.4%2C0c0.1%2C1.3%2C0.2%2C2.6%2C0.2%2C3.9c0%2C0.4%2C0.1%2C0.8%2C0.2%2C1.2c0%2C0.9%2C0%2C1.7%2C0%2C2.6h0.4c0.1%2C0.8%2C0.2%2C1.5%2C0.4%2C2.3     c28.9-1.7%2C57.7-3.3%2C86.7-2.5l0.1%2C7.2C383.7%2C217.8%2C386.5%2C233.6%2C387.4%2C247.5z%22%2F%3E%09%09%3C%2Fg%3E%09%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E\");\r\n  height: 27px;\r\n  width: 27px;\r\n  display: block;\r\n}\r\n.svg-icon{\r\n  margin: 5px auto auto;\r\n  padding: 0;\r\n  display: inline-block;\r\n  background-repeat: no-repeat no-repeat;\r\n  pointer-events: none;\r\n}\r\n.md-button.logo {\r\n  height: 7rem;\r\n  width: 7rem;\r\n}\r\n.logo-image {\r\n  height: 100%;\r\n  width: 100%;\r\n}\r\n/* Putting table headers in center */\r\n/* mat-cell{\r\n  display:flex !important;\r\n  justify-content:center!important;\r\n  \r\n}\r\n\r\nmat-header-cell {\r\n  display:flex;\r\n  justify-content:center;\r\n  text-align: center;\r\n} */"
+module.exports = ".example-stretched-tabs {\r\n  max-width: 1000px;\r\n}\r\n.example-container {\r\n  display: flex;\r\n  flex-direction: column;\r\n}\r\n.example-container > * {\r\n  width: 100%;\r\n}\r\n.example-card-parent {\r\n  /* max-width: 800px; */\r\n  min-width: 50px;\r\n  margin-left: 50px;\r\n  margin-top: 30px;\r\n  width : 100%;\r\n}\r\n.example-card {\r\n  /* max-width: 800px; */\r\n  min-width: 50px;\r\n  margin: 30px;\r\n  /* width : 100%; */\r\n}\r\n.expansion-margin {\r\n  max-width: 500px;\r\n  margin-left: 150px;\r\n  margin-top: 30px;\r\n}\r\n.example-section {\r\n  display: flex;\r\n  align-content: center;\r\n  align-items: center;\r\n  height: 60px;\r\n}\r\n.example-margin {\r\n  /* margin: 0 10px; */\r\n  margin-top: 20px;\r\n  margin-left : 10px;\r\n  margin-right: 10px;\r\n  margin-bottom: 10px;\r\n}\r\n.mat-radio-button ~ .mat-radio-button {\r\n  padding: 36px;\r\n}\r\ntable {\r\n  width: 100%;\r\n}\r\ntr.example-detail-row {\r\n  height: 0;\r\n}\r\ntr.example-element-row:not(.example-expanded-row):hover {\r\n  background: #f5f5f5;\r\n}\r\ntr.example-element-row:not(.example-expanded-row):active {\r\n  background: #efefef;\r\n}\r\n.example-element-row td {\r\n  border-bottom-width: 0;\r\n}\r\n.example-element-detail {\r\n  overflow: hidden;\r\n  display: flex;\r\n}\r\n.example-element-diagram {\r\n  min-width: 80px;\r\n  border: 2px solid black;\r\n  padding: 8px;\r\n  font-weight: lighter;\r\n  margin: 8px 0;\r\n  height: 104px;\r\n}\r\n.example-element-symbol {\r\n  font-weight: bold;\r\n  font-size: 40px;\r\n  line-height: normal;\r\n}\r\n.example-element-description {\r\n  padding: 16px;\r\n}\r\n/* .example-element-description-attribution {\r\n  opacity: 0.5;\r\n} */\r\n.example-full-width {\r\n  width: 100%;\r\n}\r\n.example-half-width{\r\n  width : 50%;\r\n}\r\n.example-grid-margin{\r\n  margin-top: 20px;\r\n  margin-bottom: 10px;\r\n  margin-right: 50px;\r\n}\r\n.rcorners2 {\r\n  border-radius: 25px;\r\n  border: 2px solid #73AD21;\r\n  padding-left: 4px; \r\n  /* width: 200px;\r\n  height: 150px;     */\r\n  margin-left: 4px;\r\n  margin-right: 4px;\r\n}\r\n/* label > input{ HIDE RADIO \r\n  visibility: hidden; Makes input not-clickable\r\n  position: absolute; Remove input from document flow\r\n}\r\nlabel > input { IMAGE STYLES\r\n  cursor:pointer;\r\n  border:2px solid transparent;\r\n}\r\nlabel > input:checked { (RADIO CHECKED) IMAGE STYLES\r\n  border:20px solid #f00;\r\n} */\r\n/* Fees table properties */\r\ntable {\r\n  width: 100%;\r\n}\r\ntr.mat-footer-row {\r\n  font-weight: bold;\r\n}\r\n.mat-table-sticky {\r\n  border-top: 1px solid #e0e0e0;\r\n}\r\n/* .icon-search {\r\n  background: url(\"../images/search.svg\");\r\n  height: 27px;\r\n  width: 22px;\r\n  display: block;\r\n}\r\n.icon-refresh {\r\n  background: url(\"../images/refresh.svg\");\r\n  height: 27px;\r\n  width: 22px;\r\n  display: block;\r\n}\r\n.icon-print {\r\n  background: url(\"../images/print.svg\");\r\n  height: 27px;\r\n  width: 22px;\r\n  display: block;\r\n}\r\n.icon-add-fee {\r\n  background: url(\"../images/icons8-plus.svg\");\r\n  height: 27px;\r\n  width: 27px;\r\n  display: block;\r\n}\r\n.svg-icon{\r\n  margin: 5px auto auto;\r\n  padding: 0;\r\n  display: inline-block;\r\n  background-repeat: no-repeat no-repeat;\r\n  pointer-events: none;\r\n} */\r\n.md-button.logo {\r\n  height: 7rem;\r\n  width: 7rem;\r\n}\r\n.logo-image {\r\n  height: 100%;\r\n  width: 100%;\r\n}\r\n/* Putting table headers in center */\r\n/* mat-cell{\r\n  display:flex !important;\r\n  justify-content:center!important;\r\n  \r\n}\r\n\r\nmat-header-cell {\r\n  display:flex;\r\n  justify-content:center;\r\n  text-align: center;\r\n} */\r\n.fab {\r\n  position: fixed;\r\n  bottom: 30px;\r\n  right: 30px;\r\n}"
 
 /***/ }),
 
@@ -311,7 +310,7 @@ module.exports = ".example-stretched-tabs {\r\n  max-width: 1000px;\r\n}\r\n.exa
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Section to create presciption -->\n<mat-card class=\"example-card-parent\">\n\n  <mat-tab-group [selectedIndex]=\"prescriptionFromControl.value\" (selectedIndexChange)=\"prescriptionFromControl.setValue($event)\"\n    (selectedTabChange)=\"loadTabSpecificData($event.index)\" mat-stretch-tabs class=\"example-stretched-tabs mat-elevation-z4\">\n    <mat-tab label=\"Basic Info\">\n      <mat-card class=\"example-card\">\n        <mat-card-content>\n          <table>\n            <tr>\n              <td>\n                <!-- First Name -->\n                <div class=\"example-container example-margin\">\n                  <mat-form-field hintLabel=\"Min {{minCharToSearch}} char to search\">\n                    <input matInput cdkFocusInitial maxlength=20 placeholder=\"First name\" [(ngModel)]=\"selectedPatient.firstName\"\n                      (keyup)='fetchPatient($event)'>\n                    <mat-hint align=\"end\">{{selectedPatient.firstName?.length || 0}}/20</mat-hint>\n                  </mat-form-field>\n                </div>\n              </td>\n              <td>\n                <!-- Last Name -->\n                <div class=\"example-container example-margin\">\n                  <mat-form-field hintLabel=\"Min {{minCharToSearch}} char to search\">\n                    <input matInput maxlength=20 placeholder=\"Last name\" [(ngModel)]=\"selectedPatient.lastName\" (keyup)='fetchPatient($event)'>\n                    <mat-hint align=\"end\">{{selectedPatient.lastName?.length || 0}}/20</mat-hint>\n                  </mat-form-field>\n                </div>\n              </td>\n              <td>\n                <div class=\"example-container example-margin\">\n                  <mat-form-field>\n                    <input matInput [matDatepicker]=\"picker\" placeholder=\"Select from calender\" (dateChange)=\"dateValidate($event)\"\n                      disabled>\n                    <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\n                    <mat-datepicker #picker disabled=\"false\"></mat-datepicker>\n                  </mat-form-field>\n                </div>\n              </td>\n              <td>\n                <div class=\"example-margin\">\n                  <button mat-mini-fab color=\"primary\" (click)=\"fetchPatient($event)\" matTooltip=\"Search\">\n                    <mat-icon aria-label=\"Search\">search</mat-icon>\n                  </button>\n                </div>\n              </td>\n              <td>\n                <div class=\"example-margin\">\n                  <button mat-mini-fab color=\"primary\" (click)=\"refreshSearch()\" matTooltip=\"Refresh\">\n                    <mat-icon aria-label=\"Refresh\">refresh</mat-icon>\n                  </button>\n                </div>\n              </td>\n            </tr>\n          </table>\n          <!-- Loading progressbar -->\n          <mat-progress-bar *ngIf=\"isPatientLoading\" color=\"color\" mode=\"indeterminate\"></mat-progress-bar>\n          <!-- Patient list -->\n          <div *ngIf=\"isPatientLoaded\">\n            <table mat-table [dataSource]=\"patientDataSource\" multiTemplateDataRows class=\"mat-elevation-z8\">\n              <ng-container matColumnDef=\"{{column}}\" *ngFor=\"let column of columnsToDisplay\">\n                <th mat-header-cell *matHeaderCellDef> {{column}} </th>\n                <td mat-cell *matCellDef=\"let element\"> {{element[column]}} </td>\n              </ng-container>\n\n              <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->\n              <ng-container matColumnDef=\"expandedDetail\">\n                <td mat-cell *matCellDef=\"let element\" [attr.colspan]=\"columnsToDisplay.length\">\n                  <div class=\"example-element-detail\" [@detailExpand]=\"element == expandedElement ? 'expanded' : 'collapsed'\">\n                    <div class=\"example-element-diagram\">\n                      <div class=\"example-element-position\"> {{element.firstName}} </div>\n                      <div class=\"example-element-symbol\"> {{element.lastName}} </div>\n                      <div class=\"example-element-name\"> {{element.age}} </div>\n                      <div class=\"example-element-weight\"> {{element.contactNo1}} </div>\n                      <!-- <span>Image placeholder</span> -->\n                    </div>\n                    <div class=\"example-element-description\">\n                      <p>\n                        {{element.address1}}\n                      </p>\n                      <p>\n                        {{element.address2}}\n                      </p>\n                      <p>\n                        <!-- <span class=\"example-element-description-attribution\"> -- Wikipedia </span> -->\n                        <button mat-raised-button color=\"primary\" (click)=\"selectedElement(expandedElement)\">\n                          Select <mat-icon aria-label=\"Select\">check_circle_outline</mat-icon>\n                        </button>\n                      </p>\n                    </div>\n                  </div>\n                </td>\n              </ng-container>\n\n              <tr mat-header-row *matHeaderRowDef=\"columnsToDisplay\"></tr>\n              <tr mat-row *matRowDef=\"let element; columns: columnsToDisplay;\" class=\"example-element-row\"\n                [class.example-expanded-row]=\"expandedElement === element\" (mouseenter)=\"mouseOverFn(element)\">\n                <!-- (mouseout)=\"mouseOutFn(expandedElement)\" -->\n              </tr>\n              <tr mat-row *matRowDef=\"let row; columns: ['expandedDetail']\" class=\"example-detail-row\"></tr>\n            </table>\n          </div>\n        </mat-card-content>\n        <!-- <mat-card-actions>\n          <button mat-button>LIKE</button>\n          <button mat-button>SHARE</button>\n        </mat-card-actions> -->\n      </mat-card>\n\n    </mat-tab>\n\n    <!-- \n      *******************************************************************************************\n      *******************************************************************************************\n      ********************************* History Section *****************************************\n      *******************************************************************************************\n      *******************************************************************************************\n     -->\n\n    <mat-tab label=\"History\" [disabled]=\"disableTabs\">\n\n      <!-- Dashboard view -->\n      <div *ngIf=\"dashboardDataSource.data && dashboardDataSource.data.length > 0\">\n        <table mat-table [dataSource]=\"dashboardDataSource\" class=\"mat-elevation-z8\">\n\n          <!-- ['Date','C/F', 'Treatment Plan', 'Treatment Done', 'Due', 'Next Appo'] -->\n          <ng-container matColumnDef=\"Date\">\n            <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> Date </th>\n            <td mat-cell *matCellDef=\"let dv\"> {{ dv.pHistory.tsCreated | date:'dd/MM/yy hh:mm a' }}</td>\n          </ng-container>\n\n          <ng-container matColumnDef=\"C/F\">\n            <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> C/F </th>\n            <td mat-cell *matCellDef=\"let dv\">\n              <!--  {{ dv.pHistory.clinicalFindings }} getOrderedClinicalFindings -->\n              <ul>\n                <li style=\"list-style: none;\" *ngFor=\"let cf of getOrderedClinicalFindings(dv.pHistory.clinicalFindings)\">{{\n                  cf }}</li>\n              </ul>\n            </td>\n          </ng-container>\n\n          <ng-container matColumnDef=\"Treatment Plan\">\n            <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> Treatment Plan </th>\n            <td mat-cell *matCellDef=\"let dv; let i = index;\">\n              <ul>\n                <li style=\"list-style: none;\" *ngFor=\"let tpv of dv.tphv\">{{ tpv.tname }} - {{ tpv.toothIndex }}</li>\n              </ul>\n            </td>\n          </ng-container>\n\n          <ng-container matColumnDef=\"Treatment Done\">\n            <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> Treatment Done </th>\n            <td mat-cell *matCellDef=\"let dv; let i = index;\">\n              <ul>\n                <li style=\"list-style: none;\" *ngFor=\"let tph of getTreatmentDoneHistoryView(dv.tphv)\">{{ tph.tname }}</li>\n              </ul>\n            </td>\n          </ng-container>\n\n          <ng-container matColumnDef=\"Due\">\n            <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> Due </th>\n            <td mat-cell *matCellDef=\"let dv; let i = index;\">\n              {{ getDueFee(dv.fbl) }}\n              <!-- <ul >\n                <li style=\"list-style: none;\" *ngFor=\"let fb of dv.fbl\">{{ fb.amount }}</li>\n              </ul>    -->\n            </td>\n          </ng-container>\n\n          <!-- Next Appo -->\n          <ng-container matColumnDef=\"Next Appo\">\n            <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> Next Appo </th>\n            <td mat-cell *matCellDef=\"let dv; let i = index;\">\n              {{ dv.pHistory.nextAppointment | date:'dd/MM/yy hh:mm a' }}\n            </td>\n          </ng-container>\n\n          <tr mat-header-row *matHeaderRowDef=\"dashboardHistoryListColumns\"></tr>\n          <tr mat-row *matRowDef=\"let row; columns: dashboardHistoryListColumns;\" (click)=\"selectPrescription(row)\"></tr>\n        </table>\n      </div>\n    </mat-tab>\n\n    <!-- \n      *******************************************************************************************\n      *******************************************************************************************\n      ********************************* Prescription Section ************************************\n      *******************************************************************************************\n      *******************************************************************************************\n     -->\n    <mat-tab label=\"Prescription\" [disabled]=\"disableTabs\">\n      <mat-card id=\"printableContent1\" class=\"example-card\">\n        <mat-card-content>\n          <mat-form-field class=\"example-full-width\">\n            <textarea matInput [disabled]=\"checkIfDisabledToModify()\" placeholder=\"Chief complaint\" [(ngModel)]=\"prescriptionHistoryView.chiefComplaint\"\n              cdkTextareaAutosize cdkAutosizeMinRows=\"1\" cdkAutosizeMaxRows=\"5\"></textarea>\n            <button mat-button *ngIf=\"prescriptionHistoryView.chiefComplaint\" matSuffix mat-icon-button aria-label=\"Clear\"\n              (click)=\"prescriptionHistoryView.chiefComplaint=''\" matToolTip=\"Clear\" [disabled]=\"checkIfDisabledToModify()\">\n              <mat-icon>close</mat-icon>\n            </button>\n          </mat-form-field>\n\n          <mat-form-field class=\"example-full-width\">\n            <!-- <button mat-button matPrefix mat-icon-button aria-label=\"Add\" (click)=\"openDialog()\" matToolTip=\"Add\" \n              [disabled]=\"checkIfDisabledToModify()\">\n              <mat-icon>add_circle_outline</mat-icon>\n            </button> -->\n            <!-- <textarea matInput placeholder=\"Chief findings\" disabled [(ngModel)]=\"clinicalFindingsView\" cdkTextareaAutosize\n              cdkAutosizeMinRows=\"1\" cdkAutosizeMaxRows=\"5\"></textarea> -->\n            <mat-chip-list #chipList1>\n              <mat-chip *ngFor=\"let s of clinicalFindingsViewForUi\" selectable=\"false\" removable=\"false\">\n                {{s}}\n              </mat-chip>\n              <input (click)=\"openDialog()\" (keydown)=\"openDialog()\" placeholder=\"Add C/F\" [matChipInputFor]=\"chipList1\"\n                matChipInputAddOnBlur=\"true\" [disabled]=\"checkIfDisabledToModify()\">\n            </mat-chip-list>\n          </mat-form-field>\n\n          <table>\n            <tr>\n              <td>\n                <!-- Medical History -->\n                <mat-form-field class=\"example-full-width\">\n                  <mat-select placeholder=\"Medical History\" [formControl]=\"medicalHistoryForm\" [(ngModel)]=\"medicalHistoryViewModel\"\n                    multiple class=\"example-full-width\" [disabled]=\"checkIfDisabledToModify()\">\n                    <mat-option *ngFor=\"let mh of mhList\" [value]=\"mh\">{{mh}}</mat-option>\n                  </mat-select>\n                </mat-form-field>\n                <!-- Loading progressbar -->\n                <mat-progress-bar *ngIf=\"mhList == null || mhList?.length <= 0\" color=\"color\" mode=\"indeterminate\"></mat-progress-bar>\n              </td>\n              <td>\n                <!-- Investigation -->\n                <mat-form-field hintLabel=\"Max 30 characters\" class=\"example-full-width\">\n                  <input matInput [maxlength]=\"30\" placeholder=\"Investigation\" [(ngModel)]=\"prescriptionHistoryView.investigation\"\n                    [disabled]=\"checkIfDisabledToModify()\">\n                  <mat-hint align=\"end\">{{prescriptionHistoryView.investigation?.length || 0}}/30</mat-hint>\n                </mat-form-field>\n              </td>\n            </tr>\n          </table>\n\n          <!-- provisionalDiagnosis -->\n          <mat-form-field class=\"example-full-width\">\n            <textarea matInput placeholder=\"Provisional diagnosis\" [(ngModel)]=\"prescriptionHistoryView.provisionalDiagnosis\"\n              cdkTextareaAutosize cdkAutosizeMinRows=\"1\" cdkAutosizeMaxRows=\"5\" [disabled]=\"checkIfDisabledToModify()\"></textarea>\n            <button mat-button *ngIf=\"prescriptionHistoryView.provisionalDiagnosis\" matSuffix mat-icon-button\n              aria-label=\"Clear\" (click)=\"prescriptionHistoryView.provisionalDiagnosis=''\" matToolTip=\"Clear\"\n              [disabled]=\"checkIfDisabledToModify()\">\n              <mat-icon>close</mat-icon>\n            </button>\n          </mat-form-field>\n\n          <!-- Treatment Plan -->\n          <!-- <mat-form-field class=\"example-full-width\">\n            <mat-chip-list #chipListtrtmnt>\n              <mat-chip *ngFor=\"let s of treatmentPlanListView\" selectable=\"true\" removable=\"true\" (removed)=\"removeChip(s,1)\">\n                {{s}}\n                <mat-icon matChipRemove>cancel</mat-icon>\n              </mat-chip>\n              <input placeholder=\"Treatment Plan\" [matChipInputFor]=\"chipListtrtmnt\" matChipInputAddOnBlur=\"true\"\n                (matChipInputTokenEnd)=\"addTreatmentPlan($event)\" [matChipInputSeparatorKeyCodes]=\"separatorKeysCodes\">\n            </mat-chip-list>\n          </mat-form-field> -->\n\n          <!-- Treatment plan -->\n          <span class=\"example-margin\">Advised Treatment plan</span>\n          <div *ngIf=\"cftMapArray && cftMapArray.length > 0\">\n            <table mat-table [dataSource]=\"trtmntPlanListDataSource\" class=\"mat-elevation-z8\">\n\n              <ng-container matColumnDef=\"cf\">\n                <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> C/F </th>\n                <td mat-cell *matCellDef=\"let cftMap\"> {{cftMap.clinicalFinding.fname}} </td>\n              </ng-container>\n\n              <ng-container matColumnDef=\"teeth\">\n                <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> Tooth </th>\n                <td mat-cell *matCellDef=\"let cftMap\"> {{cftMap.teeth.toothIndex}}\n                </td>\n              </ng-container>\n\n              <ng-container matColumnDef=\"plan\">\n                <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> Plan </th>\n                <td mat-cell *matCellDef=\"let cftMap; let i = index;\">\n                  <mat-form-field class=\"example-full-width\">\n                    <div *ngIf=\"!checkIfDisabledToModify()\">\n                      <mat-select placeholder=\"Select Treatment Plan\" [formControl]=\"treatmentPlanFormControl\" class=\"example-full-width\"\n                        (selectionChange)=\"updateTrtmntPlanSelect($event.value, i)\" [disabled]=\"checkIfDisabledToModify()\">\n                        <!-- [(value)] = cftMap.treatmentPlanName -->\n                        <mat-option *ngFor=\"let tpl of treatmentPlanList\" [value]=\"tpl.trtName\">{{tpl.trtName}}</mat-option>\n                      </mat-select>\n                    </div>\n                    <div *ngIf=\"checkIfDisabledToModify()\">\n                      <textarea matInput placeholder=\"Treatment Plans\" cdkTextareaAutosize cdkAutosizeMinRows=\"1\"\n                        cdkAutosizeMaxRows=\"5\" disabled>{{cftMap.treatmentPlanViewModel}}</textarea>\n                    </div>\n                  </mat-form-field>\n                </td>\n              </ng-container>\n\n              <ng-container matColumnDef=\"newPlan\">\n                <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> New Plan </th>\n                <td mat-cell *matCellDef=\"let cftMap; let i = index;\">\n                  <input class=\"example-full-width\" style=\"text-align:center\" *ngIf=\"cftMap.customTrtmntPlan\" matInput\n                    placeholder=\"Custom plan\" (input)=\"updateTrtmntPlanI($event.target.value, i)\" required [disabled]=\"checkIfDisabledToModify()\">\n                </td>\n              </ng-container>\n\n              <tr mat-header-row *matHeaderRowDef=\"trtmntPlanListViewColumns\"></tr>\n              <tr mat-row *matRowDef=\"let row; columns: trtmntPlanListViewColumns;\"></tr>\n            </table>\n          </div>\n\n          <!-- advice -->\n          <mat-form-field class=\"example-full-width example-grid-margin\">\n            <textarea matInput placeholder=\"Advice\" [(ngModel)]=\"prescriptionHistoryView.advice\" cdkTextareaAutosize\n              cdkAutosizeMinRows=\"1\" cdkAutosizeMaxRows=\"5\" [disabled]=\"checkIfDisabledToModify()\"></textarea>\n            <button mat-button *ngIf=\"prescriptionHistoryView.advice\" matSuffix mat-icon-button aria-label=\"Clear\"\n              (click)=\"prescriptionHistoryView.advice=''\" matToolTip=\"Clear\" [disabled]=\"checkIfDisabledToModify()\">\n              <mat-icon>close</mat-icon>\n            </button>\n          </mat-form-field>\n\n          <!-- Previous Medicines -->\n          <div *ngIf=\"checkIfDisabledToModify()\">\n            <mat-form-field class=\"example-full-width example-grid-margin\">\n              <textarea matInput placeholder=\"Previous Medicines\" [(ngModel)]=\"medicineHistoryViewModel\"\n                cdkTextareaAutosize cdkAutosizeMinRows=\"1\" cdkAutosizeMaxRows=\"5\" [disabled]=\"checkIfDisabledToModify()\">\n              </textarea>\n            </mat-form-field>\n          </div>\n\n          <!-- Medicine -->\n          <mat-form-field class=\"example-full-width\">\n            <mat-select placeholder=\"Add Medicine\" [formControl]=\"medicineForm\" multiple class=\"example-full-width\">\n              <mat-option *ngFor=\"let mh of medicineMasterViewList\" [value]=\"mh\">{{mh.medicineName}} {{mh.dosage}}</mat-option>\n            </mat-select>\n          </mat-form-field>\n\n          <!-- Next appointment -->\n          <table>\n            <tr>\n              <td>\n                <span>Next appo</span>\n              </td>\n              <td class=\"example-full-width\">\n                <mat-form-field>\n                  <input matInput [min]=\"minDate\" [max]=\"maxDate\" [matDatepicker]=\"nextAppoPicker\" placeholder=\"Date\"\n                    (dateChange)=\"createNextAppo($event)\">\n                  <!-- <mat-datepicker-toggle matSuffix [for]=\"nextAppoPicker\"></mat-datepicker-toggle> -->\n                  <mat-datepicker #nextAppoPicker></mat-datepicker>\n                </mat-form-field>\n                <button mat-raised-button (click)=\"nextAppoPicker.open()\">Choose Date</button>\n              </td>\n              <td class=\"example-full-width\">\n                <mat-form-field hintLabel=\"Enter in digits\">\n                  <input matInput maxlength=\"2\" type=\"number\" min=0 max=24 placeholder=\"Hour\" [(ngModel)]=\"nextAppoHour\"\n                    (change)=\"createNextAppoTime()\">\n                </mat-form-field>\n              </td>\n              <td class=\"example-full-width\">\n                <mat-form-field hintLabel=\"Enter in digits\">\n                  <input matInput maxlength=\"2\" type=\"number\" min=0 max=59 placeholder=\"Minute\" [(ngModel)]=\"nextAppoMinute\"\n                    (change)=\"createNextAppoTime()\">\n                </mat-form-field>\n              </td>\n            </tr>\n          </table>\n\n          <div>\n            <div class=\"example-margin\" align=\"right\">\n              <span>Add Fee</span>\n              <button mat-icon-button color=\"primary\" (click)=\"addCustomFee()\">\n                <mat-icon aria-label=\"\">add_circle</mat-icon>\n              </button>\n            </div>\n            <div *ngIf=\"feesConfigListView && feesConfigListView.length > 0\">\n              <table mat-table [dataSource]=\"feesConfigListDataSource\" class=\"mat-elevation-z8\">\n                <!-- column list -->\n                <!-- Id Column -->\n                <ng-container matColumnDef=\"treatmentPlanId\">\n                  <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> # </th>\n                  <td mat-cell *matCellDef=\"let fee\"> {{fee.treatmentPlanId}} </td>\n                  <td mat-footer-cell *matFooterCellDef> </td>\n                </ng-container>\n\n                <!-- baseFee Column -->\n                <ng-container matColumnDef=\"baseFee\">\n                  <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> Base </th>\n                  <td mat-cell *matCellDef=\"let fee\"> {{fee.baseFee}} </td>\n                  <td mat-footer-cell *matFooterCellDef> </td>\n                </ng-container>\n\n                <!-- ageGroupId Column -->\n                <ng-container matColumnDef=\"ageGroupId\">\n                  <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> AgeGrp </th>\n                  <td mat-cell *matCellDef=\"let fee\"> {{fee.ageGroupId}} </td>\n                  <td mat-footer-cell *matFooterCellDef> </td>\n                </ng-container>\n\n                <!-- ageGroupPercent Column -->\n                <ng-container matColumnDef=\"ageGroupPercent\">\n                  <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> % </th>\n                  <td mat-cell *matCellDef=\"let fee\"> {{fee.ageGroupPercent}} </td>\n                  <td mat-footer-cell *matFooterCellDef> </td>\n                </ng-container>\n\n                <!-- toothGroupId Column -->\n                <ng-container matColumnDef=\"toothGroupId\">\n                  <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> ToothGrp </th>\n                  <td mat-cell *matCellDef=\"let fee\" style=\"text-align:center\"> {{fee.toothGroupId}} </td>\n                  <td mat-footer-cell *matFooterCellDef> </td>\n                </ng-container>\n\n                <!-- toothGroupPercent Column -->\n                <ng-container matColumnDef=\"toothGroupPercent\">\n                  <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> % </th>\n                  <td mat-cell *matCellDef=\"let fee\"> {{fee.toothGroupPercent}} </td>\n                  <td mat-footer-cell *matFooterCellDef> </td>\n                </ng-container>\n\n                <!-- totalFee Column -->\n                <ng-container matColumnDef=\"totalFee\">\n                  <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> Fee </th>\n                  <td mat-cell *matCellDef=\"let fee\">\n                    <mat-form-field>\n                      <input matInput type=\"number\" min=1 [(ngModel)]=\"fee.totalFee\" (change)=\"getTotalFee()\" style=\"text-align:center\"\n                        [disabled]=\"checkIfDisabledToModify()\">\n                    </mat-form-field>\n                  </td>\n                  <td mat-footer-cell *matFooterCellDef> Total {{totalFees | currency:'&#8377;' }}</td>\n                </ng-container>\n\n                <!-- amountPaid Column -->\n                <ng-container matColumnDef=\"amountPaid\">\n                  <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> Paid </th>\n                  <td mat-cell *matCellDef=\"let fee\">\n                    <mat-form-field>\n                      <input matInput type=\"number\" min=1 [(ngModel)]=\"fee.amountPaid\" (change)=\"getTotalFee()\" style=\"text-align:center\">\n                    </mat-form-field>\n                  </td>\n                  <td mat-footer-cell *matFooterCellDef> Paid {{totalPaidFees | currency:'&#8377;' }}</td>\n                </ng-container>\n\n                <!-- notes Column -->\n                <ng-container matColumnDef=\"notes\">\n                  <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> Note </th>\n                  <td mat-cell *matCellDef=\"let fee\">\n                    <mat-form-field>\n                      <input matInput [(ngModel)]=\"fee.notes\" style=\"text-align:center\">\n                    </mat-form-field>\n                    <button mat-button matSuffix mat-icon-button aria-label=\"Remove\" (click)=\"removeFees($index)\"\n                      matToolTip=\"Remove\" [disabled]=\"checkIfDisabledToModify()\">\n                      <mat-icon>close</mat-icon>\n                    </button>\n                  </td>\n                  <td mat-footer-cell *matFooterCellDef style=\"color: red;\"> Due {{totalDueFees | currency:'&#8377;' }}\n                  </td>\n                </ng-container>\n\n                <tr mat-header-row *matHeaderRowDef=\"feesConfigListViewColumns\"></tr>\n                <tr mat-row *matRowDef=\"let row; columns: feesConfigListViewColumns;\"></tr>\n                <tr mat-footer-row *matFooterRowDef=\"feesConfigListViewColumns; sticky: true\"></tr>\n              </table>\n            </div>\n          </div>\n\n          <!-- Note -->\n          <div class=\"example-margin\">\n            <mat-form-field class=\"example-full-width\">\n              <textarea matInput placeholder=\"Notes\" [(ngModel)]=\"prescriptionHistoryView.note\" cdkTextareaAutosize\n                cdkAutosizeMinRows=\"1\" cdkAutosizeMaxRows=\"5\" [disabled]=\"checkIfDisabledToModify()\"></textarea>\n              <button mat-button *ngIf=\"prescriptionHistoryView.note\" matSuffix mat-icon-button aria-label=\"Clear\"\n                (click)=\"prescriptionHistoryView.note=''\" matToolTip=\"Clear\" [disabled]=\"checkIfDisabledToModify()\">\n                <mat-icon>close</mat-icon>\n              </button>\n            </mat-form-field>\n          </div>\n\n          <!-- Printable notes -->\n          <div class=\"example-margin\">\n            <mat-form-field class=\"example-full-width\">\n              <textarea matInput placeholder=\"Notes to be printed\" [(ngModel)]=\"prescriptionHistoryView.printableNotes\" cdkTextareaAutosize\n                cdkAutosizeMinRows=\"1\" cdkAutosizeMaxRows=\"5\" [disabled]=\"checkIfDisabledToModify()\"></textarea>\n              <button mat-button *ngIf=\"prescriptionHistoryView.printableNotes\" matSuffix mat-icon-button aria-label=\"Clear\"\n                (click)=\"prescriptionHistoryView.printableNotes=''\" matToolTip=\"Clear\" [disabled]=\"checkIfDisabledToModify()\">\n                <mat-icon>close</mat-icon>\n              </button>\n            </mat-form-field>\n          </div>\n\n          <button mat-mini-fab color=\"primary\" (click)=\"createAndSubmitPrescription()\" matTooltip=\"Print\" [disabled]=\"checkIfDisabledToModify()\">\n            <mat-icon aria-label=\"Print\">print</mat-icon>\n          </button>\n        </mat-card-content>\n      </mat-card>\n    </mat-tab>\n\n    <mat-tab label=\"Treatment Done\" [disabled]=\"disableTreatmentDoneTab\">\n      <mat-card class=\"example-card\">\n        <mat-card-content>\n          <!-- Treatment Done -->\n          <!-- this.treatmentTabPatientId = dashboardResponse.patientId\n            this.treatmentTabPrescriptionId = dashboardResponse.prescriptionId\n            this.treatmentTabTreatmentPlanHistoryViews -->\n          <!-- <app-treatment-plan \n              [treatmentTabPatientId] = \"treatmentTabPatientId\"\n              [treatmentTabPrescriptionId] = \"treatmentTabPrescriptionId\"\n              [treatmentTabTreatmentPlanHistoryViews] = \"treatmentTabTreatmentPlanHistoryViews\"\n            >Loading..</app-treatment-plan> -->\n          <app-treatment-plan>Loading..</app-treatment-plan>\n        </mat-card-content>\n      </mat-card>\n    </mat-tab>\n\n  </mat-tab-group>\n\n</mat-card>"
+module.exports = "<!-- Section to create presciption -->\r\n<mat-card class=\"example-card-parent\">\r\n\r\n  <mat-tab-group [selectedIndex]=\"prescriptionFromControl.value\" (selectedIndexChange)=\"prescriptionFromControl.setValue($event)\"\r\n    (selectedTabChange)=\"loadTabSpecificData($event.index)\" mat-stretch-tabs class=\"example-stretched-tabs mat-elevation-z4\">\r\n    <mat-tab label=\"Basic Info\">\r\n      <mat-card class=\"example-card\">\r\n        <mat-card-content>\r\n          <table>\r\n            <tr>\r\n              <td>\r\n                <i>Search by Patient details</i>\r\n              </td>\r\n            </tr>\r\n            <tr>\r\n              <td>\r\n                <!-- First Name -->\r\n                <div class=\"example-container example-margin\">\r\n                  <mat-form-field hintLabel=\"Min {{minCharToSearch}} char to search\">\r\n                    <input matInput cdkFocusInitial maxlength=20 placeholder=\"First name\" [(ngModel)]=\"selectedPatient.firstName\"\r\n                      (keyup)='fetchPatient($event)'>\r\n                    <mat-hint align=\"end\">{{selectedPatient.firstName?.length || 0}}/20</mat-hint>\r\n                  </mat-form-field>\r\n                </div>\r\n              </td>\r\n              <td>\r\n                <!-- Last Name -->\r\n                <div class=\"example-container example-margin\">\r\n                  <mat-form-field hintLabel=\"Min {{minCharToSearch}} char to search\">\r\n                    <input matInput maxlength=20 placeholder=\"Last name\" [(ngModel)]=\"selectedPatient.lastName\" (keyup)='fetchPatient($event)'>\r\n                    <mat-hint align=\"end\">{{selectedPatient.lastName?.length || 0}}/20</mat-hint>\r\n                  </mat-form-field>\r\n                </div>\r\n              </td>\r\n              <td>\r\n                <!-- Date of birth -->\r\n                <div class=\"example-container example-margin\">\r\n                  <mat-form-field>\r\n                    <input matInput [matDatepicker]=\"picker\" placeholder=\"Select from calender\" (dateChange)=\"dateValidate($event)\"\r\n                      disabled>\r\n                    <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\r\n                    <mat-datepicker #picker disabled=\"false\"></mat-datepicker>\r\n                  </mat-form-field>\r\n                </div>\r\n              </td>\r\n              <td>\r\n                <!-- Search patients -->\r\n                <div class=\"example-margin\">\r\n                  <button mat-mini-fab color=\"primary\" (click)=\"fetchPatient($event)\" matTooltip=\"Search\">\r\n                    <mat-icon aria-label=\"Search\">search</mat-icon>\r\n                  </button>\r\n                </div>\r\n              </td>\r\n              <td>\r\n                <!-- Reset all details -->\r\n                <div class=\"example-margin\">\r\n                  <button mat-mini-fab color=\"primary\" (click)=\"refreshSearch()\" matTooltip=\"Refresh\">\r\n                    <mat-icon aria-label=\"Refresh\">refresh</mat-icon>\r\n                  </button>\r\n                </div>\r\n              </td>\r\n            </tr>\r\n            <tr>\r\n              <td>\r\n                <mat-divider></mat-divider>\r\n              </td>\r\n            </tr>\r\n            <tr>\r\n              <td>\r\n                <i>Search by Prescription number</i>\r\n              </td>\r\n            </tr>\r\n            <tr>\r\n              <td>\r\n                <!-- Prescription id -->\r\n                <div class=\"example-container example-margin\">\r\n                  <mat-form-field>\r\n                    <input matInput maxlength=20 placeholder=\"Enter Prescription ID\" [(ngModel)]=\"prescriptionId\">\r\n                    <mat-hint align=\"end\">Enter in number</mat-hint>\r\n                  </mat-form-field>\r\n                </div>\r\n              </td>\r\n              <td>\r\n                <div class=\"example-margin\">\r\n                  <button mat-mini-fab color=\"primary\" (click)=\"searchPrescription()\" matTooltip=\"Search\">\r\n                    <mat-icon aria-label=\"Search\">pageview</mat-icon>\r\n                  </button>\r\n                </div>\r\n              </td>\r\n            </tr>\r\n          </table>\r\n          <!-- Loading progressbar -->\r\n          <mat-progress-bar *ngIf=\"isPatientLoading\" color=\"color\" mode=\"indeterminate\"></mat-progress-bar>\r\n          <!-- Patient list -->\r\n          <div *ngIf=\"isPatientLoaded\">\r\n            <table mat-table [dataSource]=\"patientDataSource\" multiTemplateDataRows class=\"mat-elevation-z8\">\r\n              <ng-container matColumnDef=\"{{column}}\" *ngFor=\"let column of columnsToDisplay\">\r\n                <th mat-header-cell *matHeaderCellDef> {{column}} </th>\r\n                <td mat-cell *matCellDef=\"let element\"> {{element[column]}} </td>\r\n              </ng-container>\r\n\r\n              <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->\r\n              <ng-container matColumnDef=\"expandedDetail\">\r\n                <td mat-cell *matCellDef=\"let element\" [attr.colspan]=\"columnsToDisplay.length\">\r\n                  <div class=\"example-element-detail\" [@detailExpand]=\"element == expandedElement ? 'expanded' : 'collapsed'\">\r\n                    <div class=\"example-element-diagram\">\r\n                      <div class=\"example-element-position\"> {{element.firstName}} </div>\r\n                      <div class=\"example-element-symbol\"> {{element.lastName}} </div>\r\n                      <div class=\"example-element-name\"> {{element.age}} </div>\r\n                      <div class=\"example-element-weight\"> {{element.contactNo1}} </div>\r\n                      <!-- <span>Image placeholder</span> -->\r\n                    </div>\r\n                    <div class=\"example-element-description\">\r\n                      <p>\r\n                        {{element.address1}}\r\n                      </p>\r\n                      <p>\r\n                        {{element.address2}}\r\n                      </p>\r\n                      <p>\r\n                        <!-- <span class=\"example-element-description-attribution\"> -- Wikipedia </span> -->\r\n                        <button mat-raised-button color=\"primary\" (click)=\"selectedElement(expandedElement)\">\r\n                          Select <mat-icon aria-label=\"Select\">check_circle_outline</mat-icon>\r\n                        </button>\r\n                      </p>\r\n                    </div>\r\n                  </div>\r\n                </td>\r\n              </ng-container>\r\n\r\n              <tr mat-header-row *matHeaderRowDef=\"columnsToDisplay\"></tr>\r\n              <tr mat-row *matRowDef=\"let element; columns: columnsToDisplay;\" class=\"example-element-row\"\r\n                [class.example-expanded-row]=\"expandedElement === element\" (mouseenter)=\"mouseOverFn(element)\">\r\n                <!-- (mouseout)=\"mouseOutFn(expandedElement)\" -->\r\n              </tr>\r\n              <tr mat-row *matRowDef=\"let row; columns: ['expandedDetail']\" class=\"example-detail-row\"></tr>\r\n            </table>\r\n          </div>\r\n        </mat-card-content>\r\n        <!-- <mat-card-actions>\r\n          <button mat-button>LIKE</button>\r\n          <button mat-button>SHARE</button>\r\n        </mat-card-actions> -->\r\n      </mat-card>\r\n\r\n    </mat-tab>\r\n\r\n    <!-- \r\n      *******************************************************************************************\r\n      *******************************************************************************************\r\n      ********************************* History Section *****************************************\r\n      *******************************************************************************************\r\n      *******************************************************************************************\r\n     -->\r\n\r\n    <mat-tab label=\"History\" [disabled]=\"disableTabs\">\r\n\r\n      <!-- Dashboard view -->\r\n      <div *ngIf=\"dashboardDataSource.data && dashboardDataSource.data.length > 0\">\r\n        <table mat-table [dataSource]=\"dashboardDataSource\" class=\"mat-elevation-z8\">\r\n\r\n          <!-- ['Date','C/F', 'Treatment Plan', 'Treatment Done', 'Due', 'Next Appo'] -->\r\n          <ng-container matColumnDef=\"Date\">\r\n            <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> Date </th>\r\n            <td mat-cell *matCellDef=\"let dv\"> {{ dv.pHistory.tsCreated | date:'dd/MM/yy hh:mm a' }}</td>\r\n          </ng-container>\r\n\r\n          <ng-container matColumnDef=\"C/F\">\r\n            <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> C/F </th>\r\n            <td mat-cell *matCellDef=\"let dv\">\r\n              <!--  {{ dv.pHistory.clinicalFindings }} getOrderedClinicalFindings -->\r\n              <ul>\r\n                <li style=\"list-style: none;\" *ngFor=\"let cf of getOrderedClinicalFindings(dv.pHistory.clinicalFindings)\">{{\r\n                  cf }}</li>\r\n              </ul>\r\n            </td>\r\n          </ng-container>\r\n\r\n          <ng-container matColumnDef=\"Treatment Plan\">\r\n            <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> Treatment Plan </th>\r\n            <td mat-cell *matCellDef=\"let dv; let i = index;\">\r\n              <ul>\r\n                <li style=\"list-style: none;\" *ngFor=\"let tpv of dv.tphv\">{{ tpv.tname }} - {{ tpv.toothIndex }}</li>\r\n              </ul>\r\n            </td>\r\n          </ng-container>\r\n\r\n          <ng-container matColumnDef=\"Treatment Done\">\r\n            <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> Treatment Done </th>\r\n            <td mat-cell *matCellDef=\"let dv; let i = index;\">\r\n              <ul>\r\n                <li style=\"list-style: none;\" *ngFor=\"let tph of getTreatmentDoneHistoryView(dv.tphv)\">{{ tph.tname }}</li>\r\n              </ul>\r\n            </td>\r\n          </ng-container>\r\n\r\n          <ng-container matColumnDef=\"Due\">\r\n            <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> Due </th>\r\n            <td mat-cell *matCellDef=\"let dv; let i = index;\">\r\n              {{ getDueFee(dv.fbl) }}\r\n              <!-- <ul >\r\n                <li style=\"list-style: none;\" *ngFor=\"let fb of dv.fbl\">{{ fb.amount }}</li>\r\n              </ul>    -->\r\n            </td>\r\n          </ng-container>\r\n\r\n          <!-- Next Appo -->\r\n          <ng-container matColumnDef=\"Next Appo\">\r\n            <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> Next Appo </th>\r\n            <td mat-cell *matCellDef=\"let dv; let i = index;\">\r\n              {{ dv.pHistory.nextAppointment | date:'dd/MM/yy hh:mm a' }}\r\n            </td>\r\n          </ng-container>\r\n\r\n          <tr mat-header-row *matHeaderRowDef=\"dashboardHistoryListColumns\"></tr>\r\n          <tr mat-row *matRowDef=\"let row; columns: dashboardHistoryListColumns;\" (click)=\"selectPrescription(row)\"></tr>\r\n        </table>\r\n      </div>\r\n    </mat-tab>\r\n\r\n    <!-- \r\n      *******************************************************************************************\r\n      *******************************************************************************************\r\n      ********************************* Prescription Section ************************************\r\n      *******************************************************************************************\r\n      *******************************************************************************************\r\n     -->\r\n    <mat-tab label=\"Prescription\" [disabled]=\"disableTabs\">\r\n      <mat-card id=\"printableContent1\" class=\"example-card\">\r\n        <mat-card-content>\r\n          <div class=\"fab\">\r\n            <button mat-mini-fab color=\"primary\" (click)=\"resetPrescriptionData()\" matTooltip=\"Reset\">\r\n              <mat-icon aria-label=\"Reset\">restore</mat-icon>\r\n            </button>\r\n          </div>\r\n          <mat-form-field class=\"example-full-width\">\r\n            <textarea matInput [disabled]=\"checkIfDisabledToModify()\" placeholder=\"Chief complaint\" [(ngModel)]=\"prescriptionHistoryView.chiefComplaint\"\r\n              cdkTextareaAutosize cdkAutosizeMinRows=\"1\" cdkAutosizeMaxRows=\"5\"></textarea>\r\n            <button mat-button *ngIf=\"prescriptionHistoryView.chiefComplaint\" matSuffix mat-icon-button aria-label=\"Clear\"\r\n              (click)=\"prescriptionHistoryView.chiefComplaint=''\" matToolTip=\"Clear\" [disabled]=\"checkIfDisabledToModify()\">\r\n              <mat-icon>close</mat-icon>\r\n            </button>\r\n          </mat-form-field>\r\n\r\n          <mat-form-field class=\"example-full-width\">\r\n            <!-- <button mat-button matPrefix mat-icon-button aria-label=\"Add\" (click)=\"openDialog()\" matToolTip=\"Add\" \r\n              [disabled]=\"checkIfDisabledToModify()\">\r\n              <mat-icon>add_circle_outline</mat-icon>\r\n            </button> -->\r\n            <!-- <textarea matInput placeholder=\"Chief findings\" disabled [(ngModel)]=\"clinicalFindingsView\" cdkTextareaAutosize\r\n              cdkAutosizeMinRows=\"1\" cdkAutosizeMaxRows=\"5\"></textarea> -->\r\n            <mat-chip-list #chipList1>\r\n              <mat-chip *ngFor=\"let s of clinicalFindingsViewForUi\" selectable=\"false\" removable=\"false\">\r\n                {{s}}\r\n              </mat-chip>\r\n              <input (click)=\"openDialog()\" (keydown)=\"openDialog()\" placeholder=\"Add C/F\" [matChipInputFor]=\"chipList1\"\r\n                matChipInputAddOnBlur=\"true\" [disabled]=\"checkIfDisabledToModify()\">\r\n            </mat-chip-list>\r\n          </mat-form-field>\r\n\r\n          <table>\r\n            <tr>\r\n              <td>\r\n                <!-- Medical History -->\r\n                <mat-form-field class=\"example-full-width\">\r\n                  <mat-select placeholder=\"Medical History\" [formControl]=\"medicalHistoryForm\" [(ngModel)]=\"medicalHistoryViewModel\"\r\n                    multiple class=\"example-full-width\" [disabled]=\"checkIfDisabledToModify()\">\r\n                    <mat-option *ngFor=\"let mh of mhList\" [value]=\"mh\">{{mh}}</mat-option>\r\n                  </mat-select>\r\n                </mat-form-field>\r\n                <!-- Loading progressbar -->\r\n                <mat-progress-bar *ngIf=\"mhList == null || mhList?.length <= 0\" color=\"color\" mode=\"indeterminate\"></mat-progress-bar>\r\n              </td>\r\n              <td>\r\n                <!-- Investigation -->\r\n                <mat-form-field hintLabel=\"Max 30 characters\" class=\"example-full-width\">\r\n                  <input matInput [maxlength]=\"30\" placeholder=\"Investigation\" [(ngModel)]=\"prescriptionHistoryView.investigation\"\r\n                    [disabled]=\"checkIfDisabledToModify()\">\r\n                  <mat-hint align=\"end\">{{prescriptionHistoryView.investigation?.length || 0}}/30</mat-hint>\r\n                </mat-form-field>\r\n              </td>\r\n            </tr>\r\n          </table>\r\n\r\n          <!-- provisionalDiagnosis -->\r\n          <mat-form-field class=\"example-full-width\">\r\n            <textarea matInput placeholder=\"Provisional diagnosis\" [(ngModel)]=\"prescriptionHistoryView.provisionalDiagnosis\"\r\n              cdkTextareaAutosize cdkAutosizeMinRows=\"1\" cdkAutosizeMaxRows=\"5\" [disabled]=\"checkIfDisabledToModify()\"></textarea>\r\n            <button mat-button *ngIf=\"prescriptionHistoryView.provisionalDiagnosis\" matSuffix mat-icon-button\r\n              aria-label=\"Clear\" (click)=\"prescriptionHistoryView.provisionalDiagnosis=''\" matToolTip=\"Clear\"\r\n              [disabled]=\"checkIfDisabledToModify()\">\r\n              <mat-icon>close</mat-icon>\r\n            </button>\r\n          </mat-form-field>\r\n\r\n          <!-- Treatment Plan -->\r\n          <!-- <mat-form-field class=\"example-full-width\">\r\n            <mat-chip-list #chipListtrtmnt>\r\n              <mat-chip *ngFor=\"let s of treatmentPlanListView\" selectable=\"true\" removable=\"true\" (removed)=\"removeChip(s,1)\">\r\n                {{s}}\r\n                <mat-icon matChipRemove>cancel</mat-icon>\r\n              </mat-chip>\r\n              <input placeholder=\"Treatment Plan\" [matChipInputFor]=\"chipListtrtmnt\" matChipInputAddOnBlur=\"true\"\r\n                (matChipInputTokenEnd)=\"addTreatmentPlan($event)\" [matChipInputSeparatorKeyCodes]=\"separatorKeysCodes\">\r\n            </mat-chip-list>\r\n          </mat-form-field> -->\r\n\r\n          <!-- Treatment plan -->\r\n          <span class=\"example-margin\">Advised Treatment plan</span>\r\n          <div *ngIf=\"cftMapArray && cftMapArray.length > 0\">\r\n            <table mat-table [dataSource]=\"trtmntPlanListDataSource\" class=\"mat-elevation-z8\">\r\n\r\n              <ng-container matColumnDef=\"cf\">\r\n                <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> C/F </th>\r\n                <td mat-cell *matCellDef=\"let cftMap\"> {{cftMap.clinicalFinding.fname}} </td>\r\n              </ng-container>\r\n\r\n              <ng-container matColumnDef=\"teeth\">\r\n                <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> Tooth </th>\r\n                <td mat-cell *matCellDef=\"let cftMap\"> {{cftMap.teeth.toothIndex}}\r\n                </td>\r\n              </ng-container>\r\n\r\n              <ng-container matColumnDef=\"plan\">\r\n                <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> Plan </th>\r\n                <td mat-cell *matCellDef=\"let cftMap; let i = index;\">\r\n                  <mat-form-field class=\"example-full-width\">\r\n                    <div *ngIf=\"!checkIfDisabledToModify()\">\r\n                      <mat-select placeholder=\"Select Treatment Plan\" [formControl]=\"treatmentPlanFormControl\" class=\"example-full-width\"\r\n                        (selectionChange)=\"updateTrtmntPlanSelect($event.value, i)\" [disabled]=\"checkIfDisabledToModify()\">\r\n                        <!-- [(value)] = cftMap.treatmentPlanName -->\r\n                        <mat-option *ngFor=\"let tpl of treatmentPlanList\" [value]=\"tpl.trtName\">{{tpl.trtName}}</mat-option>\r\n                      </mat-select>\r\n                    </div>\r\n                    <div *ngIf=\"checkIfDisabledToModify()\">\r\n                      <textarea matInput placeholder=\"Treatment Plans\" cdkTextareaAutosize cdkAutosizeMinRows=\"1\"\r\n                        cdkAutosizeMaxRows=\"5\" disabled>{{cftMap.treatmentPlanViewModel}}</textarea>\r\n                    </div>\r\n                  </mat-form-field>\r\n                </td>\r\n              </ng-container>\r\n\r\n              <ng-container matColumnDef=\"newPlan\">\r\n                <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> New Plan </th>\r\n                <td mat-cell *matCellDef=\"let cftMap; let i = index;\">\r\n                  <input class=\"example-full-width\" style=\"text-align:center\" *ngIf=\"cftMap.customTrtmntPlan\" matInput\r\n                    placeholder=\"Custom plan\" (input)=\"updateTrtmntPlanI($event.target.value, i)\" required [disabled]=\"checkIfDisabledToModify()\">\r\n                </td>\r\n              </ng-container>\r\n\r\n              <tr mat-header-row *matHeaderRowDef=\"trtmntPlanListViewColumns\"></tr>\r\n              <tr mat-row *matRowDef=\"let row; columns: trtmntPlanListViewColumns;\"></tr>\r\n            </table>\r\n          </div>\r\n\r\n          <!-- advice -->\r\n          <mat-form-field class=\"example-full-width example-grid-margin\">\r\n            <textarea matInput placeholder=\"Advice\" [(ngModel)]=\"prescriptionHistoryView.advice\" cdkTextareaAutosize\r\n              cdkAutosizeMinRows=\"1\" cdkAutosizeMaxRows=\"5\" [disabled]=\"checkIfDisabledToModify()\"></textarea>\r\n            <button mat-button *ngIf=\"prescriptionHistoryView.advice\" matSuffix mat-icon-button aria-label=\"Clear\"\r\n              (click)=\"prescriptionHistoryView.advice=''\" matToolTip=\"Clear\" [disabled]=\"checkIfDisabledToModify()\">\r\n              <mat-icon>close</mat-icon>\r\n            </button>\r\n          </mat-form-field>\r\n\r\n          <!-- Previous Medicines -->\r\n          <div *ngIf=\"checkIfDisabledToModify()\">\r\n            <mat-form-field class=\"example-full-width example-grid-margin\">\r\n              <textarea matInput placeholder=\"Previous Medicines\" [(ngModel)]=\"medicineHistoryViewModel\"\r\n                cdkTextareaAutosize cdkAutosizeMinRows=\"1\" cdkAutosizeMaxRows=\"5\" [disabled]=\"checkIfDisabledToModify()\">\r\n              </textarea>\r\n            </mat-form-field>\r\n          </div>\r\n\r\n          <!-- Medicine -->\r\n          <mat-form-field class=\"example-full-width\">\r\n            <mat-select placeholder=\"Add Medicine\" [formControl]=\"medicineForm\" multiple class=\"example-full-width\">\r\n              <mat-option *ngFor=\"let mh of medicineMasterViewList\" [value]=\"mh\">{{mh.medicineName}} {{mh.dosage}}</mat-option>\r\n            </mat-select>\r\n          </mat-form-field>\r\n\r\n          <!-- Next appointment -->\r\n          <table>\r\n            <tr>\r\n              <td>\r\n                <span>Next appo</span>\r\n              </td>\r\n              <td class=\"example-full-width\">\r\n                <mat-form-field>\r\n                  <input matInput [min]=\"minDate\" [max]=\"maxDate\" [matDatepicker]=\"nextAppoPicker\" placeholder=\"Date\"\r\n                    (dateChange)=\"createNextAppo($event)\">\r\n                  <!-- <mat-datepicker-toggle matSuffix [for]=\"nextAppoPicker\"></mat-datepicker-toggle> -->\r\n                  <mat-datepicker #nextAppoPicker></mat-datepicker>\r\n                </mat-form-field>\r\n                <button mat-raised-button (click)=\"nextAppoPicker.open()\">Choose Date</button>\r\n              </td>\r\n              <td class=\"example-full-width\">\r\n                <mat-form-field hintLabel=\"Enter in digits\">\r\n                  <input matInput maxlength=\"2\" type=\"number\" min=0 max=24 placeholder=\"Hour\" [(ngModel)]=\"nextAppoHour\"\r\n                    (change)=\"createNextAppoTime()\">\r\n                </mat-form-field>\r\n              </td>\r\n              <td class=\"example-full-width\">\r\n                <mat-form-field hintLabel=\"Enter in digits\">\r\n                  <input matInput maxlength=\"2\" type=\"number\" min=0 max=59 placeholder=\"Minute\" [(ngModel)]=\"nextAppoMinute\"\r\n                    (change)=\"createNextAppoTime()\">\r\n                </mat-form-field>\r\n              </td>\r\n            </tr>\r\n          </table>\r\n\r\n          <div>\r\n            <div class=\"example-margin\" align=\"right\">\r\n              <span>Add Fee</span>\r\n              <button mat-icon-button color=\"primary\" (click)=\"addCustomFee()\">\r\n                <mat-icon aria-label=\"\">add_circle</mat-icon>\r\n              </button>\r\n            </div>\r\n            <div *ngIf=\"feesConfigListView && feesConfigListView.length > 0\">\r\n              <table mat-table [dataSource]=\"feesConfigListDataSource\" class=\"mat-elevation-z8\">\r\n                <!-- column list -->\r\n                <!-- Id Column -->\r\n                <ng-container matColumnDef=\"treatmentPlanId\">\r\n                  <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> # </th>\r\n                  <td mat-cell *matCellDef=\"let fee\"> {{fee.treatmentPlanId}} </td>\r\n                  <td mat-footer-cell *matFooterCellDef> </td>\r\n                </ng-container>\r\n\r\n                <!-- baseFee Column -->\r\n                <ng-container matColumnDef=\"baseFee\">\r\n                  <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> Base </th>\r\n                  <td mat-cell *matCellDef=\"let fee\"> {{fee.baseFee}} </td>\r\n                  <td mat-footer-cell *matFooterCellDef> </td>\r\n                </ng-container>\r\n\r\n                <!-- ageGroupId Column -->\r\n                <ng-container matColumnDef=\"ageGroupId\">\r\n                  <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> AgeGrp </th>\r\n                  <td mat-cell *matCellDef=\"let fee\"> {{fee.ageGroupId}} </td>\r\n                  <td mat-footer-cell *matFooterCellDef> </td>\r\n                </ng-container>\r\n\r\n                <!-- ageGroupPercent Column -->\r\n                <ng-container matColumnDef=\"ageGroupPercent\">\r\n                  <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> % </th>\r\n                  <td mat-cell *matCellDef=\"let fee\"> {{fee.ageGroupPercent}} </td>\r\n                  <td mat-footer-cell *matFooterCellDef> </td>\r\n                </ng-container>\r\n\r\n                <!-- toothGroupId Column -->\r\n                <ng-container matColumnDef=\"toothGroupId\">\r\n                  <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> ToothGrp </th>\r\n                  <td mat-cell *matCellDef=\"let fee\" style=\"text-align:center\"> {{fee.toothGroupId}} </td>\r\n                  <td mat-footer-cell *matFooterCellDef> </td>\r\n                </ng-container>\r\n\r\n                <!-- toothGroupPercent Column -->\r\n                <ng-container matColumnDef=\"toothGroupPercent\">\r\n                  <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> % </th>\r\n                  <td mat-cell *matCellDef=\"let fee\"> {{fee.toothGroupPercent}} </td>\r\n                  <td mat-footer-cell *matFooterCellDef> </td>\r\n                </ng-container>\r\n\r\n                <!-- totalFee Column -->\r\n                <ng-container matColumnDef=\"totalFee\">\r\n                  <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> Fee </th>\r\n                  <td mat-cell *matCellDef=\"let fee\">\r\n                    <mat-form-field>\r\n                      <input matInput type=\"number\" min=1 [(ngModel)]=\"fee.totalFee\" (change)=\"getTotalFee()\" style=\"text-align:center\"\r\n                        [disabled]=\"checkIfDisabledToModify()\">\r\n                    </mat-form-field>\r\n                  </td>\r\n                  <td mat-footer-cell *matFooterCellDef> Total {{totalFees | currency:'&#8377;' }}</td>\r\n                </ng-container>\r\n\r\n                <!-- amountPaid Column -->\r\n                <ng-container matColumnDef=\"amountPaid\">\r\n                  <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> Paid </th>\r\n                  <td mat-cell *matCellDef=\"let fee\">\r\n                    <mat-form-field>\r\n                      <input matInput type=\"number\" min=1 [(ngModel)]=\"fee.amountPaid\" (change)=\"getTotalFee()\" style=\"text-align:center\">\r\n                    </mat-form-field>\r\n                  </td>\r\n                  <td mat-footer-cell *matFooterCellDef> Paid {{totalPaidFees | currency:'&#8377;' }}</td>\r\n                </ng-container>\r\n\r\n                <!-- notes Column -->\r\n                <ng-container matColumnDef=\"notes\">\r\n                  <th mat-header-cell *matHeaderCellDef style=\"text-align:center\"> Note </th>\r\n                  <td mat-cell *matCellDef=\"let fee\">\r\n                    <mat-form-field>\r\n                      <input matInput [(ngModel)]=\"fee.notes\" style=\"text-align:center\">\r\n                    </mat-form-field>\r\n                    <button mat-button matSuffix mat-icon-button aria-label=\"Remove\" (click)=\"removeFees($index)\"\r\n                      matToolTip=\"Remove\" [disabled]=\"checkIfDisabledToModify()\">\r\n                      <mat-icon>close</mat-icon>\r\n                    </button>\r\n                  </td>\r\n                  <td mat-footer-cell *matFooterCellDef style=\"color: red;\"> Due {{totalDueFees | currency:'&#8377;' }}\r\n                  </td>\r\n                </ng-container>\r\n\r\n                <tr mat-header-row *matHeaderRowDef=\"feesConfigListViewColumns\"></tr>\r\n                <tr mat-row *matRowDef=\"let row; columns: feesConfigListViewColumns;\"></tr>\r\n                <tr mat-footer-row *matFooterRowDef=\"feesConfigListViewColumns; sticky: true\"></tr>\r\n              </table>\r\n            </div>\r\n          </div>\r\n\r\n          <!-- Note -->\r\n          <div class=\"example-margin\">\r\n            <mat-form-field class=\"example-full-width\">\r\n              <textarea matInput placeholder=\"Notes\" [(ngModel)]=\"prescriptionHistoryView.note\" cdkTextareaAutosize\r\n                cdkAutosizeMinRows=\"1\" cdkAutosizeMaxRows=\"5\" [disabled]=\"checkIfDisabledToModify()\"></textarea>\r\n              <button mat-button *ngIf=\"prescriptionHistoryView.note\" matSuffix mat-icon-button aria-label=\"Clear\"\r\n                (click)=\"prescriptionHistoryView.note=''\" matToolTip=\"Clear\" [disabled]=\"checkIfDisabledToModify()\">\r\n                <mat-icon>close</mat-icon>\r\n              </button>\r\n            </mat-form-field>\r\n          </div>\r\n\r\n          <!-- Printable notes -->\r\n          <div class=\"example-margin\">\r\n            <mat-form-field class=\"example-full-width\">\r\n              <textarea matInput placeholder=\"Notes to be printed\" [(ngModel)]=\"prescriptionHistoryView.printableNotes\"\r\n                cdkTextareaAutosize cdkAutosizeMinRows=\"1\" cdkAutosizeMaxRows=\"5\" [disabled]=\"checkIfDisabledToModify()\"></textarea>\r\n              <button mat-button *ngIf=\"prescriptionHistoryView.printableNotes\" matSuffix mat-icon-button aria-label=\"Clear\"\r\n                (click)=\"prescriptionHistoryView.printableNotes=''\" matToolTip=\"Clear\" [disabled]=\"checkIfDisabledToModify()\">\r\n                <mat-icon>close</mat-icon>\r\n              </button>\r\n            </mat-form-field>\r\n          </div>\r\n\r\n\r\n          <button mat-mini-fab color=\"primary\" (click)=\"createAndSubmitPrescription()\" matTooltip=\"Upload\" [disabled]=\"checkIfDisabledToModify()\">\r\n            <mat-icon aria-label=\"Upload\">cloud_upload</mat-icon>\r\n          </button>\r\n\r\n          <button mat-mini-fab color=\"primary\" (click)=\"printPrescription()\" matTooltip=\"Print\" [disabled]=\"!checkIfDisabledToModify()\">\r\n            <mat-icon aria-label=\"Print\">local_printshop</mat-icon>\r\n          </button>\r\n\r\n        </mat-card-content>\r\n      </mat-card>\r\n    </mat-tab>\r\n\r\n    <mat-tab label=\"Treatment Done\" [disabled]=\"disableTreatmentDoneTab\">\r\n      <mat-card class=\"example-card\">\r\n        <mat-card-content>\r\n          <!-- Treatment Done -->\r\n          <!-- this.treatmentTabPatientId = dashboardResponse.patientId\r\n            this.treatmentTabPrescriptionId = dashboardResponse.prescriptionId\r\n            this.treatmentTabTreatmentPlanHistoryViews -->\r\n          <!-- <app-treatment-plan \r\n              [treatmentTabPatientId] = \"treatmentTabPatientId\"\r\n              [treatmentTabPrescriptionId] = \"treatmentTabPrescriptionId\"\r\n              [treatmentTabTreatmentPlanHistoryViews] = \"treatmentTabTreatmentPlanHistoryViews\"\r\n            >Loading..</app-treatment-plan> -->\r\n          <app-treatment-plan>Loading..</app-treatment-plan>\r\n        </mat-card-content>\r\n      </mat-card>\r\n    </mat-tab>\r\n\r\n  </mat-tab-group>\r\n\r\n</mat-card>"
 
 /***/ }),
 
@@ -340,6 +339,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_treatment_plan_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../services/treatment-plan.service */ "./src/app/services/treatment-plan.service.ts");
 /* harmony import */ var _angular_material_table__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/material/table */ "./node_modules/@angular/material/esm5/table.es5.js");
 /* harmony import */ var _services_event_service_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../services/event-service.service */ "./src/app/services/event-service.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -366,17 +366,19 @@ var __param = (undefined && undefined.__param) || function (paramIndex, decorato
 
 
 
+
 var CreatePrescriptionComponent = /** @class */ (function () {
     // treatmentTabPatientId: number
     // treatmentTabPrescriptionId: number
     // treatmentTabTreatmentPlanHistoryViews: TreatmentPlanHistoryView[]
-    function CreatePrescriptionComponent(snackBar, dialog, httpCom, treatmentPlanService, commonService, eventService) {
+    function CreatePrescriptionComponent(snackBar, dialog, httpCom, treatmentPlanService, commonService, eventService, router) {
         this.snackBar = snackBar;
         this.dialog = dialog;
         this.httpCom = httpCom;
         this.treatmentPlanService = treatmentPlanService;
         this.commonService = commonService;
         this.eventService = eventService;
+        this.router = router;
         this.columnsToDisplay = ['firstName', 'lastName', 'age', 'weight'];
         this.medicalHistoryForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"]();
         this.medicineForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"]();
@@ -462,6 +464,7 @@ var CreatePrescriptionComponent = /** @class */ (function () {
         this.disableTabs = true;
         this.initializeValiables();
         this.patientDataSource = [];
+        this.prescriptionId = undefined;
     };
     CreatePrescriptionComponent.prototype.initializeValiables = function () {
         this.selectedPatient = new _models_models__WEBPACK_IMPORTED_MODULE_1__["Patient"]();
@@ -513,12 +516,21 @@ var CreatePrescriptionComponent = /** @class */ (function () {
         this.isPatientLoading = true;
         this.isPatientLoaded = false;
         this.httpCom.getPatient(this.selectedPatient).subscribe(function (resp) {
-            if (resp && resp.status === 'SUCCESS') {
-                if (resp.status && resp.status.length > 0)
-                    _this.patientDataSource = resp.resp;
+            if (resp) {
+                if (resp.status && resp.status === 'SUCCESS') {
+                    if (resp.status.length > 0) {
+                        _this.patientDataSource = resp.resp;
+                    }
+                    else {
+                        _this.commonService.showSuccessSnackBar(_this.snackBar, "No record found");
+                    }
+                }
+                else {
+                    _this.commonService.showErrorSnackBar(_this.snackBar, resp.desc);
+                }
             }
             else {
-                //TODO: navigate to add patient tab
+                _this.commonService.showErrorSnackBar(_this.snackBar);
             }
             _this.isPatientLoaded = true;
             _this.isPatientLoading = false;
@@ -536,6 +548,41 @@ var CreatePrescriptionComponent = /** @class */ (function () {
         this.tabSelection(1);
         this.fetchDashboard(element.pid);
     };
+    CreatePrescriptionComponent.prototype.searchPrescription = function () {
+        var _this = this;
+        console.log('Prescription ID: ' + this.prescriptionId);
+        if (this.prescriptionId && this.prescriptionId > 0) {
+            this.httpCom.getSinglePrescriptionDetail(this.prescriptionId).subscribe(function (resp) {
+                if (resp) {
+                    if (resp.status == 'SUCCESS') {
+                        _this.tabSelection(2);
+                        if (resp.resp) {
+                            //Fetch patient details
+                            var dashboard = resp.resp;
+                            var patient = new _models_models__WEBPACK_IMPORTED_MODULE_1__["Patient"]();
+                            patient.pid = dashboard.pHistory.patientId;
+                            _this.httpCom.getPatient(patient).subscribe(function (patientResp) {
+                                if (patientResp && patientResp.status == 'SUCCESS') {
+                                    _this.selectedPatient = patientResp.resp[0];
+                                    _this.disableTabs = false;
+                                    _this.selectPrescription(resp.resp);
+                                }
+                            });
+                        }
+                        else {
+                            _this.commonService.showSuccessSnackBar(_this.snackBar, 'No prescription found');
+                        }
+                    }
+                    else {
+                        _this.commonService.showErrorSnackBar(_this.snackBar, resp.desc);
+                    }
+                }
+                else {
+                    _this.commonService.showErrorSnackBar(_this.snackBar);
+                }
+            });
+        }
+    };
     CreatePrescriptionComponent.prototype.tabSelection = function (tabIndex) {
         this.prescriptionFromControl.setValue(tabIndex);
     };
@@ -544,9 +591,15 @@ var CreatePrescriptionComponent = /** @class */ (function () {
         this.httpCom.getDashboardView(patientId).subscribe(function (resp) {
             if (resp.status === 'SUCCESS' && resp.resp && resp.resp.length > 0) {
                 _this.dashboardDataSource = new _angular_material_table__WEBPACK_IMPORTED_MODULE_11__["MatTableDataSource"]();
-                _this.dashboardDataSource.data = resp.resp;
+                if (resp.resp && resp.resp.length > 0) {
+                    _this.dashboardDataSource.data = resp.resp;
+                }
+                else {
+                    _this.tabSelection(2);
+                }
             }
             else {
+                _this.commonService.showErrorSnackBar(_this.snackBar, resp.desc, function () { _this.tabSelection(2); });
                 _this.tabSelection(2);
             }
         });
@@ -567,6 +620,7 @@ var CreatePrescriptionComponent = /** @class */ (function () {
         var _this = this;
         this.tabSelection(2);
         this.isDisabledToModify = true;
+        this.prescriptionId = dashboard.pHistory.prescriptionId;
         if (dashboard.pHistory) {
             this.prescriptionHistoryView = dashboard.pHistory;
             if (dashboard.pHistory.clinicalFindings.length > 0) {
@@ -581,7 +635,6 @@ var CreatePrescriptionComponent = /** @class */ (function () {
                 _this.medicineHistoryViewModel += (e.medicineName + ' ' + e.dosage + '\n');
             });
             //Create cftMapArray
-            console.log('Start of cftMapArray');
             this.cftMapArray = [];
             if (dashboard.pHistory &&
                 dashboard.pHistory.clinicalFindings &&
@@ -649,6 +702,22 @@ var CreatePrescriptionComponent = /** @class */ (function () {
      ************************************************************************************************************
      ************************************************************************************************************
      */
+    CreatePrescriptionComponent.prototype.resetPrescriptionData = function () {
+        var _this = this;
+        this.commonService.showSuccessSnackBar(this.snackBar, "Are you sure to reset all data? ", function () {
+            _this.isDisabledToModify = false;
+            _this.dashboardView = new _models_models__WEBPACK_IMPORTED_MODULE_1__["DashboardView"]();
+            _this.prescriptionHistoryView = new _models_models__WEBPACK_IMPORTED_MODULE_1__["PrescriptionHistoryView"]();
+            _this.medicalHistoryViewModel = [];
+            _this.medicalHistoryForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"]();
+            _this.clinicalFindingsViewForUi = [];
+            _this.cftMapArray = [];
+            _this.treatmentPlanListView = [];
+            _this.feesConfigListView = [];
+            _this.feesConfigListDataSource = new _angular_material_table__WEBPACK_IMPORTED_MODULE_11__["MatTableDataSource"]();
+            _this.checkIfDisabledToModify();
+        });
+    };
     CreatePrescriptionComponent.prototype.getOrderedClinicalFindings = function (cf) {
         if (cf && cf.length > 0)
             return cf.split(',');
@@ -915,9 +984,10 @@ var CreatePrescriptionComponent = /** @class */ (function () {
                 //Do something and print prescription
                 console.log(JSON.stringify(resp.resp));
                 // this.printPrescription();
-                var dashboardResponse = resp.resp;
-                if (dashboardResponse && dashboardResponse.status) {
-                    _this.treatmentPlanService.setTreatmentData(dashboardResponse.patientId, dashboardResponse.prescriptionId, _this.dashboardView.tphv);
+                _this.dashboardResponse = resp.resp;
+                if (_this.dashboardResponse && _this.dashboardResponse.status) {
+                    _this.isDisabledToModify = true;
+                    _this.treatmentPlanService.setTreatmentData(_this.dashboardResponse.patientId, _this.dashboardResponse.prescriptionId, _this.dashboardView.tphv);
                     /**
                      * As event emitter is working, so need to send reference as we need to operate on data
                      * Hence communicating via server
@@ -945,52 +1015,14 @@ var CreatePrescriptionComponent = /** @class */ (function () {
         });
     };
     CreatePrescriptionComponent.prototype.printPrescription = function () {
-        /**
-         * Go to print page for printing with input of patientId and prescriptionId
-         * goToPage(pageNum) {
-              this.router.navigate(['/product'], { queryParams: { page: pageNum } });
-          }
-         */
-        //printableContent1
-        //Need to create a separate page and populate the prescription data only    
-        var prescriptionContent = document.getElementById("printableContent1").outerHTML;
-        var openWindow = window.open("", "target", "width=800, height=800");
-        // let printablePage = `<!doctype html>
-        // <html lang="en">
-        // <head>
-        //   <meta charset="utf-8">
-        //   <title>EpsDashboard</title>
-        //   <base href="/">
-        //   <meta name="viewport" content="width=device-width, initial-scale=1">
-        //   <link rel="icon" type="image/x-icon" href="favicon.ico">
-        //   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        //   <link rel="stylesheet" href="create-prescription.component.css">
-        //   <link rel="stylesheet" href="../dashboard/dashboard.component.css">
-        // </head>
-        // <body> ${prescriptionContent} </body></html>`;
-        var printablePage = '<html>' +
-            '<head>' +
-            '<title>Prescription</title>' +
-            '<script type="text/javascript" src="runtime.js"></script>' +
-            '<script type="text/javascript" src="polyfills.js"></script>' +
-            '<script type="text/javascript" src="styles.js"></script>' +
-            // '<script type="text/javascript" src="vendor.js"></script>'+
-            '<script type="text/javascript" src="main.js"></script>' +
-            '<link rel="stylesheet" href="../dashboard/dashboard.component.css"/>' +
-            '<link rel="icon" type="image/x-icon" href="favicon.ico"/>' +
-            '</head>' +
-            '<body ' +
-            // 'onload="window.print()"'+
-            '>'
-            + prescriptionContent
-            + '</body></html>';
-        console.log("printPrescription", JSON.stringify(printablePage));
-        openWindow.document.open();
-        openWindow.document.write(printablePage);
-        openWindow.document.close;
-        openWindow.focus();
-        // openWindow.print();
-        // openWindow.close();
+        console.log('Patient ID' + this.selectedPatient.pid);
+        console.log('Prescription ID' + this.prescriptionId);
+        if (this.dashboardResponse && this.dashboardResponse.patientId && this.dashboardResponse.prescriptionId) {
+            this.router.navigate(['print'], { queryParams: { patientId: this.dashboardResponse.patientId, prescriptionId: this.dashboardResponse.prescriptionId } });
+        }
+        else if (this.isDisabledToModify) {
+            this.router.navigate(['print'], { queryParams: { patientId: this.selectedPatient.pid, prescriptionId: this.prescriptionId } });
+        }
     };
     CreatePrescriptionComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -1008,7 +1040,7 @@ var CreatePrescriptionComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [_angular_material__WEBPACK_IMPORTED_MODULE_2__["MatSnackBar"],
             _angular_material__WEBPACK_IMPORTED_MODULE_2__["MatDialog"], _services_httpcomm_service__WEBPACK_IMPORTED_MODULE_6__["HttpcommService"],
             _services_treatment_plan_service__WEBPACK_IMPORTED_MODULE_10__["TreatmentPlanService"], _services_commonservice_service__WEBPACK_IMPORTED_MODULE_9__["CommonService"],
-            _services_event_service_service__WEBPACK_IMPORTED_MODULE_12__["EventServiceService"]])
+            _services_event_service_service__WEBPACK_IMPORTED_MODULE_12__["EventServiceService"], _angular_router__WEBPACK_IMPORTED_MODULE_13__["Router"]])
     ], CreatePrescriptionComponent);
     return CreatePrescriptionComponent;
 }());
@@ -1813,28 +1845,6 @@ var PrintPrescriptionComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/print/doctor-selection-dialog.html":
-/*!****************************************************!*\
-  !*** ./src/app/print/doctor-selection-dialog.html ***!
-  \****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<h1 mat-dialog-title>Please identify yourself</h1>\r\n<div mat-dialog-content>\r\n    <mat-form-field>\r\n        <mat-select [(value)]=\"regdNo\">\r\n            <mat-option>None</mat-option>\r\n            <mat-option value=\"5883-A\">Dr. Aparna Gupta</mat-option>\r\n            <mat-option value=\"3350A\">Dr. Mitrasen Manna</mat-option>\r\n        </mat-select>\r\n    </mat-form-field>\r\n    <p>Selected regd No. {{regdNo}}</p>\r\n</div>\r\n<div mat-dialog-actions>\r\n    <button mat-button (click)=\"closeDialog()\">Done</button>\r\n</div>"
-
-/***/ }),
-
-/***/ "./src/app/print/hospital-print.html":
-/*!*******************************************!*\
-  !*** ./src/app/print/hospital-print.html ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<!-- <div *ngIf=\"!printView\">Loading...</div>\r\n<div id=\"printableContent\" *ngIf=\"printView\">\r\n</div> -->\r\n<button mat-button class=\"noPrint\" (click)=\"printPrescription()\">Print</button>\r\n<div id=\"printableContent\">\r\n\r\n    <div> <img src=\"../img/g5220.png\" alt=\"E Prescription\" height=\"200px\" width=\"100%\" min-width=\"100%\">\r\n    </div>\r\n    <br />\r\n    <!-- <div class=\"border\"></div> -->\r\n    <p class=\"left\">Prescription ID: {{printView.prescriptionId}}</p>\r\n    <p class=\"left\"><b>PATIENT INFORMATION</b></p>\r\n    <table>\r\n        <tr>\r\n            <td>\r\n                Name: <b>{{printView.name}}</b>\r\n            </td>\r\n            <td>\r\n                Reg: {{printView.regDate}}\r\n            </td>\r\n        </tr>\r\n        <tr>\r\n            <td>\r\n                Sex: {{printView.sex}}\r\n            </td>\r\n            <td>\r\n                Visited: {{printView.visitDateTime}}\r\n            </td>\r\n        </tr>\r\n        <tr>\r\n            <td>\r\n                Age: {{printView.age}}\r\n            </td>\r\n            <td>\r\n                Visit No: {{printView.visitNo}}\r\n            </td>\r\n        </tr>\r\n        <tr>\r\n            <td>\r\n                <table>\r\n                    <tr>\r\n                        <td>\r\n                            Phone No. {{printView.phoneNo}}\r\n                        </td>\r\n                    </tr>\r\n                    <tr>\r\n                        <td>\r\n                            Department: {{printView.department}}\r\n                        </td>\r\n                    </tr>\r\n                    <tr>\r\n                        <td>\r\n                            Doctor: {{printView.doctor}}\r\n                        </td>\r\n                    </tr>\r\n                </table>\r\n            </td>\r\n            <td>\r\n                Others: {{printView.printableNotes}}\r\n            </td>\r\n        </tr>\r\n    </table>\r\n    <div class=\"border\"></div>\r\n    <table>\r\n        <tr>\r\n            <td style=\"width:40%\">\r\n                CHIEF COMPLAINT:\r\n            </td>\r\n            <td style=\"width:70%\">\r\n                {{printView.chiefComplain}}\r\n            </td>\r\n        </tr>\r\n        <tr>\r\n            <td>\r\n                <p class=\"smaller-border\"></p>\r\n            </td>\r\n            <td>\r\n                <p class=\"smaller-border\"></p>\r\n            </td>\r\n        </tr>\r\n        <tr>\r\n            <td style=\"width:40%\">\r\n                MEDICAL HISTORY:\r\n            </td>\r\n            <td style=\"width:70%\">\r\n                {{printView.medicalHistory}}\r\n            </td>\r\n        </tr>\r\n        <tr>\r\n            <td>\r\n                <p class=\"smaller-border\"></p>\r\n            </td>\r\n            <td>\r\n                <p class=\"smaller-border\"></p>\r\n            </td>\r\n        </tr>\r\n        <tr>\r\n            <td style=\"width:40%\">\r\n                CLINICAL EXAMINATION:\r\n            </td>\r\n            <td style=\"width:70%\">\r\n                {{printView.clinicalFindings}}\r\n            </td>\r\n        </tr>\r\n    </table>\r\n    <div class=\"border\"></div>\r\n    <p><b>ADVICE</b></p>\r\n    <div>\r\n        <ul>\r\n            <li *ngFor=\"let advice of getOrderedAdviceList()\">{{advice}}</li>\r\n        </ul>\r\n    </div>\r\n    <div class=\"smaller-border\"></div>\r\n    <p><b>MEDICINE</b></p>\r\n    <div>\r\n        <ol>\r\n            <li *ngFor=\"let med of printView.medicine\">\r\n                {{med}}\r\n            </li>\r\n        </ol>\r\n    </div>\r\n    <div class=\"border\"></div>\r\n    <br />\r\n    <table>\r\n        <tr>\r\n            <td style=\"color:red\">\r\n                <h3><i>Dr. Mitrasen Manna</i></h3>\r\n            </td>\r\n            <td style=\"color:red\">\r\n                <h3><i>Dr. Aparna Gupta</i></h3>\r\n            </td>\r\n        </tr>\r\n        <tr>\r\n            <td class=\"right\" style=\"color:red\"><b>B.D.S. (W.B.U.H.S)</b></td>\r\n            <td class=\"right\" style=\"color:red\"><b>B.D.S., M.D.S. (W.B.U.H.S)</b></td>\r\n        </tr>\r\n        <tr>\r\n            <td style=\"color:blue\">Regd No: 3350A</td>\r\n            <td style=\"color:blue\">Regd No: 5883-A</td>\r\n        </tr>\r\n        <tr>\r\n            <td style=\"color:blue\">\r\n                Ex-House Surgeon, R. G. Kar Medical College & Hospital, Kolkata\r\n            </td>\r\n            <td style=\"color:blue\">\r\n                Ex-Resident, Dr. R. Ahmed Dental College & Hospital, Sealdah, Kolkata\r\n            </td>\r\n        </tr>\r\n        <tr>\r\n            <td style=\"color:blue\">\r\n                Contact No. 7044074579, 8697969918\r\n            </td>\r\n            <td style=\"color:blue\">\r\n                Ex-House Surgeon, GTB Hospital New Delhi\r\n            </td>\r\n        </tr>\r\n    </table>\r\n</div>"
-
-/***/ }),
-
 /***/ "./src/app/print/print.component.css":
 /*!*******************************************!*\
   !*** ./src/app/print/print.component.css ***!
@@ -1842,7 +1852,18 @@ module.exports = "<!-- <div *ngIf=\"!printView\">Loading...</div>\r\n<div id=\"p
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "/*  ------ Global settings */\r\n\r\n* {\r\n    font-family: Cambria, Georgia, serif;\r\n    /* background-color: #ffffe0; */\r\n    }\r\n\r\nbody {\r\n    text-align:justify;\r\n    counter-reset: chapter;\r\n    }\r\n\r\n/* ------- Pagination */\r\n\r\nh1, h2 {\r\n  page-break-after: avoid;\r\n  /* page-break-before: always; */\r\n}\r\n\r\np {\r\n    orphans:3;\r\n    widows:3;\r\n}\r\n\r\n/* Default left, right, top, bottom margin is 2cm */\r\n\r\n@page { margin: 2cm }\r\n\r\n/* First page, 10 cm margin on top */\r\n\r\n@page :first {\r\n/* margin-top: 10cm  */\r\n}\r\n\r\n/* Left pages, a wider margin on the left */\r\n\r\n/* @page :left {\r\nmargin-left: 3cm;\r\nmargin-right: 2cm;\r\n}\r\n\r\n@page :right {\r\nmargin-left: 2cm;\r\nmargin-right: 3cm;\r\n} */\r\n\r\n/* ------ Normal elements */\r\n\r\np,div,td { \r\n    text-indent:   1.5em;\r\n    margin-top:    .75em;\r\n    margin-bottom: .75em;\r\n    line-height: 1.3;\r\n    }\r\n\r\n/* First paragraphs after a title  */\r\n\r\nh2+p {\r\n    text-indent: 0em;\r\n    }\r\n\r\nh2+p:first-letter {\r\n    font-size: 200%;\r\n    color: blue;\r\n    font-family: \"Goudy Old Style\", Georgia, serif;\r\n    line-height: 50%;\r\n    }\r\n\r\nh1,h2,h3,h4,h5,h6 { \r\n    text-align: center; \r\n    letter-spacing: 0.1em;\r\n    }\r\n\r\nh1 {\r\n    /* margin-top: 3cm; */\r\n    color: red;\r\n    }\r\n\r\nh2 {\r\n    border-top: 5px solid blue;\r\n    border-bottom: 1px solid blue;\r\n    padding-top: 5px;\r\n    padding-bottom: 5px;\r\n    margin-top: 2cm;\r\n    counter-increment: chapter;\r\n    }\r\n\r\nh2:before {\r\n    content: \"Chapter \" counter(chapter) \": \";\r\n    }\r\n\r\nhr { \r\n    width: 50%;\r\n    text-align: center;\r\n    }\r\n\r\nstrong { \r\n    background-color: yellow;\r\n    font-style: normal;\r\n}\r\n\r\nblockquote {\r\n    font-size: 90%; \r\n    margin-left: 20%; \r\n    margin-right: 20%;\r\n    }\r\n\r\n/*  ------ Special sections, using CSS class identifiers */\r\n\r\n.toc  {\r\n    text-align:center;\r\n    margin-top: 2cm;\r\n    margin-bottom: 2cm;\r\n    }\r\n\r\n.toc p:first-letter {font-size: 100%;}\r\n\r\npre { \r\n    font-family: \"Comic Sans\", fantasy, serif;\r\n    font-style: italic; \r\n    margin-left: 20%;\r\n    }\r\n\r\np.fineprint {\r\n    font-size: 70%;\r\n    text-indent: 0em;\r\n    }\r\n\r\npre.copyright, .noprint {\r\n   display:none;\r\n}\r\n\r\np.heading {\r\n    font-size: x-large;\r\n    text-align: center; \r\n    }\r\n\r\n/* Custom entry */\r\n\r\n.left {\r\n    text-align: left;    \r\n}\r\n\r\n.center {\r\n    text-align: center;\r\n}\r\n\r\n.right {\r\n    text-align: right;\r\n}\r\n\r\n.border{\r\n    border-top: 3px solid blue;\r\n}\r\n\r\n.smaller-border{\r\n    border-top: 1.5px solid blue;\r\n}\r\n\r\ntable,tr{\r\n    width:100%;\r\n}\r\n\r\n.block1,.block2{\r\n    display: inline;\r\n}\r\n\r\n/* .icon-letterhead {\r\n    background: url(\"../images/letterhead.svg\");\r\n    height: 200px;\r\n    width: 100%;\r\n    display: block;\r\n    background-repeat:no-repeat;\r\n} */"
+module.exports = "/*  ------ Global settings */\r\n\r\n* {\r\n    font-family: Cambria, Georgia, serif;\r\n    /* background-color: #ffffe0; */\r\n    }\r\n\r\nbody {\r\n    text-align:justify;\r\n    counter-reset: chapter;\r\n    }\r\n\r\n/* ------- Pagination */\r\n\r\nh1, h2 {\r\n  page-break-after: avoid;\r\n  /* page-break-before: always; */\r\n}\r\n\r\np {\r\n    orphans:3;\r\n    widows:3;\r\n}\r\n\r\n/* Default left, right, top, bottom margin is 2cm */\r\n\r\n@page { margin: 2cm }\r\n\r\n/* First page, 10 cm margin on top */\r\n\r\n@page :first {\r\n/* margin-top: 10cm  */\r\n}\r\n\r\n/* Left pages, a wider margin on the left */\r\n\r\n/* @page :left {\r\nmargin-left: 3cm;\r\nmargin-right: 2cm;\r\n}\r\n\r\n@page :right {\r\nmargin-left: 2cm;\r\nmargin-right: 3cm;\r\n} */\r\n\r\n/* ------ Normal elements */\r\n\r\np,div,td { \r\n    text-indent:   1.5em;\r\n    margin-top:    .75em;\r\n    margin-bottom: .75em;\r\n    line-height: 1.3;\r\n    }\r\n\r\n/* First paragraphs after a title  */\r\n\r\nh2+p {\r\n    text-indent: 0em;\r\n    }\r\n\r\nh2+p:first-letter {\r\n    font-size: 200%;\r\n    color: blue;\r\n    font-family: \"Goudy Old Style\", Georgia, serif;\r\n    line-height: 50%;\r\n    }\r\n\r\nh1,h2,h4,h5,h6 { \r\n    text-align: center; \r\n    letter-spacing: 0.1em;\r\n    }\r\n\r\nh3{\r\n    letter-spacing: 0.1em;\r\n}\r\n\r\nh1 {\r\n    /* margin-top: 3cm; */\r\n    color: red;\r\n    }\r\n\r\nh2 {\r\n    border-top: 5px solid blue;\r\n    border-bottom: 1px solid blue;\r\n    padding-top: 5px;\r\n    padding-bottom: 5px;\r\n    margin-top: 2cm;\r\n    counter-increment: chapter;\r\n    }\r\n\r\nh2:before {\r\n    content: \"Chapter \" counter(chapter) \": \";\r\n    }\r\n\r\nhr { \r\n    width: 50%;\r\n    text-align: center;\r\n    }\r\n\r\nstrong { \r\n    background-color: yellow;\r\n    font-style: normal;\r\n}\r\n\r\nblockquote {\r\n    font-size: 90%; \r\n    margin-left: 20%; \r\n    margin-right: 20%;\r\n    }\r\n\r\n/*  ------ Special sections, using CSS class identifiers */\r\n\r\n.toc  {\r\n    text-align:center;\r\n    margin-top: 2cm;\r\n    margin-bottom: 2cm;\r\n    }\r\n\r\n.toc p:first-letter {font-size: 100%;}\r\n\r\npre { \r\n    font-family: \"Comic Sans\", fantasy, serif;\r\n    font-style: italic; \r\n    margin-left: 20%;\r\n    }\r\n\r\np.fineprint {\r\n    font-size: 70%;\r\n    text-indent: 0em;\r\n    }\r\n\r\npre.copyright, .noprint {\r\n   display:none;\r\n}\r\n\r\np.heading {\r\n    font-size: x-large;\r\n    text-align: center; \r\n    }\r\n\r\n/* Custom entry */\r\n\r\n.left {\r\n    text-align: left;    \r\n}\r\n\r\n.center {\r\n    text-align: center;\r\n}\r\n\r\n.right {\r\n    text-align: right;\r\n}\r\n\r\n.border{\r\n    border-top: 3px solid blue;\r\n}\r\n\r\n.smaller-border{\r\n    border-top: 1.5px solid blue;\r\n}\r\n\r\ntable,tr{\r\n    width:100%;\r\n}\r\n\r\n.block1,.block2{\r\n    display: inline;\r\n}\r\n\r\n/* .icon-letterhead {\r\n    background: url(\"../images/letterhead.svg\");\r\n    height: 200px;\r\n    width: 100%;\r\n    display: block;\r\n    background-repeat:no-repeat;\r\n} */"
+
+/***/ }),
+
+/***/ "./src/app/print/print.component.html":
+/*!********************************************!*\
+  !*** ./src/app/print/print.component.html ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div *ngIf=\"requestLoading\">\r\n    <h1>Loading...</h1>\r\n    <mat-progress-bar style=\"width: 100%\" color=\"primary\" mode=\"indeterminate\">\r\n    </mat-progress-bar>\r\n</div>\r\n<div id=\"printableContent\" *ngIf=\"printView\">\r\n\r\n    <button mat-raised-button color=\"primary\" class=\"noPrint\" (click)=\"printPrescription()\">Print</button>\r\n    <div id=\"printableContent\">\r\n\r\n        <div> <img src=\"../img/g5220.png\" alt=\"E Prescription\" height=\"200px\" width=\"100%\" min-width=\"100%\">\r\n        </div>\r\n        <br />\r\n        <!-- <div class=\"border\"></div> -->\r\n        <p class=\"left\">Prescription ID: {{printView.prescriptionId}}</p>\r\n        <p class=\"left\"><b>PATIENT INFORMATION</b></p>\r\n        <table>\r\n            <tr>\r\n                <td>\r\n                    Name: <b>{{printView.name}}</b>\r\n                </td>\r\n                <td>\r\n                    Reg: {{printView.regDate}}\r\n                </td>\r\n            </tr>\r\n            <tr>\r\n                <td>\r\n                    Sex: {{printView.sex}}\r\n                </td>\r\n                <td>\r\n                    Visited: {{printView.visitDateTime}}\r\n                </td>\r\n            </tr>\r\n            <tr>\r\n                <td>\r\n                    Age: {{printView.age}}\r\n                </td>\r\n                <td>\r\n                    Visit No: {{printView.visitNo}}\r\n                </td>\r\n            </tr>\r\n            <tr>\r\n                <td>\r\n                    <table>\r\n                        <tr>\r\n                            <td>\r\n                                Phone No. {{printView.phoneNo}}\r\n                            </td>\r\n                        </tr>\r\n                        <tr>\r\n                            <td>\r\n                                Department: {{printView.department}}\r\n                            </td>\r\n                        </tr>\r\n                        <tr>\r\n                            <td>\r\n                                Doctor: {{printView.doctor}}\r\n                            </td>\r\n                        </tr>\r\n                    </table>\r\n                </td>\r\n                <td>\r\n                    Others: {{printView.printableNotes}}\r\n                </td>\r\n            </tr>\r\n        </table>\r\n        <div class=\"border\"></div>\r\n        <table>\r\n            <tr>\r\n                <td style=\"width:40%\">\r\n                    CHIEF COMPLAINT:\r\n                </td>\r\n                <td style=\"width:70%\">\r\n                    {{printView.chiefComplain}}\r\n                </td>\r\n            </tr>\r\n            <tr>\r\n                <td>\r\n                    <p class=\"smaller-border\"></p>\r\n                </td>\r\n                <td>\r\n                    <p class=\"smaller-border\"></p>\r\n                </td>\r\n            </tr>\r\n            <tr>\r\n                <td style=\"width:40%\">\r\n                    MEDICAL HISTORY:\r\n                </td>\r\n                <td style=\"width:70%\">\r\n                    {{printView.medicalHistory}}\r\n                </td>\r\n            </tr>\r\n            <tr>\r\n                <td>\r\n                    <p class=\"smaller-border\"></p>\r\n                </td>\r\n                <td>\r\n                    <p class=\"smaller-border\"></p>\r\n                </td>\r\n            </tr>\r\n            <tr>\r\n                <td style=\"width:40%\">\r\n                    CLINICAL EXAMINATION:\r\n                </td>\r\n                <td style=\"width:70%\">\r\n                    {{printView.clinicalFindings}}\r\n                </td>\r\n            </tr>\r\n        </table>\r\n        <div class=\"border\"></div>\r\n        <p><b>ADVICE</b></p>\r\n        <div>\r\n            <ul>\r\n                <li *ngFor=\"let advice of getOrderedAdviceList()\">{{advice}}</li>\r\n            </ul>\r\n        </div>\r\n        <div class=\"smaller-border\"></div>\r\n        <p><b>MEDICINE</b></p>\r\n        <div>\r\n            <ol>\r\n                <li *ngFor=\"let med of printView.medicine\">\r\n                    {{med}}\r\n                </li>\r\n            </ol>\r\n        </div>\r\n        <div class=\"border\"></div>\r\n        <br />\r\n        <table>\r\n            <tr>\r\n                <td style=\"color:red\" class=\"left\">\r\n                    <h3><i>Dr. Mitrasen Manna</i></h3>\r\n                </td>\r\n                <td style=\"color:red\" class=\"right\">\r\n                    <h3><i>Dr. Aparna Gupta</i></h3>\r\n                </td>\r\n            </tr>\r\n            <tr>\r\n                <td class=\"left\" style=\"color:red\"><b>B.D.S. (W.B.U.H.S)</b></td>\r\n                <td class=\"right\" style=\"color:red\"><b>B.D.S., M.D.S. (W.B.U.H.S)</b></td>\r\n            </tr>\r\n            <tr>\r\n                <td style=\"color:blue\">Regd No: 3350A</td>\r\n                <td class=\"right\" style=\"color:blue\">Regd No: 5883-A</td>\r\n            </tr>\r\n            <tr>\r\n                <td style=\"color:blue\">\r\n                    Ex-House Surgeon, R. G. Kar Medical College & Hospital, Kolkata\r\n                </td>\r\n                <td class=\"right\" style=\"color:blue\">\r\n                    Ex-Resident, Dr. R. Ahmed Dental College & Hospital, Sealdah, Kolkata\r\n                </td>\r\n            </tr>\r\n            <tr>\r\n                <td style=\"color:blue\">\r\n                    Contact No. 7044074579, 8697969918\r\n                </td>\r\n                <td class=\"right\" style=\"color:blue\">\r\n                    Ex-House Surgeon, GTB Hospital New Delhi\r\n                </td>\r\n            </tr>\r\n        </table>\r\n    </div>\r\n</div>"
 
 /***/ }),
 
@@ -1850,20 +1871,18 @@ module.exports = "/*  ------ Global settings */\r\n\r\n* {\r\n    font-family: C
 /*!******************************************!*\
   !*** ./src/app/print/print.component.ts ***!
   \******************************************/
-/*! exports provided: PrintComponent, DoctorSelectionDialog */
+/*! exports provided: PrintComponent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PrintComponent", function() { return PrintComponent; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DoctorSelectionDialog", function() { return DoctorSelectionDialog; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
 /* harmony import */ var _services_httpcomm_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/httpcomm.service */ "./src/app/services/httpcomm.service.ts");
 /* harmony import */ var _services_commonservice_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../services/commonservice.service */ "./src/app/services/commonservice.service.ts");
-/* harmony import */ var _services_dummyresponse__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../services/dummyresponse */ "./src/app/services/dummyresponse.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1873,10 +1892,6 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (undefined && undefined.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
-
 
 
 
@@ -1889,34 +1904,31 @@ var PrintComponent = /** @class */ (function () {
         this.matSnackbar = matSnackbar;
         this.router = router;
         this.dialog = dialog;
-        this.regdNo = "____________________";
-        this.printStylesheet = "\n    <style>\n    /*  ------ Global settings */\n\n* {\n    font-family: Cambria, Georgia, serif;\n    /* background-color: #ffffe0; */\n    }\n\nbody {\n    text-align:justify;\n    counter-reset: chapter;\n    }\n    \n/* ------- Pagination */\n\nh1, h2 {\n  page-break-after: avoid;\n  /* page-break-before: always; */\n}\n\np {\n    orphans:3;\n    widows:3;\n}\n\n/* Default left, right, top, bottom margin is 2cm */\n@page { margin: 2cm } \n\n/* First page, 10 cm margin on top */\n@page :first {\n}\n/* ------ Normal elements */\n    \n p,div,td { \n    text-indent:   1.5em;\n    margin-top:    .75em;\n    margin-bottom: .75em;\n    line-height: 1.3;\n    }\n    \n/* First paragraphs after a title  */\n    \nh2+p {\n    text-indent: 0em;\n    }\n\nh1,h2,h3,h4,h5,h6 { \n    text-align: center; \n    letter-spacing: 0.1em;\n    }\n\n h1 {\n    color: red;\n    }\n    \n h2 {\n    border-top: 5px solid blue;\n    border-bottom: 1px solid blue;\n    padding-top: 5px;\n    padding-bottom: 5px;\n    margin-top: 2cm;\n    counter-increment: chapter;\n    }\n\n hr { \n    width: 50%;\n    text-align: center;\n    }\n\npre { \n    font-family: \"Comic Sans\", fantasy, serif;\n    font-style: italic; \n    margin-left: 20%;\n    }\n    \np.fineprint {\n    font-size: 70%;\n    text-indent: 0em;\n    }\n    \npre.copyright, .noprint {\n   display:none;\n}\n\np.heading {\n    font-size: x-large;\n    text-align: center; \n    }\n\n\n/* Custom entry */\n.left {\n    text-align: left;    \n}\n.center {\n    text-align: center;\n}\n.right {\n    text-align: right;\n}\n.border{\n    border-top: 3px solid blue;\n}\n.smaller-border{\n    border-top: 1.5px solid blue;\n}\ntable,tr{\n    width:100%;\n}\n.block1,.block2{\n    display: inline;\n}\n    </style>\n    ";
+        this.requestLoading = true;
+        this.printStylesheet = "\n    <style>\n    /*  ------ Global settings */\n\n* {\n    font-family: Cambria, Georgia, serif;\n    /* background-color: #ffffe0; */\n    }\n\nbody {\n    text-align:justify;\n    counter-reset: chapter;\n    }\n    \n/* ------- Pagination */\n\nh1, h2 {\n  page-break-after: avoid;\n  /* page-break-before: always; */\n}\n\np {\n    orphans:3;\n    widows:3;\n}\n\n/* Default left, right, top, bottom margin is 2cm */\n@page { margin: 2cm } \n\n/* First page, 10 cm margin on top */\n@page :first {\n}\n/* ------ Normal elements */\n    \n p,div,td { \n    text-indent:   1.5em;\n    margin-top:    .75em;\n    margin-bottom: .75em;\n    line-height: 1.3;\n    }\n    \n/* First paragraphs after a title  */\n    \nh2+p {\n    text-indent: 0em;\n    }\n\nh1,h2,h4,h5,h6 { \n    text-align: center; \n    letter-spacing: 0.1em;\n    }\n h3 {\n    letter-spacing: 0.1em;\n }\n h1 {\n    color: red;\n    }\n    \n h2 {\n    border-top: 5px solid blue;\n    border-bottom: 1px solid blue;\n    padding-top: 5px;\n    padding-bottom: 5px;\n    margin-top: 2cm;\n    counter-increment: chapter;\n    }\n\n hr { \n    width: 50%;\n    text-align: center;\n    }\n\npre { \n    font-family: \"Comic Sans\", fantasy, serif;\n    font-style: italic; \n    margin-left: 20%;\n    }\n    \np.fineprint {\n    font-size: 70%;\n    text-indent: 0em;\n    }\n    \npre.copyright, .noprint {\n   display:none;\n}\n\np.heading {\n    font-size: x-large;\n    text-align: center; \n    }\n\n\n/* Custom entry */\n.left {\n    text-align: left;    \n}\n.center {\n    text-align: center;\n}\n.right {\n    text-align: right;\n}\n.border{\n    border-top: 3px solid blue;\n}\n.smaller-border{\n    border-top: 1.5px solid blue;\n}\ntable,tr{\n    width:100%;\n}\n.block1,.block2{\n    display: inline;\n}\n    </style>\n    ";
         this.httpService = new _services_httpcomm_service__WEBPACK_IMPORTED_MODULE_4__["HttpcommService"](httpClient);
         this.commonService = new _services_commonservice_service__WEBPACK_IMPORTED_MODULE_5__["CommonService"]();
-        /**
-         * For testing
-         */
-        var dummyService = new _services_dummyresponse__WEBPACK_IMPORTED_MODULE_6__["DummyResponse"]();
-        this.printView = dummyService.prescriptionPrintView.resp;
     }
     PrintComponent.prototype.ngAfterViewInit = function () {
-        // const patientId = +this.route.snapshot.queryParamMap.get('patientId');
-        // const prescriptionId = +this.route.snapshot.queryParamMap.get('prescriptionId');
-        // console.log(`Data patient ${patientId} prescription ${prescriptionId}`)
-        // if (patientId > 0 && prescriptionId > 0) {
-        //     this.httpService.getPrescriptionPrintView(patientId, prescriptionId).subscribe(resp => {
-        //         if (resp && resp.status == 'SUCCESS') {
-        //             this.printView = resp.resp;
-        //         } else {
-        //             this.commonService.showErrorSnackBar(this.matSnackbar,"",() =>{
-        //                 this.router.navigate([''])
-        //             })
-        //         }
-        //     })
-        // }else{
-        //     this.router.navigate([''])            
-        // }
-        // this.getSelectedDocRegdNo()
+        var _this = this;
+        var patientId = +this.route.snapshot.queryParamMap.get('patientId');
+        var prescriptionId = +this.route.snapshot.queryParamMap.get('prescriptionId');
+        if (patientId > 0 && prescriptionId > 0) {
+            this.httpService.getPrescriptionPrintView(patientId, prescriptionId).subscribe(function (resp) {
+                _this.requestLoading = false;
+                if (resp && resp.status == 'SUCCESS') {
+                    _this.printView = resp.resp;
+                }
+                else {
+                    _this.commonService.showErrorSnackBar(_this.matSnackbar, resp.desc, function () {
+                        _this.router.navigate(['']);
+                    });
+                }
+            });
+        }
+        else {
+            this.router.navigate(['']);
+        }
     };
     PrintComponent.prototype.ngOnInit = function () {
         /**
@@ -1928,19 +1940,6 @@ var PrintComponent = /** @class */ (function () {
     PrintComponent.prototype.getOrderedAdviceList = function () {
         return this.commonService.getNewLineSeperatedArrayString(this.printView.advice);
     };
-    PrintComponent.prototype.getSelectedDocRegdNo = function () {
-        var _this = this;
-        var dialogDocRegdNoRef = this.dialog.open(DoctorSelectionDialog, {
-            width: '700px',
-            data: ""
-        });
-        dialogDocRegdNoRef.afterClosed().subscribe(function (regdNumber) {
-            if (regdNumber) {
-                _this.regdNo = regdNumber;
-            }
-            console.log(_this.regdNo);
-        });
-    };
     PrintComponent.prototype.printPrescription = function () {
         var prescriptionContent = document.getElementById("printableContent");
         // if (prescriptionContent.requestFullscreen) {
@@ -1950,18 +1949,19 @@ var PrintComponent = /** @class */ (function () {
         var openWindow = window.open("", "target", "fullscreen=yes");
         var css = this.printStylesheet;
         var printablePage = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"> \n        <html lang=\"en\"> \n          <head> \n            <meta http-equiv=\"Content-Type\" content=\"text/html; charset=us-ascii\" /> \n            <title>E - prescription</title>\n            " + css + "\n          </head> \n          <body>\n       " + prescriptionContent.innerHTML + "\n       </body></html>";
-        // console.log("printPrescription", JSON.stringify(printablePage))
         openWindow.document.open();
         openWindow.document.write(printablePage);
         openWindow.document.close;
         openWindow.focus();
-         openWindow.print();
-//         openWindow.close();
+        if (!this.httpService.dummy) {
+            openWindow.print();
+            openWindow.close();
+        }
     };
     PrintComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-print',
-            template: __webpack_require__(/*! ./hospital-print.html */ "./src/app/print/hospital-print.html"),
+            template: __webpack_require__(/*! ./print.component.html */ "./src/app/print/print.component.html"),
             styles: [__webpack_require__(/*! ./print.component.css */ "./src/app/print/print.component.css")]
         }),
         __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"],
@@ -1971,31 +1971,24 @@ var PrintComponent = /** @class */ (function () {
     return PrintComponent;
 }());
 
-var DoctorSelectionDialog = /** @class */ (function () {
-    function DoctorSelectionDialog(dialogRef, customData) {
-        if (customData === void 0) { customData = ""; }
-        this.dialogRef = dialogRef;
-        this.customData = customData;
-    }
-    DoctorSelectionDialog.prototype.closeDialog = function () {
-        this.dialogRef.close(this.regdNo);
-    };
-    DoctorSelectionDialog.prototype.onNoClick = function () {
-        this.dialogRef.close();
-    };
-    ;
-    DoctorSelectionDialog = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'doctor-selection-dialog',
-            template: __webpack_require__(/*! ./doctor-selection-dialog.html */ "./src/app/print/doctor-selection-dialog.html"),
-            styles: [__webpack_require__(/*! ./print.component.css */ "./src/app/print/print.component.css")],
-        }),
-        __param(1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"])(_angular_material__WEBPACK_IMPORTED_MODULE_3__["MAT_DIALOG_DATA"])),
-        __metadata("design:paramtypes", [_angular_material__WEBPACK_IMPORTED_MODULE_3__["MatDialogRef"], String])
-    ], DoctorSelectionDialog);
-    return DoctorSelectionDialog;
-}());
-
+// @Component({
+//     selector: 'doctor-selection-dialog',
+//     templateUrl: 'doctor-selection-dialog.html',
+//     styleUrls: ['./print.component.css'],
+// })
+// export class DoctorSelectionDialog {
+//     regdNo: string
+//     constructor(
+//         public dialogRef: MatDialogRef<DoctorSelectionDialog>,
+//         @Inject(MAT_DIALOG_DATA) public customData: string = "") {
+//     }
+//     closeDialog() {
+//         this.dialogRef.close(this.regdNo)
+//     }
+//     onNoClick(): void {
+//         this.dialogRef.close();
+//     };
+// }
 
 
 /***/ }),
@@ -2136,12 +2129,15 @@ var CommonService = /** @class */ (function () {
             data: snackBarModel, duration: snackBarModel.duration
         });
     };
-    CommonService.prototype.showSuccessSnackBar = function (snackBar, callback) {
+    CommonService.prototype.showSuccessSnackBar = function (snackBar, successMsg, callback) {
+        if (successMsg === void 0) { successMsg = 'Data updated successfully'; }
         if (callback === void 0) { callback = null; }
         var snackBarModel = new _snackhelper_snackbar_model__WEBPACK_IMPORTED_MODULE_1__["SnackbarModel"]();
         snackBarModel.action = "OK";
-        snackBarModel.msg = "Data updated successfully";
-        snackBarModel.callback = callback;
+        snackBarModel.msg = successMsg;
+        if (callback) {
+            snackBarModel.callback = callback;
+        }
         snackBar.openFromComponent(_snackhelper_snackhelper_component__WEBPACK_IMPORTED_MODULE_2__["SnackhelperComponent"], {
             data: snackBarModel, duration: snackBarModel.duration
         });
@@ -2153,7 +2149,9 @@ var CommonService = /** @class */ (function () {
         snackBarModel.action = "OK";
         snackBarModel.isError = true;
         snackBarModel.msg = errorMsg;
-        snackBarModel.callback = callback;
+        if (callback) {
+            snackBarModel.callback = callback;
+        }
         snackBar.openFromComponent(_snackhelper_snackhelper_component__WEBPACK_IMPORTED_MODULE_2__["SnackhelperComponent"], {
             data: snackBarModel, duration: snackBarModel.duration
         });
@@ -2797,6 +2795,116 @@ var DummyResponse = /** @class */ (function () {
                 }
             ]
         };
+        this.getSinglePrescriptionView = {
+            "status": "SUCCESS",
+            "desc": null,
+            "resp": {
+                "pHistory": {
+                    "prescriptionId": 34,
+                    "advice": "general test  advice",
+                    "chiefComplaint": "general test cc",
+                    "clinicalFindings": "Periodontities - 34 35",
+                    "investigation": "general test iv",
+                    "nextAppointment": 1542393000000,
+                    "note": "general test notes",
+                    "printableNotes": "Printed",
+                    "patientId": 1,
+                    "provisionalDiagnosis": "general test pd",
+                    "tsCreated": 1542426489661,
+                    "tsModified": null
+                },
+                "fbl": [
+                    {
+                        "fId": 34,
+                        "amount": 500,
+                        "amountPaid": 390,
+                        "trtmntPlanRef": 2,
+                        "notes": "general test fee",
+                        "patientId": 1,
+                        "prescriptionId": null,
+                        "tsCreated": 1542426489787,
+                        "paymentTs": null
+                    },
+                    {
+                        "fId": 35,
+                        "amount": 356,
+                        "amountPaid": 70,
+                        "trtmntPlanRef": 2,
+                        "notes": "general test fee",
+                        "patientId": 1,
+                        "prescriptionId": null,
+                        "tsCreated": 1542426489787,
+                        "paymentTs": null
+                    }
+                ],
+                "mhv": [
+                    {
+                        "medicalHistoryId": 37,
+                        "medicalHistoryName": "Hypotension",
+                        "note": null,
+                        "patientId": 1,
+                        "prescriptionId": 34,
+                        "severity": null,
+                        "startedFrom": 1542426489878
+                    },
+                    {
+                        "medicalHistoryId": 38,
+                        "medicalHistoryName": "Asthma",
+                        "note": null,
+                        "patientId": 1,
+                        "prescriptionId": 34,
+                        "severity": null,
+                        "startedFrom": 1542426489878
+                    }
+                ],
+                "medhv": [
+                    {
+                        "medId": 20,
+                        "diseaseCode": "dCode2",
+                        "diseaseName": null,
+                        "dosage": "dose",
+                        "medicineName": "med2",
+                        "patientId": 1,
+                        "prescriptionId": 34
+                    },
+                    {
+                        "medId": 21,
+                        "diseaseCode": "dCode3",
+                        "diseaseName": null,
+                        "dosage": "dose",
+                        "medicineName": "med3",
+                        "patientId": 1,
+                        "prescriptionId": 34
+                    }
+                ],
+                "tphv": [
+                    {
+                        "clinicalFinding": "Periodontities",
+                        "note": null,
+                        "patientId": 1,
+                        "prescriptionId": 40,
+                        "toothIndex": "35",
+                        "tsCreated": 1546330807107,
+                        "tsModified": null,
+                        "status": "Pending",
+                        "tname": "Prosthesis removable",
+                        "tid": 8
+                    },
+                    {
+                        "clinicalFinding": "Periodontities",
+                        "note": null,
+                        "patientId": 1,
+                        "prescriptionId": 40,
+                        "toothIndex": "34",
+                        "tsCreated": 1546330836694,
+                        "tsModified": null,
+                        "status": "Completed",
+                        "tname": "RCT",
+                        "tid": 9
+                    }
+                ]
+            }
+        };
         this.prescriptionPrintView = {
             "status": "SUCCESS",
             "desc": null,
@@ -2939,6 +3047,7 @@ var HttpcommService = /** @class */ (function () {
         this.postAddClinicalFindingUrl = this.baseUrl + 'clinical-finding/add-clinical-finding';
         this.getAddTreatmentPlanUrl = this.baseUrl + 'trtmnt/add-treatment-plan';
         this.getPrescriptionPrintViewUrl = this.baseUrl + 'prescription-print/get?';
+        this.getSinglePrescriptionViewUrl = this.baseUrl + 'dashboard/get-prescription-by-id?id=';
         this.httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpHeaders"]({
                 'Accept': 'application/json',
@@ -3105,12 +3214,21 @@ var HttpcommService = /** @class */ (function () {
         return new Promise(function (resolve) { return setTimeout(resolve, ms); });
     };
     HttpcommService.prototype.getPrescriptionPrintView = function (patientId, prescriptionId) {
-        // if(this.dummy){
-        //   return of(this.parseData(this.dummyResp.prescriptionPrintView))
-        // }else{
-        //   return this.genericGetRequest(this.getPrescriptionPrintViewUrl+'patientId'+patientId+'prescriptionId'+prescriptionId,'Prescription Print')
-        // }
-        return this.genericGetRequest('http://demo4369803.mockable.io/prescription-print/get');
+        if (this.dummy) {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(this.parseData(this.dummyResp.prescriptionPrintView));
+        }
+        else {
+            return this.genericGetRequest(this.getPrescriptionPrintViewUrl + 'patientId' + patientId + 'prescriptionId' + prescriptionId, 'Prescription Print');
+        }
+        // return this.genericGetRequest('https://demo5063914.mockable.io/prescription-print/get')
+    };
+    HttpcommService.prototype.getSinglePrescriptionDetail = function (prescriptionId) {
+        if (this.dummy) {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(this.dummyResp.getSinglePrescriptionView);
+        }
+        else {
+            return this.genericGetRequest(this.getSinglePrescriptionViewUrl + prescriptionId, 'Single prescription request');
+        }
     };
     HttpcommService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({

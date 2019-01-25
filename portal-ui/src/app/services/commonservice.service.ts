@@ -30,23 +30,30 @@ export class CommonService {
     return this.message;
   }
 
-  validateDate(date: Date): boolean {
-    if (date &&
-      date.getDate() && date.getDate() > 0 &&
-      date.getMonth() && date.getMonth() >= 0 &&
-      date.getFullYear() && date.getFullYear() > 0) return true;
-    return false;
-  }
+  validateDate(date: Date): boolean {    
+    if (date.getDate() > 0 &&
+      date.getMonth() >= 0 &&
+      date.getFullYear() > 0) {
+        return true;    
+    }else{
+      return false;
+    }
+}
 
   getParsedDate(date: Date): number[] {
     let pd: number[] = null;
-    // console.log('Date validation: ' + this.validateDate(date));
+    // console.log(date.getTime())
+    // console.log(date.getDate())
+    // console.log(date.getMonth())
+    // console.log(date.getFullYear())
+    console.log('Date validation: ' + this.validateDate(date));
     if (this.validateDate(date)) {
       pd = [];
       pd.push(date.getDate());
       pd.push(date.getMonth() + 1);
       pd.push(date.getFullYear());
     }
+    console.log(pd)
     return pd;
   }
 

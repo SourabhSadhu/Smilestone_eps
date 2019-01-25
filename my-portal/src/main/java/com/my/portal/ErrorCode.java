@@ -18,7 +18,13 @@ public enum ErrorCode {
 	INVAID_TREATMENT_PLAN_ID("Invalid treatment plan id"),
 	DUPLICATE_TOOTH_INDEX("Duplicate tooth index data"), 
 	TO_AGE_SMALLER_THAN_FROM_AGE("To age smaller than from age"), 
-	ZERO_FEE_BREAKUP_AMOUNT("Fee can't be zero"), 
+	ZERO_FEE_BREAKUP_AMOUNT("Fee can't be zero"),
+	NO_RECORD_FOUND("No record found"),
+	BLANK_FIRST_NAME("Please enter first name"),
+	BLANK_LAST_NAME("Please enter last name"),
+	BLANK_CONTACT_NUMBER("Please enter contact number"),
+	BLANK_DOB("Please enter DOB"),	
+	INVALID_DOB("Invalid dob format"),
 	;
 
 	String desc;

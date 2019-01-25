@@ -69,18 +69,19 @@ public class PatientServiceImpl implements PatientService{
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED)
 	public PatientView addPatient(PatientView p) {
-		if(StringUtils.hasText(p.getFirstName()) 
-				&& StringUtils.hasText(p.getLastName())
-				&& null != p.getContactNo1()
-				&& null != p.getDobDd()
-				&& null != p.getDobMm()
-				&& null != p.getDobYy()
-				&& p.getDobDd().compareTo(new BigDecimal(32)) < 1
-				&& p.getDobMm().compareTo(new BigDecimal(13)) < 1				
-				) {			
-			return map(repo.saveAndFlush(map(p)));
+		if(StringUtils.isEmpty(p.getFirstName())) {
+			throw new ValidationException(ErrorCode.BLANK_FIRST_NAME);
+		}else if(StringUtils.isEmpty(p.getLastName())) {
+			throw new ValidationException(ErrorCode.BLANK_LAST_NAME);			
+		}else if(StringUtils.isEmpty(p.getContactNo1())) {
+			throw new ValidationException(ErrorCode.BLANK_CONTACT_NUMBER);			
+		}else if(StringUtils.isEmpty(p.getDobTimestamp())) {
+			throw new ValidationException(ErrorCode.BLANK_DOB);			
+		}else if(p.getDobDd().compareTo(new BigDecimal(31)) > 0
+				&& p.getDobMm().compareTo(new BigDecimal(12)) > 1){
+			throw new ValidationException(ErrorCode.INVALID_DOB);
 		}else {
-			throw new ValidationException(ErrorCode.INVALID_INPUT);
+			return map(repo.saveAndFlush(map(p)));
 		}
 	}
 
@@ -92,32 +93,35 @@ public class PatientServiceImpl implements PatientService{
 
 	@Override
 	public List<PatientView> getPatient(PatientView p) {
+		List<PatientView> resp = new ArrayList<>();
+
 		if(null != p.getPId() && p.getPId().longValue() > 0) {
-			List<PatientView> resp = new ArrayList<>();
-			resp.add(this.findById(p.getPId()));
-			return resp;
+			resp.add(this.findById(p.getPId()));		
 		}else if (null != p.getDobDd() && null != p.getDobMm() && null != p.getDobYy()
 				&& (StringUtils.isEmpty(p.getFirstName()) || StringUtils.isEmpty(p.getLastName()))) {
-			return findByDOB(p.getDobDd(), p.getDobMm(), p.getDobYy());
+			resp.addAll(findByDOB(p.getDobDd(), p.getDobMm(), p.getDobYy()));
 		} else if (null != p.getDobDd() && null != p.getDobMm() && null != p.getDobYy()
 				&& StringUtils.hasText(p.getFirstName()) && StringUtils.hasText(p.getLastName())) {
-			return findByDetails(p.getFirstName(), p.getLastName(), p.getDobDd(), p.getDobMm(), p.getDobYy());
+			resp.addAll(findByDetails(p.getFirstName(), p.getLastName(), p.getDobDd(), p.getDobMm(), p.getDobYy()));
 		} else if (StringUtils.hasText(p.getFirstName()) && StringUtils.hasText(p.getLastName())) {
-			return findByFullName(p.getFirstName().toLowerCase(), p.getLastName().toLowerCase());
+			resp.addAll(findByFullName(p.getFirstName().toLowerCase(), p.getLastName().toLowerCase()));
 		} else if (StringUtils.hasText(p.getFirstName())) {
-			return findByFirstName(p.getFirstName().toLowerCase());
+			resp.addAll(findByFirstName(p.getFirstName().toLowerCase()));
 		} else if (StringUtils.hasText(p.getLastName())) {
-			return findByLastName(p.getLastName().toLowerCase());
+			resp.addAll(findByLastName(p.getLastName().toLowerCase()));
 		} else if((null != p.getContactNo1() && BigDecimal.ZERO.compareTo(p.getContactNo1()) != 0) ||
 				(null != p.getContactNo2() && BigDecimal.ZERO.compareTo(p.getContactNo2()) != 0) 
 				){
 			if(null != p.getContactNo1()){
-				return findByContactNo(p.getContactNo1());
+				resp.addAll(findByContactNo(p.getContactNo1()));
 			}else{
-				return findByContactNo(p.getContactNo2());
+				resp.addAll(findByContactNo(p.getContactNo2()));
 			}
+		}
+		if(null!= resp && !resp.isEmpty()) {
+			return resp;
 		}else {
-			return new ArrayList<>();
+			throw new ValidationException(ErrorCode.NO_RECORD_FOUND);
 		}
 	}
 

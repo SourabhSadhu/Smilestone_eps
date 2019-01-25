@@ -18,7 +18,7 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@SequenceGenerator(name="FEE_CONFIG_FEECONFIGID_GENERATOR", sequenceName="fee_config_id_seq")
+@SequenceGenerator(name="FEE_CONFIG_FEECONFIGID_GENERATOR", sequenceName="fee_config_id_seq", allocationSize = 1, schema = "eps")
 @Table(name="fee_config")
 @NamedQuery(name="FeeConfig.findFeeConfig", 
 	query="SELECT f FROM FeeConfig f WHERE f.ageGroupId = :age_grp AND f.toothGroupId = :tooth_grp_idx "

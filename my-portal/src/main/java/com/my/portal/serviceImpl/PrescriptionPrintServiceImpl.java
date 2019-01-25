@@ -86,7 +86,8 @@ public class PrescriptionPrintServiceImpl implements PrescriptionPrintService {
 		SimpleDateFormat sdf = new SimpleDateFormat(DATE_TIME_FORMAT);
 		PrescriptionPrintModel response = new PrescriptionPrintModel();
 		response.setAdvice(reqPrescription.getAdvice());
-		response.setAge(getPatientAge(reqPatient.getDobTimestamp()));
+		response.setAge(null != reqPatient.getDobTimestamp() ? getPatientAge(reqPatient.getDobTimestamp()) : "" );
+		response.setSex(reqPatient.getSex());
 		response.setChiefComplain(reqPrescription.getChiefComplaint());
 		response.setClinicalFindings(reqPrescription.getClinicalFindings());
 		response.setDepartment(System.getProperty(DEPARTMENT, "Oral and Maxillofacial Surgery OPD"));

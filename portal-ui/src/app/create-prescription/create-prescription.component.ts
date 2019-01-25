@@ -285,9 +285,9 @@ export class CreatePrescriptionComponent implements OnInit {
 
     this.httpCom.getDashboardView(patientId).subscribe(
       resp => {
-        if (resp.status === 'SUCCESS' && resp.resp && resp.resp.length > 0) {
-          this.dashboardDataSource = new MatTableDataSource<DashboardView>()
+        if (resp.status === 'SUCCESS' && resp.resp) {
           if (resp.resp && resp.resp.length > 0) {
+            this.dashboardDataSource = new MatTableDataSource<DashboardView>()
             this.dashboardDataSource.data = resp.resp
           } else {
             this.tabSelection(2)

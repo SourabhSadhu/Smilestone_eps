@@ -20,7 +20,7 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@SequenceGenerator(name="PATIENTS_PID_GENERATOR", sequenceName="patient_id_seq")
+@SequenceGenerator(name="PATIENTS_PID_GENERATOR", sequenceName="patient_id_seq", allocationSize = 1, schema = "eps")
 @Table(name="patients")
 @NamedQueries({
 	@NamedQuery(name="Patient.findByFirstName", query="SELECT p FROM Patient p WHERE lower(p.firstName) like(:fName)"),

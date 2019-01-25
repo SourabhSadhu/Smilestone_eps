@@ -46,11 +46,7 @@ public class PatientController {
 				throw new ValidationException(ErrorCode.INVALID_INPUT);
 			}
 			List<PatientView> pList = patientService.getPatient(p);
-			if(null != pList && !pList.isEmpty()) {
-				return new ResponseEntity<>(CommonUtils.getResp(pList), HttpStatus.OK);
-			}else {
-				return new ResponseEntity<>(CommonUtils.getResp(new ArrayList<>()), HttpStatus.OK);
-			}
+			return new ResponseEntity<>(CommonUtils.getResp(pList), HttpStatus.OK);
 		} catch (Exception e) {
 			if(e instanceof ValidationException) {
 				ValidationException ve = (ValidationException) e;

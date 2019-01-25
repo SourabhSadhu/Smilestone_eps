@@ -78,7 +78,7 @@
                         </span>
                         <mat-form-field>
                           <input matInput [matDatepicker]="picker" placeholder="Select from calender" (dateChange)="dateAddEvent('change', $event)"
-                            disabled>
+                            disabled [formControl]="dobDate">
                           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                           <mat-datepicker #picker disabled="false"></mat-datepicker>
                         </mat-form-field>

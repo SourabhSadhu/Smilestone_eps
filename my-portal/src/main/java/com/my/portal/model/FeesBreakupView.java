@@ -19,7 +19,7 @@ public class FeesBreakupView implements Serializable {
 	private Long patientId;
 	private Long prescriptionId;
 	private Timestamp tsCreated;
-	private Timestamp paymentTs;
+	private Timestamp tsUpdated;
 
 	public FeesBreakupView() {
 	}
@@ -88,12 +88,12 @@ public class FeesBreakupView implements Serializable {
 		this.tsCreated = tsCreated;
 	}
 
-	public final Timestamp getPaymentTs() {
-		return paymentTs;
+	public final Timestamp getUpdatedTs() {
+		return tsUpdated;
 	}
 
-	public final void setPaymentTs(Timestamp paymentTs) {
-		this.paymentTs = paymentTs;
+	public final void setUpdatedTs(Timestamp paymentTs) {
+		this.tsUpdated = paymentTs;
 	}
 	
 }

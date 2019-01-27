@@ -68,8 +68,8 @@ export class DashboardComponent implements OnInit {
 
   submitPatient(){
     // this.nextStep();
-    console.log(this.patient)
-    console.log('DOB',this.dobDate.value)  
+    // console.log(this.patient)
+    // console.log('DOB',this.dobDate.value)  
     this.httpService.addPatient(this.patient).subscribe( resp => {
       if(resp && resp.status == 'SUCCESS'){
           this.commonService.showSuccessSnackBar(this.snackBar)
@@ -89,14 +89,14 @@ export class DashboardComponent implements OnInit {
     console.log(event)
   }
   dateAddEvent(type: string, event: MatDatepickerInputEvent<Date>) {
-    console.log(`Date value: ${event.value}`)
+    // console.log(`Date value: ${event.value}`)
     let dob: Date = event.value
     let parsedDate : number[] = this.commonService.getParsedDate(dob);
     if(parsedDate && parsedDate.length == 3){
       this.patient.dobDd = parsedDate[0];
       this.patient.dobMm = parsedDate[1];
       this.patient.dobYy = parsedDate[2];
-      this.patient.dobTimestamp = dob.getMilliseconds();
+      this.patient.dobTimestamp = dob.getTime();
     }
   }
 

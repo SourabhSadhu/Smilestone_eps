@@ -98,3 +98,13 @@ INSERT INTO fee_config (treatment_plan_id,base_fee,tooth_group_id,tooth_group_pe
 (1,75,3,10,'30to60',10),
 (1,75,4,10,'30to60',10);
 
+
+
+
+
+
+--Changes after first deployment
+
+ALTER TABLE eps.medicine_history
+    ADD COLUMN ts_created timestamp without time zone;
+    

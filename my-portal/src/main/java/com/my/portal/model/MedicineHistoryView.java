@@ -14,6 +14,7 @@ public class MedicineHistoryView implements Serializable {
 	private String medicineName;
 	private Long patientId;
 	private Long prescriptionId;
+	private Long tsCreated;
 
 	public MedicineHistoryView() {
 	}
@@ -72,6 +73,14 @@ public class MedicineHistoryView implements Serializable {
 
 	public final void setPrescriptionId(Long prescriptionId) {
 		this.prescriptionId = prescriptionId;
+	}
+
+	public final Long getTsCreated() {
+		return tsCreated;
+	}
+
+	public final void setTsCreated(Long tsCreated) {
+		this.tsCreated = tsCreated;
 	}
 
 }

@@ -3,6 +3,7 @@ package com.my.portal.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,13 +24,15 @@ import com.my.portal.model.FeesBreakupView;
 import com.my.portal.service.FeeConfigService;
 import com.my.portal.service.FeesBreakupService;
 
+import ch.qos.logback.classic.Logger;
+
 @RestController
 @RequestMapping(value = "/fee")
 public class FeeController {
 
 	@Autowired	FeesBreakupService fbService;
 	@Autowired	FeeConfigService fcService;
-
+	private final Logger logger = (Logger) LoggerFactory.getLogger(getClass());
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/get-config", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -42,6 +45,7 @@ public class FeeController {
 		try {
 			return new ResponseEntity<>(CommonUtils.getResp(fcService.getFeeConfig(age, trtmntId, toothGrpIdx)), HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 			if(e instanceof ValidationException) {
 				ValidationException ve = (ValidationException) e;
 				return new ResponseEntity<>(CommonUtils.getResp(null, ve.getValidationPayload()), HttpStatus.OK);
@@ -68,6 +72,7 @@ public class FeeController {
 			
 			return new ResponseEntity<>(CommonUtils.getResp(null, ErrorCode.INVALID_INPUT), HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 			if(e instanceof ValidationException) {
 				ValidationException ve = (ValidationException) e;
 				return new ResponseEntity<>(CommonUtils.getResp(null, ve.getValidationPayload()), HttpStatus.OK);
@@ -85,6 +90,7 @@ public class FeeController {
 		try {
 			return new ResponseEntity<>(CommonUtils.getResp(fcService.addFeeConfig(view)), HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 			if(e instanceof ValidationException) {
 				ValidationException ve = (ValidationException) e;
 				return new ResponseEntity<>(CommonUtils.getResp(null, ve.getValidationPayload()), HttpStatus.OK);
@@ -94,21 +100,22 @@ public class FeeController {
 		}
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/update-fee-config", produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public ResponseEntity<?> updateFeeConfig(@RequestBody FeesBreakupView view) {
-
-		try {
-			return new ResponseEntity<>(CommonUtils.getResp(fbService.updateFeePaid(view)), HttpStatus.OK);
-		} catch (Exception e) {
-			if(e instanceof ValidationException) {
-				ValidationException ve = (ValidationException) e;
-				return new ResponseEntity<>(CommonUtils.getResp(null, ve.getValidationPayload()), HttpStatus.OK);
-			}else {
-				e.printStackTrace();
-				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-			}
-		}
-	}
+//	@RequestMapping(method = RequestMethod.POST, value = "/update-fee-config", produces = MediaType.APPLICATION_JSON_VALUE)
+//	@ResponseBody
+//	public ResponseEntity<?> updateFeeConfig(@RequestBody FeesBreakupView view) {
+//
+//		try {
+//			return new ResponseEntity<>(CommonUtils.getResp(fbService.updateFeePaid(view)), HttpStatus.OK);
+//		} catch (Exception e) {
+//			logger.error(e.getMessage(), e);
+//			if(e instanceof ValidationException) {
+//				ValidationException ve = (ValidationException) e;
+//				return new ResponseEntity<>(CommonUtils.getResp(null, ve.getValidationPayload()), HttpStatus.OK);
+//			}else {
+//				e.printStackTrace();
+//				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//			}
+//		}
+//	}
 	
 }

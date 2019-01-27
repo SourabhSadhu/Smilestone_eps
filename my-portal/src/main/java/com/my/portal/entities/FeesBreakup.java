@@ -60,8 +60,8 @@ public class FeesBreakup implements Serializable {
 	@Column(name="ts_created")
 	private Timestamp tsCreated;
 	
-	@Column(name="payment_ts")
-	private Timestamp paymentTs;
+	@Column(name="ts_updated")
+	private Timestamp tsUpdated;
 
 	public FeesBreakup() {
 	}
@@ -130,12 +130,12 @@ public class FeesBreakup implements Serializable {
 		this.prescriptionId = prescriptionId;
 	}
 
-	public final Timestamp getPaymentTs() {
-		return paymentTs;
+	public final Timestamp getUpdatedTs() {
+		return tsUpdated;
 	}
 
-	public final void setPaymentTs(Timestamp paymentTs) {
-		this.paymentTs = paymentTs;
+	public final void setUpdatedTs(Timestamp paymentTs) {
+		this.tsUpdated = paymentTs;
 	}
 	
 

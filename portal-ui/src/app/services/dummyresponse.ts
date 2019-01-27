@@ -625,7 +625,7 @@ export class DummyResponse {
   public getSinglePrescriptionView = {
     "status": "SUCCESS",
     "desc": null,
-    "resp": {
+    "resp": [{
       "pHistory": {
         "prescriptionId": 34,
         "advice": "general test  advice",
@@ -730,7 +730,7 @@ export class DummyResponse {
           "tid": 9
         }
       ]
-    }
+    }]
   };
 
 

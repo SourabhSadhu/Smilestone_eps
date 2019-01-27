@@ -16,6 +16,7 @@ public enum ErrorCode {
 	INVALID_PRESCRIPTION_HISTORY_ID("Prescription not found"),
 	INVALID_BLOOD_GROUP("Invalid blood group"), 
 	INVAID_TREATMENT_PLAN_ID("Invalid treatment plan id"),
+	INVALID_PATIENT_ID_OR_PRESCRIPTION_ID("Invalid Patient or Prescription ID"),
 	DUPLICATE_TOOTH_INDEX("Duplicate tooth index data"), 
 	TO_AGE_SMALLER_THAN_FROM_AGE("To age smaller than from age"), 
 	ZERO_FEE_BREAKUP_AMOUNT("Fee can't be zero"),
@@ -25,6 +26,7 @@ public enum ErrorCode {
 	BLANK_CONTACT_NUMBER("Please enter contact number"),
 	BLANK_DOB("Please enter DOB"),	
 	INVALID_DOB("Invalid dob format"),
+	SERVER_ERROR("Server error"),
 	;
 
 	String desc;

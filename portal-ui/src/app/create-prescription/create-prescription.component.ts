@@ -239,27 +239,27 @@ export class CreatePrescriptionComponent implements OnInit {
   searchPrescription() {
     console.log('Prescription ID: ' + this.prescriptionId)
     if (this.prescriptionId && this.prescriptionId > 0) {
-      this.httpCom.getSinglePrescriptionDetail(this.prescriptionId).subscribe(resp => {
-        if (resp) {
-          if (resp.status == 'SUCCESS') {
+      this.httpCom.getSinglePrescriptionDetail(this.prescriptionId).subscribe(dashboardResp => {
+        if (dashboardResp) {
+          if (dashboardResp.status == 'SUCCESS') {
             this.tabSelection(2)
-            if (resp.resp) {
+            if (dashboardResp.resp && dashboardResp.resp.length > 0) {
               //Fetch patient details
-              let dashboard :DashboardView = resp.resp;
+              let dashboard :DashboardView = dashboardResp.resp[0];
               let patient = new Patient()
               patient.pid = dashboard.pHistory.patientId
               this.httpCom.getPatient(patient).subscribe(patientResp => {
                 if(patientResp && patientResp.status == 'SUCCESS'){
                   this.selectedPatient = patientResp.resp[0];
                   this.disableTabs = false;
-                  this.selectPrescription(resp.resp);
+                  this.selectPrescription(dashboard);
                 }
               })
             } else {
-              this.commonService.showSuccessSnackBar(this.snackBar, 'No prescription found')
+              this.commonService.showSuccessSnackBar(this.snackBar, dashboardResp.desc)
             }
           } else {
-            this.commonService.showErrorSnackBar(this.snackBar, resp.desc)
+            this.commonService.showErrorSnackBar(this.snackBar, dashboardResp.desc)
           }
         } else {
           this.commonService.showErrorSnackBar(this.snackBar)

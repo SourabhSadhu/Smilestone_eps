@@ -1,5 +1,6 @@
 package com.my.portal.controller;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,12 +16,15 @@ import com.my.portal.ValidationException;
 import com.my.portal.service.MedicalHistoryMasterService;
 import com.my.portal.service.MedicalHistoryService;
 
+import ch.qos.logback.classic.Logger;
+
 @Controller
 @RequestMapping(value = "/medical-history")
 public class MedicalHistoryController {
 
 	@Autowired	MedicalHistoryService mhService;
 	@Autowired MedicalHistoryMasterService mhmService;
+	private final Logger logger = (Logger) LoggerFactory.getLogger(getClass());
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/get-all", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -28,6 +32,7 @@ public class MedicalHistoryController {
 		try {
 			return new ResponseEntity<>(CommonUtils.getResp(mhService.findAll()), HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 			if(e instanceof ValidationException) {
 				ValidationException ve = (ValidationException) e;
 				return new ResponseEntity<>(CommonUtils.getResp(null, ve.getValidationPayload()), HttpStatus.OK);
@@ -43,6 +48,7 @@ public class MedicalHistoryController {
 		try {
 			return new ResponseEntity<>(CommonUtils.getResp(mhService.getByPatientId(pID)), HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 			if(e instanceof ValidationException) {
 				ValidationException ve = (ValidationException) e;
 				return new ResponseEntity<>(CommonUtils.getResp(null, ve.getValidationPayload()), HttpStatus.OK);
@@ -58,6 +64,7 @@ public class MedicalHistoryController {
 		try {
 			return new ResponseEntity<>(CommonUtils.getResp(mhService.getByMedicalHistoryName(name)), HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 			if(e instanceof ValidationException) {
 				ValidationException ve = (ValidationException) e;
 				return new ResponseEntity<>(CommonUtils.getResp(null, ve.getValidationPayload()), HttpStatus.OK);

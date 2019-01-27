@@ -531,14 +531,17 @@
             </mat-form-field>
           </div>
 
-
-          <button mat-mini-fab color="primary" (click)="createAndSubmitPrescription()" matTooltip="Upload" [disabled]="checkIfDisabledToModify()">
-            <mat-icon aria-label="Upload">cloud_upload</mat-icon>
-          </button>
-
-          <button mat-mini-fab color="primary" (click)="printPrescription()" matTooltip="Print" [disabled]="!checkIfDisabledToModify()">
-            <mat-icon aria-label="Print">local_printshop</mat-icon>
-          </button>
+          <div>
+            <a>Save Prescription </a>
+            <button class="example-margin" mat-mini-fab color="primary" (click)="createAndSubmitPrescription()" matTooltip="Upload" [disabled]="checkIfDisabledToModify()">
+              <mat-icon aria-label="Upload">cloud_upload</mat-icon>
+            </button>
+          
+            <a>      Print Prescription </a>
+            <button class="example-margin" mat-mini-fab color="primary" (click)="printPrescription()" matTooltip="Print" [disabled]="!checkIfDisabledToModify()">
+              <mat-icon aria-label="Print">local_printshop</mat-icon>
+            </button>
+          </div>
 
         </mat-card-content>
       </mat-card>

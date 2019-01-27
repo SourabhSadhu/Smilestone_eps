@@ -31,11 +31,10 @@ export class HttpcommService {
   getFeeConfigTrtIdPart3Url = '&trtmnt_id=';
   getFeeConfigListUrl = this.baseUrl + 'fee/get-config-list';
   addDashboardUrl = this.baseUrl + 'dashboard/add-dashboard';
-  getDashboard = this.baseUrl + 'dashboard/get-dashboard?patientId=';
+  getDashboardUrl = this.baseUrl + 'dashboard/get-dashboard?';
   postAddClinicalFindingUrl = this.baseUrl + 'clinical-finding/add-clinical-finding'
   getAddTreatmentPlanUrl = this.baseUrl + 'trtmnt/add-treatment-plan'
   getPrescriptionPrintViewUrl = this.baseUrl + 'prescription-print/get?'
-  getSinglePrescriptionViewUrl = this.baseUrl + 'dashboard/get-prescription-by-id?id='
   
   constructor(public http : HttpClient) {
     this.dummyResp = new DummyResponse();
@@ -56,8 +55,8 @@ export class HttpcommService {
   getDashboardView(patientId: number): Observable<Response>{
     if(this.dummy){      
       return of(this.parseData(this.dummyResp.getDashboardView));
-    }else{
-      return this.http.get<Response>(this.baseUrl+'dashboard/get-dashboard?patientId='+patientId, this.httpOptions);
+    }else{      
+      return this.http.get<Response>(this.getDashboardUrl+'patientId='+patientId, this.httpOptions);
     }
   }
 
@@ -229,7 +228,7 @@ export class HttpcommService {
     if(this.dummy){
       return of(this.dummyResp.getSinglePrescriptionView);
     }else{
-      return this.genericGetRequest(this.getSinglePrescriptionViewUrl+prescriptionId,'Single prescription request')
+      return this.genericGetRequest(this.getDashboardUrl+'prescriptionId='+prescriptionId,'Single prescription request')
     }
   }
 }

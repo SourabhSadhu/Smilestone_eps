@@ -1,6 +1,7 @@
 package com.my.portal.entities;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -45,6 +46,9 @@ public class MedicineHistory implements Serializable {
 
 	@Column(name="prescription_id")
 	private Long prescriptionId;
+	
+	@Column(name="ts_created")
+	private Timestamp tsCreated;
 
 	public MedicineHistory() {
 	}
@@ -104,6 +108,13 @@ public class MedicineHistory implements Serializable {
 	public final void setPrescriptionId(Long prescriptionId) {
 		this.prescriptionId = prescriptionId;
 	}
-	
+
+	public final Timestamp getTsCreated() {
+		return tsCreated;
+	}
+
+	public final void setTsCreated(Timestamp tsCreated) {
+		this.tsCreated = tsCreated;
+	}
 
 }

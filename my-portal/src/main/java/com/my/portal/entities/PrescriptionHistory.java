@@ -13,58 +13,56 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-
 /**
  * The persistent class for the prescription_history database table.
  * 
  */
 @Entity
-@SequenceGenerator(name="PRESCRIPTION_HISTORY_PRESCRIPTIONID_GENERATOR", sequenceName="prescription_id_seq", allocationSize = 1, schema = "eps")
-@Table(name="prescription_history")
-@NamedQueries({
-	@NamedQuery(name="PrescriptionHistory.findAll", query="SELECT p FROM PrescriptionHistory p"),
-	@NamedQuery(name="PrescriptionHistory.findByPatientId", query="SELECT p FROM PrescriptionHistory p WHERE p.patientId = :patientId"),
-	@NamedQuery(name="PrescriptionHistory.getByDateRange", query="SELECT p FROM PrescriptionHistory p")
-})
+@SequenceGenerator(name = "PRESCRIPTION_HISTORY_PRESCRIPTIONID_GENERATOR", sequenceName = "prescription_id_seq", allocationSize = 1, schema = "eps")
+@Table(name = "prescription_history")
+@NamedQueries({ @NamedQuery(name = "PrescriptionHistory.findAll", query = "SELECT p FROM PrescriptionHistory p"),
+		@NamedQuery(name = "PrescriptionHistory.findByPatientId", query = "SELECT p FROM PrescriptionHistory p WHERE p.patientId = :patientId"),
+		@NamedQuery(name = "PrescriptionHistory.findByPrescriptionAndPatientId", query = "SELECT p FROM PrescriptionHistory p WHERE p.patientId = :patientId AND p.prescriptionId = :prescriptionId"),
+		@NamedQuery(name = "PrescriptionHistory.getByDateRange", query = "SELECT p FROM PrescriptionHistory p") })
 public class PrescriptionHistory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PRESCRIPTION_HISTORY_PRESCRIPTIONID_GENERATOR")
-	@Column(name="prescription_id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PRESCRIPTION_HISTORY_PRESCRIPTIONID_GENERATOR")
+	@Column(name = "prescription_id")
 	private Long prescriptionId;
 
 	private String advice;
 
-	@Column(name="chief_complaint")
+	@Column(name = "chief_complaint")
 	private String chiefComplaint;
-	
-	@Column(name="clinical_findings")
+
+	@Column(name = "clinical_findings")
 	private String clinicalFindings;
 
 	private String investigation;
 
-	@Column(name="next_appointment")
+	@Column(name = "next_appointment")
 	private Timestamp nextAppointment;
 
 	private String note;
-	
-	@Column(name="printable_notes")
+
+	@Column(name = "printable_notes")
 	private String printableNotes;
 
-	@Column(name="patient_id")
+	@Column(name = "patient_id")
 	private Long patientId;
 
-	@Column(name="provisional_diagnosis")
+	@Column(name = "provisional_diagnosis")
 	private String provisionalDiagnosis;
 
-	@Column(name="ts_created")
+	@Column(name = "ts_created")
 	private Timestamp tsCreated;
 
-	@Column(name="ts_modified")
+	@Column(name = "ts_modified")
 	private Timestamp tsModified;
-	
-	@Column(name="visit_count")
+
+	@Column(name = "visit_count")
 	private long visitCount;
 
 	public PrescriptionHistory() {

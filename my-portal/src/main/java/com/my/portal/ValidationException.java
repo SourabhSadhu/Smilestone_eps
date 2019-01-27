@@ -14,4 +14,16 @@ public class ValidationException extends RuntimeException {
 	public ErrorCode getValidationPayload() {
 		return error;
 	}
+
+//	@Override
+//	public String toString() {
+//		return "toString [error=" + error + ", getValidationPayload()=" + getValidationPayload() + "]";
+//	}
+
+	@Override
+	public String getMessage() {
+		return "getMessage [error=" + error + ", getValidationPayload()=" + getValidationPayload().getDesc() + "]";
+	}
+	
+	
 }

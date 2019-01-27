@@ -23,24 +23,22 @@ import com.my.portal.service.TreatmentPlanService;
 @Service
 public class PrescriptionHistoryServiceImpl implements PrescriptionHistoryService {
 
-	@Autowired
-	PrescriptionHistoryRespository repo;
-	@Autowired
-	FeesBreakupService fbService;
-	@Autowired
-	MedicalHistoryService mhService;
-	@Autowired
-	MedicineService medService;
-	@Autowired
-	TreatmentPlanService tpService;
-
-	@Autowired
-	PatientService pService;
+	@Autowired	PrescriptionHistoryRespository repo;
+	@Autowired	FeesBreakupService fbService;
+	@Autowired	MedicalHistoryService mhService;
+	@Autowired	MedicineService medService;
+	@Autowired	TreatmentPlanService tpService;
+	@Autowired	PatientService pService;
 
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
 	public List<PrescriptionHistoryView> findByPatientId(Long patientId) {
 		return mapAll(repo.findByPatientId(patientId));
+	}
+
+	@Override
+	public List<PrescriptionHistoryView> findByPrescriptionAndPatientId(Long patientId, Long prescriptionId) {
+		return mapAll(repo.findByPrescriptionAndPatientId(patientId, prescriptionId));
 	}
 
 	@Override

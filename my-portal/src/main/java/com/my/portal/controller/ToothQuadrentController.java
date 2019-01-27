@@ -1,5 +1,6 @@
 package com.my.portal.controller;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,12 +16,15 @@ import com.my.portal.ValidationException;
 import com.my.portal.model.ToothQuadrentView;
 import com.my.portal.service.ToothQuadrentService;
 
+import ch.qos.logback.classic.Logger;
+
 @Controller
 @RequestMapping(value = "/tooth-qdr")
 public class ToothQuadrentController {
 
 	@Autowired
 	ToothQuadrentService tqService;
+	private final Logger logger = (Logger) LoggerFactory.getLogger(getClass());
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/get-all", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -28,6 +32,7 @@ public class ToothQuadrentController {
 		try {
 			return new ResponseEntity<>(CommonUtils.getResp(tqService.findAll()), HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 			if(e instanceof ValidationException) {
 				ValidationException ve = (ValidationException) e;
 				return new ResponseEntity<>(CommonUtils.getResp(null, ve.getValidationPayload()), HttpStatus.OK);
@@ -60,6 +65,7 @@ public class ToothQuadrentController {
 		try {
 			return new ResponseEntity<>(CommonUtils.getResp(tqService.addToothQuadrent(view)), HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 			if(e instanceof ValidationException) {
 				ValidationException ve = (ValidationException) e;
 				return new ResponseEntity<>(CommonUtils.getResp(null, ve.getValidationPayload()), HttpStatus.OK);

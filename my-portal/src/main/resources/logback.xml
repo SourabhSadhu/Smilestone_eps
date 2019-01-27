@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<configuration scan="true">
+
+	<!-- include resource="org/springframework/boot/logging/logback/base.xml" /-->
+	<jmxConfigurator />
+
+	<appender name="UPDATES_APPENDER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!--See also http://logback.qos.ch/manual/appenders.html#RollingFileAppender -->
+		<File>${catalina.base}/logs/customer-mobile/customer-mobile.log
+		</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>${catalina.base}/logs/eps/eps.%d{yyyy-MM-dd}.%i.log </fileNamePattern>
+			<minIndex>1</minIndex>
+			<maxIndex>50</maxIndex>
+		</rollingPolicy>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>100MB</maxFileSize>
+		</triggeringPolicy>
+		<encoder>
+			<Pattern>%d %X %-5level %logger{36} - %msg%n%ex</Pattern>
+		</encoder>
+	</appender>
+
+	<appender name="ASYNC_UPDATES_APPENDER" class="ch.qos.logback.classic.AsyncAppender">
+		<queueSize>2000</queueSize>
+		<discardingThreshold>0</discardingThreshold>
+		<appender-ref ref="UPDATES_APPENDER" />
+	</appender>
+
+
+	<appender name="API_APPENDER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!--See also http://logback.qos.ch/manual/appenders.html#RollingFileAppender -->
+		<File>${catalina.base}/logs/customer-mobile/customer-mobile-api.log
+		</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>${catalina.base}/logs/eps/eps.%i.log
+			</fileNamePattern>
+			<minIndex>1</minIndex>
+			<maxIndex>100</maxIndex>
+		</rollingPolicy>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>200MB</maxFileSize>
+		</triggeringPolicy>
+		<encoder>
+			<Pattern>%msg%n%ex</Pattern>
+		</encoder>
+	</appender>
+
+	<appender name="ASYNC_API_APPENDER" class="ch.qos.logback.classic.AsyncAppender">
+		<queueSize>2000</queueSize>
+		<discardingThreshold>0</discardingThreshold>
+		<appender-ref ref="API_APPENDER" />
+	</appender>
+
+	<logger name="api" level="INFO" additivity="false">
+		<appender-ref ref="ASYNC_API_APPENDER" />
+	</logger>
+
+
+
+	<!-- ROOT should be warn -->
+	<root level="WARN">
+		<!-- No need to set any appender-ref here. Each of the appender is set 
+			in logger element. -->
+		<appender-ref ref="ASYNC_UPDATES_APPENDER" />
+	</root>
+	
+	<logger name="org.springframework" level="WARN" additivity="false">
+		<appender-ref ref="ASYNC_UPDATES_APPENDER" />
+	</logger>
+
+	<logger name="org.springframework.web.servlet.DispatcherServlet" level="WARN" additivity="false">
+		<appender-ref ref="ASYNC_UPDATES_APPENDER" />
+	</logger>
+
+	<logger name="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" level="WARN" additivity="false">
+		<appender-ref ref="ASYNC_UPDATES_APPENDER" />
+	</logger>
+
+	<logger name="org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor" level="WARN" additivity="false">
+		<appender-ref ref="ASYNC_UPDATES_APPENDER" />
+	</logger>
+
+	<logger name="org.springframework.integration.ip.tcp.connection.TcpMessageMapper" level="OFF" additivity="false">
+		<appender-ref ref="ASYNC_UPDATES_APPENDER" />
+	</logger>
+	
+	<logger name="org.springframework.web.client.RestTemplate" level="WARN" additivity="false">
+		<appender-ref ref="ASYNC_UPDATES_APPENDER" />
+	</logger>
+
+	<logger name="com.my.portal" level="WARN" additivity="false">
+		<appender-ref ref="ASYNC_UPDATES_APPENDER" />
+	</logger>
+	
+	
+</configuration>

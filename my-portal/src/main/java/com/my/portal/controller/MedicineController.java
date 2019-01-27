@@ -1,5 +1,6 @@
 package com.my.portal.controller;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,11 +15,14 @@ import com.my.portal.CommonUtils;
 import com.my.portal.ValidationException;
 import com.my.portal.service.MedicineService;
 
+import ch.qos.logback.classic.Logger;
+
 @Controller
 @RequestMapping(value = "/medicine")
 public class MedicineController {
 
 	@Autowired MedicineService mService;
+	private final Logger logger = (Logger) LoggerFactory.getLogger(getClass());
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -27,6 +31,7 @@ public class MedicineController {
 		try {
 			return new ResponseEntity<>(CommonUtils.getResp(mService.getAll()), HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 			if(e instanceof ValidationException) {
 				ValidationException ve = (ValidationException) e;
 				return new ResponseEntity<>(CommonUtils.getResp(null, ve.getValidationPayload()), HttpStatus.OK);
@@ -44,6 +49,7 @@ public class MedicineController {
 		try {
 			return new ResponseEntity<>(CommonUtils.getResp(mService.getMedicineByTreatmentNameAndAge (trtmntId, age)), HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 			if(e instanceof ValidationException) {
 				ValidationException ve = (ValidationException) e;
 				return new ResponseEntity<>(CommonUtils.getResp(null, ve.getValidationPayload()), HttpStatus.OK);

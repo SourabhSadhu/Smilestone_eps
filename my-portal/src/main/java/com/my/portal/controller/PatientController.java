@@ -1,8 +1,8 @@
 package com.my.portal.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,12 +21,15 @@ import com.my.portal.model.PatientView;
 import com.my.portal.model.ResponseStatus;
 import com.my.portal.service.PatientService;
 
+import ch.qos.logback.classic.Logger;
+
 @Controller
 @RequestMapping(value = "/patient")
 public class PatientController {
 
 	@Autowired
 	PatientService patientService;
+	private final Logger logger = (Logger) LoggerFactory.getLogger(getClass());
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -48,6 +51,7 @@ public class PatientController {
 			List<PatientView> pList = patientService.getPatient(p);
 			return new ResponseEntity<>(CommonUtils.getResp(pList), HttpStatus.OK);
 		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 			if(e instanceof ValidationException) {
 				ValidationException ve = (ValidationException) e;
 				return new ResponseEntity<>(CommonUtils.getResp(null, ve.getValidationPayload()), HttpStatus.OK);
@@ -64,7 +68,7 @@ public class PatientController {
 		try {
 			return new ResponseEntity<>(CommonUtils.getResp(patientService.addPatient(p)), HttpStatus.OK);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 			if(e instanceof ValidationException) {
 				ValidationException ve = (ValidationException) e;
 				return new ResponseEntity<>(CommonUtils.getResp(null, ve.getValidationPayload()), HttpStatus.OK);

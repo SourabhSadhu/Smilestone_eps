@@ -1,5 +1,6 @@
 package com.my.portal.controller;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,12 +19,15 @@ import com.my.portal.model.TreatmentPlanHistoryView;
 import com.my.portal.service.TreatmentPlanHistoryService;
 import com.my.portal.service.TreatmentPlanService;
 
+import ch.qos.logback.classic.Logger;
+
 @Controller
 @RequestMapping(value = "/trtmnt")
 public class TreatmentPlanController {
 	
 	@Autowired TreatmentPlanService tpService;
 	@Autowired TreatmentPlanHistoryService tphService;
+	private final Logger logger = (Logger) LoggerFactory.getLogger(getClass());
 
 	@RequestMapping(method = RequestMethod.GET, value = "/get-plan"/*, produces = MediaType.TEXT_PLAIN_VALUE*/)
 	@ResponseBody
@@ -40,6 +44,7 @@ public class TreatmentPlanController {
 				return new ResponseEntity<>(CommonUtils.getResp(tpService.findAll()), HttpStatus.OK);
 			}
 		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 			if(e instanceof ValidationException) {
 				ValidationException ve = (ValidationException) e;
 				return new ResponseEntity<>(CommonUtils.getResp(null, ve.getValidationPayload()), HttpStatus.OK);
@@ -56,7 +61,7 @@ public class TreatmentPlanController {
 		try {
 			return new ResponseEntity<>(CommonUtils.getResp(tphService.findByPatientAndPrescriptionId(patientId, prescriptionId)), HttpStatus.OK);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 			if(e instanceof ValidationException) {
 				ValidationException ve = (ValidationException) e;
 				return new ResponseEntity<>(CommonUtils.getResp(null, ve.getValidationPayload()), HttpStatus.OK);
@@ -73,7 +78,7 @@ public class TreatmentPlanController {
 		try {
 			return new ResponseEntity<>(CommonUtils.getResp(tphService.addTreatmentPlan(view)), HttpStatus.OK);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 			if(e instanceof ValidationException) {
 				ValidationException ve = (ValidationException) e;
 				return new ResponseEntity<>(CommonUtils.getResp(null, ve.getValidationPayload()), HttpStatus.OK);

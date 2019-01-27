@@ -79,7 +79,8 @@ public class FeesBreakupServiceImpl implements FeesBreakupService {
 			FeesBreakup prevEntry = repo.findOne(view.getfId());
 			if(null != prevEntry){
 				prevEntry.setAmountPaid(view.getAmountPaid());
-				prevEntry.setPaymentTs(new Timestamp(System.currentTimeMillis()));
+				prevEntry.setNotes(view.getNotes());
+				prevEntry.setUpdatedTs(new Timestamp(System.currentTimeMillis()));
 				return map(repo.saveAndFlush(prevEntry));
 			}else{
 				throw new ValidationException(ErrorCode.NOT_FOUND);
@@ -130,7 +131,7 @@ public class FeesBreakupServiceImpl implements FeesBreakupService {
 			e.setAmount(v.getAmount());
 			e.setAmountPaid(v.getAmountPaid());
 			e.setNotes(v.getNotes());
-			e.setTsCreated(new Timestamp(System.currentTimeMillis()));
+//			e.setTsCreated(new Timestamp(System.currentTimeMillis()));
 //			e.setClinicalFinding(cfService.map(v.getClinicalFinding()));
 //			e.setPatient(pService.map(v.getPatient()));
 //			e.setPrescriptionHistory(phService.map(v.getPrescriptionHistory()));

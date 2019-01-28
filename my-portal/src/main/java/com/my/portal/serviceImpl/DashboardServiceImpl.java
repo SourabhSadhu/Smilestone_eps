@@ -4,8 +4,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -21,7 +19,6 @@ import com.my.portal.entities.TreatmentPlanHistory;
 import com.my.portal.model.DashboardResponse;
 import com.my.portal.model.DashboardView;
 import com.my.portal.model.FeesBreakupView;
-import com.my.portal.model.MedicineHistoryView;
 import com.my.portal.model.PatientView;
 import com.my.portal.model.PrescriptionHistoryView;
 import com.my.portal.model.TreatmentPlanHistoryView;

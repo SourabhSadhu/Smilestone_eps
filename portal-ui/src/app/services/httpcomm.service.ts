@@ -31,6 +31,7 @@ export class HttpcommService {
   getFeeConfigTrtIdPart3Url = '&trtmnt_id=';
   getFeeConfigListUrl = this.baseUrl + 'fee/get-config-list';
   addDashboardUrl = this.baseUrl + 'dashboard/add-dashboard';
+  updateDashboardUrl = this.baseUrl + 'dashboard/update-dashboard';
   getDashboardUrl = this.baseUrl + 'dashboard/get-dashboard?';
   postAddClinicalFindingUrl = this.baseUrl + 'clinical-finding/add-clinical-finding'
   getAddTreatmentPlanUrl = this.baseUrl + 'trtmnt/add-treatment-plan'
@@ -181,6 +182,21 @@ export class HttpcommService {
   addDashBoard(req : DashboardView) : Observable<Response>{
     if(!this.dummy){
       return this.genericPostRequest(this.addDashboardUrl,req,'Add dashboard')
+    }else{
+      let resp = new Response()
+      resp.status = 'SUCCESS'
+      let response = new DashboardResponse()
+      response.patientId = req.pHistory.patientId
+      response.prescriptionId = 99
+      response.status = true
+      resp.resp = response
+      return of(resp)
+    }
+  }
+
+  updateDashBoard(req : DashboardView) : Observable<Response>{
+    if(!this.dummy){
+      return this.genericPostRequest(this.updateDashboardUrl,req,'Update dashboard')
     }else{
       let resp = new Response()
       resp.status = 'SUCCESS'

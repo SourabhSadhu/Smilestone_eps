@@ -108,3 +108,5 @@ INSERT INTO fee_config (treatment_plan_id,base_fee,tooth_group_id,tooth_group_pe
 ALTER TABLE eps.medicine_history
     ADD COLUMN ts_created timestamp without time zone;
     
+ALTER TABLE eps.fees_breakup
+    RENAME payment_ts TO ts_updated;    

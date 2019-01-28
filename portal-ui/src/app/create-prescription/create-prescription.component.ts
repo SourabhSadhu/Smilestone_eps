@@ -197,7 +197,7 @@ export class CreatePrescriptionComponent implements OnInit {
       this.searchPatient();
     }
   }
-  searchPatient(){
+  searchPatient() {
     //search patient
     this.isPatientLoading = true;
     this.isPatientLoaded = false;
@@ -206,10 +206,10 @@ export class CreatePrescriptionComponent implements OnInit {
         if (resp.status && resp.status === 'SUCCESS') {
           if (resp.status.length > 0) {
             this.patientDataSource = resp.resp;
-          }else{
+          } else {
             this.commonService.showSuccessSnackBar(this.snackBar, "No record found")
           }
-        }else{
+        } else {
           this.commonService.showErrorSnackBar(this.snackBar, resp.desc)
         }
       } else {
@@ -235,7 +235,7 @@ export class CreatePrescriptionComponent implements OnInit {
     this.fetchDashboard(element.pid)
   }
 
-  prescriptionId : number
+  prescriptionId: number
   searchPrescription() {
     console.log('Prescription ID: ' + this.prescriptionId)
     if (this.prescriptionId && this.prescriptionId > 0) {
@@ -245,11 +245,11 @@ export class CreatePrescriptionComponent implements OnInit {
             this.tabSelection(2)
             if (dashboardResp.resp && dashboardResp.resp.length > 0) {
               //Fetch patient details
-              let dashboard :DashboardView = dashboardResp.resp[0];
+              let dashboard: DashboardView = dashboardResp.resp[0];
               let patient = new Patient()
               patient.pid = dashboard.pHistory.patientId
               this.httpCom.getPatient(patient).subscribe(patientResp => {
-                if(patientResp && patientResp.status == 'SUCCESS'){
+                if (patientResp && patientResp.status == 'SUCCESS') {
                   this.selectedPatient = patientResp.resp[0];
                   this.disableTabs = false;
                   this.selectPrescription(dashboard);
@@ -319,9 +319,9 @@ export class CreatePrescriptionComponent implements OnInit {
     this.tabSelection(2)
     this.isDisabledToModify = true
     this.prescriptionId = dashboard.pHistory.prescriptionId
-    if (dashboard.pHistory) {
+    if (dashboard.pHistory) {      
       this.prescriptionHistoryView = dashboard.pHistory
-      if (dashboard.pHistory.clinicalFindings.length > 0) {
+      if (dashboard.pHistory.clinicalFindings && dashboard.pHistory.clinicalFindings.length > 0) {
         this.clinicalFindingsViewForUi = dashboard.pHistory.clinicalFindings.split(',')
       }
       this.medicalHistoryViewModel = []
@@ -388,6 +388,7 @@ export class CreatePrescriptionComponent implements OnInit {
           feeConf.amountPaid = fee.amountPaid
           feeConf.notes = fee.notes
           feeConf.ageGroupId = this.ageGroup
+          feeConf.feeConfigId = fee.fId
           this.feesConfigListView.push(feeConf)
         })
         this.getTotalFee()
@@ -574,13 +575,8 @@ export class CreatePrescriptionComponent implements OnInit {
   }
 
   createNextAppo(event: MatDatepickerInputEvent<Date>) {
-    try {
-      // console.log('next appo ' + event.value.getTime());
-      this.prescriptionHistoryView.nextAppointment = event.value.getTime()
-      if (0 <= this.nextAppoHour && this.nextAppoHour <= 24 && 0 <= this.nextAppoMinute && this.nextAppoMinute <= 59) {
-        let modifiedTime = ((this.nextAppoHour * 60) + this.nextAppoMinute) * 60 * 1000 + event.value.getTime()
-        // console.log('next appo ' + modifiedTime);
-      }
+    try {      
+      this.nextAppoDate = event.value.getTime()      
     } catch (error) {
       console.log(error)
       this.snackModel.msg = "Invalid Date"
@@ -594,6 +590,7 @@ export class CreatePrescriptionComponent implements OnInit {
 
   nextAppoHour = 0;
   nextAppoMinute = 0;
+  nextAppoDate = 0;
   createNextAppoTime() {
     // console.log(`NextAppo Hour ${this.nextAppoHour} Minute ${this.nextAppoMinute}`)
   }
@@ -675,101 +672,155 @@ export class CreatePrescriptionComponent implements OnInit {
   createAndSubmitPrescription() {
 
     this.dashboardView = new DashboardView();
-    this.dashboardView.fbl = []
-    if (this.feesConfigListView && this.feesConfigListView.length > 0) {
-      this.feesConfigListView.map(f => {
-        let fb = new FeesBreakupView()
-        fb.amount = f.totalFee
-        fb.notes = f.notes
-        fb.trtmntPlanRef = f.treatmentPlanId
-        fb.patientId = this.selectedPatient.pid
-        fb.amountPaid = f.amountPaid
-        this.dashboardView.fbl.push(fb)
-      })
-    }
-    this.dashboardView.medhv = []
-    if (this.medicineForm.value && this.medicineForm.value.length > 0) {
-      this.medicineForm.value.map(m => {
-        let medh = new MedicineHistoryView()
-        medh.medicineName = m.medicineName
-        medh.diseaseCode = m.diseaseCode
-        medh.diseaseName = m.diseaseName
-        medh.dosage = m.dosage
-        medh.patientId = this.selectedPatient.pid
-        this.dashboardView.medhv.push(medh)
-      })
-    }
-    this.dashboardView.mhv = [];
-    // if (this.medicalHistoryForm.value && this.medicalHistoryForm.value.length > 0) {
-    if (this.medicalHistoryViewModel && this.medicalHistoryViewModel.length > 0) {
-      // medicalHistoryViewModel
-      this.medicalHistoryForm.value.map(v => {
-        let view = new MedicalHistoryView();
-        view.medicalHistoryName = v;
-        view.patientId = this.selectedPatient.pid;
-        this.dashboardView.mhv.push(view);
-      });
-    }
-    this.dashboardView.pHistory = this.prescriptionHistoryView
-    this.dashboardView.pHistory.patientId = this.selectedPatient.pid
-    this.dashboardView.pHistory.clinicalFindings = this.commonService.getFormattedClinicalFindingsForPost(this.clinicalFindingsViewForUi)
-    this.dashboardView.tphv = []
-    this.cftMapArray.map(cft => {
-      let tph = new TreatmentPlanHistoryView()
-      tph.patientId = this.selectedPatient.pid
-      tph.tname = cft.treatmentPlanName
-      tph.toothIndex = cft.teeth.toothIndex
-      tph.clinicalFinding = cft.clinicalFinding.fname
-      this.dashboardView.tphv.push(tph)
-    })
-
-    console.log(JSON.stringify(this.dashboardView))
-    this.httpCom.addDashBoard(this.dashboardView).subscribe(
-      resp => {
-        if (resp.status === 'SUCCESS') {
-          //Do something and print prescription
-          console.log(JSON.stringify(resp.resp));
-          // this.printPrescription();
-          this.dashboardResponse = resp.resp
-          if (this.dashboardResponse && this.dashboardResponse.status) {
-            this.isDisabledToModify = true
-            this.treatmentPlanService.setTreatmentData(this.dashboardResponse.patientId, this.dashboardResponse.prescriptionId, this.dashboardView.tphv)
-
-            /**
-             * As event emitter is working, so need to send reference as we need to operate on data
-             * Hence communicating via server
-             */
-            //Injecting variable references
-            // this.treatmentTabPatientId = dashboardResponse.patientId
-            // this.treatmentTabPrescriptionId = dashboardResponse.prescriptionId
-            // this.treatmentTabTreatmentPlanHistoryViews = this.dashboardView.tphv
-
-            this.snackModel.isError = false
-            this.snackModel.msg = "Prescription added"
-            this.snackModel.action = "OK"
-            this.snackModel.callback = () => {
-              //navigate to treatment plan tab
-              this.tabSelection(3)
-            }
-            this.commonService.showSnackBar(this.snackBar, this.snackModel)
-          } else {
-            this.snackModel.isError = true
-            this.snackModel.msg = "Server error"
-            this.snackModel.action = "OK"
-            this.commonService.showSnackBar(this.snackBar, this.snackModel)
-          }
+    //Check if uploading new precription or updating an existing one
+    //Existing
+    if (this.prescriptionHistoryView && this.prescriptionHistoryView.prescriptionId > 0) {
+      this.dashboardView.fbl = []
+      if (this.feesConfigListView && this.feesConfigListView.length > 0) {
+        this.feesConfigListView.map(f => {
+          let fb = new FeesBreakupView()
+          fb.amount = f.totalFee
+          fb.notes = f.notes
+          fb.trtmntPlanRef = f.treatmentPlanId
+          fb.patientId = this.selectedPatient.pid
+          fb.amountPaid = f.amountPaid   
+          fb.fId = f.feeConfigId       
+          this.dashboardView.fbl.push(fb)          
+        })
+      }
+      this.dashboardView.medhv = []
+      if (this.medicineForm.value && this.medicineForm.value.length > 0) {
+        this.medicineForm.value.map(m => {
+          let medh = new MedicineHistoryView()
+          medh.medicineName = m.medicineName
+          medh.diseaseCode = m.diseaseCode
+          medh.diseaseName = m.diseaseName
+          medh.dosage = m.dosage
+          medh.patientId = this.selectedPatient.pid
+          this.dashboardView.medhv.push(medh)
+        })
+      }
+      this.dashboardView.pHistory = new PrescriptionHistoryView()
+      this.dashboardView.pHistory.patientId = this.selectedPatient.pid
+      this.dashboardView.pHistory.prescriptionId = this.prescriptionId
+      if(0 < this.nextAppoDate ){
+        this.dashboardView.pHistory.nextAppointment = this.nextAppoDate
+        if (0 <= this.nextAppoHour && this.nextAppoHour <= 24 && 0 <= this.nextAppoMinute && this.nextAppoMinute <= 59) {
+          let modifiedTime = ((this.nextAppoHour * 60) + this.nextAppoMinute) * 60 * 1000 + this.nextAppoDate          
+          this.dashboardView.pHistory.nextAppointment = modifiedTime;
         }
       }
-    );
+      console.log(JSON.stringify(this.dashboardView))
+      this.httpCom.addDashBoard(this.dashboardView).subscribe(
+        resp => {
+          if (resp.status === 'SUCCESS') {
+            console.log(JSON.stringify(resp.resp));
+            this.dashboardResponse = resp.resp
+            if (this.dashboardResponse && this.dashboardResponse.status) {
+              this.treatmentPlanService.setTreatmentData(this.dashboardResponse.patientId, this.dashboardResponse.prescriptionId, this.dashboardView.tphv)
+              this.commonService.showSuccessSnackBar(this.snackBar,"Prescription updated",() => {               
+                this.tabSelection(3)
+              })
+            } else {
+              this.commonService.showErrorSnackBar(this.snackBar, this.dashboardResponse.respMsg)
+            }
+          }else{
+            this.commonService.showErrorSnackBar(this.snackBar, resp.status)
+          }
+        }
+      );
+    } 
+    //New prescription
+    else{
+      
+      this.dashboardView.fbl = []
+      if (this.feesConfigListView && this.feesConfigListView.length > 0) {
+        this.feesConfigListView.map(f => {
+          let fb = new FeesBreakupView()
+          fb.amount = f.totalFee
+          fb.notes = f.notes
+          fb.trtmntPlanRef = f.treatmentPlanId
+          fb.patientId = this.selectedPatient.pid
+          fb.amountPaid = f.amountPaid
+          this.dashboardView.fbl.push(fb)
+        })
+      }
+      this.dashboardView.medhv = []
+      if (this.medicineForm.value && this.medicineForm.value.length > 0) {
+        this.medicineForm.value.map(m => {
+          let medh = new MedicineHistoryView()
+          medh.medicineName = m.medicineName
+          medh.diseaseCode = m.diseaseCode
+          medh.diseaseName = m.diseaseName
+          medh.dosage = m.dosage
+          medh.patientId = this.selectedPatient.pid
+          this.dashboardView.medhv.push(medh)
+        })
+      }
+      this.dashboardView.mhv = [];
+      // if (this.medicalHistoryForm.value && this.medicalHistoryForm.value.length > 0) {
+      if (this.medicalHistoryViewModel && this.medicalHistoryViewModel.length > 0) {
+        // medicalHistoryViewModel
+        this.medicalHistoryForm.value.map(v => {
+          let view = new MedicalHistoryView();
+          view.medicalHistoryName = v;
+          view.patientId = this.selectedPatient.pid;
+          this.dashboardView.mhv.push(view);
+        });
+      }
+      this.dashboardView.pHistory = this.prescriptionHistoryView
+      this.dashboardView.pHistory.patientId = this.selectedPatient.pid
+      this.dashboardView.pHistory.clinicalFindings = this.commonService.getFormattedClinicalFindingsForPost(this.clinicalFindingsViewForUi)
+      this.dashboardView.tphv = []
+      this.cftMapArray.map(cft => {
+        let tph = new TreatmentPlanHistoryView()
+        tph.patientId = this.selectedPatient.pid
+        tph.tname = cft.treatmentPlanName
+        tph.toothIndex = cft.teeth.toothIndex
+        tph.clinicalFinding = cft.clinicalFinding.fname
+        this.dashboardView.tphv.push(tph)
+      })
+
+      if(0 < this.nextAppoDate ){
+        this.prescriptionHistoryView.nextAppointment = this.nextAppoDate
+        if (0 <= this.nextAppoHour && this.nextAppoHour <= 24 && 0 <= this.nextAppoMinute && this.nextAppoMinute <= 59) {
+          let modifiedTime = ((this.nextAppoHour * 60) + this.nextAppoMinute) * 60 * 1000 + this.nextAppoDate          
+          this.prescriptionHistoryView.nextAppointment = modifiedTime;
+        }
+      }
+
+      console.log(JSON.stringify(this.dashboardView))
+      this.httpCom.addDashBoard(this.dashboardView).subscribe(
+        resp => {
+          if (resp.status === 'SUCCESS') {
+            //Do something and print prescription
+            console.log(JSON.stringify(resp.resp));
+            // this.printPrescription();
+            this.dashboardResponse = resp.resp
+            if (this.dashboardResponse && this.dashboardResponse.status) {
+              this.isDisabledToModify = true
+              this.treatmentPlanService.setTreatmentData(this.dashboardResponse.patientId, this.dashboardResponse.prescriptionId, this.dashboardView.tphv)              
+              this.commonService.showSuccessSnackBar(this.snackBar,"Prescription added",() => {               
+                this.tabSelection(3)
+              })
+            } else {
+              this.commonService.showErrorSnackBar(this.snackBar, this.dashboardResponse.respMsg)
+            }
+          }else{
+            this.commonService.showErrorSnackBar(this.snackBar, resp.status)
+          }          
+        }
+      );
+    }
   }
 
   printPrescription() {
-    console.log('Patient ID'+this.selectedPatient.pid)
-    console.log('Prescription ID'+this.prescriptionId)
-    if(this.dashboardResponse && this.dashboardResponse.patientId && this.dashboardResponse.prescriptionId){
-      this.router.navigate(['print'],{queryParams: { patientId:this.dashboardResponse.patientId , prescriptionId:this.dashboardResponse.prescriptionId}})
-    }else if(this.isDisabledToModify){
-      this.router.navigate(['print'],{queryParams: { patientId:this.selectedPatient.pid , prescriptionId:this.prescriptionId}})
+    console.log('Patient ID' + this.selectedPatient.pid)
+    console.log('Prescription ID' + this.prescriptionId)
+    if (this.dashboardResponse && this.dashboardResponse.patientId && this.dashboardResponse.prescriptionId) {
+      this.router.navigate(['print'], { queryParams: { patientId: this.dashboardResponse.patientId, prescriptionId: this.dashboardResponse.prescriptionId } })
+    } else if (this.isDisabledToModify) {
+      this.router.navigate(['print'], { queryParams: { patientId: this.selectedPatient.pid, prescriptionId: this.prescriptionId } })
     }
   }
 }

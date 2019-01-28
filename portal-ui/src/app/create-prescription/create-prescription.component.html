@@ -533,7 +533,7 @@
 
           <div>
             <a>Save Prescription </a>
-            <button class="example-margin" mat-mini-fab color="primary" (click)="createAndSubmitPrescription()" matTooltip="Upload" [disabled]="checkIfDisabledToModify()">
+            <button class="example-margin" mat-mini-fab color="primary" (click)="createAndSubmitPrescription()" matTooltip="Upload">
               <mat-icon aria-label="Upload">cloud_upload</mat-icon>
             </button>
           
@@ -546,6 +546,15 @@
         </mat-card-content>
       </mat-card>
     </mat-tab>
+
+    <!-- 
+  /************************************************************************************************************
+   ************************************************************************************************************
+   *************************************** Treatment Plan Section *********************************************
+   ************************************************************************************************************
+   ************************************************************************************************************
+   */
+     -->
 
     <mat-tab label="Treatment Done" [disabled]="disableTreatmentDoneTab">
       <mat-card class="example-card">

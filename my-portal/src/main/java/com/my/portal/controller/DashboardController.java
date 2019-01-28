@@ -67,7 +67,7 @@ public class DashboardController {
 	@ResponseBody
 	public ResponseEntity<?> updatePrescription(@RequestBody DashboardView view){
 		try{
-			return new ResponseEntity<>(CommonUtils.getResp(dService.processPrescription(view)), HttpStatus.OK);
+			return new ResponseEntity<>(CommonUtils.getResp(dService.updatePrescription(view)), HttpStatus.OK);
 		}catch(Exception e){
 			logger.error(e.getMessage(), e);
 			e.printStackTrace();

@@ -27,6 +27,24 @@ public class DashboardController {
 	
 	private final Logger logger = (Logger) LoggerFactory.getLogger(getClass());
 
+	@RequestMapping(method = RequestMethod.GET, value = "/get-dashboard-count", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<?> getDashboardCount(
+			@RequestParam(value="patientId", required = true) Long patientId			
+			) {
+		try{
+			return new ResponseEntity<>(CommonUtils.getResp(dService.getDashboardCount(patientId)), HttpStatus.OK);
+		}catch(Exception e){
+			logger.error(e.getMessage(), e);
+			if(e instanceof ValidationException) {
+				ValidationException ve = (ValidationException) e;
+				return new ResponseEntity<>(CommonUtils.getResp(null, ve.getValidationPayload()), HttpStatus.OK);
+			}else {
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+		}
+	}
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/get-dashboard", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<?> getDashboard(

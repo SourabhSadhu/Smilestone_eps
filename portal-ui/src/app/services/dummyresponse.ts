@@ -754,11 +754,29 @@ export class DummyResponse {
       "medicalHistory": "Asthma, Cardiac diseases, Hypertension, Hypotension, Hyperthyroidism, Drug hypersensitivity",
       "clinicalFindings": "RETAINED ROOT IN 23,32,36,37,45 \n CARIOUS 13,14",
       "advice": "Extraction in 23, 36, 37, 45, 13, 14.\n Come within 9:30 AM after having full meal with an adult addendent except SUNDAYs and enlisted holidays.\n EXTRACTION OF 23 HAS BEEN DONE UNDER L.A.\n HEMOSTASIS HAS BEEN ACHIEVED.\n MOIST COTTON PACK GIVEN.\n SOFT AND COLD DIET FOR NEXT 24 HOURS.\n WARM SALINE MOUTH WASH FREQUENTLY AFTER 24 HOURS.\n IN CASE OF ANY EMERGENCY, ADVISED TO GO TO ANY NEARBY GOVT HOSPITAL.",
-      "medicine": [
+      "medicineAll": [
         "Amoxycilin 500mg + Clavulenic Acid 125mg Tab 3 after meal 5 days",
         "Metronidazole Tab I.P. 400mg (Flim coated) 3 after meal 5 days",
         "Paracetamol I.P. 650mg. Tab 3 after meal 5 days",
         "Rantidine Tab. I.P. 150mg 2 before meal 5 days"
+      ],
+      "medicineCurrent": [
+        "Paracetamol I.P. 650mg. Tab 3 after meal 5 days",
+        "Rantidine Tab. I.P. 150mg 2 before meal 5 days"
+      ],
+      "tphv": [
+        {
+          "clinicalFinding": "Periodontities",
+          "note": null,
+          "patientId": 1,
+          "prescriptionId": 40,
+          "toothIndex": "34",
+          "tsCreated": 1546330836694,
+          "tsModified": null,
+          "status": "Completed",
+          "tname": "RCT",
+          "tid": 9
+        }
       ]
     }
   };

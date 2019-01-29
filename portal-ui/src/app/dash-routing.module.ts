@@ -6,6 +6,7 @@ import {AdminComponent} from './admin/admin.component';
 import { MaterialTestComponent } from './material-test/material-test.component';
 import { PrintPrescriptionComponent } from './print-prescription/print-prescription.component';
 import { PrintComponent } from './print/print.component'
+import { MatSortTableComponent } from './mat-sort-table/mat-sort-table.component'
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'admin', component: AdminComponent },
   { path: 'test', component: MaterialTestComponent },
   { path: 'printTest', component: PrintPrescriptionComponent },
-  { path: 'print', component: PrintComponent }
+  { path: 'print', component: PrintComponent },
+  { path: 'sortTable', component: MatSortTableComponent}
 ];
 
 @NgModule({

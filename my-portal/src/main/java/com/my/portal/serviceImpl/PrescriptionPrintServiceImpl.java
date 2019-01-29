@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.joda.time.LocalDate;
 import org.joda.time.Period;
@@ -65,8 +66,8 @@ public class PrescriptionPrintServiceImpl implements PrescriptionPrintService {
 //				prescriptionPrintModel.setAmountTotal(Long.toString(totalAmount));
 //				prescriptionPrintModel.setAmountPaid(Long.toString(paidAmount));
 //				prescriptionPrintModel.setAmountDue(Long.toString(totalAmount - paidAmount));
-				
-				List<MedicalHistoryView> medicalHistoryView = medicalHistoryService.getByPatientId(patientId);
+				medicalHistoryViewString = "";
+				List<MedicalHistoryView> medicalHistoryView = medicalHistoryService.getByPrescriptionId(patientId);
 				medicalHistoryView.forEach(mhv -> {
 					medicalHistoryViewString += mhv.getMedicalHistoryName().concat(", ");
 				});
@@ -89,7 +90,10 @@ public class PrescriptionPrintServiceImpl implements PrescriptionPrintService {
 						}
 					}		
 				}				
-				prescriptionPrintModel.setTphv(tphService.findByPatientAndPrescriptionId(patientId, prescriptionId));
+				prescriptionPrintModel.setTphv(tphService.findByPatientAndPrescriptionId(patientId, prescriptionId).stream().filter(tph -> {
+					if(tph.getStatus().equals("Completed")) return true;
+					else return false;
+				}).collect(Collectors.toList()));
 				
 			}
 		}

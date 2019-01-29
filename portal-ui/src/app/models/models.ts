@@ -196,5 +196,7 @@ export class PrescriptionPrintView {
     medicalHistory: string;
     clinicalFindings: string;
     advice: string;
-    medicine: string[];
+    medicineCurrent: string[];
+    medicineAll: string[];
+    tphv: TreatmentPlanHistoryView[];
 }

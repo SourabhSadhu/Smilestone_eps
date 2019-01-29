@@ -56,6 +56,7 @@ import { DialogToothClinicalfindings, CustomFeeInsertionDialog } from './create-
 import { PrintPrescriptionComponent } from './print-prescription/print-prescription.component';
 import { TreatmentPlanComponent } from './treatment-plan/treatment-plan.component';
 import { PrintComponent } from './print/print.component';
+import { MatSortTableComponent } from './mat-sort-table/mat-sort-table.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { PrintComponent } from './print/print.component';
     CustomFeeInsertionDialog,
     PrintPrescriptionComponent,
     TreatmentPlanComponent,
-    PrintComponent
+    PrintComponent,
+    MatSortTableComponent
   ],
   imports: [
     BrowserModule,

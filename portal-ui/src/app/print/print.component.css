@@ -1,6 +1,6 @@
 /*  ------ Global settings */
 
-* {
+p,div,td,h1,h2,h3 {
     font-family: Cambria, Georgia, serif;
     /* background-color: #ffffe0; */
     }
@@ -155,3 +155,8 @@ table,tr{
 .block1,.block2{
     display: inline;
 }
+.fab {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+  }

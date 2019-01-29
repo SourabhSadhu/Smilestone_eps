@@ -19,6 +19,7 @@ export class PrintComponent implements OnInit, AfterViewInit {
     httpService: HttpcommService;
     commonService: CommonService;
     requestLoading = true;
+    date: Date = new Date()
 
     constructor(private route: ActivatedRoute, httpClient: HttpClient,
         public matSnackbar: MatSnackBar, public router: Router,
@@ -60,12 +61,18 @@ export class PrintComponent implements OnInit, AfterViewInit {
     }
 
     printPrescription() {
-
-        var prescriptionContent = document.getElementById("printableContent");
+        var prescriptionContent = document.getElementById("printableFullPrescriptionContent");
         // if (prescriptionContent.requestFullscreen) {
         //     prescriptionContent.requestFullscreen();
         // }
         // var openWindow = window.open("", "_blank", "fullscreen=yes,width=800,height=600")
+        this.processPrintProcess(prescriptionContent.innerHTML)
+    }
+    printRevisit(){
+        var revisit = document.getElementById("printableRevisitPrescriptionContent").innerHTML        
+        this.processPrintProcess(revisit)
+    }
+    processPrintProcess(htmlData: string){
         var openWindow = window.open("", "target", "fullscreen=yes")
         var css = this.printStylesheet
         let printablePage =
@@ -77,7 +84,7 @@ export class PrintComponent implements OnInit, AfterViewInit {
             ${css}
           </head> 
           <body>
-       ${prescriptionContent.innerHTML}
+       ${htmlData}
        </body></html>`;
         openWindow.document.open()
         openWindow.document.write(printablePage)
@@ -88,7 +95,6 @@ export class PrintComponent implements OnInit, AfterViewInit {
             openWindow.close();
         }
     }
-
     printStylesheet: string = `
     <style>
     /*  ------ Global settings */

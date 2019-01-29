@@ -13,10 +13,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.my.portal.entities.MedicalHistory;
-import com.my.portal.entities.MedicalHistoryMaster;
-import com.my.portal.model.MedicalHistoryMasterView;
 import com.my.portal.model.MedicalHistoryView;
-import com.my.portal.model.PatientView;
 import com.my.portal.repositories.MedicalHistoryRepository;
 import com.my.portal.service.MedicalHistoryMasterService;
 import com.my.portal.service.MedicalHistoryService;
@@ -49,6 +46,12 @@ public class MedicalHistoryServiceImpl implements MedicalHistoryService {
 	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
 	public List<MedicalHistoryView> getByPatientId(Long id) {
 		return mapAll(repo.getByPatientId(id));
+	}
+	
+	@Override
+	@Transactional(isolation = Isolation.READ_COMMITTED, readOnly = true)
+	public List<MedicalHistoryView> getByPrescriptionId(Long id) {
+		return mapAll(repo.getByPrescriptionId(id));
 	}
 	
 	@Override

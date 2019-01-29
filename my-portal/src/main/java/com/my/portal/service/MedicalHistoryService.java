@@ -9,6 +9,7 @@ public interface MedicalHistoryService {
 	
 	List<MedicalHistoryView> findAll();
 	List<MedicalHistoryView> getByPatientId(Long id);
+	List<MedicalHistoryView> getByPrescriptionId(Long id);
 	List<MedicalHistoryView> getByMedicalHistoryName(String name);
 	MedicalHistoryView addMedicalHistory(MedicalHistoryView view);
 	MedicalHistoryView map(MedicalHistory e);

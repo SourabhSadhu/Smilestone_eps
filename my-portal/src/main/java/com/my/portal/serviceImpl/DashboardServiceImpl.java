@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,6 +62,15 @@ public class DashboardServiceImpl implements DashboardService {
 	MedicineHistoryRepository medRepo;
 	@Autowired
 	TreatmentPlanHistoryRepository tphRepo;
+
+	
+	@Override
+	public Long getDashboardCount(Long patientId) {
+		PrescriptionHistory filterBy = new PrescriptionHistory();
+		filterBy.setPatientId(patientId);
+		Example<PrescriptionHistory> exampleCriteria = Example.of(filterBy);
+		return phRepo.count(exampleCriteria);		
+	}
 
 	@Override
 	public List<DashboardView> getDashboard(Long patientId, Long prescriptionId) {

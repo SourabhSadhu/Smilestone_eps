@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 @NamedQueries({ @NamedQuery(name = "TreatmentPlanHistory.findAll", query = "SELECT t FROM TreatmentPlanHistory t"),
 		@NamedQuery(name = "TreatmentPlanHistory.findByPatientId", query = "SELECT t FROM TreatmentPlanHistory t where t.patientId = :patientId"),
 		@NamedQuery(name = "TreatmentPlanHistory.findByPrescriptionId", query = "SELECT t FROM TreatmentPlanHistory t  where t.prescriptionId = :prescriptionId"),
-		@NamedQuery(name = "TreatmentPlanHistory.findByPatientAndPrescriptionId", query = "SELECT t FROM TreatmentPlanHistory t  where t.patientId = :patientId and t.prescriptionId = :prescriptionId") })
+		@NamedQuery(name = "TreatmentPlanHistory.findByPatientAndPrescriptionId", query = "SELECT t FROM TreatmentPlanHistory t  where t.patientId = :patientId and t.prescriptionId = :prescriptionId ORDER BY t.tsCreated DESC") })
 public class TreatmentPlanHistory implements Serializable {
 	private static final long serialVersionUID = 1L;
 

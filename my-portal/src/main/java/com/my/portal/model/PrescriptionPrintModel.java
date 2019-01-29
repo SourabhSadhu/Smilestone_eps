@@ -22,7 +22,9 @@ public class PrescriptionPrintModel implements Serializable {
 	private String medicalHistory; 
 	private String clinicalFindings;
 	private String advice;
-	private List<String> medicine;	
+	private List<String> medicineCurrent;
+	private List<String> medicineAll;
+	List<TreatmentPlanHistoryView> tphv;
 /*	private String 
 	private String 
 	private String 
@@ -124,10 +126,22 @@ public class PrescriptionPrintModel implements Serializable {
 	public void setAdvice(String advice) {
 		this.advice = advice;
 	}
-	public List<String> getMedicine() {
-		return this.medicine;
+	public final List<String> getMedicineCurrent() {
+		return medicineCurrent;
 	}
-	public void setMedicine(List<String> medicine) {
-		this.medicine = medicine;
+	public final void setMedicineCurrent(List<String> medicineCurrent) {
+		this.medicineCurrent = medicineCurrent;
+	}
+	public final List<String> getMedicineAll() {
+		return medicineAll;
+	}
+	public final void setMedicineAll(List<String> medicineAll) {
+		this.medicineAll = medicineAll;
+	}
+	public final List<TreatmentPlanHistoryView> getTphv() {
+		return tphv;
+	}
+	public final void setTphv(List<TreatmentPlanHistoryView> tphv) {
+		this.tphv = tphv;
 	}
 }

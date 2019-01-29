@@ -22,6 +22,7 @@ import com.my.portal.service.MedicineService;
 import com.my.portal.service.PatientService;
 import com.my.portal.service.PrescriptionHistoryService;
 import com.my.portal.service.PrescriptionPrintService;
+import com.my.portal.service.TreatmentPlanHistoryService;
 
 @Service
 public class PrescriptionPrintServiceImpl implements PrescriptionPrintService {
@@ -31,6 +32,7 @@ public class PrescriptionPrintServiceImpl implements PrescriptionPrintService {
 	@Autowired MedicineService medicineService;
 //	@Autowired FeesBreakupService fessBreakupService;
 	@Autowired MedicalHistoryService medicalHistoryService;
+	@Autowired TreatmentPlanHistoryService tphService;
 	private final String DEPARTMENT = "department";
 	private final String DOCTOR = "doctor";
 	private final String DATE_TIME_FORMAT = "dd-MM-yyyy hh:mm aa";
@@ -39,6 +41,7 @@ public class PrescriptionPrintServiceImpl implements PrescriptionPrintService {
 //	private long totalAmount = 0;
 //	private long paidAmount = 0;
 	private String medicalHistoryViewString = "";
+	private final long MEDICINE_CURRENT_SEPERATOR_MILLIS = 86400;
 	
 	@Override
 	public PrescriptionPrintModel getPrescrition(long patientId, long prescriptionId) {
@@ -72,11 +75,22 @@ public class PrescriptionPrintServiceImpl implements PrescriptionPrintService {
 				
 				List<MedicineHistoryView> medicineHistories = medicineService.getMedicineHistoryByPrescriptionId(prescriptionId);				
 				if(null != medicineHistories && !medicineHistories.isEmpty()){
-					prescriptionPrintModel.setMedicine(new ArrayList<>());
-				}
-				for(MedicineHistoryView mh : medicineHistories){					
-					prescriptionPrintModel.getMedicine().add(mh.getMedicineName().concat(" ").concat(mh.getDosage()));
+					prescriptionPrintModel.setMedicineAll(new ArrayList<>());
+					prescriptionPrintModel.setMedicineCurrent(new ArrayList<>());
+
+					long lastMedicineTs = 0l;
+					if(null != medicineHistories.get(0).getTsCreated()){
+						lastMedicineTs = medicineHistories.get(0).getTsCreated();
+					}
+					for(MedicineHistoryView mh : medicineHistories){					
+						prescriptionPrintModel.getMedicineAll().add(mh.getMedicineName().concat(" ").concat(mh.getDosage()));
+						if(lastMedicineTs > 0 && lastMedicineTs - mh.getTsCreated() <= MEDICINE_CURRENT_SEPERATOR_MILLIS){
+							prescriptionPrintModel.getMedicineCurrent().add(mh.getMedicineName().concat(" ").concat(mh.getDosage()));
+						}
+					}		
 				}				
+				prescriptionPrintModel.setTphv(tphService.findByPatientAndPrescriptionId(patientId, prescriptionId));
+				
 			}
 		}
 		return prescriptionPrintModel;

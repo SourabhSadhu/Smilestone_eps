@@ -20,7 +20,7 @@ import javax.persistence.Table;
 	@NamedQuery(name="MedicineHistory.getMedicineHistoryByPatientId", query="SELECT m FROM MedicineHistory m "
 			+ " WHERE m.patientId = :patientId"),
 	@NamedQuery(name="MedicineHistory.getMedicineHistoryByPrescriptionId", query="SELECT m FROM MedicineHistory m"
-			+ " WHERE m.prescriptionId = :prescriptionId")
+			+ " WHERE m.prescriptionId = :prescriptionId ORDER BY m.tsCreated DESC")
 })
 public class MedicineHistory implements Serializable {
 	private static final long serialVersionUID = 1L;

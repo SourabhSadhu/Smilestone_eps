@@ -175,6 +175,7 @@ public class MedicineServiceImpl implements MedicineService {
 			v.setMedId(e.getMedId());
 			v.setPatientId(e.getPatientId());
 			v.setPrescriptionId(e.getPrescriptionId());
+			v.setTsCreated(null != e.getTsCreated() ? e.getTsCreated().getTime() : 0l);
 		}
 		return v;
 	}

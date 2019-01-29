@@ -75,7 +75,7 @@ public class FeesBreakupServiceImpl implements FeesBreakupService {
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED)
 	public FeesBreakupView updateFeePaid(FeesBreakupView view){
-		if(null != view && view.getAmountPaid() != null && view.getfId() != null){
+		if(null != view && /*view.getAmountPaid() != null &&*/ view.getfId() != null){
 			FeesBreakup prevEntry = repo.findOne(view.getfId());
 			if(null != prevEntry){
 				prevEntry.setAmountPaid(view.getAmountPaid());

@@ -39,64 +39,78 @@ import com.my.portal.service.TreatmentPlanHistoryService;
 @Service
 public class DashboardServiceImpl implements DashboardService {
 
-	@Autowired	PatientService pService;
-	@Autowired	PrescriptionHistoryService phService;
-	@Autowired	MedicineService medService;
-	@Autowired	FeesBreakupService fbService;
-	@Autowired	MedicalHistoryService mhService;
-	@Autowired	TreatmentPlanHistoryService tphService;
-	@Autowired	PrescriptionHistoryRespository phRepo;
-	@Autowired	MedicalHistoryRepository mhRepo;
-	@Autowired	FeesBreakupRepository fbRepo;
-	@Autowired	MedicineHistoryRepository medRepo;
-	@Autowired  TreatmentPlanHistoryRepository tphRepo;
+	@Autowired
+	PatientService pService;
+	@Autowired
+	PrescriptionHistoryService phService;
+	@Autowired
+	MedicineService medService;
+	@Autowired
+	FeesBreakupService fbService;
+	@Autowired
+	MedicalHistoryService mhService;
+	@Autowired
+	TreatmentPlanHistoryService tphService;
+	@Autowired
+	PrescriptionHistoryRespository phRepo;
+	@Autowired
+	MedicalHistoryRepository mhRepo;
+	@Autowired
+	FeesBreakupRepository fbRepo;
+	@Autowired
+	MedicineHistoryRepository medRepo;
+	@Autowired
+	TreatmentPlanHistoryRepository tphRepo;
 
 	@Override
 	public List<DashboardView> getDashboard(Long patientId, Long prescriptionId) {
 
 		List<DashboardView> dashboardViews = new ArrayList<>();
-		if(null == patientId && null == prescriptionId){			
+		if (null == patientId && null == prescriptionId) {
 			throw new ValidationException(ErrorCode.INVALID_INPUT);
 		}
-		if(null == prescriptionId){
+		if (null == prescriptionId) {
 			PatientView p1 = pService.findById(patientId);
-			if(null == p1 || null == p1.getPId()){
+			if (null == p1 || null == p1.getPId()) {
 				throw new ValidationException(ErrorCode.INVALID_PATIENT_ID);
 			}
-			List<PrescriptionHistoryView> prescriptionHistoryViews = phService.mapAll(phRepo.findByPatientId(patientId));
+			List<PrescriptionHistoryView> prescriptionHistoryViews = phService
+					.mapAll(phRepo.findByPatientId(patientId));
 			prescriptionHistoryViews.stream().forEach(pView -> {
-				
+
 				DashboardView view = new DashboardView();
 				view.setpHistory(pView);
 				view.getFbl().addAll(fbService.mapAll(fbRepo.findByPrescriptionId(pView.getPrescriptionId())));
-				view.getMedhv().addAll(medService.mapAll(medRepo.getMedicineHistoryByPrescriptionId(pView.getPrescriptionId())));
+				view.getMedhv().addAll(
+						medService.mapAll(medRepo.getMedicineHistoryByPrescriptionId(pView.getPrescriptionId())));
 				view.getMhv().addAll(mhService.mapAll(mhRepo.getByPrescriptionId(pView.getPrescriptionId())));
 				view.getTphv().addAll(tphService.findByPrescriptionId(pView.getPrescriptionId()));
-				
+
 				dashboardViews.add(view);
 			});
-		}else{
+		} else {
 			PrescriptionHistoryView pView = phService.findOne(prescriptionId);
-			if(null != pView && null != pView.getPrescriptionId()){
+			if (null != pView && null != pView.getPrescriptionId()) {
 				DashboardView view = new DashboardView();
 				view.setpHistory(pView);
 				view.getFbl().addAll(fbService.mapAll(fbRepo.findByPrescriptionId(pView.getPrescriptionId())));
-				view.getMedhv().addAll(medService.mapAll(medRepo.getMedicineHistoryByPrescriptionId(pView.getPrescriptionId())));
+				view.getMedhv().addAll(
+						medService.mapAll(medRepo.getMedicineHistoryByPrescriptionId(pView.getPrescriptionId())));
 				view.getMhv().addAll(mhService.mapAll(mhRepo.getByPrescriptionId(pView.getPrescriptionId())));
 				view.getTphv().addAll(tphService.findByPrescriptionId(pView.getPrescriptionId()));
-				
+
 				dashboardViews.add(view);
-			}			
+			}
 		}
-		if(dashboardViews.isEmpty()){
+		if (dashboardViews.isEmpty()) {
 			throw new ValidationException(ErrorCode.NO_RECORD_FOUND);
-		}else{
+		} else {
 			return dashboardViews;
 		}
 	}
 
 	@Override
-	@Transactional(isolation = Isolation.READ_COMMITTED,value = "transactionManager", rollbackFor = Exception.class)
+	@Transactional(isolation = Isolation.READ_COMMITTED, value = "transactionManager", rollbackFor = Exception.class)
 	public DashboardResponse processPrescription(DashboardView v) {
 		DashboardResponse response = new DashboardResponse();
 
@@ -105,7 +119,8 @@ public class DashboardServiceImpl implements DashboardService {
 			if (null != phv) {
 				if (null != phv.getPatientId()) {
 					PatientView p1 = pService.findById(phv.getPatientId());
-					if (null == p1 || null == p1.getPId()/* || 0 >= p1.getPId().longValue() */) {
+					if (null == p1 || null == p1
+							.getPId()/* || 0 >= p1.getPId().longValue() */) {
 						throw new ValidationException(ErrorCode.INVALID_PATIENT_ID);
 					}
 					PrescriptionHistory phEntity = phService.map(phv);
@@ -121,7 +136,7 @@ public class DashboardServiceImpl implements DashboardService {
 					}
 					fbRepo.flush();
 
-					//TODO: Check if already exists and then insert
+					// TODO: Check if already exists and then insert
 					List<MedicalHistory> mhl = mhService.map(v.getMhv());
 					for (MedicalHistory mh : mhl) {
 						mh.setPatientId(phv.getPatientId());
@@ -159,58 +174,67 @@ public class DashboardServiceImpl implements DashboardService {
 	}
 
 	@Override
-	@Transactional(isolation = Isolation.READ_COMMITTED,value = "transactionManager", rollbackFor = Exception.class)
+	@Transactional(isolation = Isolation.READ_COMMITTED, value = "transactionManager", rollbackFor = Exception.class)
 	public DashboardResponse updatePrescription(DashboardView v) {
 		DashboardResponse response = null;
 
 		if (null != v) {
 			PrescriptionHistoryView phv = v.getpHistory();
-			if (null != phv) {
-				if (null != phv.getPatientId() && null != phv.getPrescriptionId()) {
-					List<PrescriptionHistoryView> existingRecords = phService.findByPrescriptionAndPatientId(phv.getPatientId(), phv.getPrescriptionId()); 
-					if (null == existingRecords || existingRecords.isEmpty()) {
-						throw new ValidationException(ErrorCode.INVALID_PATIENT_ID_OR_PRESCRIPTION_ID);
-					}
-					
-					PrescriptionHistoryView existing = existingRecords.get(0);
-					//Update next appointment, fees, medicines
-					if(phv.getNextAppointment() != null){
-						existing.setNextAppointment(phv.getNextAppointment());
-					}
-					
-					List<MedicineHistory> medhl = medService.mapEntities(v.getMedhv());
-					for (MedicineHistory medh : medhl) {
-						medh.setPatientId(phv.getPatientId());
-						medh.setPrescriptionId(phv.getPrescriptionId());
-						medh.setTsCreated(new Timestamp(System.currentTimeMillis()));
-						medRepo.save(medh);
-					}
-					medRepo.flush();
-					
-					List<FeesBreakupView> existingFees = fbService.findByPatientAndPrescriptionId(phv.getPatientId(), phv.getPrescriptionId());
-					//Updating existing fees
-					for(FeesBreakupView fb : v.getFbl()){
-						//Assuming existing fees entry will have fees id
-						if(null != fb.getfId()){
-							existingFees.forEach(existingFee -> {
-								if(fb.getfId().longValue() == existingFee.getfId().longValue()){
-									fbService.updateFeePaid(fb);
-								}
-							});
-						}else{
-							//TODO: insert new fees entry
-						}
-					};
-					
+			if (null != phv && null != phv.getPatientId() && null != phv.getPrescriptionId()) {
+
+				List<PrescriptionHistoryView> existingRecords = phService
+						.findByPrescriptionAndPatientId(phv.getPatientId(), phv.getPrescriptionId());
+				if (null == existingRecords || existingRecords.isEmpty()) {
+					throw new ValidationException(ErrorCode.INVALID_PATIENT_ID_OR_PRESCRIPTION_ID);
 				}
-			}
+
+				PrescriptionHistoryView existing = existingRecords.get(0);
+				// Update next appointment, fees, medicines
+				if (phv.getNextAppointment() != null) {
+					existing.setNextAppointment(phv.getNextAppointment());
+				}
+
+				List<MedicineHistory> medhl = medService.mapEntities(v.getMedhv());
+				for (MedicineHistory medh : medhl) {
+					medh.setPatientId(phv.getPatientId());
+					medh.setPrescriptionId(phv.getPrescriptionId());
+					medh.setTsCreated(new Timestamp(System.currentTimeMillis()));
+					medRepo.save(medh);
+				}
+				medRepo.flush();
+
+				List<FeesBreakupView> existingFees = fbService.findByPatientAndPrescriptionId(phv.getPatientId(),
+						phv.getPrescriptionId());
+				// Updating existing fees
+				for (FeesBreakupView fb : v.getFbl()) {
+					// Assuming existing fees entry will have fees id
+					if (null != fb.getfId()) {
+						existingFees.forEach(existingFee -> {
+							if (fb.getfId().longValue() == existingFee.getfId().longValue()) {
+								fbService.updateFeePaid(fb);
+							}
+						});
+					} else {
+						FeesBreakup feesBreakup = fbService.map(fb);
+						feesBreakup.setPatientId(phv.getPatientId());
+						feesBreakup.setPrescriptionId(phv.getPrescriptionId());
+						feesBreakup.setTsCreated(new Timestamp(System.currentTimeMillis()));
+						fbRepo.save(feesBreakup);
+					}
+				}
+				;
+				fbRepo.flush();
+				response = new DashboardResponse();
+				response.setPatientId(phv.getPatientId());
+				response.setPrescriptionId(phv.getPrescriptionId());
+				response.setStatus(true);
+			}			
 		}
-		
-		if(null == response){
+
+		if (null == response) {
 			throw new ValidationException(ErrorCode.NO_RECORD_FOUND);
 		}
 		return response;
-		
 	}
 
 }

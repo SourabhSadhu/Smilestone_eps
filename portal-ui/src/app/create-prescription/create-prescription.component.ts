@@ -319,9 +319,9 @@ export class CreatePrescriptionComponent implements OnInit {
     this.tabSelection(2)
     this.isDisabledToModify = true
     this.prescriptionId = dashboard.pHistory.prescriptionId
-    if (dashboard.pHistory) {      
+    if (dashboard.pHistory) {
       this.prescriptionHistoryView = dashboard.pHistory
-      if (dashboard.pHistory.clinicalFindings && dashboard.pHistory.clinicalFindings.length > 0) {
+      if (dashboard.pHistory.clinicalFindings.length > 0) {
         this.clinicalFindingsViewForUi = dashboard.pHistory.clinicalFindings.split(',')
       }
       this.medicalHistoryViewModel = []
@@ -575,8 +575,9 @@ export class CreatePrescriptionComponent implements OnInit {
   }
 
   createNextAppo(event: MatDatepickerInputEvent<Date>) {
-    try {      
-      this.nextAppoDate = event.value.getTime()      
+    try {
+      // console.log('next appo ' + event.value.getTime());
+      this.nextAppoDate = event.value.getTime() 
     } catch (error) {
       console.log(error)
       this.snackModel.msg = "Invalid Date"
@@ -671,6 +672,8 @@ export class CreatePrescriptionComponent implements OnInit {
   dashboardResponse: DashboardResponse
   createAndSubmitPrescription() {
 
+
+
     this.dashboardView = new DashboardView();
     //Check if uploading new precription or updating an existing one
     //Existing
@@ -685,6 +688,7 @@ export class CreatePrescriptionComponent implements OnInit {
           fb.patientId = this.selectedPatient.pid
           fb.amountPaid = f.amountPaid   
           fb.fId = f.feeConfigId       
+          fb.prescriptionId = this.prescriptionHistoryView.prescriptionId
           this.dashboardView.fbl.push(fb)          
         })
       }
@@ -711,7 +715,7 @@ export class CreatePrescriptionComponent implements OnInit {
         }
       }
       console.log(JSON.stringify(this.dashboardView))
-      this.httpCom.addDashBoard(this.dashboardView).subscribe(
+      this.httpCom.updateDashBoard(this.dashboardView).subscribe(
         resp => {
           if (resp.status === 'SUCCESS') {
             console.log(JSON.stringify(resp.resp));
@@ -730,9 +734,9 @@ export class CreatePrescriptionComponent implements OnInit {
         }
       );
     } 
-    //New prescription
-    else{
-      
+    //else insert as a new prescription
+    else {
+      this.dashboardView = new DashboardView();
       this.dashboardView.fbl = []
       if (this.feesConfigListView && this.feesConfigListView.length > 0) {
         this.feesConfigListView.map(f => {
@@ -771,6 +775,13 @@ export class CreatePrescriptionComponent implements OnInit {
       this.dashboardView.pHistory = this.prescriptionHistoryView
       this.dashboardView.pHistory.patientId = this.selectedPatient.pid
       this.dashboardView.pHistory.clinicalFindings = this.commonService.getFormattedClinicalFindingsForPost(this.clinicalFindingsViewForUi)
+      if(0 < this.nextAppoDate ){
+        this.dashboardView.pHistory.nextAppointment = this.nextAppoDate
+        if (0 <= this.nextAppoHour && this.nextAppoHour <= 24 && 0 <= this.nextAppoMinute && this.nextAppoMinute <= 59) {
+          let modifiedTime = ((this.nextAppoHour * 60) + this.nextAppoMinute) * 60 * 1000 + this.nextAppoDate          
+          this.dashboardView.pHistory.nextAppointment = modifiedTime;
+        }
+      }
       this.dashboardView.tphv = []
       this.cftMapArray.map(cft => {
         let tph = new TreatmentPlanHistoryView()
@@ -780,14 +791,6 @@ export class CreatePrescriptionComponent implements OnInit {
         tph.clinicalFinding = cft.clinicalFinding.fname
         this.dashboardView.tphv.push(tph)
       })
-
-      if(0 < this.nextAppoDate ){
-        this.prescriptionHistoryView.nextAppointment = this.nextAppoDate
-        if (0 <= this.nextAppoHour && this.nextAppoHour <= 24 && 0 <= this.nextAppoMinute && this.nextAppoMinute <= 59) {
-          let modifiedTime = ((this.nextAppoHour * 60) + this.nextAppoMinute) * 60 * 1000 + this.nextAppoDate          
-          this.prescriptionHistoryView.nextAppointment = modifiedTime;
-        }
-      }
 
       console.log(JSON.stringify(this.dashboardView))
       this.httpCom.addDashBoard(this.dashboardView).subscribe(
@@ -799,16 +802,32 @@ export class CreatePrescriptionComponent implements OnInit {
             this.dashboardResponse = resp.resp
             if (this.dashboardResponse && this.dashboardResponse.status) {
               this.isDisabledToModify = true
-              this.treatmentPlanService.setTreatmentData(this.dashboardResponse.patientId, this.dashboardResponse.prescriptionId, this.dashboardView.tphv)              
-              this.commonService.showSuccessSnackBar(this.snackBar,"Prescription added",() => {               
+              this.treatmentPlanService.setTreatmentData(this.dashboardResponse.patientId, this.dashboardResponse.prescriptionId, this.dashboardView.tphv)
+
+              /**
+               * As event emitter is working, so need to send reference as we need to operate on data
+               * Hence communicating via server
+               */
+              //Injecting variable references
+              // this.treatmentTabPatientId = dashboardResponse.patientId
+              // this.treatmentTabPrescriptionId = dashboardResponse.prescriptionId
+              // this.treatmentTabTreatmentPlanHistoryViews = this.dashboardView.tphv
+
+              this.snackModel.isError = false
+              this.snackModel.msg = "Prescription added"
+              this.snackModel.action = "OK"
+              this.snackModel.callback = () => {
+                //navigate to treatment plan tab
                 this.tabSelection(3)
-              })
+              }
+              this.commonService.showSnackBar(this.snackBar, this.snackModel)
             } else {
-              this.commonService.showErrorSnackBar(this.snackBar, this.dashboardResponse.respMsg)
+              this.snackModel.isError = true
+              this.snackModel.msg = "Server error"
+              this.snackModel.action = "OK"
+              this.commonService.showSnackBar(this.snackBar, this.snackModel)
             }
-          }else{
-            this.commonService.showErrorSnackBar(this.snackBar, resp.status)
-          }          
+          }
         }
       );
     }

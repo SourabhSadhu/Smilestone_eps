@@ -1,0 +1,30 @@
+<h1 mat-dialog-title>Add Fee</h1>
+<div mat-dialog-content>
+    <form class="example-form">
+        <mat-form-field class="example-full-width">
+            <input type="text" matInput placeholder="Select Medicine" [formControl]="medicineForm"
+                [matAutocomplete]="autoMedicine">
+            <mat-autocomplete autoActiveFirstOption #autoMedicine="matAutocomplete">
+                <mat-option *ngFor="let medicineName of medicineNameListObservable | async" [value]="medicineName">
+                    {{medicineName}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </form>
+    <mat-divider></mat-divider>
+
+    <mat-form-field class="example-margin">
+        <input matInput placeholder="Repetition" [(ngModel)]="repetition" style="text-align:center" required>
+    </mat-form-field>
+    <mat-form-field class="example-margin">
+        <input matInput placeholder="Period in days" [(ngModel)]="period" style="text-align:center" required>
+    </mat-form-field>
+    <mat-form-field class="example-margin">
+        <input matInput [ngModel]="result" style="text-align:center" disabled>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Close</button>
+    <button mat-button (click)="generatePreview()">Check</button>
+    <button mat-button (click)="closeDialog()">Done</button>
+</div>

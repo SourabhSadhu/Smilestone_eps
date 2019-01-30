@@ -21,6 +21,7 @@ import { TreatmentPlanService } from '../services/treatment-plan.service'
 import { MatTableDataSource } from '@angular/material/table';
 import { EventServiceService } from '../services/event-service.service';
 import { Router } from '@angular/router';
+import { MedicineInsertionDialog } from './medicine-dialog/medicine-insertion-dialog-component';
 
 @Component({
   selector: 'app-create-prescription',
@@ -52,7 +53,8 @@ export class CreatePrescriptionComponent implements OnInit {
   medicalHistoryViewModel: string[];
 
   medicineMasterViewList: MedicineView[];
-  medicineForm = new FormControl()
+  // medicineForm = new FormControl()
+  medicineHistoryViews : MedicineHistoryView[]
   medicineHistoryViewModel: string
   mhList: MedicalMaster[] = [];
 
@@ -165,6 +167,8 @@ export class CreatePrescriptionComponent implements OnInit {
     this.treatmentPlanListView = [];
     this.feesConfigListView = [];
     this.feesConfigListDataSource = new MatTableDataSource<FeeConfigView>();
+    this.medicineHistoryViews = []
+    this.medicineHistoryViewModel = ''
   }
 
   fetchPatient(event: any) {
@@ -429,7 +433,7 @@ export class CreatePrescriptionComponent implements OnInit {
   }
 
   //Prescription Section
-  openDialog(): void {
+  openClinicalFindingToothMappingDialog(): void {
     this.httpCom.getClinicalFindings().subscribe(
       response => {
         if (response.status == 'SUCCESS') {
@@ -518,6 +522,29 @@ export class CreatePrescriptionComponent implements OnInit {
     });
   }
 
+  openMedicineInsertionDialog() {
+
+    const dialogFeeRef = this.dialog.open(MedicineInsertionDialog, {
+      width: '700px',
+      data: this.medicineMasterViewList
+    });
+
+    dialogFeeRef.afterClosed().subscribe(result => {
+      console.log(result)
+      if (result) {
+        
+        let medicineHistoryView: MedicineHistoryView = result
+        if(medicineHistoryView){
+          medicineHistoryView.patientId = this.selectedPatient.pid
+          medicineHistoryView.prescriptionId = this.prescriptionId
+          this.medicineHistoryViews.push(medicineHistoryView)
+          this.medicineHistoryViewModel = this.medicineHistoryViewModel + medicineHistoryView.medicineName + ' ' + medicineHistoryView.dosage + '\n'
+        }
+
+      }
+    });
+  }
+
   addTreatmentPlan(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
@@ -554,25 +581,26 @@ export class CreatePrescriptionComponent implements OnInit {
     this.getTotalFee()
   }
 
+  // Commenting as no usage found for addMedicine
   //Function for adding custom medicines
-  addMedicine(event: MatChipInputEvent) {
-    let customMedicineMaster = new MedicineView();
-    const input = event.input;
-    let data = event.value;
-    if ((data || '').trim()) {
-      let dataParts: string[] = data.split(' -- ');
-      if (dataParts.length == 2) {
-        customMedicineMaster.medicineName = dataParts[0];
-        customMedicineMaster.dosage = dataParts[1];
-        this.medicineMasterViewList.push(customMedicineMaster);
-      } else {
-        console.log('Error medicine format');
-      }
-    }
-    if (input) {
-      input.value = '';
-    }
-  }
+  // addMedicine(event: MatChipInputEvent) {
+  //   let customMedicineMaster = new MedicineView();
+  //   const input = event.input;
+  //   let data = event.value;
+  //   if ((data || '').trim()) {
+  //     let dataParts: string[] = data.split(' -- ');
+  //     if (dataParts.length == 2) {
+  //       customMedicineMaster.medicineName = dataParts[0];
+  //       customMedicineMaster.dosage = dataParts[1];
+  //       this.medicineMasterViewList.push(customMedicineMaster);
+  //     } else {
+  //       console.log('Error medicine format');
+  //     }
+  //   }
+  //   if (input) {
+  //     input.value = '';
+  //   }
+  // }
 
   createNextAppo(event: MatDatepickerInputEvent<Date>) {
     try {
@@ -692,18 +720,21 @@ export class CreatePrescriptionComponent implements OnInit {
           this.dashboardView.fbl.push(fb)          
         })
       }
-      this.dashboardView.medhv = []
-      if (this.medicineForm.value && this.medicineForm.value.length > 0) {
-        this.medicineForm.value.map(m => {
-          let medh = new MedicineHistoryView()
-          medh.medicineName = m.medicineName
-          medh.diseaseCode = m.diseaseCode
-          medh.diseaseName = m.diseaseName
-          medh.dosage = m.dosage
-          medh.patientId = this.selectedPatient.pid
-          this.dashboardView.medhv.push(medh)
-        })
-      }
+      
+      // this.dashboardView.medhv = []
+      // if (this.medicineForm.value && this.medicineForm.value.length > 0) {
+      //   this.medicineForm.value.map(m => {
+      //     let medh = new MedicineHistoryView()
+      //     medh.medicineName = m.medicineName
+      //     medh.diseaseCode = m.diseaseCode
+      //     medh.diseaseName = m.diseaseName
+      //     medh.dosage = m.dosage
+      //     medh.patientId = this.selectedPatient.pid
+      //     this.dashboardView.medhv.push(medh)
+      //   })
+      // }
+      this.dashboardView.medhv = this.medicineHistoryViews
+
       this.dashboardView.pHistory = new PrescriptionHistoryView()
       this.dashboardView.pHistory.patientId = this.selectedPatient.pid
       this.dashboardView.pHistory.prescriptionId = this.prescriptionId
@@ -750,17 +781,19 @@ export class CreatePrescriptionComponent implements OnInit {
         })
       }
       this.dashboardView.medhv = []
-      if (this.medicineForm.value && this.medicineForm.value.length > 0) {
-        this.medicineForm.value.map(m => {
-          let medh = new MedicineHistoryView()
-          medh.medicineName = m.medicineName
-          medh.diseaseCode = m.diseaseCode
-          medh.diseaseName = m.diseaseName
-          medh.dosage = m.dosage
-          medh.patientId = this.selectedPatient.pid
-          this.dashboardView.medhv.push(medh)
-        })
-      }
+      // if (this.medicineForm.value && this.medicineForm.value.length > 0) {
+      //   this.medicineForm.value.map(m => {
+      //     let medh = new MedicineHistoryView()
+      //     medh.medicineName = m.medicineName
+      //     medh.diseaseCode = m.diseaseCode
+      //     medh.diseaseName = m.diseaseName
+      //     medh.dosage = m.dosage
+      //     medh.patientId = this.selectedPatient.pid
+      //     this.dashboardView.medhv.push(medh)
+      //   })
+      // }
+      
+      this.dashboardView.medhv = this.medicineHistoryViews
       this.dashboardView.mhv = [];
       // if (this.medicalHistoryForm.value && this.medicalHistoryForm.value.length > 0) {
       if (this.medicalHistoryViewModel && this.medicalHistoryViewModel.length > 0) {
@@ -995,6 +1028,8 @@ export class DialogToothClinicalfindings {
     return this.originalCfList.filter(option => option.toLowerCase().includes(value.toLowerCase()));
   }
 }
+
+
 
 
 @Component({

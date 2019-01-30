@@ -53,10 +53,12 @@ import { SnackhelperComponent } from './snackhelper/snackhelper.component';
 import { CreatePrescriptionComponent } from './create-prescription/create-prescription.component';
 import { MaterialTestComponent } from './material-test/material-test.component';
 import { DialogToothClinicalfindings, CustomFeeInsertionDialog } from './create-prescription/create-prescription.component';
+import { MedicineInsertionDialog } from './create-prescription/medicine-dialog/medicine-insertion-dialog-component'
 import { PrintPrescriptionComponent } from './print-prescription/print-prescription.component';
 import { TreatmentPlanComponent } from './treatment-plan/treatment-plan.component';
 import { PrintComponent } from './print/print.component';
 import { MatSortTableComponent } from './mat-sort-table/mat-sort-table.component';
+import { from } from 'rxjs';
 
 @NgModule({
   declarations: [
@@ -68,6 +70,7 @@ import { MatSortTableComponent } from './mat-sort-table/mat-sort-table.component
     MaterialTestComponent,
     DialogToothClinicalfindings,
     CustomFeeInsertionDialog,
+    MedicineInsertionDialog,
     PrintPrescriptionComponent,
     TreatmentPlanComponent,
     PrintComponent,
@@ -120,6 +123,6 @@ import { MatSortTableComponent } from './mat-sort-table/mat-sort-table.component
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [SnackhelperComponent,DialogToothClinicalfindings,CustomFeeInsertionDialog]
+  entryComponents: [SnackhelperComponent,DialogToothClinicalfindings,CustomFeeInsertionDialog,MedicineInsertionDialog]
 })
 export class AppModule { }

@@ -253,7 +253,7 @@
               <mat-chip *ngFor="let s of clinicalFindingsViewForUi" selectable="false" removable="false">
                 {{s}}
               </mat-chip>
-              <input (click)="openDialog()" (keydown)="openDialog()" placeholder="Add C/F" [matChipInputFor]="chipList1"
+              <input (click)="openClinicalFindingToothMappingDialog()" (keydown)="openClinicalFindingToothMappingDialog()" placeholder="Add C/F" [matChipInputFor]="chipList1"
                 matChipInputAddOnBlur="true" [disabled]="checkIfDisabledToModify()">
             </mat-chip-list>
           </mat-form-field>
@@ -363,21 +363,27 @@
             </button>
           </mat-form-field>
 
-          <!-- Previous Medicines -->
-          <div *ngIf="checkIfDisabledToModify()">
+          <!-- Medicine -->
+          <!-- <mat-form-field class="example-full-width">
+            <mat-select placeholder="Add Medicine" [formControl]="medicineForm" multiple class="example-full-width">
+              <mat-option *ngFor="let mh of medicineMasterViewList" [value]="mh">{{mh.medicineName}} {{mh.dosage}}</mat-option>
+            </mat-select>
+          </mat-form-field> -->
+          <div class="example-margin" align="right">
+            <span>Add Medicine</span>
+            <button mat-icon-button color="primary" (click)="openMedicineInsertionDialog()">
+              <mat-icon aria-label="">add_circle</mat-icon>
+            </button>
+          </div>
+
+          <!-- Medicines Preview -->
+          <div *ngIf="medicineHistoryViewModel">
             <mat-form-field class="example-full-width example-grid-margin">
-              <textarea matInput placeholder="Previous Medicines" [(ngModel)]="medicineHistoryViewModel"
+              <textarea matInput placeholder="Medicines" [(ngModel)]="medicineHistoryViewModel"
                 cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5" [disabled]="checkIfDisabledToModify()">
               </textarea>
             </mat-form-field>
           </div>
-
-          <!-- Medicine -->
-          <mat-form-field class="example-full-width">
-            <mat-select placeholder="Add Medicine" [formControl]="medicineForm" multiple class="example-full-width">
-              <mat-option *ngFor="let mh of medicineMasterViewList" [value]="mh">{{mh.medicineName}} {{mh.dosage}}</mat-option>
-            </mat-select>
-          </mat-form-field>
 
           <!-- Next appointment -->
           <table>

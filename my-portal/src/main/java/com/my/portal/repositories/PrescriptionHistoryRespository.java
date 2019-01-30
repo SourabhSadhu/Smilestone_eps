@@ -11,6 +11,8 @@ import com.my.portal.entities.PrescriptionHistory;
 public interface PrescriptionHistoryRespository extends JpaRepository<PrescriptionHistory, Long> {
 	
 	List<PrescriptionHistory> findByPatientId(@Param("patientId") Long patientId);
+	List<PrescriptionHistory> findByPatientIdAndLimit(@Param("patientId") Long patientId, @Param("limit") long limit, @Param("offset") long offset);
 	List<PrescriptionHistory> findByPrescriptionAndPatientId(@Param("patientId") Long patientId, @Param("prescriptionId") Long prescriptionId);
 	List<PrescriptionHistory> getByDateRange(@Param("startDate") Timestamp startDate, @Param("endDate") Timestamp endDate);
+	https://stackoverflow.com/questions/24367572/how-to-use-limit-in-spring-within-sql-query
 }

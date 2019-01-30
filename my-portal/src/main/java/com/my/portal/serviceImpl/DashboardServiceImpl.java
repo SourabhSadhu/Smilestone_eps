@@ -73,7 +73,7 @@ public class DashboardServiceImpl implements DashboardService {
 	}
 
 	@Override
-	public List<DashboardView> getDashboard(Long patientId, Long prescriptionId) {
+	public List<DashboardView> getDashboard(Long patientId, Long prescriptionId, Long limit, Long offset) {
 
 		List<DashboardView> dashboardViews = new ArrayList<>();
 		if (null == patientId && null == prescriptionId) {
@@ -84,8 +84,13 @@ public class DashboardServiceImpl implements DashboardService {
 			if (null == p1 || null == p1.getPId()) {
 				throw new ValidationException(ErrorCode.INVALID_PATIENT_ID);
 			}
-			List<PrescriptionHistoryView> prescriptionHistoryViews = phService
-					.mapAll(phRepo.findByPatientId(patientId));
+			
+			List<PrescriptionHistoryView> prescriptionHistoryViews = new ArrayList<>();
+			if(null != limit && limit.longValue() > 0  && null != offset){
+				prescriptionHistoryViews = phService.mapAll(phRepo.findByPatientIdAndLimit(patientId, limit, offset));
+			}else{
+				prescriptionHistoryViews = phService.mapAll(phRepo.findByPatientId(patientId));
+			}
 			prescriptionHistoryViews.stream().forEach(pView -> {
 
 				DashboardView view = new DashboardView();

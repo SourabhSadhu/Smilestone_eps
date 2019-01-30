@@ -49,10 +49,12 @@ public class DashboardController {
 	@ResponseBody
 	public ResponseEntity<?> getDashboard(
 			@RequestParam(value="patientId", required = false) Long patientId,
-			@RequestParam(value="prescriptionId", required = false) Long prescriptionId
+			@RequestParam(value="prescriptionId", required = false) Long prescriptionId,
+			@RequestParam(value="limit", required = false) Long limit,
+			@RequestParam(value="offset", required = false) Long offset
 			) {
 		try{
-			return new ResponseEntity<>(CommonUtils.getResp(dService.getDashboard(patientId, prescriptionId)), HttpStatus.OK);
+			return new ResponseEntity<>(CommonUtils.getResp(dService.getDashboard(patientId, prescriptionId, limit, offset)), HttpStatus.OK);
 		}catch(Exception e){
 			logger.error(e.getMessage(), e);
 			if(e instanceof ValidationException) {

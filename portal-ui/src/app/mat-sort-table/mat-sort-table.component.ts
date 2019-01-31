@@ -3,6 +3,8 @@ import {Component, OnInit, ViewChild, AfterViewInit} from '@angular/core';
 import {MatPaginator, MatSort} from '@angular/material';
 import {merge, Observable, of as observableOf} from 'rxjs';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
+import { MatTableDataSource } from '@angular/material/table';
+import { DashboardView,Response } from '../models/models'
 
 @Component({
   selector: 'app-mat-sort-table',
@@ -10,9 +12,13 @@ import {catchError, map, startWith, switchMap} from 'rxjs/operators';
   styleUrls: ['./mat-sort-table.component.css']
 })
 export class MatSortTableComponent implements AfterViewInit  {
-  displayedColumns: string[] = ['created', 'state', 'number', 'title'];
+  
+  dashboardHistoryListColumns = ['Date', 'C/F', 'Treatment Plan', 'Treatment Done', 'Due', 'Next Appo']
+  dashboardDataSource: MatTableDataSource<DashboardView>
+  
+  // displayedColumns: string[] = ['created', 'state', 'number', 'title'];
   exampleDatabase: ExampleHttpDatabase | null;
-  data: GithubIssue[] = [];
+  data: DashboardView[] = [];
 
   resultsLength = 0;
   isLoadingResults = true;
@@ -35,15 +41,20 @@ export class MatSortTableComponent implements AfterViewInit  {
         switchMap(() => {
           this.isLoadingResults = true;
           return this.exampleDatabase!.getRepoIssues(
-            this.sort.active, this.sort.direction, this.paginator.pageIndex);
+            // this.sort.active, this.sort.direction, this.paginator.pageIndex
+            "1",this.paginator.pageIndex,3);
         }),
         map(data => {
-          // Flip flag to show that loading has finished.
-          this.isLoadingResults = false;
-          this.isRateLimitReached = false;
-          this.resultsLength = data.total_count;
-
-          return data.items;
+          if(data && data.status == 'SUCCESS'){
+            // Flip flag to show that loading has finished.
+            this.isLoadingResults = false;
+            this.isRateLimitReached = false;
+            this.data = data.resp;
+            
+            this.dashboardDataSource.data = data.resp
+            this.resultsLength = this.data.length;
+          }
+          return data.resp;
         }),
         catchError(() => {
           this.isLoadingResults = false;
@@ -56,27 +67,27 @@ export class MatSortTableComponent implements AfterViewInit  {
 
 }
 
-export interface GithubApi {
-  items: GithubIssue[];
-  total_count: number;
-}
+// export interface GithubApi {
+//   items: GithubIssue[];
+//   total_count: number;
+// }
 
-export interface GithubIssue {
-  created_at: string;
-  number: string;
-  state: string;
-  title: string;
-}
+// export interface GithubIssue {
+//   created_at: string;
+//   number: string;
+//   state: string;
+//   title: string;
+// }
 
 /** An example database that the data source uses to retrieve data for the table. */
 export class ExampleHttpDatabase {
   constructor(private http: HttpClient) {}
 
-  getRepoIssues(sort: string, order: string, page: number): Observable<GithubApi> {
-    const href = 'https://api.github.com/search/issues';
+  getRepoIssues(patientId: string = "1", page: number, size: number = 5): Observable<Response> {
+    const href = 'http://localhost:12000/my-portal/dashboard/get-dashboard';
     const requestUrl =
-        `${href}?q=repo:angular/material2&sort=${sort}&order=${order}&page=${page + 1}`;
+        `${href}?patientId=${patientId}&page=${page + 1}&size=${size}`;
 
-    return this.http.get<GithubApi>(requestUrl);
+    return this.http.get<Response>(requestUrl);
   }
 }

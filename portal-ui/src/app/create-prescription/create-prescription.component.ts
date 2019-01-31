@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, AfterViewInit } from '@angular/core';
 import {
   ClinicalFindingView, MedicalMaster, Patient, PrescriptionHistoryView,
   ToothQuadrentView, TreatmentPlan, FeesBreakupView, FeeConfigView,
@@ -13,9 +13,9 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { HttpcommService } from '../services/httpcomm.service';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatChipInputEvent } from '@angular/material';
-import { Observable, pipe, of } from 'rxjs';
-import { startWith, map, tap } from 'rxjs/operators';
+import { MatChipInputEvent, MatPaginator, MatSort } from '@angular/material';
+import { Observable, pipe, of, merge } from 'rxjs';
+import { startWith, map, tap, switchMap } from 'rxjs/operators';
 import { CommonService } from '../services/commonservice.service';
 import { TreatmentPlanService } from '../services/treatment-plan.service'
 import { MatTableDataSource } from '@angular/material/table';
@@ -54,7 +54,7 @@ export class CreatePrescriptionComponent implements OnInit {
 
   medicineMasterViewList: MedicineView[];
   // medicineForm = new FormControl()
-  medicineHistoryViews : MedicineHistoryView[]
+  medicineHistoryViews: MedicineHistoryView[]
   medicineHistoryViewModel: string
   mhList: MedicalMaster[] = [];
 
@@ -95,6 +95,10 @@ export class CreatePrescriptionComponent implements OnInit {
   ngOnInit() {
     this.initializeValiables();
     // this.commonService = new CommonService();
+  }
+
+  ngAfterViewInit() {
+    // this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
   }
 
   loadTabSpecificData(tabIndex: number) {
@@ -285,23 +289,54 @@ export class CreatePrescriptionComponent implements OnInit {
 
   dashboardHistoryListColumns = ['Date', 'C/F', 'Treatment Plan', 'Treatment Done', 'Due', 'Next Appo']
   dashboardDataSource: MatTableDataSource<DashboardView>
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  // @ViewChild(MatSort) sort: MatSort;
+  resultsLength = 0;
+  isLoadingResults: Boolean = false
+
   fetchDashboard(patientId: number) {
 
-    this.httpCom.getDashboardView(patientId).subscribe(
-      resp => {
-        if (resp.status === 'SUCCESS' && resp.resp) {
-          if (resp.resp && resp.resp.length > 0) {
-            this.dashboardDataSource = new MatTableDataSource<DashboardView>()
-            this.dashboardDataSource.data = resp.resp
-          } else {
-            this.tabSelection(2)
-          }
-        } else {
-          this.commonService.showErrorSnackBar(this.snackBar, resp.desc, () => { this.tabSelection(2) })
-          this.tabSelection(2)
-        }
+    // this.httpCom.getDashboardView(patientId).subscribe(
+    //   resp => {
+    //     if (resp.status === 'SUCCESS' && resp.resp) {
+    //       if (resp.resp && resp.resp.length > 0) {
+    //         this.dashboardDataSource = new MatTableDataSource<DashboardView>()
+    //         this.dashboardDataSource.data = resp.resp
+    //       } else {
+    //         this.tabSelection(2)
+    //       }
+    //     } else {
+    //       this.commonService.showErrorSnackBar(this.snackBar, resp.desc, () => { this.tabSelection(2) })
+    //       this.tabSelection(2)
+    //     }
+    //   }
+    // )
+
+    this.httpCom.getDashboardCount(patientId).subscribe(resp => {
+      if (resp && resp.status == 'SUCCESS') {
+        this.resultsLength = resp.resp
+
+        merge(this.paginator.page)
+          .pipe(
+            startWith({}),
+            switchMap(() => {
+              this.isLoadingResults = true;
+              return this.httpCom.getDashboardPaginatedView(patientId, this.paginator.pageIndex, 3)
+            }),
+            map(data => {
+              if (data && data.status == 'SUCCESS') {
+                // Flip flag to show that loading has finished.
+                this.isLoadingResults = false;
+                this.dashboardDataSource = new MatTableDataSource<DashboardView>()
+                this.dashboardDataSource.data = data.resp
+              }
+              return data.resp;
+            })
+          ).subscribe(data => {
+            console.log(data)
+          });
       }
-    )
+    })
   }
 
   getDueFee(feesList: FeesBreakupView[]): number {
@@ -532,9 +567,9 @@ export class CreatePrescriptionComponent implements OnInit {
     dialogFeeRef.afterClosed().subscribe(result => {
       console.log(result)
       if (result) {
-        
+
         let medicineHistoryView: MedicineHistoryView = result
-        if(medicineHistoryView){
+        if (medicineHistoryView) {
           medicineHistoryView.patientId = this.selectedPatient.pid
           medicineHistoryView.prescriptionId = this.prescriptionId
           this.medicineHistoryViews.push(medicineHistoryView)
@@ -605,7 +640,7 @@ export class CreatePrescriptionComponent implements OnInit {
   createNextAppo(event: MatDatepickerInputEvent<Date>) {
     try {
       // console.log('next appo ' + event.value.getTime());
-      this.nextAppoDate = event.value.getTime() 
+      this.nextAppoDate = event.value.getTime()
     } catch (error) {
       console.log(error)
       this.snackModel.msg = "Invalid Date"
@@ -714,13 +749,13 @@ export class CreatePrescriptionComponent implements OnInit {
           fb.notes = f.notes
           fb.trtmntPlanRef = f.treatmentPlanId
           fb.patientId = this.selectedPatient.pid
-          fb.amountPaid = f.amountPaid   
-          fb.fId = f.feeConfigId       
+          fb.amountPaid = f.amountPaid
+          fb.fId = f.feeConfigId
           fb.prescriptionId = this.prescriptionHistoryView.prescriptionId
-          this.dashboardView.fbl.push(fb)          
+          this.dashboardView.fbl.push(fb)
         })
       }
-      
+
       // this.dashboardView.medhv = []
       // if (this.medicineForm.value && this.medicineForm.value.length > 0) {
       //   this.medicineForm.value.map(m => {
@@ -738,10 +773,10 @@ export class CreatePrescriptionComponent implements OnInit {
       this.dashboardView.pHistory = new PrescriptionHistoryView()
       this.dashboardView.pHistory.patientId = this.selectedPatient.pid
       this.dashboardView.pHistory.prescriptionId = this.prescriptionId
-      if(0 < this.nextAppoDate ){
+      if (0 < this.nextAppoDate) {
         this.dashboardView.pHistory.nextAppointment = this.nextAppoDate
         if (0 <= this.nextAppoHour && this.nextAppoHour <= 24 && 0 <= this.nextAppoMinute && this.nextAppoMinute <= 59) {
-          let modifiedTime = ((this.nextAppoHour * 60) + this.nextAppoMinute) * 60 * 1000 + this.nextAppoDate          
+          let modifiedTime = ((this.nextAppoHour * 60) + this.nextAppoMinute) * 60 * 1000 + this.nextAppoDate
           this.dashboardView.pHistory.nextAppointment = modifiedTime;
         }
       }
@@ -753,18 +788,18 @@ export class CreatePrescriptionComponent implements OnInit {
             this.dashboardResponse = resp.resp
             if (this.dashboardResponse && this.dashboardResponse.status) {
               this.treatmentPlanService.setTreatmentData(this.dashboardResponse.patientId, this.dashboardResponse.prescriptionId, this.dashboardView.tphv)
-              this.commonService.showSuccessSnackBar(this.snackBar,"Prescription updated",() => {               
+              this.commonService.showSuccessSnackBar(this.snackBar, "Prescription updated", () => {
                 this.tabSelection(3)
               })
             } else {
               this.commonService.showErrorSnackBar(this.snackBar, this.dashboardResponse.respMsg)
             }
-          }else{
+          } else {
             this.commonService.showErrorSnackBar(this.snackBar, resp.status)
           }
         }
       );
-    } 
+    }
     //else insert as a new prescription
     else {
       this.dashboardView = new DashboardView();
@@ -792,7 +827,7 @@ export class CreatePrescriptionComponent implements OnInit {
       //     this.dashboardView.medhv.push(medh)
       //   })
       // }
-      
+
       this.dashboardView.medhv = this.medicineHistoryViews
       this.dashboardView.mhv = [];
       // if (this.medicalHistoryForm.value && this.medicalHistoryForm.value.length > 0) {
@@ -808,10 +843,10 @@ export class CreatePrescriptionComponent implements OnInit {
       this.dashboardView.pHistory = this.prescriptionHistoryView
       this.dashboardView.pHistory.patientId = this.selectedPatient.pid
       this.dashboardView.pHistory.clinicalFindings = this.commonService.getFormattedClinicalFindingsForPost(this.clinicalFindingsViewForUi)
-      if(0 < this.nextAppoDate ){
+      if (0 < this.nextAppoDate) {
         this.dashboardView.pHistory.nextAppointment = this.nextAppoDate
         if (0 <= this.nextAppoHour && this.nextAppoHour <= 24 && 0 <= this.nextAppoMinute && this.nextAppoMinute <= 59) {
-          let modifiedTime = ((this.nextAppoHour * 60) + this.nextAppoMinute) * 60 * 1000 + this.nextAppoDate          
+          let modifiedTime = ((this.nextAppoHour * 60) + this.nextAppoMinute) * 60 * 1000 + this.nextAppoDate
           this.dashboardView.pHistory.nextAppointment = modifiedTime;
         }
       }

@@ -6,6 +6,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,7 +77,7 @@ public class DashboardServiceImpl implements DashboardService {
 	}
 
 	@Override
-	public List<DashboardView> getDashboard(Long patientId, Long prescriptionId, Long limit, Long offset) {
+	public List<DashboardView> getDashboard(Long patientId, Long prescriptionId, Long page, Long size) {
 
 		List<DashboardView> dashboardViews = new ArrayList<>();
 		if (null == patientId && null == prescriptionId) {
@@ -86,8 +90,14 @@ public class DashboardServiceImpl implements DashboardService {
 			}
 			
 			List<PrescriptionHistoryView> prescriptionHistoryViews = new ArrayList<>();
-			if(null != limit && limit.longValue() > 0  && null != offset){
-				prescriptionHistoryViews = phService.mapAll(phRepo.findByPatientIdAndLimit(patientId, limit, offset));
+			if(null != page  && null != size && size.longValue() > 0){
+				
+				Sort sortCriteria = new Sort(Direction.DESC, "tsCreated");
+				Pageable sortByTsCreated = new PageRequest(page.intValue(),size.intValue(),sortCriteria);
+				/*Page<PrescriptionHistory> pageableData*/ List<PrescriptionHistory> listData = phRepo.findAllByPatientId(patientId, sortByTsCreated);				
+//				List<PrescriptionHistory> listData = pageableData.getContent();
+				prescriptionHistoryViews = phService.mapAll(listData);
+				
 			}else{
 				prescriptionHistoryViews = phService.mapAll(phRepo.findByPatientId(patientId));
 			}

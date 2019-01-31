@@ -156,8 +156,12 @@
     <mat-tab label="History" [disabled]="disableTabs">
 
       <!-- Dashboard view -->
-      <div *ngIf="dashboardDataSource.data && dashboardDataSource.data.length > 0">
-        <table mat-table [dataSource]="dashboardDataSource" class="mat-elevation-z8">
+      <div class="example-loading-shade" *ngIf="isLoadingResults">
+        <mat-spinner *ngIf="isLoadingResults"></mat-spinner>    
+      </div>  
+      
+        <table mat-table [dataSource]="dashboardDataSource" class="mat-elevation-z8"
+          matSort matSortActive="Date" matSortDisableClear matSortDirection="desc">
 
           <!-- ['Date','C/F', 'Treatment Plan', 'Treatment Done', 'Due', 'Next Appo'] -->
           <ng-container matColumnDef="Date">
@@ -215,7 +219,8 @@
           <tr mat-header-row *matHeaderRowDef="dashboardHistoryListColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: dashboardHistoryListColumns;" (click)="selectPrescription(row)"></tr>
         </table>
-      </div>
+        <mat-paginator [length]="resultsLength" [pageSize]="3"></mat-paginator>
+    
     </mat-tab>
 
     <!-- 

@@ -43,16 +43,16 @@ Correct due amount in history page -> Done
 if patient not found while searching, stop progress bar -> Done
 while viewing prescription, remove the remove button table row -> Done
 clinical finding saving format and viewing format does not match. Check uploading data -> Done
-api to update medicine, next appointment, fee(need a flag to denote newly added fees -> fee id), treatment plan
-Also take care of visit count accordingly
+api to update medicine, next appointment, fee(need a flag to denote newly added fees -> fee id), treatment plan -> Done
+Also take care of visit count accordingly -> Not required
 On succesful response of updating treatment plan. show toast/snack and update history in ui -> Done
-Load tab specific data on tab opening 
+Load tab specific data on tab opening  -> Done
 on successful patient addition go back to prescription page -> Done
-Add api and app logger in server
+Add api and app logger in server -> Done
 Fees table is appending new data with previous data while selecting prescription history
-Add medicine duration(How many days)
+Add medicine duration(How many days) -> Done
 Next appointment time not getting saved
 Capitalize patient name initials
-Prescription print doctor name aparna first priority
-Medicine history table with tsCreated timestamp while insert
-Multiple medicines are coming
+Prescription print doctor name aparna first priority -> Done
+Medicine history table with tsCreated timestamp while insert -> Done
+Multiple medicines are coming -> Don't know 

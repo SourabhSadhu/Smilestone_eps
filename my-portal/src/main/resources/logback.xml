@@ -37,7 +37,7 @@
 		<File>${catalina.base}/logs/e-prescription/e-prescription-api.log
 		</File>
 		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-			<fileNamePattern>${catalina.base}/logs/e-prescription/e-prescription.%i.log
+			<fileNamePattern>${catalina.base}/logs/e-prescription/e-prescription-api-%i.log
 			</fileNamePattern>
 			<minIndex>1</minIndex>
 			<maxIndex>100</maxIndex>

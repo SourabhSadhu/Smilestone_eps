@@ -22,11 +22,7 @@ import javax.persistence.Table;
 @Table(name = "prescription_history")
 @NamedQueries({ @NamedQuery(name = "PrescriptionHistory.findAll", query = "SELECT p FROM PrescriptionHistory p"),
 		@NamedQuery(name = "PrescriptionHistory.findByPatientId", query = "SELECT p FROM PrescriptionHistory p WHERE p.patientId = :patientId ORDER BY p.tsCreated DESC"),
-		/*
-		 * @NamedQuery(name = "PrescriptionHistory.findByPatientIdAndLimit", query =
-		 * "SELECT p FROM PrescriptionHistory p WHERE p.patientId = :patientId ORDER BY p.tsCreated DESC LIMIT :limit OFFSET :offset"
-		 * ),
-		 */
+		@NamedQuery(name = "PrescriptionHistory.getCountByPatientId", query = "select count(*) from PrescriptionHistory p WHERE p.patientId = :patientId"),
 		@NamedQuery(name = "PrescriptionHistory.findByPrescriptionAndPatientId", query = "SELECT p FROM PrescriptionHistory p WHERE p.patientId = :patientId AND p.prescriptionId = :prescriptionId ORDER BY p.tsCreated DESC"),
 		@NamedQuery(name = "PrescriptionHistory.getByDateRange", query = "SELECT p FROM PrescriptionHistory p ORDER BY p.tsCreated DESC") })
 public class PrescriptionHistory implements Serializable {

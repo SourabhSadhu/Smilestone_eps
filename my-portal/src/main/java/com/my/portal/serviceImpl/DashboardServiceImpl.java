@@ -70,10 +70,7 @@ public class DashboardServiceImpl implements DashboardService {
 	
 	@Override
 	public Long getDashboardCount(Long patientId) {
-		PrescriptionHistory filterBy = new PrescriptionHistory();
-		filterBy.setPatientId(patientId);
-		Example<PrescriptionHistory> exampleCriteria = Example.of(filterBy);
-		return phRepo.count(exampleCriteria);		
+		return phRepo.getCountByPatientId(patientId);		
 	}
 
 	@Override

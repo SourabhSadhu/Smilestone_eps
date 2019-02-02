@@ -21,7 +21,7 @@
         <async-supported>true</async-supported>        
         <init-param>
         	<param-name>initParam</param-name>
-        	<param-value>/downloadApkFile,/docUpload,/invoiceUpload,TnC</param-value>
+        	<param-value>/js,/fonts,/img,/index</param-value>
         </init-param>
     </filter>
     <filter-mapping>

@@ -313,7 +313,7 @@ export class CreatePrescriptionComponent implements OnInit {
     // )
 
     this.httpCom.getDashboardCount(patientId).subscribe(resp => {
-      if (resp && resp.status == 'SUCCESS') {
+      if (resp && resp.status == 'SUCCESS' && resp.resp > 0) {
         this.resultsLength = resp.resp
 
         merge(this.paginator.page)
@@ -324,18 +324,26 @@ export class CreatePrescriptionComponent implements OnInit {
               return this.httpCom.getDashboardPaginatedView(patientId, this.paginator.pageIndex, 3)
             }),
             map(data => {
-              if (data && data.status == 'SUCCESS') {
-                // Flip flag to show that loading has finished.
-                this.isLoadingResults = false;
-                this.dashboardDataSource = new MatTableDataSource<DashboardView>()
-                this.dashboardDataSource.data = data.resp
+              // Flip flag to show that loading has finished.
+              this.isLoadingResults = false;
+              if(data){
+                if (data && data.status == 'SUCCESS') {
+                  this.dashboardDataSource = new MatTableDataSource<DashboardView>()
+                  this.dashboardDataSource.data = data.resp
+                }else{
+                  this.commonService.showErrorSnackBar(this.snackBar, data.desc)
+                }
+              }else{
+                this.commonService.showErrorSnackBar(this.snackBar)
               }
               return data.resp;
             })
           ).subscribe(data => {
             console.log(data)
           });
-      }
+        }else {
+          this.tabSelection(2)
+        }
     })
   }
 

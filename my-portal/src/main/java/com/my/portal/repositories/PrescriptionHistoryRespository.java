@@ -12,6 +12,7 @@ import com.my.portal.entities.PrescriptionHistory;
 public interface PrescriptionHistoryRespository extends JpaRepository<PrescriptionHistory, Long> {
 	
 	List<PrescriptionHistory> findByPatientId(@Param("patientId") Long patientId);
+	Long getCountByPatientId(@Param("patientId") Long patientId);
 	List<PrescriptionHistory> findAllByPatientId(@Param("patientId") Long patientId, Pageable pageable);
 	List<PrescriptionHistory> findByPrescriptionAndPatientId(@Param("patientId") Long patientId, @Param("prescriptionId") Long prescriptionId);
 	List<PrescriptionHistory> getByDateRange(@Param("startDate") Timestamp startDate, @Param("endDate") Timestamp endDate);	

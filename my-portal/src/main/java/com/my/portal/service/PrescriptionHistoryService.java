@@ -9,7 +9,7 @@ import com.my.portal.model.PrescriptionHistoryView;
 public interface PrescriptionHistoryService {
 
 	List<PrescriptionHistoryView> findByPatientId(Long patientId);
-	List<PrescriptionHistoryView> findByPrescriptionAndPatientId(Long patientId, Long prescriptionId);
+	PrescriptionHistoryView findByPrescriptionAndPatientId(Long patientId, Long prescriptionId);
 	List<PrescriptionHistoryView> getByDateRange(Timestamp startDate, Timestamp endDate);
 	PrescriptionHistoryView findOne(Long id);
 	PrescriptionHistoryView addPrescription(PrescriptionHistoryView v);

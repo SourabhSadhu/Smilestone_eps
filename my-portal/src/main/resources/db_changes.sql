@@ -110,3 +110,28 @@ ALTER TABLE eps.medicine_history
     
 ALTER TABLE eps.fees_breakup
     RENAME payment_ts TO ts_updated;    
+    
+    
+-- Changes on 17-02-19
+delete from eps.medicine_master;
+insert into eps.medicine_master (medicine_name,disease_code,disease_name,clinical_availability,age_group,treatment_id,dosage) values('Tab.Augmentin 625mg','','',0,'10to30',1,'');
+insert into eps.medicine_master (medicine_name,disease_code,disease_name,clinical_availability,age_group,treatment_id,dosage) values('Tab.Clavum 625mg','','',0,'10to30',1,'');
+insert into eps.medicine_master (medicine_name,disease_code,disease_name,clinical_availability,age_group,treatment_id,dosage) values('Cap.Mox.500mg','','',0,'10to30',1,'');
+insert into eps.medicine_master (medicine_name,disease_code,disease_name,clinical_availability,age_group,treatment_id,dosage) values('Flagyl 400 mg','','',0,'10to30',1,'');
+insert into eps.medicine_master (medicine_name,disease_code,disease_name,clinical_availability,age_group,treatment_id,dosage) values('Tab.Hifenac-P','','',0,'10to30',1,'');
+insert into eps.medicine_master (medicine_name,disease_code,disease_name,clinical_availability,age_group,treatment_id,dosage) values('Tab.Ketorol DT','','',0,'10to30',1,'');
+insert into eps.medicine_master (medicine_name,disease_code,disease_name,clinical_availability,age_group,treatment_id,dosage) values('Tab.Pan 40mg','','',0,'10to30',1,'');
+insert into eps.medicine_master (medicine_name,disease_code,disease_name,clinical_availability,age_group,treatment_id,dosage) values('Tab.Azithral500mg','','',0,'10to30',1,'');
+insert into eps.medicine_master (medicine_name,disease_code,disease_name,clinical_availability,age_group,treatment_id,dosage) values('Tab.Tabaz-i','','',0,'10to30',1,'');
+insert into eps.medicine_master (medicine_name,disease_code,disease_name,clinical_availability,age_group,treatment_id,dosage) values('Tab.Lynx500mg','','',0,'10to30',1,'');
+insert into eps.medicine_master (medicine_name,disease_code,disease_name,clinical_availability,age_group,treatment_id,dosage) values('Tab./Cap.Dox TSL','','',0,'10to30',1,'');
+insert into eps.medicine_master (medicine_name,disease_code,disease_name,clinical_availability,age_group,treatment_id,dosage) values('Tab.Taxim200','','',0,'10to30',1,'');
+insert into eps.medicine_master (medicine_name,disease_code,disease_name,clinical_availability,age_group,treatment_id,dosage) values('Tab.Ceftas CL200','','',0,'10to30',1,'');
+insert into eps.medicine_master (medicine_name,disease_code,disease_name,clinical_availability,age_group,treatment_id,dosage) values('Tab.Levoflox 500mg','','',0,'10to30',1,'');
+insert into eps.medicine_master (medicine_name,disease_code,disease_name,clinical_availability,age_group,treatment_id,dosage) values('Tab.Pan D','','',0,'10to30',1,'');
+insert into eps.medicine_master (medicine_name,disease_code,disease_name,clinical_availability,age_group,treatment_id,dosage) values('Tab.Alprax 0.25','','',0,'10to30',1,'');
+insert into eps.medicine_master (medicine_name,disease_code,disease_name,clinical_availability,age_group,treatment_id,dosage) values('Tab.Zolfresh 5mg','','',0,'10to30',1,'');
+insert into eps.medicine_master (medicine_name,disease_code,disease_name,clinical_availability,age_group,treatment_id,dosage) values('Tab.Zolfresh 10mg','','',0,'10to30',1,'');
+insert into eps.medicine_master (medicine_name,disease_code,disease_name,clinical_availability,age_group,treatment_id,dosage) values('Tab.Myospaz Forte','','',0,'10to30',1,'');
+insert into eps.medicine_master (medicine_name,disease_code,disease_name,clinical_availability,age_group,treatment_id,dosage) values('Tab.Paracetamol 650mg','','',0,'10to30',1,'');
+insert into eps.medicine_master (medicine_name,disease_code,disease_name,clinical_availability,age_group,treatment_id,dosage) values('Tab.Paracetamol 500 mg','','',0,'10to30',1,'');    

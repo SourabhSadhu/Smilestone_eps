@@ -37,8 +37,8 @@ public class PrescriptionHistoryServiceImpl implements PrescriptionHistoryServic
 	}
 
 	@Override
-	public List<PrescriptionHistoryView> findByPrescriptionAndPatientId(Long patientId, Long prescriptionId) {
-		return mapAll(repo.findByPrescriptionAndPatientId(patientId, prescriptionId));
+	public PrescriptionHistoryView findByPrescriptionAndPatientId(Long patientId, Long prescriptionId) {
+		return map(repo.findByPrescriptionAndPatientId(patientId, prescriptionId));
 	}
 
 	@Override

@@ -115,7 +115,7 @@ export class TreatmentPlanComponent implements OnInit, OnDestroy {
       // this.selectedTreatmentPlanHistView.prescriptionId = this.treatmentTabPrescriptionId
       this.selectedTreatmentPlanHistView.status = this.treatmentStatusForm.value
       console.log("Add Treatment Plan", JSON.stringify(this.selectedTreatmentPlanHistView))
-      let url : string = this.httpComService.getAddTreatmentPlanUrl+'?patientId='+this.selectedTreatmentPlanHistView.patientId + '&prescriptionId='+ this.selectedTreatmentPlanHistView.prescriptionId
+      let url : string = this.httpComService.getAddTreatmentPlanHistUrl+'?patientId='+this.selectedTreatmentPlanHistView.patientId + '&prescriptionId='+ this.selectedTreatmentPlanHistView.prescriptionId
       console.log("URL", JSON.stringify(url))
       this.httpComService.genericPostRequest(
         url, 

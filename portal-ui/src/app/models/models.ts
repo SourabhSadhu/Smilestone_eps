@@ -183,9 +183,9 @@ export class PrescriptionPrintView {
     name: string;
     sex: string;
     age: string;
-    phoneNo: string;
-    department: string;
-    doctor: string;
+    // phoneNo: string;
+    // department: string;
+    // doctor: string;
     prescriptionId: string;
     regDate: string;
     visitNo: string;
@@ -195,8 +195,10 @@ export class PrescriptionPrintView {
     chiefComplain: string;
     medicalHistory: string;
     clinicalFindings: string;
+    provisionalDiagnosis: string;
     advice: string;
     medicineCurrent: string[];
     medicineAll: string[];
     tphv: TreatmentPlanHistoryView[];
+    tphvCompleted: TreatmentPlanHistoryView[];
 }

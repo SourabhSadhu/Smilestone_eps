@@ -12,12 +12,14 @@ import org.joda.time.Period;
 import org.joda.time.PeriodType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.my.portal.model.MedicalHistoryView;
 import com.my.portal.model.MedicineHistoryView;
 import com.my.portal.model.PatientView;
 import com.my.portal.model.PrescriptionHistoryView;
 import com.my.portal.model.PrescriptionPrintModel;
+import com.my.portal.model.TreatmentPlanHistoryView;
 import com.my.portal.service.MedicalHistoryService;
 import com.my.portal.service.MedicineService;
 import com.my.portal.service.PatientService;
@@ -31,18 +33,11 @@ public class PrescriptionPrintServiceImpl implements PrescriptionPrintService {
 	@Autowired PatientService pService;
 	@Autowired PrescriptionHistoryService prescriptionHistoryService;
 	@Autowired MedicineService medicineService;
-//	@Autowired FeesBreakupService fessBreakupService;
 	@Autowired MedicalHistoryService medicalHistoryService;
 	@Autowired TreatmentPlanHistoryService tphService;
-	private final String DEPARTMENT = "department";
-	private final String DOCTOR = "doctor";
 	private final String DATE_TIME_FORMAT = "dd-MM-yyyy hh:mm aa";
-//	private final String DATE_FORMAT = "dd-MM-yyyy";
-//	private final String TIME_FORMAT = "hh:mm aa";
-//	private long totalAmount = 0;
-//	private long paidAmount = 0;
 	private String medicalHistoryViewString = "";
-	private final long MEDICINE_CURRENT_SEPERATOR_MILLIS = 86400;
+	private final long MILLIS_IN_A_DAY = 86400000l;
 	
 	@Override
 	public PrescriptionPrintModel getPrescrition(long patientId, long prescriptionId) {
@@ -67,11 +62,14 @@ public class PrescriptionPrintServiceImpl implements PrescriptionPrintService {
 //				prescriptionPrintModel.setAmountPaid(Long.toString(paidAmount));
 //				prescriptionPrintModel.setAmountDue(Long.toString(totalAmount - paidAmount));
 				medicalHistoryViewString = "";
-				List<MedicalHistoryView> medicalHistoryView = medicalHistoryService.getByPrescriptionId(patientId);
+				List<MedicalHistoryView> medicalHistoryView = medicalHistoryService.getByPrescriptionId(prescriptionId);
 				medicalHistoryView.forEach(mhv -> {
-					medicalHistoryViewString += mhv.getMedicalHistoryName().concat(", ");
+					if(StringUtils.hasText(medicalHistoryViewString)){						
+						medicalHistoryViewString += ", ";
+					}
+					medicalHistoryViewString += mhv.getMedicalHistoryName();
 				});
-				medicalHistoryViewString = medicalHistoryViewString.substring(0,medicalHistoryViewString.length() - 2);
+				
 				prescriptionPrintModel.setMedicalHistory(medicalHistoryViewString);
 				
 				List<MedicineHistoryView> medicineHistories = medicineService.getMedicineHistoryByPrescriptionId(prescriptionId);				
@@ -85,13 +83,17 @@ public class PrescriptionPrintServiceImpl implements PrescriptionPrintService {
 					}
 					for(MedicineHistoryView mh : medicineHistories){					
 						prescriptionPrintModel.getMedicineAll().add(mh.getMedicineName().concat(" ").concat(mh.getDosage()));
-						if(lastMedicineTs > 0 && lastMedicineTs - mh.getTsCreated() <= MEDICINE_CURRENT_SEPERATOR_MILLIS){
+						if(lastMedicineTs > 0 && lastMedicineTs - mh.getTsCreated() <= MILLIS_IN_A_DAY){
 							prescriptionPrintModel.getMedicineCurrent().add(mh.getMedicineName().concat(" ").concat(mh.getDosage()));
 						}
 					}		
 				}				
-				prescriptionPrintModel.setTphv(tphService.findByPatientAndPrescriptionId(patientId, prescriptionId).stream().filter(tph -> {
-					if(tph.getStatus().equals("Completed")) return true;
+				List<TreatmentPlanHistoryView> tphv = tphService.findByPatientAndPrescriptionId(patientId, prescriptionId);
+				prescriptionPrintModel.setTphv(tphv);
+				prescriptionPrintModel.setTphvCompleted(tphv.stream().filter(tph -> {
+//					if(StringUtils.hasText(tph.getStatus()) && tph.getStatus().equals("Completed")) return true;
+					if(null != tph.getTsCreated() && System.currentTimeMillis() - tph.getTsCreated() <= MILLIS_IN_A_DAY) return true;
+					if(null != tph.getTsModified() && System.currentTimeMillis() - tph.getTsModified() <= MILLIS_IN_A_DAY) return true;
 					else return false;
 				}).collect(Collectors.toList()));
 				
@@ -108,10 +110,8 @@ public class PrescriptionPrintServiceImpl implements PrescriptionPrintService {
 		response.setSex(reqPatient.getSex());
 		response.setChiefComplain(reqPrescription.getChiefComplaint());
 		response.setClinicalFindings(reqPrescription.getClinicalFindings());
-		response.setDepartment(System.getProperty(DEPARTMENT, "Oral and Maxillofacial Surgery OPD"));
-		response.setDoctor(System.getProperty(DOCTOR, "Dr. Mitrasen Manna / Dr. Aparna Gupta"));
+		response.setProvisionalDiagnosis(reqPrescription.getProvisionalDiagnosis());
 		response.setName(reqPatient.getFirstName().concat(" ").concat(reqPatient.getLastName()));
-		response.setClinicalFindings(reqPrescription.getClinicalFindings());
 		response.setPrintableNotes(reqPrescription.getPrintableNotes());
 		response.setPrescriptionId(Long.toString(reqPrescription.getPrescriptionId()));
 		
@@ -119,8 +119,6 @@ public class PrescriptionPrintServiceImpl implements PrescriptionPrintService {
 			Date nextAppoTs = new Date(reqPrescription.getNextAppointment().getTime());
 			response.setNextAppointmentDateTime(sdf.format(nextAppoTs));
 		}
-		response.setPhoneNo(null != reqPatient.getContactNo1() ? reqPatient.getContactNo1().toString()
-				.concat(null != reqPatient.getContactNo2() ? " / ".concat(reqPatient.getContactNo2().toString()) : "") : "");
 		response.setPrescriptionId(reqPrescription.getPrescriptionId().toString());
 		
 		if(null != reqPatient.getTsCreated()){

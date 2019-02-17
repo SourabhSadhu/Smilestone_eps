@@ -509,6 +509,12 @@ export class DummyResponse {
     ]
   };
 
+  public getDashboardCountView = {
+    "status": "SUCCESS",
+    "desc": null,
+    "resp": 3
+  }
+
   public getDashboardView = {
     "status": "SUCCESS",
     "desc": null,
@@ -751,6 +757,7 @@ export class DummyResponse {
       "nextAppointmentDateTime": "09-01-2019 12:00 AM",
       "printableNotes": "Printed",
       "chiefComplain": "Dental Pain",
+      "provisionalDiagnosis": "Diagnosis critical",
       "medicalHistory": "Asthma, Cardiac diseases, Hypertension, Hypotension, Hyperthyroidism, Drug hypersensitivity",
       "clinicalFindings": "RETAINED ROOT IN 23,32,36,37,45 \n CARIOUS 13,14",
       "advice": "Extraction in 23, 36, 37, 45, 13, 14.\n Come within 9:30 AM after having full meal with an adult addendent except SUNDAYs and enlisted holidays.\n EXTRACTION OF 23 HAS BEEN DONE UNDER L.A.\n HEMOSTASIS HAS BEEN ACHIEVED.\n MOIST COTTON PACK GIVEN.\n SOFT AND COLD DIET FOR NEXT 24 HOURS.\n WARM SALINE MOUTH WASH FREQUENTLY AFTER 24 HOURS.\n IN CASE OF ANY EMERGENCY, ADVISED TO GO TO ANY NEARBY GOVT HOSPITAL.",
@@ -765,6 +772,32 @@ export class DummyResponse {
         "Rantidine Tab. I.P. 150mg 2 before meal 5 days"
       ],
       "tphv": [
+        {
+          "clinicalFinding": "Periodontities",
+          "note": null,
+          "patientId": 1,
+          "prescriptionId": 40,
+          "toothIndex": "34",
+          "tsCreated": 1546330836694,
+          "tsModified": null,
+          "status": "Completed",
+          "tname": "RCT",
+          "tid": 9
+        },
+        {
+          "clinicalFinding": "Periodontities",
+          "note": null,
+          "patientId": 1,
+          "prescriptionId": 40,
+          "toothIndex": "17",
+          "tsCreated": 1546330836694,
+          "tsModified": null,
+          "status": "Pending",
+          "tname": "Removal",
+          "tid": 9
+        }
+      ],
+      "tphvCompleted": [
         {
           "clinicalFinding": "Periodontities",
           "note": null,

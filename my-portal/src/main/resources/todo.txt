@@ -56,3 +56,6 @@ Capitalize patient name initials
 Prescription print doctor name aparna first priority -> Done
 Medicine history table with tsCreated timestamp while insert -> Done
 Multiple medicines are coming -> Don't know 
+Print only last visit details in prescription revisit print and segregate visit wise selections.
+
+

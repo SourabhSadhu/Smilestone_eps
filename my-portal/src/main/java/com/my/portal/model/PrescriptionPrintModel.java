@@ -9,9 +9,9 @@ public class PrescriptionPrintModel implements Serializable {
 	private String name;
 	private String sex;
 	private String age;
-	private String phoneNo;
-	private String department; 
-	private String doctor;
+//	private String phoneNo;
+//	private String department; 
+//	private String doctor;
 	private String prescriptionId;
 	private String regDate;
 	private String visitNo;
@@ -21,10 +21,12 @@ public class PrescriptionPrintModel implements Serializable {
 	private String chiefComplain;
 	private String medicalHistory; 
 	private String clinicalFindings;
+	private String provisionalDiagnosis;
 	private String advice;
 	private List<String> medicineCurrent;
 	private List<String> medicineAll;
 	List<TreatmentPlanHistoryView> tphv;
+	List<TreatmentPlanHistoryView> tphvCompleted;
 /*	private String 
 	private String 
 	private String 
@@ -48,24 +50,24 @@ public class PrescriptionPrintModel implements Serializable {
 	public void setAge(String age) {
 		this.age = age;
 	}
-	public String getPhoneNo() {
-		return phoneNo;
-	}
-	public void setPhoneNo(String phoneNo) {
-		this.phoneNo = phoneNo;
-	}
-	public String getDepartment() {
-		return department;
-	}
-	public void setDepartment(String department) {
-		this.department = department;
-	}
-	public String getDoctor() {
-		return doctor;
-	}
-	public void setDoctor(String doctor) {
-		this.doctor = doctor;
-	}
+//	public String getPhoneNo() {
+//		return phoneNo;
+//	}
+//	public void setPhoneNo(String phoneNo) {
+//		this.phoneNo = phoneNo;
+//	}
+//	public String getDepartment() {
+//		return department;
+//	}
+//	public void setDepartment(String department) {
+//		this.department = department;
+//	}
+//	public String getDoctor() {
+//		return doctor;
+//	}
+//	public void setDoctor(String doctor) {
+//		this.doctor = doctor;
+//	}
 	public String getPrescriptionId() {
 		return prescriptionId;
 	}
@@ -120,6 +122,12 @@ public class PrescriptionPrintModel implements Serializable {
 	public void setClinicalFindings(String clinicalFindings) {
 		this.clinicalFindings = clinicalFindings;
 	}
+	public final String getProvisionalDiagnosis() {
+		return provisionalDiagnosis;
+	}
+	public final void setProvisionalDiagnosis(String provisionalDiagnosis) {
+		this.provisionalDiagnosis = provisionalDiagnosis;
+	}
 	public String getAdvice() {
 		return advice;
 	}
@@ -143,5 +151,11 @@ public class PrescriptionPrintModel implements Serializable {
 	}
 	public final void setTphv(List<TreatmentPlanHistoryView> tphv) {
 		this.tphv = tphv;
+	}
+	public final List<TreatmentPlanHistoryView> getTphvCompleted() {
+		return tphvCompleted;
+	}
+	public final void setTphvCompleted(List<TreatmentPlanHistoryView> tphvCompleted) {
+		this.tphvCompleted = tphvCompleted;
 	}
 }

@@ -71,7 +71,7 @@ public class TreatmentPlanController {
 		}
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/add-treatment-plan", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, value = "/add-treatment-plan-hist", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<?> addTreatmentPlan(@RequestBody TreatmentPlanHistoryView view) 
 	{

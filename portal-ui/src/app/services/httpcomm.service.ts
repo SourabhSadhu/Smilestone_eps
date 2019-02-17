@@ -11,7 +11,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class HttpcommService {
 
   dummyResp : DummyResponse;
-  dummy = true;
+  dummy = false;
   resp : Response;
   baseUrl = 'http://localhost:12000/my-portal/';
   ageGrpUrl = this.baseUrl + 'age-group/get-age-group?age=';
@@ -35,7 +35,7 @@ export class HttpcommService {
   getDashboardUrl = this.baseUrl + 'dashboard/get-dashboard?';
   getDashboardCountUrl = this.baseUrl + 'dashboard/get-dashboard-count?';
   postAddClinicalFindingUrl = this.baseUrl + 'clinical-finding/add-clinical-finding'
-  getAddTreatmentPlanUrl = this.baseUrl + 'trtmnt/add-treatment-plan'
+  getAddTreatmentPlanHistUrl = this.baseUrl + 'trtmnt/add-treatment-plan-hist'
   getPrescriptionPrintViewUrl = this.baseUrl + 'prescription-print/get?'
   
   constructor(public http : HttpClient) {
@@ -63,11 +63,19 @@ export class HttpcommService {
   }
 
   getDashboardCount(patientId: number): Observable<Response>{
-    return this.genericGetRequest(this.getDashboardCountUrl+'patientId='+patientId,"Dashboard count")
+    if(this.dummy){      
+      return of(this.parseData(this.dummyResp.getDashboardCountView));
+    }else{
+      return this.genericGetRequest(this.getDashboardCountUrl+'patientId='+patientId,"Dashboard count")
+    }
   }
 
   getDashboardPaginatedView(patientId: number, page: number, size: number): Observable<Response>{
-    return this.genericGetRequest(`${this.getDashboardUrl}patientId=${patientId}&page=${page}&size=${size}`)
+    if(this.dummy){      
+      return of(this.parseData(this.dummyResp.getDashboardView));
+    }else{
+      return this.genericGetRequest(`${this.getDashboardUrl}patientId=${patientId}&page=${page}&size=${size}`)
+    }
   }
 
   getAgeGroup(age : string) : Observable<Response>{

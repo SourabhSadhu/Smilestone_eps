@@ -54,11 +54,9 @@ import { CreatePrescriptionComponent } from './create-prescription/create-prescr
 import { MaterialTestComponent } from './material-test/material-test.component';
 import { DialogToothClinicalfindings, CustomFeeInsertionDialog } from './create-prescription/create-prescription.component';
 import { MedicineInsertionDialog } from './create-prescription/medicine-dialog/medicine-insertion-dialog-component'
-import { PrintPrescriptionComponent } from './print-prescription/print-prescription.component';
 import { TreatmentPlanComponent } from './treatment-plan/treatment-plan.component';
 import { PrintComponent } from './print/print.component';
 import { MatSortTableComponent } from './mat-sort-table/mat-sort-table.component';
-import { from } from 'rxjs';
 
 @NgModule({
   declarations: [
@@ -71,7 +69,6 @@ import { from } from 'rxjs';
     DialogToothClinicalfindings,
     CustomFeeInsertionDialog,
     MedicineInsertionDialog,
-    PrintPrescriptionComponent,
     TreatmentPlanComponent,
     PrintComponent,
     MatSortTableComponent

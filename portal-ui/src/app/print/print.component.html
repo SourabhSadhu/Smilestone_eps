@@ -106,15 +106,42 @@
                     </tr>
                     <tr>
                         <td style="width:40%">
-                            CLINICAL EXAMINATION:
+                            CLINICAL FINDINGS:
                         </td>
                         <td style="width:70%">
                             {{printView.clinicalFindings}}
                         </td>
                     </tr>
+                    <tr>
+                        <td>
+                            <p class="smaller-border"></p>
+                        </td>
+                        <td>
+                            <p class="smaller-border"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:40%">
+                            PROVISIONAL DIAGNOSIS:
+                        </td>
+                        <td style="width:70%">
+                            {{printView.provisionalDiagnosis}}
+                        </td>
+                    </tr>                    
                 </table>
+                <div class="border"></div>
+                <div *ngIf="printView.tphv && printView.tphv.length > 0">                    
+                    <p><b>Treatment Plan:</b></p>
+                    <div>
+                        <ol>
+                            <li *ngFor="let tphvItem of printView.tphv">
+                                {{tphvItem.tname}} on {{tphvItem.toothIndex}} for {{tphvItem.clinicalFinding}} is {{tphvItem.status}}
+                            </li>
+                        </ol>
+                    </div>
+                </div>
                 <div *ngIf="printView.advice">
-                    <div class="border"></div>
+                    <div class="smaller-border"></div>
                     <p><b>ADVICE</b></p>
                     <div>
                         <ul>
@@ -133,7 +160,7 @@
                         </ol>
                     </div>
                 </div>
-                <div id="medicine" *ngIf="printView.medicineCurrent">
+                <div id="medicine" *ngIf="printView.medicineCurrent && printView.medicineCurrent.length > 0">
                     <div class="smaller-border"></div>
                     <p><b>MEDICINE</b></p>
                     <div>
@@ -156,10 +183,6 @@
                             <div class="block2" style="color:red"><b> [B.D.S., M.D.S. (W.B.U.H.S)]</b></div>
                         </td>
                     </tr>
-                    <!-- <tr>
-                                <td class="left" style="color:red"><b>B.D.S. (W.B.U.H.S)</b></td>
-                                <td class="right" style="color:red"><b>B.D.S., M.D.S. (W.B.U.H.S)</b></td>
-                            </tr> -->
                     <tr>
                         <td style="color:blue">Regd No: 3350A</td>
                         <td class="right" style="color:blue">Regd No: 5883-A</td>
@@ -191,12 +214,25 @@
                 </button>
             </div>            
             <div id="printableRevisitPrescriptionContent">
-                <div *ngIf="printView.tphv">
+                <div class="smaller-border"></div>
+                <div>Visit count : {{printView.visitNo}}</div>
+                <div class="noPrint" *ngIf="printView.tphv && printView.tphv.length > 0">
+                    <div class="smaller-border"></div>
+                    <p><b>Work History:</b></p>
+                    <div>
+                        <ol>
+                            <li *ngFor="let tphvItem of printView.tphv">
+                                {{tphvItem.tname}} on {{tphvItem.toothIndex}} for {{tphvItem.clinicalFinding}} is {{tphvItem.status}}
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <div *ngIf="printView.tphvCompleted && printView.tphvCompleted.length > 0">
                     <div class="smaller-border"></div>
                     <p><b>Work Done:</b></p>
                     <div>
                         <ol>
-                            <li *ngFor="let tphvItem of printView.tphv">
+                            <li *ngFor="let tphvItem of printView.tphvCompleted">
                                 {{tphvItem.tname}} done on {{tphvItem.toothIndex}} for {{tphvItem.clinicalFinding}}
                             </li>
                         </ol>

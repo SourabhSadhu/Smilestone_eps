@@ -140,12 +140,11 @@ public class DashboardServiceImpl implements DashboardService {
 			if (null != phv) {
 				if (null != phv.getPatientId()) {
 					PatientView p1 = pService.findById(phv.getPatientId());
-					if (null == p1 || null == p1
-							.getPId()/* || 0 >= p1.getPId().longValue() */) {
+					if (null == p1 || null == p1.getPId()/* || 0 >= p1.getPId().longValue() */) {
 						throw new ValidationException(ErrorCode.INVALID_PATIENT_ID);
 					}
 					PrescriptionHistory phEntity = phService.map(phv);
-					phEntity.setVisitCount(1);
+					phEntity.setVisitCount(1l);
 					phEntity = phRepo.saveAndFlush(phEntity);
 
 					List<FeesBreakup> fbl = fbService.map(v.getFbl());
@@ -203,13 +202,12 @@ public class DashboardServiceImpl implements DashboardService {
 			PrescriptionHistoryView phv = v.getpHistory();
 			if (null != phv && null != phv.getPatientId() && null != phv.getPrescriptionId()) {
 
-				List<PrescriptionHistoryView> existingRecords = phService
+				PrescriptionHistoryView existing = phService
 						.findByPrescriptionAndPatientId(phv.getPatientId(), phv.getPrescriptionId());
-				if (null == existingRecords || existingRecords.isEmpty()) {
+				if (null == existing ) {
 					throw new ValidationException(ErrorCode.INVALID_PATIENT_ID_OR_PRESCRIPTION_ID);
 				}
 
-				PrescriptionHistoryView existing = existingRecords.get(0);
 				// Update next appointment, fees, medicines
 				if (phv.getNextAppointment() != null) {
 					existing.setNextAppointment(phv.getNextAppointment());

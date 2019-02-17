@@ -5,9 +5,9 @@
     <p *ngFor = "let menu of navMenus">
       <button mat-button routerLink={{menu.path}} (click) = "sidenav.close()">{{menu.name}}</button>  
     </p>
-    <p>      
+    <!-- <p>      
       <button mat-button [routerLink]="['print']" [queryParams]="{ patientId:1 , prescriptionId:12}" (click) = "sidenav.close()">Print</button>
-    </p>
+    </p> -->
   </mat-sidenav>
 
   <mat-sidenav-content>

@@ -11,7 +11,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class HttpcommService {
 
   dummyResp : DummyResponse;
-  dummy = false;
+  dummy = true;
   resp : Response;
   baseUrl = 'http://localhost:12000/my-portal/';
   ageGrpUrl = this.baseUrl + 'age-group/get-age-group?age=';

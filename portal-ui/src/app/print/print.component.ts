@@ -6,49 +6,54 @@ import { MatSnackBar, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/
 import { PrescriptionPrintView } from '../models/models';
 import { HttpcommService } from '../services/httpcomm.service';
 import { CommonService } from '../services/commonservice.service';
-import { DummyResponse } from '../services/dummyresponse';
+import { HeaderFooter } from './header-footer';
 
 @Component({
     selector: 'app-print',
     templateUrl: './print.component.html',
-    styleUrls: ['./print.component.css']
+    styleUrls: ['./print-medium-site.css', './image.css']
 })
 export class PrintComponent implements OnInit, AfterViewInit {
 
-    printView: PrescriptionPrintView;
+    printView = new PrescriptionPrintView();
     httpService: HttpcommService;
     commonService: CommonService;
     requestLoading = true;
+    isDummy: boolean;
     date: Date = new Date()
+    headerFooter : HeaderFooter;
 
     constructor(private route: ActivatedRoute, httpClient: HttpClient,
         public matSnackbar: MatSnackBar, public router: Router,
         public dialog: MatDialog) {
         this.httpService = new HttpcommService(httpClient);
+        this.isDummy = this.httpService.dummy;
         this.commonService = new CommonService();
+        this.headerFooter = new HeaderFooter(this.isDummy)
+        console.log(this.isDummy)
     }
 
-    ngAfterViewInit() {
+    ngOnInit() {
         const patientId = +this.route.snapshot.queryParamMap.get('patientId');
         const prescriptionId = +this.route.snapshot.queryParamMap.get('prescriptionId');
-        
+
         if (patientId > 0 && prescriptionId > 0) {
             this.httpService.getPrescriptionPrintView(patientId, prescriptionId).subscribe(resp => {
                 this.requestLoading = false
                 if (resp && resp.status == 'SUCCESS') {
                     this.printView = resp.resp;
-                } else {                    
-                    this.commonService.showErrorSnackBar(this.matSnackbar,resp.desc,() =>{
+                } else {
+                    this.commonService.showErrorSnackBar(this.matSnackbar, resp.desc, () => {
                         this.router.navigate([''])
                     })
                 }
             })
-        }else{ 
-            this.router.navigate([''])            
+        } else {
+            this.router.navigate([''])
         }
     }
 
-    ngOnInit() {
+    ngAfterViewInit() {
         /**
          * More details on route and queryparams
          * https://www.tektutorialshub.com/angular/angular-passing-optional-query-parameters-to-route/
@@ -62,39 +67,154 @@ export class PrintComponent implements OnInit, AfterViewInit {
 
     printPrescription() {
         var prescriptionContent = document.getElementById("printableFullPrescriptionContent");
-        // if (prescriptionContent.requestFullscreen) {
-        //     prescriptionContent.requestFullscreen();
-        // }
-        // var openWindow = window.open("", "_blank", "fullscreen=yes,width=800,height=600")
-        this.processPrintProcess(prescriptionContent.innerHTML)
+        this.processPrintProcess(this.headerFooter.header + prescriptionContent.innerHTML + this.headerFooter.footer)
     }
-    printRevisit(){
-        var revisit = document.getElementById("printableRevisitPrescriptionContent").innerHTML        
-        this.processPrintProcess(revisit)
+    printRevisit() {
+        const dialogRef = this.dialog.open(HeaderFooterConfirmationDialog, {
+            width: '350px'
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                var revisit = document.getElementById("printableRevisitPrescriptionContent").innerHTML
+                this.processPrintProcess(this.headerFooter.header + revisit + this.headerFooter.footer)
+            } else {
+                var revisit = document.getElementById("printableRevisitPrescriptionContent").innerHTML
+                this.processPrintProcess(revisit)
+            }
+        });
+
+
+
     }
-    processPrintProcess(htmlData: string){
-        var openWindow = window.open("", "target", "fullscreen=yes")
-        var css = this.printStylesheet
+    processPrintProcess(htmlData: string) {
+        // var openWindow = window.open("http://localhost:4200/print?patientId=1&prescriptionId=34", "_blank", "fullscreen=yes")
+        var openWindow = window.open("http://localhost:4200/print?patientId=1&prescriptionId=34", "_blank",'height='+screen.height+', width='+screen.width)
+        var css = this.printMediumCss
         let printablePage =
-            `<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"> 
-        <html lang="en"> 
-          <head> 
-            <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" /> 
-            <title>E - prescription</title>
-            ${css}
-          </head> 
-          <body>
-       ${htmlData}
-       </body></html>`;
+            `<!DOCTYPE html"> 
+            <html lang="en"> 
+                <head> 
+                    <title>E - prescription</title>
+                    ${css}
+                </head> 
+                <body>
+                    ${htmlData}
+                </body>
+            </html>`;
         openWindow.document.open()
         openWindow.document.write(printablePage)
-        openWindow.document.close
-        openWindow.focus();
-        if(!this.httpService.dummy){
+        setTimeout(() => {
+            openWindow.document.close
+            openWindow.focus();
             openWindow.print();
-            openWindow.close();
-        }
+            // openWindow.close();
+        }, 2 * 1000)
+        
     }
+
+
+
+    printMediumCss: string = `
+    <style>
+    .page-header, .page-header-space {
+        /* height: 100px; */
+        /* Changing height as per requirement */
+        height: 200px;
+      }
+      
+      .page-footer, .page-footer-space {
+        height: 90px;
+      }
+        
+      .page-footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;        
+      }
+        
+      .page-header {
+        position: fixed;
+        top: 0mm;
+        width: 100%;
+      }
+        
+      .page {
+        page-break-after: always;
+      }
+        
+      @page {
+        margin: 20mm
+      }
+        
+      @media print {
+        thead {display: table-header-group;} 
+        tfoot {display: table-footer-group;}          
+        button, .noprint{display: none;}          
+        body {margin: 0;}
+        div, table, ul, ol {page-break-inside: avoid;}
+      }
+      
+      /* Custom entries */
+      .fab {
+        position: fixed;
+        bottom: 150px;
+        right: 30px;
+      }
+      .left {
+        text-align: left;    
+      }
+      .center {
+          text-align: center;
+      }
+      .right {
+          text-align: right;
+      }
+      .smaller-border{
+          border-top: 1.5px solid blue;
+      }
+      p.header {
+        font-family: 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-size: 18px;
+      }
+      
+      p.sub-header{
+        /* font-family: 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
+        font-size: 15px;
+        margin: 9px;
+      }
+      .light-green-letterhead{
+        color : #6ab689
+      }
+      .deep-green-letterhead{
+        color : #6da945
+      }
+      .left {
+        text-align: left;    
+      }
+      .center {
+        text-align: center;
+      }
+      .right {
+        text-align: right;
+      }
+      .border{
+        border-top: 3px solid blue;
+      }
+      .smaller-border{
+        border-top: 1.5px solid blue;
+      }
+      .block1,.block2{
+        display: inline;
+      }
+      p,div,td { 
+        text-indent:   1em;
+        margin-top:    .5em;
+        margin-bottom: .5em;
+        line-height: 1.5;
+      }
+      </style>
+    `
     printStylesheet: string = `
     <style>
     /*  ------ Global settings */
@@ -116,10 +236,46 @@ export class PrintComponent implements OnInit, AfterViewInit {
       /* page-break-before: always; */
     }
     
-    /* p {
-        orphans:3;
-        widows:3;
-    } */
+    p.header {
+        font-family: 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-size: 25px;
+        /*display:inline-block;
+        -webkit-transform:scale(2,1); * Safari and Chrome *
+        -moz-transform:scale(2,1); * Firefox *
+        -ms-transform:scale(2,1); * IE 9 *
+        -o-transform:scale(2,1); Opera 
+        transform:scale(2,1); */
+        -webkit-transform:scale(2,1);
+        transform:scale(2,1);
+      }
+    
+    p.sub-header{
+        font-family: 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-size: 15px;
+    }
+    .font30{
+        font-size: 30px
+    }
+    @media screen {
+        div.footer {
+          display: none;
+        }
+      }
+    @media print {
+        div.footer {
+          position: relative;
+          bottom: 0;
+        }
+        div, table, ul, ol {
+            page-break-inside: avoid;
+        }
+      }
+    .light-green-letterhead{
+        color : #6ab689
+    }
+    .deep-green-letterhead{
+        color : #6da945
+    }
     
     /* Default left, right, top, bottom margin is 2cm */
     @page { margin: 1cm } 
@@ -262,19 +418,34 @@ export class PrintComponent implements OnInit, AfterViewInit {
 //     styleUrls: ['./print.component.css'],
 // })
 // export class DoctorSelectionDialog {
-
 //     regdNo: string
 //     constructor(
 //         public dialogRef: MatDialogRef<DoctorSelectionDialog>,
 //         @Inject(MAT_DIALOG_DATA) public customData: string = "") {
-
 //     }
 //     closeDialog() {
 //         this.dialogRef.close(this.regdNo)
 //     }
-
 //     onNoClick(): void {
 //         this.dialogRef.close();
 //     };
-
 // }
+
+@Component({
+    selector: 'header-footer-confirmation',
+    templateUrl: 'header-footer-confirmation.html',
+})
+export class HeaderFooterConfirmationDialog {
+
+    constructor(
+        public dialogRef: MatDialogRef<HeaderFooterConfirmationDialog>) { }
+
+    onNoClick(): void {
+        this.dialogRef.close(false);
+    }
+
+    onPositiveClick(): void {
+        this.dialogRef.close(true);
+    }
+
+}

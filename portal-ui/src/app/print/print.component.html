@@ -3,270 +3,236 @@
     <mat-progress-bar style="width: 100%" color="primary" mode="indeterminate">
     </mat-progress-bar>
 </div>
-<div *ngIf="printView">
+<!-- <div *ngIf="printView"> -->
 <!-- <div> -->
-    <mat-tab-group mat-align-tabs="center" animationDuration="1500ms">
-        <mat-tab label="Full Prescription">
-            <div class="fab">
-                <button mat-mini-fab color="primary" (click)="printPrescription()" matTooltip="Print">
-                    <mat-icon aria-label="Print">local_printshop</mat-icon>
-                </button>
+<mat-tab-group mat-align-tabs="center" animationDuration="1500ms">
+    <!--
+        ====================================================================================
+        ====================================================================================
+        ====================================================================================
+        ================================    First Visit    =================================
+        ====================================================================================
+        ====================================================================================
+        ====================================================================================
+    -->
+    <mat-tab label="Full Prescription">
+        <div class="fab">
+            <button mat-mini-fab color="primary" (click)="printPrescription()" matTooltip="Print">
+                <mat-icon aria-label="Print">local_printshop</mat-icon>
+            </button>
+        </div>
+        <div id="printableFullPrescriptionContent">     
+            <div class="smaller-border"></div>       
+            <p class="left">Prescription ID: {{printView.prescriptionId}}</p>
+            <p class="left"><b>PATIENT INFORMATION</b></p>
+            <table>
+                <tr>
+                    <td>
+                        Name: {{printView.name}}
+                    </td>
+                    <td>
+                        Date: {{date | date: 'dd-MM-yyyy hh:mm a'}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Sex: {{printView.sex}}
+                    </td>
+                    <td>
+                        Visited: {{printView.visitDateTime}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Age: {{printView.age}}
+                    </td>
+                    <td>
+                        Next Appointment: {{printView.nextAppointmentDateTime}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Others: {{printView.printableNotes}}
+                    </td>
+                </tr>
+            </table>
+            <div class="smaller-border"></div>
+            <table>
+                <tr>
+                    <td style="width:40%">
+                        CHIEF COMPLAINT:
+                    </td>
+                    <td style="width:70%">
+                        {{printView.chiefComplain}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="smaller-border"></p>
+                    </td>
+                    <td>
+                        <p class="smaller-border"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:40%">
+                        MEDICAL HISTORY:
+                    </td>
+                    <td style="width:70%">
+                        {{printView.medicalHistory}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="smaller-border"></p>
+                    </td>
+                    <td>
+                        <p class="smaller-border"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:40%">
+                        CLINICAL FINDINGS:
+                    </td>
+                    <td style="width:70%">
+                        {{printView.clinicalFindings}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="smaller-border"></p>
+                    </td>
+                    <td>
+                        <p class="smaller-border"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:40%">
+                        PROVISIONAL DIAGNOSIS:
+                    </td>
+                    <td style="width:70%">
+                        {{printView.provisionalDiagnosis}}
+                    </td>
+                </tr>
+            </table>
+            <div class="smaller-border"></div>
+            <div *ngIf="printView.tphv && printView.tphv.length > 0">
+                <p><b>Treatment Plan:</b></p>
+                <div>
+                    <ol>
+                        <li *ngFor="let tphvItem of printView.tphv">
+                            {{tphvItem.tname}} on {{tphvItem.toothIndex}} for
+                            {{tphvItem.clinicalFinding}} is
+                            {{tphvItem.status}}
+                        </li>
+                    </ol>
+                </div>
             </div>
-
-            <div id="printableFullPrescriptionContent">
-                <div style="text-indent: 0em"> <img src="../img/g5220.png" alt="E Prescription" height="150px" width="99%">
-                </div>
-                <br />
-                <!-- <div class="border"></div> -->
-                <p class="left">Prescription ID: {{printView.prescriptionId}}</p>
-                <p class="left"><b>PATIENT INFORMATION</b></p>
-                <table>
-                    <tr>
-                        <td>
-                            Name: <b>{{printView.name}}</b>
-                        </td>
-                        <td>
-                            Date: {{date | date: 'dd-MM-yyyy hh:mm a'}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Sex: {{printView.sex}}
-                        </td>
-                        <td>
-                            Visited: {{printView.visitDateTime}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Age: {{printView.age}}
-                        </td>
-                        <td>
-                            Next Appointment: {{printView.nextAppointmentDateTime}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <!-- <td>
-                                    <table>
-                                        <tr>
-                                            <td>
-                                                Phone No. {{printView.phoneNo}}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Department: {{printView.department}}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Doctor: {{printView.doctor}}
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td> -->
-                        <td>
-                            Others: {{printView.printableNotes}}
-                        </td>
-                    </tr>
-                </table>
-                <div class="border"></div>
-                <table>
-                    <tr>
-                        <td style="width:40%">
-                            CHIEF COMPLAINT:
-                        </td>
-                        <td style="width:70%">
-                            {{printView.chiefComplain}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p class="smaller-border"></p>
-                        </td>
-                        <td>
-                            <p class="smaller-border"></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width:40%">
-                            MEDICAL HISTORY:
-                        </td>
-                        <td style="width:70%">
-                            {{printView.medicalHistory}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p class="smaller-border"></p>
-                        </td>
-                        <td>
-                            <p class="smaller-border"></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width:40%">
-                            CLINICAL FINDINGS:
-                        </td>
-                        <td style="width:70%">
-                            {{printView.clinicalFindings}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p class="smaller-border"></p>
-                        </td>
-                        <td>
-                            <p class="smaller-border"></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width:40%">
-                            PROVISIONAL DIAGNOSIS:
-                        </td>
-                        <td style="width:70%">
-                            {{printView.provisionalDiagnosis}}
-                        </td>
-                    </tr>                    
-                </table>
-                <div class="border"></div>
-                <div *ngIf="printView.tphv && printView.tphv.length > 0">                    
-                    <p><b>Treatment Plan:</b></p>
-                    <div>
-                        <ol>
-                            <li *ngFor="let tphvItem of printView.tphv">
-                                {{tphvItem.tname}} on {{tphvItem.toothIndex}} for {{tphvItem.clinicalFinding}} is {{tphvItem.status}}
-                            </li>
-                        </ol>
-                    </div>
-                </div>
-                <div *ngIf="printView.advice">
-                    <div class="smaller-border"></div>
-                    <p><b>ADVICE</b></p>
-                    <div>
-                        <ul>
-                            <li *ngFor="let advice of getOrderedAdviceList()">{{advice}}</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="noPrint" *ngIf="printView.medicineAll">
-                    <div class="smaller-border"></div>
-                    <p><b>ALL MEDICINE</b></p>
-                    <div>
-                        <ol>
-                            <li *ngFor="let med of printView.medicineAll">
-                                {{med}}
-                            </li>
-                        </ol>
-                    </div>
-                </div>
-                <div id="medicine" *ngIf="printView.medicineCurrent && printView.medicineCurrent.length > 0">
-                    <div class="smaller-border"></div>
-                    <p><b>MEDICINE</b></p>
-                    <div>
-                        <ol>
-                            <li *ngFor="let med of printView.medicineCurrent">
-                                {{med}}
-                            </li>
-                        </ol>
-                    </div>
-                </div>
-                <br />
-                <table>
-                    <tr>
-                        <td style="color:red" class="left">
-                            <div class="block1"><b><i>Dr. Mitrasen Manna</i></b></div>
-                            <div class="block2" style="color:red"><b> [B.D.S. (W.B.U.H.S)]</b></div>
-                        </td>
-                        <td style="color:red" class="right">
-                            <div class="block1"><b><i>Dr. Aparna Gupta</i></b></div>
-                            <div class="block2" style="color:red"><b> [B.D.S., M.D.S. (W.B.U.H.S)]</b></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="color:blue">Regd No: 3350A</td>
-                        <td class="right" style="color:blue">Regd No: 5883-A</td>
-                    </tr>
-                    <tr>
-                        <td style="color:blue">
-                            Ex-House Surgeon, R. G. Kar Medical College & Hospital, Kolkata
-                        </td>
-                        <td class="right" style="color:blue">
-                            Ex-Resident, Dr. R. Ahmed Dental College & Hospital, Sealdah, Kolkata
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <!-- <td style="color:blue">
-                                    Contact No. 7044074579, 8697969918
-                                </td> -->
-                        <td class="right" style="color:blue">
-                            Ex-House Surgeon, GTB Hospital New Delhi
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </mat-tab>
-        <mat-tab label="Revisit Prescription">
-            <div class="fab">
-                <button mat-mini-fab color="primary" (click)="printRevisit()" matTooltip="Print">
-                    <mat-icon aria-label="Print">local_printshop</mat-icon>
-                </button>
-            </div>            
-            <div id="printableRevisitPrescriptionContent">
+            <div *ngIf="printView.advice">
                 <div class="smaller-border"></div>
-                <div>Visit count : {{printView.visitNo}}</div>
-                <div class="noPrint" *ngIf="printView.tphv && printView.tphv.length > 0">
-                    <div class="smaller-border"></div>
-                    <p><b>Work History:</b></p>
-                    <div>
-                        <ol>
-                            <li *ngFor="let tphvItem of printView.tphv">
-                                {{tphvItem.tname}} on {{tphvItem.toothIndex}} for {{tphvItem.clinicalFinding}} is {{tphvItem.status}}
-                            </li>
-                        </ol>
-                    </div>
-                </div>
-                <div *ngIf="printView.tphvCompleted && printView.tphvCompleted.length > 0">
-                    <div class="smaller-border"></div>
-                    <p><b>Work Done:</b></p>
-                    <div>
-                        <ol>
-                            <li *ngFor="let tphvItem of printView.tphvCompleted">
-                                {{tphvItem.tname}} done on {{tphvItem.toothIndex}} for {{tphvItem.clinicalFinding}}
-                            </li>
-                        </ol>
-                    </div>
-                </div>
-                <div class="noPrint" *ngIf="printView.medicineAll">
-                    <div class="smaller-border"></div>
-                    <p><b>ALL MEDICINE</b></p>
-                    <div>
-                        <ol>
-                            <li *ngFor="let med of printView.medicineAll">
-                                {{med}}
-                            </li>
-                        </ol>
-                    </div>
-                </div>
-                <div *ngIf="printView.medicineCurrent">
-                    <div class="smaller-border"></div>
-                    <p><b>MEDICINE</b></p>
-                    <div>
-                        <ol>
-                            <li *ngFor="let med of printView.medicineCurrent">
-                                {{med}}
-                            </li>
-                        </ol>
-                    </div>
-                </div>
-                <div id="nextAppo">
-                    <div class="border"></div>
-                    <p>Next Appointment: {{printView.nextAppointmentDateTime}}</p>
+                <p><b>ADVICE</b></p>
+                <div>
+                    <ul>
+                        <li *ngFor="let advice of getOrderedAdviceList()">{{advice}}</li>
+                    </ul>
                 </div>
             </div>
-        </mat-tab>
-        <mat-tab label="Money Receipt">Coming soon</mat-tab>
-    </mat-tab-group>
+            <div class="noPrint" *ngIf="printView.medicineAll">
+                <div class="smaller-border"></div>
+                <p><b>ALL MEDICINE</b></p>
+                <div>
+                    <ol>
+                        <li *ngFor="let med of printView.medicineAll">
+                            {{med}}
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div id="medicine" *ngIf="printView.medicineCurrent && printView.medicineCurrent.length > 0">
+                <div class="smaller-border"></div>
+                <p><b>MEDICINE</b></p>
+                <div>
+                    <ol>
+                        <li *ngFor="let med of printView.medicineCurrent">
+                            {{med}}
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div class="smaller-border"></div>
+        </div>
+    </mat-tab>
+    <!--
+        ====================================================================================
+        ====================================================================================
+        ====================================================================================
+        ================================    Re Visit    ====================================
+        ====================================================================================
+        ====================================================================================
+        ====================================================================================
+    -->
+    <mat-tab label="Revisit Prescription">
+        <div class="fab">
+            <button mat-mini-fab color="primary" (click)="printRevisit()" matTooltip="Print">
+                <mat-icon aria-label="Print">local_printshop</mat-icon>
+            </button>
+        </div>
+        <div id="printableRevisitPrescriptionContent">  
+            <div class="smaller-border"></div>          
+            <div>Visit count : {{printView.visitNo}}</div>
+            <div class="noPrint" *ngIf="printView.tphv && printView.tphv.length > 0">
+                <div class="smaller-border"></div>
+                <p><b>Work History:</b></p>
+                <div>
+                    <ol>
+                        <li *ngFor="let tphvItem of printView.tphv">
+                            {{tphvItem.tname}} on {{tphvItem.toothIndex}} for {{tphvItem.clinicalFinding}} is
+                            {{tphvItem.status}}
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div *ngIf="printView.tphvCompleted && printView.tphvCompleted.length > 0">
+                <div class="smaller-border"></div>
+                <p><b>Work Done:</b></p>
+                <div>
+                    <ol>
+                        <li *ngFor="let tphvItem of printView.tphvCompleted">
+                            {{tphvItem.tname}} done on {{tphvItem.toothIndex}} for {{tphvItem.clinicalFinding}}
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div class="noPrint" *ngIf="printView.medicineAll">
+                <div class="smaller-border"></div>
+                <p><b>ALL MEDICINE</b></p>
+                <div>
+                    <ol>
+                        <li *ngFor="let med of printView.medicineAll">
+                            {{med}}
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div *ngIf="printView.medicineCurrent">
+                <div class="smaller-border"></div>
+                <p><b>MEDICINE</b></p>
+                <div>
+                    <ol>
+                        <li *ngFor="let med of printView.medicineCurrent">
+                            {{med}}
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div id="nextAppo">
+                <div class="smaller-border"></div>
+                <p>Next Appointment: {{printView.nextAppointmentDateTime}}</p>
+            </div>
+            <div class="smaller-border"></div>
+        </div>
+    </mat-tab>
+    <mat-tab label="Money Receipt">Coming soon</mat-tab>
+</mat-tab-group>
 
-</div>
+<!-- </div> -->

@@ -16,12 +16,32 @@ h1, h2 {
   page-break-after: avoid;
   /* page-break-before: always; */
 }
+p.header {
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 25px;
+    /*display:inline-block;
+    -webkit-transform:scale(2,1); * Safari and Chrome *
+    -moz-transform:scale(2,1); * Firefox *
+    -ms-transform:scale(2,1); * IE 9 *
+    -o-transform:scale(2,1); Opera 
+    transform:scale(2,1); */
+    -webkit-transform:scale(2,1);
+    transform:scale(2,1);
+  }
 
-/* p {
-    orphans:3;
-    widows:3;
-} */
-
+p.sub-header{
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 15px;
+}
+.font30{
+    font-size: 30px
+}
+.light-green-letterhead{
+    color : #6ab689
+}
+.deep-green-letterhead{
+    color : #6da945
+}
 /* Default left, right, top, bottom margin is 2cm */
 @page { margin: 1cm } 
 
@@ -41,6 +61,31 @@ margin-left: 2cm;
 margin-right: 3cm;
 } */
 
+.footer {
+    clear: both;
+    position: relative;
+    /* height: 200px; */
+    margin-top: -20px;
+    /* position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem; */
+  }
+  @media screen {
+    div.footer {
+      display: none;
+    }
+  }
+@media print {
+    div.footer {
+      position: relative;
+      bottom: 0;
+    }
+    div, table, ul, ol {
+        page-break-inside: avoid;
+    }
+  }
 /* ------ Normal elements */
     
  p,div,td { 

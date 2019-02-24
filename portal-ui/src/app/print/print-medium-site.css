@@ -1,0 +1,119 @@
+/* Styles go here */
+/* Source: https://medium.com/@Idan_Co/the-ultimate-print-html-template-with-header-footer-568f415f6d2a */
+/* Live example: https://next.plnkr.co/edit/lWk6Yd?preview */
+
+.page-header, .page-header-space {
+  /* height: 100px; */
+  /* Changing height as per requirement */
+  height: 200px;
+}
+
+.page-footer, .page-footer-space {
+  height: 90px;
+}
+  
+.page-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  /* border-top: 1px solid black; for demo */
+  /* background: #67b67863; for demo */
+}
+  
+.page-header {
+  position: fixed;
+  top: 0mm;
+  width: 100%;
+  /* border-bottom: 1px solid black; for demo */
+  /* background: #67b67863; for demo */
+}
+  
+.page {
+  page-break-after: always;
+}
+  
+@page {
+  margin: 20mm
+}
+  
+@media print {
+  thead {display: table-header-group;} 
+  tfoot {display: table-footer-group;}
+    
+  button, .noprint {display: none;}
+    
+  body {margin: 0;}
+
+  div, table, ul, ol {page-break-inside: avoid;}
+}
+
+/* Custom entries */
+.fab {
+  position: fixed;
+  bottom: 150px;
+  right: 30px;
+}
+.left {
+  text-align: left;    
+}
+.center {
+    text-align: center;
+}
+.right {
+    text-align: right;
+}
+/* .border{
+    border-top: 3px solid blue;
+} */
+.smaller-border{
+    border-top: 1.5px solid blue;
+}
+p.header {
+  font-family: 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 18px;
+  -webkit-transform:scale(2,1);
+  transform:scale(2,1);
+  margin: 9px;
+}
+
+p.sub-header{
+  /* font-family: 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
+  font-size: 15px;
+  margin: 9px;
+}
+.font30{
+  font-size: 30px
+}
+.light-green-letterhead{
+  color : #6ab689
+}
+.deep-green-letterhead{
+  color : #6da945
+}
+.left {
+  text-align: left;    
+}
+.center {
+  text-align: center;
+}
+.right {
+  text-align: right;
+}
+.border{
+  border-top: 3px solid blue;
+}
+.smaller-border{
+  border-top: 1.5px solid blue;
+}
+table,tr{
+  width:100%;
+}
+.block1,.block2{
+  display: inline;
+}
+p,div,td { 
+  text-indent:   1em;
+  margin-top:    .5em;
+  margin-bottom: .5em;
+  line-height: 1.5;
+}

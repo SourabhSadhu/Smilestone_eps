@@ -57,6 +57,8 @@ import { MedicineInsertionDialog } from './create-prescription/medicine-dialog/m
 import { TreatmentPlanComponent } from './treatment-plan/treatment-plan.component';
 import { PrintComponent } from './print/print.component';
 import { MatSortTableComponent } from './mat-sort-table/mat-sort-table.component';
+import { HeaderFooterConfirmationDialog } from './print/print.component';
+import { PrintMediumSiteComponent } from './print-medium-site/print-medium-site.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +73,9 @@ import { MatSortTableComponent } from './mat-sort-table/mat-sort-table.component
     MedicineInsertionDialog,
     TreatmentPlanComponent,
     PrintComponent,
-    MatSortTableComponent
+    MatSortTableComponent,
+    HeaderFooterConfirmationDialog,
+    PrintMediumSiteComponent
   ],
   imports: [
     BrowserModule,
@@ -120,6 +124,6 @@ import { MatSortTableComponent } from './mat-sort-table/mat-sort-table.component
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [SnackhelperComponent,DialogToothClinicalfindings,CustomFeeInsertionDialog,MedicineInsertionDialog]
+  entryComponents: [SnackhelperComponent,DialogToothClinicalfindings,CustomFeeInsertionDialog,MedicineInsertionDialog,HeaderFooterConfirmationDialog]
 })
 export class AppModule { }

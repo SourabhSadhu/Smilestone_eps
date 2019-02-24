@@ -80,14 +80,14 @@ export class PrintComponent implements OnInit, AfterViewInit {
                 this.processPrintProcess(this.headerFooter.header + revisit + this.headerFooter.footer)
             } else {
                 var revisit = document.getElementById("printableRevisitPrescriptionContent").innerHTML
-                this.processPrintProcess(revisit)
+                this.processPrintProcess(revisit, false)
             }
         });
 
 
 
     }
-    processPrintProcess(htmlData: string) {
+    processPrintProcess(htmlData: string, isAsync: boolean = true) {
         // var openWindow = window.open("http://localhost:4200/print?patientId=1&prescriptionId=34", "_blank", "fullscreen=yes")
         var openWindow = window.open("http://localhost:4200/print?patientId=1&prescriptionId=34", "_blank",'height='+screen.height+', width='+screen.width)
         var css = this.printMediumCss
@@ -104,12 +104,21 @@ export class PrintComponent implements OnInit, AfterViewInit {
             </html>`;
         openWindow.document.open()
         openWindow.document.write(printablePage)
-        setTimeout(() => {
+        
+        //Async flag to set timeout for loading image
+        if(isAsync){
+            setTimeout(() => {
+                openWindow.document.close
+                openWindow.focus();
+                openWindow.print();
+                // openWindow.close();
+            }, 2 * 1000)
+        }else{            
             openWindow.document.close
             openWindow.focus();
             openWindow.print();
-            // openWindow.close();
-        }, 2 * 1000)
+            // openWindow.close();            
+        }
         
     }
 

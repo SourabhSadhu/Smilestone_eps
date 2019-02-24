@@ -287,7 +287,7 @@ export class CreatePrescriptionComponent implements OnInit {
    ************************************************************************************************************
    */
 
-  dashboardHistoryListColumns = ['Date', 'C/F', 'Treatment Plan', 'Treatment Done', 'Due', 'Next Appo']
+  dashboardHistoryListColumns = ['Date', 'C/F', 'Treatment Plan', 'Treatment Done', 'Due', 'Next Appo','Action']
   dashboardDataSource: MatTableDataSource<DashboardView>
   @ViewChild(MatPaginator) paginator: MatPaginator;
   // @ViewChild(MatSort) sort: MatSort;
@@ -909,9 +909,15 @@ export class CreatePrescriptionComponent implements OnInit {
     }
   }
 
+  printPrescriptionFromDash(prescriptionId: number){    
+    this.prescriptionId = prescriptionId;
+    this.isDisabledToModify = true
+    this.printPrescription()
+  }
+
   printPrescription() {
-    console.log('Patient ID' + this.selectedPatient.pid)
-    console.log('Prescription ID' + this.prescriptionId)
+    // console.log('Patient ID' + this.selectedPatient.pid)
+    // console.log('Prescription ID' + this.prescriptionId)
     if (this.dashboardResponse && this.dashboardResponse.patientId && this.dashboardResponse.prescriptionId) {
       this.router.navigate(['print'], { queryParams: { patientId: this.dashboardResponse.patientId, prescriptionId: this.dashboardResponse.prescriptionId } })
     } else if (this.isDisabledToModify) {

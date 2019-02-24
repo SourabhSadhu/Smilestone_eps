@@ -1,9 +1,7 @@
-<mat-sidenav-container
-    class="example-container" (backdropClick)="close('backdrop')">
+<mat-sidenav-container class="example-container" (backdropClick)="close('backdrop')">
   <mat-sidenav #sidenav (keydown.escape)="sidenav.close()" disableClose>
-    <!-- <p><button mat-button (click)="close('toggle button')">Toggle</button></p> -->
-    <p *ngFor = "let menu of navMenus">
-      <button mat-button routerLink={{menu.path}} (click) = "sidenav.close()">{{menu.name}}</button>  
+    <p *ngFor = "let menu of navMenus" style="text-align: center">
+      <button mat-stroked-button routerLink={{menu.path}} (click) = "sidenav.close()">{{menu.name}}</button>  
     </p>
     <!-- <p>      
       <button mat-button [routerLink]="['print']" [queryParams]="{ patientId:1 , prescriptionId:12}" (click) = "sidenav.close()">Print</button>
@@ -11,12 +9,14 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <p>
-      <button mat-icon-button (click)="sidenav.open()">
+    <div class="block">
+      <button class="menuButton" mat-fab (click)="sidenav.open()">
           <mat-icon aria-label="Example icon-button with a heart icon">home</mat-icon>
       </button>
-    </p>
-    <router-outlet></router-outlet>
+    </div>
+    <div class="block2">
+      <router-outlet></router-outlet>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
 

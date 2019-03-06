@@ -69,6 +69,9 @@ public class PrescriptionPrintServiceImpl implements PrescriptionPrintService {
 					}
 					medicalHistoryViewString += mhv.getMedicalHistoryName();
 				});
+				if(StringUtils.isEmpty(medicalHistoryViewString)){
+					medicalHistoryViewString = "Not significant";
+				}
 				
 				prescriptionPrintModel.setMedicalHistory(medicalHistoryViewString);
 				

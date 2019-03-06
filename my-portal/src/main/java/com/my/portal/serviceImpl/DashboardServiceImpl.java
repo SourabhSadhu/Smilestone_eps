@@ -212,6 +212,9 @@ public class DashboardServiceImpl implements DashboardService {
 				if (phv.getNextAppointment() != null) {
 					existing.setNextAppointment(phv.getNextAppointment());
 				}
+				existing.setPrintableNotes(phv.getPrintableNotes());
+				phService.addPrescription(existing);
+				
 
 				List<MedicineHistory> medhl = medService.mapEntities(v.getMedhv());
 				for (MedicineHistory medh : medhl) {

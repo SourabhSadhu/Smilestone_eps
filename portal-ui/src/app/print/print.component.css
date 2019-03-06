@@ -24,9 +24,9 @@ p.header {
     -moz-transform:scale(2,1); * Firefox *
     -ms-transform:scale(2,1); * IE 9 *
     -o-transform:scale(2,1); Opera 
-    transform:scale(2,1); */
+    transform:scale(2,1); 
     -webkit-transform:scale(2,1);
-    transform:scale(2,1);
+    transform:scale(2,1); */
   }
 
 p.sub-header{

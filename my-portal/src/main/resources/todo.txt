@@ -58,4 +58,19 @@ Medicine history table with tsCreated timestamp while insert -> Done
 Multiple medicines are coming -> Don't know 
 Print only last visit details in prescription revisit print and segregate visit wise selections.
 
+log file size increase -> Done
+revisit prescription section wrong data for new prescription
+error log not appending
+
+
+Others section before print footer -> Done
+In header make the name size bigger -> Done
+shift the header section to right so that page dosent look empty
+small divider line before footer -> Done
+revisit page -> work done -> treatment done -> Done
+revisit page-> manual entry for treatment done
+Dont populate treatment done instead provide text box for manual entry
+treatment done stages -> preferable manual entry
+editable notes to be printed -> Done
+
 

@@ -40,7 +40,7 @@
   thead {display: table-header-group;} 
   tfoot {display: table-footer-group;}
     
-  button, .noprint {display: none;}
+  button {display: none;}
     
   body {margin: 0;}
 
@@ -50,7 +50,7 @@
 /* Custom entries */
 .fab {
   position: fixed;
-  bottom: 150px;
+  bottom: 30px;
   right: 30px;
 }
 .left {

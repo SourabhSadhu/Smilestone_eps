@@ -13,11 +13,11 @@
 		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
 			<fileNamePattern>${catalina.base}/logs/e-prescription/e-prescription.%d{yyyy-MM-dd}.%i.log </fileNamePattern>
 			<minIndex>1</minIndex>
-			<maxIndex>50</maxIndex>
+			<maxIndex>100</maxIndex>
 		</rollingPolicy>
 		<triggeringPolicy
 			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-			<maxFileSize>50KB</maxFileSize>
+			<maxFileSize>5MB</maxFileSize>
 		</triggeringPolicy>
 		<encoder>
 			<Pattern>%d %X %-5level %logger{36} - %msg%n%ex</Pattern>
@@ -44,7 +44,7 @@
 		</rollingPolicy>
 		<triggeringPolicy
 			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-			<maxFileSize>50KB</maxFileSize>
+			<maxFileSize>10MB</maxFileSize>
 		</triggeringPolicy>
 		<encoder>
 			<Pattern>%msg%n%ex</Pattern>

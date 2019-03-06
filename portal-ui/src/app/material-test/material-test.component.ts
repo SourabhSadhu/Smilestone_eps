@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import { HttpcommService } from '../services/httpcomm.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-material-test',
@@ -18,8 +20,12 @@ export class MaterialTestComponent implements OnInit {
   dataSource = ELEMENT_DATA;
   columnsToDisplay = ['name', 'weight', 'symbol', 'position'];
   expandedElement: PeriodicElement;
+  private elem : ElementRef;
+  private httpService: HttpcommService;
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) {
+    this.httpService = new HttpcommService(httpClient);
+  }
 
   ngOnInit() {
   }
@@ -36,6 +42,16 @@ export class MaterialTestComponent implements OnInit {
 
   selectedElement(element : PeriodicElement){
     console.log(`Selected position ${element.position}`);
+  }
+
+  fileToUpload: File
+  postMethod(files: FileList) {
+    this.fileToUpload = files.item(0); 
+    let formData = new FormData(); 
+    formData.append('file', this.fileToUpload, this.fileToUpload.name); 
+    this.httpService.genericPostRequest("http://www.google.com", formData).subscribe((val) => {
+      console.log(val);
+    });
   }
 
 }

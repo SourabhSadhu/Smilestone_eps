@@ -781,6 +781,7 @@ export class CreatePrescriptionComponent implements OnInit {
       this.dashboardView.pHistory = new PrescriptionHistoryView()
       this.dashboardView.pHistory.patientId = this.selectedPatient.pid
       this.dashboardView.pHistory.prescriptionId = this.prescriptionId
+      this.dashboardView.pHistory.printableNotes = this.prescriptionHistoryView.printableNotes
       if (0 < this.nextAppoDate) {
         this.dashboardView.pHistory.nextAppointment = this.nextAppoDate
         if (0 <= this.nextAppoHour && this.nextAppoHour <= 24 && 0 <= this.nextAppoMinute && this.nextAppoMinute <= 59) {

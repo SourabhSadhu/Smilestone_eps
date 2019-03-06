@@ -740,77 +740,96 @@ export class DummyResponse {
   };
 
 
-  public prescriptionPrintView = {
-    "status": "SUCCESS",
-    "desc": null,
-    "resp": {
-      "name": "Sourabh Sadhu",
-      "sex": "Male",
-      "age": "26 Yrs 9 Months 23 Days",
-      "phoneNo": "9046787913 / 7980231838",
-      "department": "Oral and Maxillofacial Surgery OPD",
-      "doctor": "Dr. Aparna Gupta / Dr. Mitrasen Manna",
-      "prescriptionId": "41",
-      "regDate": "19-08-2018 09:41 PM",
-      "visitNo": "1",
-      "visitDateTime": "05-01-2019 11:35 AM",
-      "nextAppointmentDateTime": "09-01-2019 12:00 AM",
-      "printableNotes": "Printed",
-      "chiefComplain": "Dental Pain",
-      "provisionalDiagnosis": "Diagnosis critical",
-      "medicalHistory": "Asthma, Cardiac diseases, Hypertension, Hypotension, Hyperthyroidism, Drug hypersensitivity",
-      "clinicalFindings": "RETAINED ROOT IN 23,32,36,37,45 \n CARIOUS 13,14",
-      "advice": "EXTRACTION OF 23 HAS BEEN DONE UNDER L.A.\nCome within 9:30 AM after having full meal with an adult addendent except SUNDAYs and enlisted holidays.\n EXTRACTION OF 23 HAS BEEN DONE UNDER L.A.\n HEMOSTASIS HAS BEEN ACHIEVED.\n MOIST COTTON PACK GIVEN.\n SOFT AND COLD DIET FOR NEXT 24 HOURS.\n WARM SALINE MOUTH WASH FREQUENTLY AFTER 24 HOURS.\n IN CASE OF ANY EMERGENCY, ADVISED TO GO TO ANY NEARBY GOVT HOSPITAL., 36, 37, 45, 13, 14.\n Come within 9:30 AM after having full meal with an adult addendent except SUNDAYs and enlisted holidays.\n EXTRACTION OF 23 HAS BEEN DONE UNDER L.A.\n HEMOSTASIS HAS BEEN ACHIEVED.\n MOIST COTTON PACK GIVEN.\n SOFT AND COLD DIET FOR NEXT 24 HOURS.\n WARM SALINE MOUTH WASH FREQUENTLY AFTER 24 HOURS.\n IN CASE OF ANY EMERGENCY, ADVISED TO GO TO ANY NEARBY GOVT HOSPITAL., 36, 37, 45, 13, 14.\n Come within 9:30 AM after having full meal with an adult addendent except SUNDAYs and enlisted holidays.\n EXTRACTION OF 23 HAS BEEN DONE UNDER L.A.\n HEMOSTASIS HAS BEEN ACHIEVED.\n MOIST COTTON PACK GIVEN.\n SOFT AND COLD DIET FOR NEXT 24 HOURS.\n WARM SALINE MOUTH WASH FREQUENTLY AFTER 24 HOURS.\n IN CASE OF ANY EMERGENCY, ADVISED TO GO TO ANY NEARBY GOVT HOSPITAL.",
-      "medicineAll": [
-        "Amoxycilin 500mg + Clavulenic Acid 125mg Tab 3 after meal 5 days",
-        "Metronidazole Tab I.P. 400mg (Flim coated) 3 after meal 5 days",
-        "Paracetamol I.P. 650mg. Tab 3 after meal 5 days",
-        "Rantidine Tab. I.P. 150mg 2 before meal 5 days"
-      ],
-      "medicineCurrent": [
-        "Paracetamol I.P. 650mg. Tab 3 after meal 5 days",
-        "Rantidine Tab. I.P. 150mg 2 before meal 5 days"
-      ],
-      "tphv": [
-        {
-          "clinicalFinding": "Periodontities",
-          "note": null,
-          "patientId": 1,
-          "prescriptionId": 40,
-          "toothIndex": "34",
-          "tsCreated": 1546330836694,
-          "tsModified": null,
-          "status": "Completed",
-          "tname": "RCT",
-          "tid": 9
-        },
-        {
-          "clinicalFinding": "Periodontities",
-          "note": null,
-          "patientId": 1,
-          "prescriptionId": 40,
-          "toothIndex": "17",
-          "tsCreated": 1546330836694,
-          "tsModified": null,
-          "status": "Pending",
-          "tname": "Removal",
-          "tid": 9
-        }
-      ],
-      "tphvCompleted": [
-        {
-          "clinicalFinding": "Periodontities",
-          "note": null,
-          "patientId": 1,
-          "prescriptionId": 40,
-          "toothIndex": "34",
-          "tsCreated": 1546330836694,
-          "tsModified": null,
-          "status": "Completed",
-          "tname": "RCT",
-          "tid": 9
-        }
-      ]
-    }
-  };
+  public prescriptionPrintView = 
+  // {
+  //   "status": "SUCCESS",
+  //   "desc": null,
+  //   "resp": {
+  //     "name": "Sourabh Sadhu",
+  //     "sex": "Male",
+  //     "age": "26 Yrs 9 Months 23 Days",
+  //     "phoneNo": "9046787913 / 7980231838",
+  //     "department": "Oral and Maxillofacial Surgery OPD",
+  //     "doctor": "Dr. Aparna Gupta / Dr. Mitrasen Manna",
+  //     "prescriptionId": "41",
+  //     "regDate": "19-08-2018 09:41 PM",
+  //     "visitNo": "1",
+  //     "visitDateTime": "05-01-2019 11:35 AM",
+  //     "nextAppointmentDateTime": "09-01-2019 12:00 AM",
+  //     "printableNotes": "Printed",
+  //     "chiefComplain": "Dental Pain",
+  //     "provisionalDiagnosis": "Diagnosis critical",
+  //     "medicalHistory": "Asthma, Cardiac diseases, Hypertension, Hypotension, Hyperthyroidism, Drug hypersensitivity",
+  //     "clinicalFindings": "RETAINED ROOT IN 23,32,36,37,45 \n CARIOUS 13,14",
+  //     "advice": "EXTRACTION OF 23 HAS BEEN DONE UNDER L.A.\nCome within 9:30 AM after having full meal with an adult addendent except SUNDAYs and enlisted holidays.\n EXTRACTION OF 23 HAS BEEN DONE UNDER L.A.\n HEMOSTASIS HAS BEEN ACHIEVED.\n MOIST COTTON PACK GIVEN.\n SOFT AND COLD DIET FOR NEXT 24 HOURS.\n WARM SALINE MOUTH WASH FREQUENTLY AFTER 24 HOURS.\n IN CASE OF ANY EMERGENCY, ADVISED TO GO TO ANY NEARBY GOVT HOSPITAL., 36, 37, 45, 13, 14.\n Come within 9:30 AM after having full meal with an adult addendent except SUNDAYs and enlisted holidays.\n EXTRACTION OF 23 HAS BEEN DONE UNDER L.A.\n HEMOSTASIS HAS BEEN ACHIEVED.\n MOIST COTTON PACK GIVEN.\n SOFT AND COLD DIET FOR NEXT 24 HOURS.\n WARM SALINE MOUTH WASH FREQUENTLY AFTER 24 HOURS.\n IN CASE OF ANY EMERGENCY, ADVISED TO GO TO ANY NEARBY GOVT HOSPITAL., 36, 37, 45, 13, 14.\n Come within 9:30 AM after having full meal with an adult addendent except SUNDAYs and enlisted holidays.\n EXTRACTION OF 23 HAS BEEN DONE UNDER L.A.\n HEMOSTASIS HAS BEEN ACHIEVED.\n MOIST COTTON PACK GIVEN.\n SOFT AND COLD DIET FOR NEXT 24 HOURS.\n WARM SALINE MOUTH WASH FREQUENTLY AFTER 24 HOURS.\n IN CASE OF ANY EMERGENCY, ADVISED TO GO TO ANY NEARBY GOVT HOSPITAL.",
+  //     "medicineAll": [
+  //       "Amoxycilin 500mg + Clavulenic Acid 125mg Tab 3 after meal 5 days",
+  //       "Metronidazole Tab I.P. 400mg (Flim coated) 3 after meal 5 days",
+  //       "Paracetamol I.P. 650mg. Tab 3 after meal 5 days",
+  //       "Rantidine Tab. I.P. 150mg 2 before meal 5 days"
+  //     ],
+  //     "medicineCurrent": [
+  //       "Paracetamol I.P. 650mg. Tab 3 after meal 5 days",
+  //       "Rantidine Tab. I.P. 150mg 2 before meal 5 days"
+  //     ],
+  //     "tphv": [
+  //       {
+  //         "clinicalFinding": "Periodontities",
+  //         "note": null,
+  //         "patientId": 1,
+  //         "prescriptionId": 40,
+  //         "toothIndex": "34",
+  //         "tsCreated": 1546330836694,
+  //         "tsModified": null,
+  //         "status": "Completed",
+  //         "tname": "RCT",
+  //         "tid": 9
+  //       },
+  //       {
+  //         "clinicalFinding": "Periodontities",
+  //         "note": null,
+  //         "patientId": 1,
+  //         "prescriptionId": 40,
+  //         "toothIndex": "17",
+  //         "tsCreated": 1546330836694,
+  //         "tsModified": null,
+  //         "status": "Pending",
+  //         "tname": "Removal",
+  //         "tid": 9
+  //       }
+  //     ],
+  //     "tphvCompleted": [
+  //       {
+  //         "clinicalFinding": "Periodontities",
+  //         "note": null,
+  //         "patientId": 1,
+  //         "prescriptionId": 40,
+  //         "toothIndex": "34",
+  //         "tsCreated": 1546330836694,
+  //         "tsModified": null,
+  //         "status": "Completed",
+  //         "tname": "RCT",
+  //         "tid": 9
+  //       }
+  //     ]
+  //   }
+  // };
+  {"status":"SUCCESS","desc":null,"resp":{"name":"sourabh sadhu","sex":"male","age":"26 Yrs 11 Months 6 Days","prescriptionId":"4188888888888888888888888888888888888888888888888888888888","regDate":"19-08-2018 09:41 PM","visitNo":"1","visitDateTime":"05-01-2019 11:35 AM","nextAppointmentDateTime":"09-01-2019 12:00 AM","printableNotes":null,"chiefComplain":"Test 2","medicalHistory":"Hypertension, Hypotension, Hyperthyroidism, Drug hypersensitivity","clinicalFindings":"Nam na jana findings","provisionalDiagnosis":"Test 2","advice":"Test 2","medicineCurrent":[],"medicineAll":["med1 sokale bikale 1 ta khabar por","med2 dose"],"tphv":[
+    {"clinicalFinding":"Stain","note":"Done","patientId":1,"prescriptionId":41,"toothIndex":"35","tsCreated":null,"tsModified":1546669776629,"status":"Completed","tid":15,"tname":"Oral prophylaxis"},
+    {"clinicalFinding":"Stain","note":"Done","patientId":1,"prescriptionId":41,"toothIndex":"35","tsCreated":null,"tsModified":1546669776629,"status":"Completed","tid":15,"tname":"Oral prophylaxis"},
+    {"clinicalFinding":"Stain","note":"Done","patientId":1,"prescriptionId":41,"toothIndex":"35","tsCreated":null,"tsModified":1546669776629,"status":"Completed","tid":15,"tname":"Oral prophylaxis"},
+    {"clinicalFinding":"Stain","note":"Done","patientId":1,"prescriptionId":41,"toothIndex":"35","tsCreated":null,"tsModified":1546669776629,"status":"Completed","tid":15,"tname":"Oral prophylaxis"},
+    {"clinicalFinding":"Stain","note":"Done","patientId":1,"prescriptionId":41,"toothIndex":"35","tsCreated":null,"tsModified":1546669776629,"status":"Completed","tid":15,"tname":"Oral prophylaxis"},
+    {"clinicalFinding":"Stain","note":"Done","patientId":1,"prescriptionId":41,"toothIndex":"35","tsCreated":null,"tsModified":1546669776629,"status":"Completed","tid":15,"tname":"Oral prophylaxis"},
+    {"clinicalFinding":"Stain","note":"Done","patientId":1,"prescriptionId":41,"toothIndex":"35","tsCreated":null,"tsModified":1546669776629,"status":"Completed","tid":15,"tname":"Oral prophylaxis"},
+    {"clinicalFinding":"Stain","note":"Done","patientId":1,"prescriptionId":41,"toothIndex":"35","tsCreated":null,"tsModified":1546669776629,"status":"Completed","tid":15,"tname":"Oral prophylaxis"},
+    {"clinicalFinding":"Stain","note":"Done","patientId":1,"prescriptionId":41,"toothIndex":"35","tsCreated":null,"tsModified":1546669776629,"status":"Completed","tid":15,"tname":"Oral prophylaxis"},
+    {"clinicalFinding":"Stain","note":"Done","patientId":1,"prescriptionId":41,"toothIndex":"35","tsCreated":null,"tsModified":1546669776629,"status":"Completed","tid":15,"tname":"Oral prophylaxis"},
+    {"clinicalFinding":"Stain","note":"Done","patientId":1,"prescriptionId":41,"toothIndex":"35","tsCreated":null,"tsModified":1546669776629,"status":"Completed","tid":15,"tname":"Oral prophylaxis"},
+    {"clinicalFinding":"Stain","note":"Done","patientId":1,"prescriptionId":41,"toothIndex":"35","tsCreated":null,"tsModified":1546669776629,"status":"Completed","tid":15,"tname":"Oral prophylaxis"},
+    {"clinicalFinding":"Stain","note":"Done","patientId":1,"prescriptionId":41,"toothIndex":"35","tsCreated":null,"tsModified":1546669776629,"status":"Completed","tid":15,"tname":"Oral prophylaxis"},
+    {"clinicalFinding":"Stain","note":"Done","patientId":1,"prescriptionId":41,"toothIndex":"35","tsCreated":null,"tsModified":1546669776629,"status":"Completed","tid":15,"tname":"Oral prophylaxis"},
+    {"clinicalFinding":"Stain","note":"Done","patientId":1,"prescriptionId":41,"toothIndex":"35","tsCreated":null,"tsModified":1546669776629,"status":"Completed","tid":15,"tname":"Oral prophylaxis"},
+    {"clinicalFinding":"Stain","note":"Done","patientId":1,"prescriptionId":41,"toothIndex":"35","tsCreated":null,"tsModified":1546669776629,"status":"Completed","tid":15,"tname":"Oral prophylaxis"},
+    {"clinicalFinding":"Stain","note":"Note is done","patientId":1,"prescriptionId":41,"toothIndex":"34","tsCreated":null,"tsModified":1546676510540,"status":"Completed","tid":16,"tname":"Prosthesis fixed"},{"clinicalFinding":"Attrition","note":null,"patientId":1,"prescriptionId":41,"toothIndex":"31","tsCreated":null,"tsModified":1546695375812,"status":"Completed","tid":14,"tname":"Restoration"},{"clinicalFinding":"Attrition","note":"update","patientId":1,"prescriptionId":41,"toothIndex":"15","tsCreated":null,"tsModified":1546695994022,"status":"Completed","tid":11,"tname":"Prosthesis removable"},{"clinicalFinding":"Attrition","note":"testing","patientId":1,"prescriptionId":41,"toothIndex":"21","tsCreated":1546698156115,"tsModified":null,"status":"Completed","tid":12,"tname":"Extraction"},{"clinicalFinding":"test cf 2","note":"cumtom addition note 2","patientId":1,"prescriptionId":41,"toothIndex":"22","tsCreated":1546695340749,"tsModified":null,"status":"Completed","tid":18,"tname":"Custom addition 2"},{"clinicalFinding":"cilinical","note":"test plan","patientId":1,"prescriptionId":41,"toothIndex":"13","tsCreated":1546676591999,"tsModified":null,"status":"Completed","tid":17,"tname":"Custome entry"},{"clinicalFinding":"Attrition","note":"hope this works","patientId":1,"prescriptionId":41,"toothIndex":"32","tsCreated":1546668342076,"tsModified":1546697832572,"status":"Completed","tid":13,"tname":"Extraction"}],"tphvCompleted":[]}};
 }

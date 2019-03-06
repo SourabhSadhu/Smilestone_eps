@@ -547,9 +547,9 @@
           <div class="example-margin">
             <mat-form-field class="example-full-width">
               <textarea matInput placeholder="Notes to be printed" [(ngModel)]="prescriptionHistoryView.printableNotes"
-                cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5" [disabled]="checkIfDisabledToModify()"></textarea>
+                cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
               <button mat-button *ngIf="prescriptionHistoryView.printableNotes" matSuffix mat-icon-button aria-label="Clear"
-                (click)="prescriptionHistoryView.printableNotes=''" matToolTip="Clear" [disabled]="checkIfDisabledToModify()">
+                (click)="prescriptionHistoryView.printableNotes=''" matToolTip="Clear">
                 <mat-icon>close</mat-icon>
               </button>
             </mat-form-field>

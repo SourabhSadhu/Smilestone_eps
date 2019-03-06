@@ -17,13 +17,12 @@
     -->
     <mat-tab label="Full Prescription">
         <div class="fab">
-            <button mat-mini-fab color="primary" (click)="printPrescription()" matTooltip="Print">
+            <button mat-fab color="primary" (click)="printPrescription()" matTooltip="Print">
                 <mat-icon aria-label="Print">local_printshop</mat-icon>
             </button>
         </div>
-        <div id="printableFullPrescriptionContent">     
-            <div class="smaller-border"></div>       
-            <p class="left">Prescription ID: {{printView.prescriptionId}}</p>
+        <div id="printableFullPrescriptionContent">                 
+            <p class="right"># {{printView.prescriptionId}}</p>
             <p class="left"><b>PATIENT INFORMATION</b></p>
             <table>
                 <tr>
@@ -48,11 +47,6 @@
                     </td>
                     <td>
                         Next Appointment: {{printView.nextAppointmentDateTime}}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Others: {{printView.printableNotes}}
                     </td>
                 </tr>
             </table>
@@ -160,6 +154,7 @@
                 </div>
             </div>
             <div class="smaller-border"></div>
+            <p>Others: {{printView.printableNotes}}</p>            
         </div>
     </mat-tab>
     <!--
@@ -173,16 +168,16 @@
     -->
     <mat-tab label="Revisit Prescription">
         <div class="fab">
-            <button mat-mini-fab color="primary" (click)="printRevisit()" matTooltip="Print">
+            <button mat-fab color="primary" (click)="printRevisit()" matTooltip="Print">
                 <mat-icon aria-label="Print">local_printshop</mat-icon>
             </button>
         </div>
-        <div id="printableRevisitPrescriptionContent">  
-            <div class="smaller-border"></div>          
+        <div id="printableRevisitPrescriptionContent">                    
+            <p class="right"># {{printView.prescriptionId}}</p>
             <div>Visit count : {{printView.visitNo}}</div>
             <div class="noPrint" *ngIf="printView.tphv && printView.tphv.length > 0">
                 <div class="smaller-border"></div>
-                <p><b>Work History:</b></p>
+                <p><b>Treatment History:</b></p>
                 <div>
                     <ol>
                         <li *ngFor="let tphvItem of printView.tphv">
@@ -192,16 +187,20 @@
                     </ol>
                 </div>
             </div>
-            <div *ngIf="printView.tphvCompleted && printView.tphvCompleted.length > 0">
+            <div>
+                <!-- *ngIf="printView.tphvCompleted && printView.tphvCompleted.length > 0" -->
                 <div class="smaller-border"></div>
-                <p><b>Work Done:</b></p>
-                <div>
-                    <ol>
-                        <li *ngFor="let tphvItem of printView.tphvCompleted">
-                            {{tphvItem.tname}} done on {{tphvItem.toothIndex}} for {{tphvItem.clinicalFinding}}
-                        </li>
-                    </ol>
-                </div>
+                <p>
+                    <b>Treatment Done:</b>
+                    <button mat-icon-button (click)="editTreatmentPlan()" class="noprint">
+                        <mat-icon aria-label="Edit">create</mat-icon>
+                    </button>
+                </p>
+                <!-- <mat-form-field class="example-full-width">
+                    <textarea matInput placeholder="Treatment details" cdkTextareaAutosize cdkAutosizeMinRows="1" 
+                        cdkAutosizeMaxRows="5" [(ngModel)]="customTreatmentPlan"></textarea>
+                </mat-form-field> -->
+                <p>{{customTreatmentPlan}}</p>
             </div>
             <div class="noPrint" *ngIf="printView.medicineAll">
                 <div class="smaller-border"></div>

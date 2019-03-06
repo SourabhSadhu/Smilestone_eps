@@ -84,9 +84,8 @@ export class PrintComponent implements OnInit, AfterViewInit {
             }
         });
 
-
-
     }
+
     processPrintProcess(htmlData: string, isAsync: boolean = true) {
         // var openWindow = window.open("http://localhost:4200/print?patientId=1&prescriptionId=34", "_blank", "fullscreen=yes")
         var openWindow = window.open("http://localhost:4200/print?patientId=1&prescriptionId=34", "_blank",'height='+screen.height+', width='+screen.width)
@@ -117,7 +116,7 @@ export class PrintComponent implements OnInit, AfterViewInit {
             openWindow.document.close
             openWindow.focus();
             openWindow.print();
-            // openWindow.close();            
+            openWindow.close();            
         }
         
     }
@@ -129,11 +128,11 @@ export class PrintComponent implements OnInit, AfterViewInit {
     .page-header, .page-header-space {
         /* height: 100px; */
         /* Changing height as per requirement */
-        height: 200px;
+        height: 180px;
       }
       
       .page-footer, .page-footer-space {
-        height: 90px;
+        height: 100px;
       }
         
       .page-footer {
@@ -161,7 +160,7 @@ export class PrintComponent implements OnInit, AfterViewInit {
         tfoot {display: table-footer-group;}          
         button, .noprint{display: none;}          
         body {margin: 0;}
-        div, table, ul, ol {page-break-inside: avoid;}
+        div, table, ul, ol {page-break-inside: always;}        
       }
       
       /* Custom entries */
@@ -178,13 +177,25 @@ export class PrintComponent implements OnInit, AfterViewInit {
       }
       .right {
           text-align: right;
+          padding-right: 1em;
       }
       .smaller-border{
           border-top: 1.5px solid blue;
+        //   min-width: 100%;
+          width: 100%;
+      }
+      .smaller-border-footer{
+        border-top: 1.5px solid blue;
       }
       p.header {
         font-family: 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-        font-size: 18px;
+        font-size: 35px;
+        margin-bottom: 0px;
+      }
+      p.footer {
+        font-family: 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-size: 25px;
+        margin-bottom: 0px;
       }
       
       p.sub-header{
@@ -198,21 +209,6 @@ export class PrintComponent implements OnInit, AfterViewInit {
       .deep-green-letterhead{
         color : #6da945
       }
-      .left {
-        text-align: left;    
-      }
-      .center {
-        text-align: center;
-      }
-      .right {
-        text-align: right;
-      }
-      .border{
-        border-top: 3px solid blue;
-      }
-      .smaller-border{
-        border-top: 1.5px solid blue;
-      }
       .block1,.block2{
         display: inline;
       }
@@ -220,7 +216,7 @@ export class PrintComponent implements OnInit, AfterViewInit {
         text-indent:   1em;
         margin-top:    .5em;
         margin-bottom: .5em;
-        line-height: 1.5;
+        line-height: 1;
       }
       </style>
     `
@@ -419,6 +415,17 @@ export class PrintComponent implements OnInit, AfterViewInit {
     }
     </style>
     `
+    customTreatmentPlan = ''
+    editTreatmentPlan(){
+        const dialogRef = this.dialog.open(CustomTreatmentPlanDialog, {
+            width: '250px',
+            data: this.customTreatmentPlan
+          });
+      
+          dialogRef.afterClosed().subscribe(result => {
+            this.customTreatmentPlan = result;
+          });
+    }
 }
 
 // @Component({
@@ -457,4 +464,28 @@ export class HeaderFooterConfirmationDialog {
         this.dialogRef.close(true);
     }
 
+}
+
+@Component({
+    selector: 'custom-treatment-plan-selector',
+    template: `<h1 mat-dialog-title>Edit Treament details</h1>
+    <div mat-dialog-content>
+        <mat-form-field>
+            <textarea matInput placeholder="Treatment details" cdkTextareaAutosize cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="5" [(ngModel)]="data"></textarea>
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button (click)="onNoClick()">Cancel</button>
+        <button mat-button [mat-dialog-close]="data" color="primary">Ok</button>
+    </div>`
+})
+export class CustomTreatmentPlanDialog{
+    constructor(public dialogRef : MatDialogRef<CustomTreatmentPlanDialog>,
+        @Inject(MAT_DIALOG_DATA) public data: string){
+    }
+
+    onNoClick() : void{
+        this.dialogRef.close();
+    }
 }

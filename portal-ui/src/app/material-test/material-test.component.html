@@ -1,5 +1,11 @@
+<!-- <form>
+  <input type="file" id="selectFile" name="selectFile" multiple />
+  <input type="button" (click)="uploadImage()" value="Upload Image" /> 
+</form> -->
 
-
+<form>
+  <input id="myForm" type="file" name="file" (change)="postMethod($event.target.files)">
+</form>
 
 <table mat-table
        [dataSource]="dataSource" multiTemplateDataRows

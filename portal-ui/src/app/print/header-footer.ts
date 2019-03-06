@@ -16,8 +16,8 @@ export class HeaderFooter{
     public header = `
     <div class="page-header">
         <table>
-            <tr>
-                <td>
+            <tr>                
+                <td style="text-indent: 5em">
                     <div>
                         ${this.getHeaderImage()}
                     </div>
@@ -31,8 +31,13 @@ export class HeaderFooter{
                     <p class="sub-header deep-green-letterhead">MORNING: 10 AM TO 1 PM </p>
                     <p class="sub-header deep-green-letterhead">EVENING: 5.30 PM TO 8.30 PM </p>
                     <p class="sub-header deep-green-letterhead">SUNDAY EVENING & MONDAY FULL DAY CLOSED</p>
-                </td>
-                <!-- <td style="text-align: center;min-width:100px;"></td> -->
+                </td>                
+            </tr>
+        </table>
+        <table style="width: 100%;">
+            <tr style="min-width:100%; width:100%;">
+                <td class="smaller-border" style="min-width:50%; width:50%;" ></td>
+                <td class="smaller-border" style="min-width:50%; width:50%;" ></td>
             </tr>
         </table>
     </div>
@@ -63,13 +68,18 @@ export class HeaderFooter{
         </tr>
     </tfoot>
     </table>
+    
     <table class="page-footer">
         <tr>
+            <td class="smaller-border" style="max-width:50%; width:50%;" ></td>
+            <td class="smaller-border" style="max-width:50%; width:50%;" ></td>
+        </tr>
+        <tr>
             <td class="left">
-                <p class="block1 header deep-green-letterhead"><b>Dr. Mitrasen Manna</b></p>
+                <p class="block1 footer deep-green-letterhead"><b>Dr. Mitrasen Manna</b></p>
             </td>
             <td class="right">
-                <p class="block1 header deep-green-letterhead"><b>Dr. Aparna Gupta</b></p>
+                <p class="block1 footer deep-green-letterhead"><b>Dr. Aparna Gupta</b></p>
             </td>
         </tr>
         <tr>

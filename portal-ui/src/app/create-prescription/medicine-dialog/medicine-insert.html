@@ -19,7 +19,8 @@
     <mat-form-field class="example-margin">
         <input matInput placeholder="Period in days" [(ngModel)]="period" style="text-align:center" required>
     </mat-form-field>
-    <mat-form-field class="example-margin">
+    <br/>
+    <mat-form-field *ngIf="checkMedicineStatement" class="example-margin">
         <input matInput [ngModel]="result" style="text-align:center" disabled>
     </mat-form-field>
 </div>

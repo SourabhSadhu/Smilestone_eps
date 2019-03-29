@@ -19,9 +19,10 @@ import { MedicineHistoryView, MedicineView } from '../../models/models';
     medicineNameListObservable: Observable<string[]>;
     medicineNameList: string[];
     medicineForm = new FormControl();
-    repetition = ''
-    period = ''
-    result = ''
+    repetition = '';
+    period = '';
+    result = '';
+    checkMedicineStatement = false;
   
     constructor(
       public dialogRef: MatDialogRef<MedicineInsertionDialog>,
@@ -43,6 +44,7 @@ import { MedicineHistoryView, MedicineView } from '../../models/models';
     };
   
     generatePreview(){
+      this.checkMedicineStatement = true;
       this.result = this.medicineForm.value + ' ' + this.repetition + ' ' + this.period + ' days'
     }
   

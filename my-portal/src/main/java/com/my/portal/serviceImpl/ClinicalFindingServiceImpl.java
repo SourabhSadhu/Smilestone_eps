@@ -93,6 +93,7 @@ public class ClinicalFindingServiceImpl implements ClinicalFindingService {
 			cfvList = new ArrayList<>();
 		}
 		if(repo.findAll().size() != cfvList.size()) {
+			cfvList.clear();
 			for(ClinicalFinding f : repo.findAll()) {
 				cfvList.add(map(f));
 			}

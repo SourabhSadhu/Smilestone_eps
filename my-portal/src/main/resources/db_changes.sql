@@ -135,3 +135,10 @@ insert into eps.medicine_master (medicine_name,disease_code,disease_name,clinica
 insert into eps.medicine_master (medicine_name,disease_code,disease_name,clinical_availability,age_group,treatment_id,dosage) values('Tab.Myospaz Forte','','',0,'10to30',1,'');
 insert into eps.medicine_master (medicine_name,disease_code,disease_name,clinical_availability,age_group,treatment_id,dosage) values('Tab.Paracetamol 650mg','','',0,'10to30',1,'');
 insert into eps.medicine_master (medicine_name,disease_code,disease_name,clinical_availability,age_group,treatment_id,dosage) values('Tab.Paracetamol 500 mg','','',0,'10to30',1,'');    
+
+
+
+
+-- Release 2.0
+-- Start date 27-03-1992
+insert into eps.treatment_plan (trt_id,trt_name, trt_desc, clinical_finding) values (8,'Other', 'Custom entry', 1);

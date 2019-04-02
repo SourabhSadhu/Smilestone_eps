@@ -80,6 +80,21 @@ export class MedicineView {
     medicineId: number;
 };
 
+
+export class MedicineMultiSelection{
+    medicineName: string;
+    // ageGroup: string;
+    // treatmentId: number;
+    // dosage: string;
+    // clinicalAvailability: number;
+    // diseaseCode: string;
+    // diseaseName: string;
+    // medicineId: number;
+    selected: boolean;
+    repetition: string;
+    period: string;
+  }
+
 export class FeesBreakupView {
     fId: number;
     amount: number;

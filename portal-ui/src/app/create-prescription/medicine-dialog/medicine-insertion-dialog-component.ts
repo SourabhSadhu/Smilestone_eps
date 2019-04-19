@@ -1,8 +1,8 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators'
 import { FormControl } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatCheckboxChange } from '@angular/material';
 import { MedicineHistoryView, MedicineView, MedicineMultiSelection } from '../../models/models';
 import { MatTableDataSource } from '@angular/material';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -45,6 +45,7 @@ export class MedicineInsertionDialog {
         let medicineSelectionModel = new MedicineMultiSelection()
         medicineSelectionModel.medicineName = meds.medicineName
         medicineSelectionModel.selected = false;
+        medicineSelectionModel.medicineId = meds.medicineId;
         this.medicineNameList.push(medicineSelectionModel);
       })
       this.dataSource.data = this.medicineNameList;
@@ -77,8 +78,14 @@ export class MedicineInsertionDialog {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  onChange(event, index: number) {
-    console.log("Index",index);
+  onChange(event: EventEmitter<MatCheckboxChange>, element: MedicineMultiSelection) {
+    console.log(element.selected);
+    element.selected = false;
+    console.log(element.selected);
+    console.log("Index",element.medicineId);
     console.log("Event",event);
+    let matChkChg = new MatCheckboxChange()
+    matChkChg.checked = false;
+    event.emit(matChkChg)
   }
 }

@@ -93,6 +93,7 @@ export class MedicineMultiSelection{
     selected: boolean;
     repetition: string;
     period: string;
+    medicineId: number;
   }
 
 export class FeesBreakupView {
